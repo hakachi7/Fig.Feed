@@ -6,11 +6,12 @@
 <title>Fig.Feed</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.min.js"></script>
 <style>
 :root{
-  --bg:#ffffff; --fg:#0a0a0a; --muted:#7a7a7a; --line:#e7e7e7; --tile:#d9d9d9; --soft:#f4f4f4;
-  --accent:#ff1f1f; --drop:#14d36a; --badge:#2f45ff;
+  --bg:#ffffff; --fg:#0a0a0a; --muted:#7a7a7a; --line:#e7e7e7; --tile:#d9d9d9; --soft:#f4f4f4; --panel:#f1f0ee;
+  --accent:#ff1f1f; --drop:#14d36a; --badge:#2f45ff; --err:#c4281c;
   --f:"Inter","Helvetica Neue",Arial,sans-serif;
   color-scheme:light;
 }
@@ -23,6 +24,35 @@ button{cursor:pointer;background:none;border:0;padding:0}
 :focus-visible{outline:2px solid var(--fg);outline-offset:3px}
 img{display:block;max-width:100%}
 .view{min-height:100%}
+.loading{height:100vh;display:grid;place-items:center;color:var(--muted);font-size:13px}
+
+/* ---------- Entrar / criar conta (estilo Cosmos) ---------- */
+.auth{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
+.auth-l{display:flex;flex-direction:column;align-items:center;padding:36px 24px 40px}
+.auth-l .top{height:40px}
+.auth-f{margin:auto 0;width:min(326px,100%);display:flex;flex-direction:column;gap:12px;text-align:center}
+.auth-f h1{font-size:18px;font-weight:500;margin:0;letter-spacing:-.01em}
+.auth-f .sub{margin:2px 0 14px;color:var(--muted);font-size:13px}
+.auth-f .sub a,.auth-f .link{color:var(--fg);cursor:pointer;text-decoration:none}
+.auth-f input{width:100%;height:50px;border:1px solid var(--line);border-radius:14px;padding:0 16px;font-size:14px;outline:none;background:#fff}
+.auth-f input:focus{border-color:#bdbdbd}
+.pw{position:relative}
+.pw input{padding-right:48px}
+.pw button{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:28px;height:28px;display:grid;place-items:center;color:#444}
+.auth-btn{height:52px;border-radius:99px;background:var(--fg);color:#fff;font-weight:600;font-size:14px;margin-top:2px}
+.auth-btn[disabled]{opacity:.55;cursor:default}
+.auth-f .forgot{color:var(--muted);font-size:13px;margin-top:6px;cursor:pointer}
+.auth-f .msg{font-size:13px;line-height:1.45;padding:10px 12px;border-radius:12px;text-align:left}
+.auth-f .msg.err{background:#fdecea;color:var(--err)}
+.auth-f .msg.ok{background:#eaf6ee;color:#1e6b3a}
+.auth-word{font-weight:600;font-size:19px;letter-spacing:-.01em;text-transform:uppercase}
+.auth-r{background:var(--panel);position:relative;overflow:hidden;height:100vh;position:sticky;top:0}
+.auth-r .col{display:flex;flex-direction:column;align-items:center;gap:32px;animation:rise 70s linear infinite}
+.auth-r .col img{object-fit:cover}
+@keyframes rise{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+.auth-r .cap{position:absolute;left:20px;bottom:14px;font-size:10px;font-weight:600;line-height:1.25}
+@media (max-width:820px){.auth{grid-template-columns:1fr}.auth-r{display:none}}
+@media (prefers-reduced-motion:reduce){.auth-r .col{animation:none}}
 
 /* ---------- 1. Home ---------- */
 .home{height:100vh;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
@@ -41,7 +71,6 @@ img{display:block;max-width:100%}
 .menu li button{color:#fff;text-align:left;padding:0;transition:opacity .2s}
 .menu li button:hover{opacity:.6}
 .menu .credit{position:absolute;left:clamp(16px,4.7vw,90px);bottom:clamp(20px,5vw,60px);font-size:clamp(11px,.85vw,15px)}
-.menu .back{position:absolute;right:clamp(16px,3vw,48px);bottom:clamp(20px,5vw,60px);font-size:13px;color:#fff;opacity:.8}
 @media (max-width:640px){.menu nav{left:auto;right:20px;top:24px}}
 
 /* ---------- Cabeçalho (estilo Cosmos) ---------- */
@@ -50,6 +79,7 @@ img{display:block;max-width:100%}
 .hdr .r{display:flex;align-items:center;gap:10px;justify-content:flex-end}
 .logo{display:grid;grid-template-columns:repeat(3,6px);gap:2px}
 .logo i{width:6px;height:7.5px;background:var(--fg);display:block}
+.logo.big{grid-template-columns:repeat(3,8px)}.logo.big i{width:8px;height:10px}
 .nav a{font-size:15px;color:var(--muted);text-decoration:none;font-weight:500;position:relative;white-space:nowrap;cursor:pointer}
 .nav a.cur{color:var(--fg)}
 .nav .badge{position:absolute;top:-10px;right:-15px;background:var(--badge);color:#fff;font-size:10px;border-radius:99px;min-width:17px;height:17px;display:grid;place-items:center;padding:0 4px}
@@ -58,11 +88,12 @@ img{display:block;max-width:100%}
 .search{display:flex;align-items:center;gap:10px;width:min(430px,34vw);border:1px solid var(--line);background:#fafafa;border-radius:99px;padding:10px 16px}
 .search svg{flex:none}
 .search input{border:0;background:none;outline:none;width:100%;font-size:14px}
-.pill{border:1px solid var(--line);border-radius:99px;padding:9px 16px;display:flex;align-items:center;gap:7px;font-weight:500;background:#fff}
+.pill{border:1px solid var(--line);border-radius:99px;padding:9px 16px;display:inline-flex;align-items:center;gap:7px;font-weight:500;background:#fff}
 .pill:hover{background:var(--soft)}
+.pill.dark{background:var(--fg);color:#fff;border-color:var(--fg)}
 .avatar{width:36px;height:36px;border-radius:50%;background-size:cover;background-position:center;background-color:var(--tile)}
 .who{display:flex;align-items:center;gap:6px}
-.drop{position:absolute;right:max(16px,2.2vw);top:62px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 12px 32px rgba(0,0,0,.08);padding:6px;min-width:210px;display:flex;flex-direction:column;z-index:30}
+.drop{position:absolute;right:max(16px,2.2vw);top:62px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 12px 32px rgba(0,0,0,.08);padding:6px;min-width:230px;display:flex;flex-direction:column;z-index:30}
 .drop button,.drop .lbl{padding:9px 12px;border-radius:8px;text-align:left}
 .drop button:hover{background:var(--soft)}
 .drop .lbl{color:var(--muted);font-size:12px}
@@ -75,12 +106,13 @@ img{display:block;max-width:100%}
 .contas{min-height:calc(100vh - 66px);display:flex;align-items:center;justify-content:center;padding:40px max(16px,4vw)}
 .accs{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(40px,4.9vw,94px)}
 .acc{display:flex;flex-direction:column;gap:clamp(16px,1.7vw,32px);width:clamp(220px,19vw,364px)}
-.acc .g{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(5px,.42vw,8px)}
+.acc .g{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(5px,.42vw,8px);transition:transform .25s}
 .acc .g div{aspect-ratio:101/131;background:var(--tile) center/cover}
-.acc .g{transition:transform .25s}
 .acc:hover .g{transform:translateY(-4px)}
 .acc .h{font-size:11px;text-align:left}
-.empty{color:var(--muted);text-align:center}
+.empty{color:var(--muted);text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;max-width:360px}
+.empty h2{color:var(--fg);font-size:22px;font-weight:400;letter-spacing:-.02em;margin:0}
+.empty .row2{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
 
 /* ---------- 4. Feed ---------- */
 .feed{display:flex;justify-content:center;padding:50px 16px 80px}
@@ -151,117 +183,227 @@ img{display:block;max-width:100%}
 .field{display:flex;flex-direction:column;gap:6px;margin-bottom:18px;max-width:420px}
 .field label{font-size:12px;color:var(--muted)}
 .field input{border:1px solid var(--line);border-radius:10px;padding:10px 12px}
-.chk{display:flex;gap:10px;align-items:center;margin-bottom:18px}
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--fg);color:#fff;padding:9px 16px;border-radius:99px;font-size:13px;z-index:99}
+.chk{display:flex;gap:10px;align-items:center;margin-bottom:24px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--fg);color:#fff;padding:9px 16px;border-radius:99px;font-size:13px;z-index:99;max-width:calc(100vw - 32px);text-align:center}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-<div id="app"></div>
-<input type="file" id="file" accept="image/*" multiple hidden>
+<div id="app"><div class="loading">Carregando…</div></div>
+<input type="file" id="file" accept="image/jpeg,image/png,image/webp" multiple hidden>
 <div class="toast" id="toast" hidden></div>
 
 <script>
-/* ======================= Dados ======================= */
-const KEY='figfeed-v2';
-const FALLBACK=[[10,'Paul Jarvis'],[11,'Paul Jarvis'],[13,'Paul Jarvis'],[14,'Paul Jarvis'],[15,'Paul Jarvis'],[16,'Paul Jarvis'],[17,'Paul Jarvis'],[18,'Paul Jarvis'],[19,'Paul Jarvis'],[20,'Aleks Dorohovich'],[21,'Alejandro Escamilla'],[22,'Alejandro Escamilla'],[23,'Alejandro Escamilla'],[24,'Alejandro Escamilla'],[25,'Alejandro Escamilla'],[26,'Vadim Sherbakov'],[27,'Yoni Kaplan-Nadel'],[28,'Jerry Adney'],[29,'Go Wild'],[30,'Shyamanta Baruah'],[31,'How-Soon Ngu'],[32,'Rodrigo Melo'],[33,'Alejandro Escamilla'],[34,'Aleks Dorohovich'],[35,'Shane Colella'],[36,'Vadim Sherbakov'],[37,'Austin Neill'],[38,'Allyson Souza'],[39,'Luke Chesser'],[40,'Ryan Mcguire'],[41,'Nithya Ramanujam'],[42,'Luke Chesser'],[43,'Oleg Chursin'],[44,'Christopher Sardegna'],[45,'Alan Haverty'],[46,'Jeffrey Kam'],[47,'Christopher Sardegna'],[48,'Luke Chesser'],[49,'Margaret Barley'],[50,'Tyler Wanlass'],[51,'Ireneuszm'],[52,'Cierra'],[53,'J Duclos'],[54,'Nicholas Swanson'],[55,'Tyler Wanlass'],[56,'Sebastian Muller'],[57,'Nathan Anderson'],[58,'Tom Butler'],[59,'Art Wave'],[60,'Vadim Sherbakov']];
+/* ======================= Conexão com o banco ======================= */
+// Chave pública (anon): pode ficar no código. A segurança vem das regras do banco.
+const SB_URL='https://ftffxxugvzijkcfprgiv.supabase.co';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0ZmZ4eHVndnppamtjZnByZ2l2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM2MzkzMDIsImV4cCI6MjEwOTIxNTMwMn0.kjafUQL_XW_fK7egXM6J3HavKM2tzwvNUpFOd8zOWI0';
+const sb=window.supabase.createClient(SB_URL,SB_KEY);
+let USER=null;
+
+/* ======================= Utilidades ======================= */
+const FALLBACK=[[10,'Paul Jarvis'],[11,'Paul Jarvis'],[13,'Paul Jarvis'],[14,'Paul Jarvis'],[15,'Paul Jarvis'],[16,'Paul Jarvis'],[17,'Paul Jarvis'],[18,'Paul Jarvis'],[19,'Paul Jarvis'],[20,'Aleks Dorohovich'],[21,'Alejandro Escamilla'],[22,'Alejandro Escamilla'],[23,'Alejandro Escamilla'],[24,'Alejandro Escamilla'],[25,'Alejandro Escamilla'],[26,'Vadim Sherbakov'],[27,'Yoni Kaplan-Nadel'],[28,'Jerry Adney'],[29,'Go Wild'],[30,'Shyamanta Baruah'],[31,'How-Soon Ngu'],[32,'Rodrigo Melo'],[33,'Alejandro Escamilla'],[34,'Aleks Dorohovich'],[35,'Shane Colella'],[36,'Vadim Sherbakov'],[37,'Austin Neill'],[38,'Allyson Souza'],[39,'Luke Chesser'],[40,'Ryan Mcguire'],[41,'Nithya Ramanujam'],[42,'Luke Chesser'],[43,'Oleg Chursin'],[44,'Christopher Sardegna'],[45,'Alan Haverty'],[46,'Jeffrey Kam'],[47,'Christopher Sardegna'],[48,'Luke Chesser'],[49,'Margaret Barley'],[50,'Tyler Wanlass']];
 const TITLES=['Lançamento','Bastidores','Depoimento','Promo do mês','Dica rápida','Antes e depois','Equipe','Produto novo','Pergunta da semana','Guia em fotos','Citação','Coleção'];
 const CAPS=['Chegou o que vocês pediram. Salva esse post pra não esquecer e marca quem precisa ver isso hoje.','Um pouco do nosso dia a dia por aqui. Quem aí gosta de ver bastidores? Conta nos comentários.','Cliente feliz é o nosso melhor marketing. Obrigado pela confiança de sempre.','Só essa semana: condição especial para quem chamar no direct. Link na bio.','Passo a passo em poucas fotos. Arrasta pro lado, testa e me conta o resultado.','A diferença fala por si. Arrasta pro lado e confere o antes e depois.'];
-let POOL=[];let uid=Date.now();const nid=()=>(uid++).toString(36);
+let POOL=FALLBACK;
 const rnd=n=>Math.floor(Math.random()*n);
-const pickPhoto=()=>{const p=POOL[rnd(POOL.length)];return {id:nid(),pid:p[0],author:p[1]}};
-const src=(s,w=600,h=750)=>s.data?s.data:`https://picsum.photos/id/${s.pid}/${w}/${h}`;
-const credit=s=>s&&s.author?`credit / @${s.author.toLowerCase().replace(/[^a-z0-9]+/g,'')}`:'credit / @voce';
+const randPhoto=()=>{const p=POOL[rnd(POOL.length)];return {path:'picsum:'+p[0],credit:p[1]}};
+const URLS={}; // caminho no Storage -> link temporário
+function src(s,w=600,h=750){if(!s)return'';const p=s.path||'';
+  if(p.startsWith('picsum:'))return `https://picsum.photos/id/${p.slice(7)}/${w}/${h}`;return URLS[p]||''}
+const bgi=(s,w,h)=>{const u=src(s,w,h);return u?`background-image:url('${u}')`:''};
+const handleOf=c=>c?'@'+String(c).toLowerCase().replace(/[^a-z0-9._]+/g,''):'@voce';
+const fmt=d=>{if(!d)return'sem data';const[y,m,dd]=d.split('-');return `${dd}/${m}`};
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const iso=d=>{const x=new Date(d);x.setMinutes(x.getMinutes()-x.getTimezoneOffset());return x.toISOString().slice(0,10)};
+function toast(m,ms=2600){const t=document.getElementById('toast');t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,ms)}
+async function db(q){const {data,error}=await q;if(error){console.error(error);toast(traduz(error.message));throw error}return data}
+function traduz(m=''){
+  const t=m.toLowerCase();
+  if(t.includes('invalid login'))return 'E-mail ou senha incorretos.';
+  if(t.includes('email not confirmed'))return 'Confirme seu e-mail antes de entrar. Procure o link na sua caixa de entrada (e no spam).';
+  if(t.includes('already registered'))return 'Já existe uma conta com esse e-mail. Entre ou recupere a senha.';
+  if(t.includes('at least 6')||t.includes('password should'))return 'A senha precisa ter pelo menos 6 caracteres.';
+  if(t.includes('rate limit')||t.includes('security purposes'))return 'Muitas tentativas seguidas. Espere alguns minutos e tente de novo.';
+  if(t.includes('valid email')||t.includes('invalid format'))return 'Esse e-mail não parece válido.';
+  if(t.includes('máximo de 10'))return 'Um post pode ter no máximo 10 fotos.';
+  if(t.includes('failed to fetch')||t.includes('network'))return 'Sem conexão com o servidor. Confira sua internet.';
+  return 'Algo deu errado: '+m;
+}
 
-function makePost(i,baseDate){const d=new Date(baseDate);d.setDate(d.getDate()-i*2);
-  const n=1+rnd(4);return {id:nid(),title:TITLES[i%TITLES.length],caption:CAPS[rnd(CAPS.length)],date:d.toISOString().slice(0,10),slides:Array.from({length:n},pickPhoto)}}
-function makeAccount(handle,count=12){const top=new Date();top.setDate(top.getDate()+14);
-  return {id:nid(),handle,posts:Array.from({length:count},(_,i)=>makePost(i,top))}}
-function seed(){return {datesFollow:true,profile:{name:'Seu nome',handle:'@seu.perfil'},accounts:[makeAccount('@aisdjsadoihasdiohasd'),makeAccount('@4iqwjus890uy8asdj'),makeAccount('@lsmadfauisdagf24214')]}}
-
-let S=null;
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast('Não deu para salvar (fotos enviadas muito pesadas?)')}}
+/* ======================= Dados (vindos do banco) ======================= */
+let S={profile:{name:'',handle:'',dates_follow:true},accounts:[]};
 const accById=id=>S.accounts.find(a=>a.id===id);
-const fmt=d=>{if(!d)return'';const[y,m,dd]=d.split('-');return `${dd}/${m}`};
-const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-function toast(m){const t=document.getElementById('toast');t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,2300)}
+
+async function signPaths(paths){
+  const need=[...new Set(paths)].filter(p=>p&&!p.startsWith('picsum:')&&!URLS[p]);if(!need.length)return;
+  const {data}=await sb.storage.from('fotos').createSignedUrls(need,60*60*6);
+  (data||[]).forEach(d=>{if(d.signedUrl)URLS[d.path]=d.signedUrl});
+}
+async function loadAll(){
+  const [prof,accs,posts,slides]=await Promise.all([
+    db(sb.from('profiles').select('*').eq('id',USER.id).maybeSingle()),
+    db(sb.from('accounts').select('id,handle,position').order('position').order('created_at')),
+    db(sb.from('posts').select('id,account_id,title,caption,publish_date,status,position').order('position').order('created_at')),
+    db(sb.from('slides').select('id,post_id,storage_path,credit,position').order('position').order('created_at'))]);
+  S.profile=prof||{name:'',handle:'',dates_follow:true};
+  const byPost={};slides.forEach(s=>(byPost[s.post_id]=byPost[s.post_id]||[]).push({id:s.id,path:s.storage_path,credit:s.credit}));
+  const byAcc={};posts.forEach(p=>(byAcc[p.account_id]=byAcc[p.account_id]||[]).push({id:p.id,title:p.title,caption:p.caption,date:p.publish_date,status:p.status,slides:byPost[p.id]||[]}));
+  S.accounts=accs.map(a=>({id:a.id,handle:a.handle,posts:byAcc[a.id]||[]}));
+  await signPaths(slides.map(s=>s.storage_path));
+}
+
+// Contas de exemplo, para testar sem precisar enviar fotos
+async function seedExamples(){
+  toast('Criando contas de exemplo…',8000);
+  const handles=['@cafe.serido','@studio.lume','@atelie.mare'];const base=S.accounts.length;
+  for(let k=0;k<handles.length;k++){
+    const acc=await db(sb.from('accounts').insert({handle:handles[k],position:base+k}).select('id').single());
+    const top=new Date();top.setDate(top.getDate()+14);
+    const rows=Array.from({length:12},(_,i)=>{const d=new Date(top);d.setDate(d.getDate()-i*2);
+      return {account_id:acc.id,title:TITLES[i],caption:CAPS[rnd(CAPS.length)],publish_date:iso(d),position:i,status:i<4?'rascunho':i<8?'pronto':'agendado'}});
+    const ps=await db(sb.from('posts').insert(rows).select('id,position'));
+    const sl=[];ps.forEach(p=>{const n=1+rnd(4);for(let j=0;j<n;j++){const ph=randPhoto();sl.push({post_id:p.id,storage_path:ph.path,credit:ph.credit,position:j})}});
+    await db(sb.from('slides').insert(sl));
+  }
+  await loadAll();toast('Contas de exemplo criadas');
+}
 
 /* ======================= Rotas ======================= */
-// #home  #menu  #contas  #feed/ID  #car/ID/POST  #edit/ID/POST  #crono  #down  #perfil  #config
+// #entrar #criar #senha #nova-senha | #home #menu #contas #feed/ID #car/ID/POST #edit/ID/POST #crono #down #perfil #config
+const AUTH=['entrar','criar','senha','nova-senha'];
 const app=document.getElementById('app');
-let route=[],menuPhoto=null,q='',openDrop=null,homeTimer=null;
-const go=h=>{location.hash=h};
+let route=[],menuPhoto=null,q='',openDrop=null,homeTimer=null,recovery=false;
+const go=h=>{if(location.hash.slice(1)===h)render();else location.hash=h};
 window.addEventListener('hashchange',render);
 
 function render(){
-  clearInterval(homeTimer);openDrop=null;
-  route=(location.hash.slice(1)||'home').split('/');
-  const v=route[0];
-  const map={home:vHome,menu:vMenu,contas:vContas,feed:vFeed,car:vCar,edit:vEdit,crono:vCrono,down:vDown,perfil:vPerfil,config:vConfig};
+  clearInterval(homeTimer);openDrop=null;document.querySelector('.drop')?.remove();dragCleanup&&dragCleanup();window.onresize=null;
+  route=(location.hash.slice(1)||'home').split('/');const v=route[0];
+  if(recovery&&v!=='nova-senha')return go('nova-senha');
+  if(!USER&&!AUTH.includes(v))return go('entrar');
+  if(USER&&AUTH.includes(v)&&!(v==='nova-senha'&&recovery))return go('home');
+  const map={entrar:()=>vAuth('entrar'),criar:()=>vAuth('criar'),senha:()=>vAuth('senha'),'nova-senha':()=>vAuth('nova-senha'),
+    home:vHome,menu:vMenu,contas:vContas,feed:vFeed,car:vCar,edit:vEdit,crono:vCrono,down:vDown,perfil:vPerfil,config:vConfig};
   (map[v]||vHome)();window.scrollTo(0,0);
 }
 
+/* ======================= Entrar / Criar conta ======================= */
+const LOGO=(big)=>`<span class="logo ${big?'big':''}" aria-hidden="true">`+'<i></i>'.repeat(9)+'</span>';
+const EYE='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+const EYE_OFF='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3l18 18M10.6 5.1A10.8 10.8 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4.1M6.6 6.6C3.8 8.4 2 12 2 12s3.5 7 10 7c1.6 0 3-.4 4.3-1M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>';
+function authPanel(){
+  const shapes=[[342,270],[536,886],[194,270],[420,520],[300,400],[460,330]];
+  const imgs=Array.from({length:6},(_,i)=>{const p=POOL[(i*7+3)%POOL.length];const [w,h]=shapes[i];
+    return `<img src="https://picsum.photos/id/${p[0]}/${Math.round(w*1.5)}/${Math.round(h*1.5)}" alt="" style="width:${w/20}vw;max-width:${w}px;aspect-ratio:${w}/${h}">`}).join('');
+  return `<aside class="auth-r" aria-hidden="true"><div class="col">${imgs}${imgs}</div>
+    <div class="cap">Feeds organizados, não improvisados.<br>Fotos via Unsplash</div></aside>`;
+}
+function vAuth(mode){
+  const T={entrar:['Bem-vindo de volta',`Digite suas credenciais ou <a data-go="criar">crie uma conta</a>`,'Próximo'],
+    criar:['Crie sua conta',`Já tem conta? <a data-go="entrar">Entre aqui</a>`,'Criar conta'],
+    senha:['Recuperar senha',`Enviamos um link para você criar uma nova senha. <a data-go="entrar">Voltar</a>`,'Enviar link'],
+    'nova-senha':['Nova senha','Escolha uma senha nova para sua conta.','Salvar senha']}[mode];
+  app.innerHTML=`<main class="auth"><section class="auth-l"><div class="top">${LOGO(true)}</div>
+    <form class="auth-f" id="af" novalidate>
+      <h1>${T[0]}</h1><p class="sub">${T[1]}</p>
+      ${mode==='criar'?'<input id="a-name" placeholder="Seu nome" autocomplete="name" required>':''}
+      ${mode!=='nova-senha'?'<input id="a-email" type="email" placeholder="seu@email.com" autocomplete="email" required>':''}
+      ${mode!=='senha'?`<div class="pw"><input id="a-pass" type="password" placeholder="${mode==='entrar'?'Senha':'Senha (mínimo 6 caracteres)'}" autocomplete="${mode==='entrar'?'current-password':'new-password'}" required><button type="button" id="eye" aria-label="Mostrar senha">${EYE_OFF}</button></div>`:''}
+      <button class="auth-btn" id="a-go">${T[2]}</button>
+      ${mode==='entrar'?'<a class="forgot" data-go="senha">Esqueceu sua senha?</a>':''}
+      <div class="msg" id="a-msg" hidden></div>
+    </form>
+    <div class="auth-word">Fig.Feed</div></section>${authPanel()}</main>`;
+  app.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+  const eye=document.getElementById('eye');
+  if(eye)eye.onclick=()=>{const i=document.getElementById('a-pass');const show=i.type==='password';i.type=show?'text':'password';eye.innerHTML=show?EYE:EYE_OFF;eye.setAttribute('aria-label',show?'Esconder senha':'Mostrar senha')};
+  const msg=(t,ok)=>{const m=document.getElementById('a-msg');m.textContent=t;m.className='msg '+(ok?'ok':'err');m.hidden=false};
+  (document.getElementById('a-email')||document.getElementById('a-pass')).focus();
+  document.getElementById('af').onsubmit=async e=>{
+    e.preventDefault();const btn=document.getElementById('a-go');
+    const email=document.getElementById('a-email')?.value.trim();const pass=document.getElementById('a-pass')?.value;
+    if(mode!=='nova-senha'&&!/^\S+@\S+\.\S+$/.test(email||''))return msg('Digite um e-mail válido.');
+    if(mode!=='senha'&&(!pass||pass.length<6))return msg('A senha precisa ter pelo menos 6 caracteres.');
+    btn.disabled=true;const old=btn.textContent;btn.textContent='Aguarde…';
+    try{
+      if(mode==='entrar'){const {error}=await sb.auth.signInWithPassword({email,password:pass});if(error)throw error}
+      if(mode==='criar'){const name=document.getElementById('a-name').value.trim();
+        const {data,error}=await sb.auth.signUp({email,password:pass,options:{data:{name},emailRedirectTo:location.protocol.startsWith('http')?location.href.split('#')[0]:undefined}});
+        if(error)throw error;
+        if(!data.session){msg(`Conta criada! Enviamos um link de confirmação para ${email}. Clique nele e depois volte aqui para entrar.`,true);btn.textContent=old;btn.disabled=false;return}}
+      if(mode==='senha'){const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:location.protocol.startsWith('http')?location.href.split('#')[0]:undefined});if(error)throw error;
+        msg(`Se existir uma conta com ${email}, você vai receber um link para criar uma nova senha.`,true);btn.textContent=old;btn.disabled=false;return}
+      if(mode==='nova-senha'){const {error}=await sb.auth.updateUser({password:pass});if(error)throw error;recovery=false;toast('Senha alterada');go('home')}
+    }catch(err){msg(traduz(err.message));btn.textContent=old;btn.disabled=false}
+  };
+}
+
 /* ======================= Cabeçalho ======================= */
-const LOGO='<span class="logo" aria-hidden="true">'+'<i></i>'.repeat(9)+'</span>';
-function weekCount(){const now=new Date();now.setHours(0,0,0,0);const lim=new Date(now);lim.setDate(lim.getDate()+7);
-  let n=0;S.accounts.forEach(a=>a.posts.forEach(p=>{const d=new Date(p.date+'T12:00');if(d>=now&&d<=lim)n++}));return n}
+function weekCount(){const now=iso(new Date());const lim=new Date();lim.setDate(lim.getDate()+7);const l=iso(lim);
+  let n=0;S.accounts.forEach(a=>a.posts.forEach(p=>{if(p.date&&p.date>=now&&p.date<=l)n++}));return n}
 function header(cur,crumb){
   const wc=weekCount();const av=S.accounts[0]?.posts[0]?.slides[0];
   return `<header class="hdr">
-    <div class="l">
-      <button aria-label="Voltar para o início" data-go="home">${LOGO}</button>
+    <div class="l"><button aria-label="Voltar para o início" data-go="home">${LOGO()}</button>
       ${crumb?`<div class="crumb">${crumb}</div>`:`<nav class="nav" style="display:flex;gap:22px">
         <a data-go="contas" class="${cur==='contas'?'cur':''}">Contas</a>
         <a data-go="crono" class="${cur==='crono'?'cur':''}">Cronograma${wc?`<span class="badge">${wc}</span>`:''}</a>
-        <a data-go="down" class="${cur==='down'?'cur':''}">Downloads</a></nav>`}
-    </div>
+        <a data-go="down" class="${cur==='down'?'cur':''}">Downloads</a></nav>`}</div>
     <div class="mid"><label class="search"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#777" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
       <input id="q" placeholder="Buscar contas, posts ou legendas" value="${esc(q)}" autocomplete="off"></label></div>
-    <div class="r">
-      <button class="pill" id="criar"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Criar</button>
-      <button class="who" id="me" aria-label="Abrir menu da conta"><span class="avatar" style="background-image:url(${av?src(av,80,80):''})"></span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
-    </div></header>`;
+    <div class="r"><button class="pill" id="criar"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Criar</button>
+      <button class="who" id="me" aria-label="Abrir menu da conta"><span class="avatar" style="${bgi(av,80,80)}"></span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button></div></header>`;
 }
 function bindHeader(){
   app.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
   const qi=document.getElementById('q');
-  if(qi)qi.oninput=e=>{q=e.target.value;applySearch()};
-  if(qi)qi.onkeydown=e=>{if(e.key==='Enter'&&!['contas','feed'].includes(route[0]))go('contas')};
+  if(qi){qi.oninput=e=>{q=e.target.value;applySearch()};qi.onkeydown=e=>{if(e.key==='Enter'&&!['contas','feed'].includes(route[0]))go('contas')}}
   document.getElementById('criar').onclick=e=>{e.stopPropagation();dropdown('criar')};
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
+async function sair(){await sb.auth.signOut();}
 function dropdown(kind){
   document.querySelector('.drop')?.remove();if(openDrop===kind){openDrop=null;return}openDrop=kind;
   const d=document.createElement('div');d.className='drop';d.onclick=e=>e.stopPropagation();
   const inAcc=route[0]==='feed'||route[0]==='car';
-  if(kind==='me'){d.innerHTML=`<span class="lbl">${esc(S.profile.handle)}</span>
+  if(kind==='me'){d.innerHTML=`<span class="lbl">${esc(S.profile.handle||USER.email)}</span>
     <button data-a="perfil">Perfil</button><button data-a="config">Configuração</button><hr><button data-a="sair">Sair</button>`}
   else{d.innerHTML=`<span class="lbl">Nova conta</span><form id="nf"><input id="nh" placeholder="@perfil.do.cliente" required><button class="pill" style="padding:6px 10px">Criar</button></form><hr>
     ${inAcc?`<button data-a="post">Novo post com fotos de exemplo</button><button data-a="up">Novo post com fotos suas</button>`:`<span class="lbl">Abra uma conta para criar posts</span>`}`}
   document.body.appendChild(d);
-  d.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{const a=b.dataset.a;d.remove();openDrop=null;
-    if(a==='perfil')go('perfil');if(a==='config')go('config');if(a==='sair')go('home');
-    if(a==='post'){const acc=accById(route[1]);const p=newPost(acc);p.slides=Array.from({length:3},pickPhoto);acc.posts.unshift(p);save();go(`car/${acc.id}/${p.id}`)}
+  d.querySelectorAll('[data-a]').forEach(b=>b.onclick=async()=>{const a=b.dataset.a;d.remove();openDrop=null;
+    if(a==='perfil')go('perfil');if(a==='config')go('config');if(a==='sair')sair();
+    if(a==='post')examplePost(accById(route[1]));
     if(a==='up')pickFiles({type:'newpost',acc:route[1]});});
-  const f=d.querySelector('#nf');if(f){f.onsubmit=e=>{e.preventDefault();let h=d.querySelector('#nh').value.trim().replace(/\s+/g,'');if(!h)return;if(h[0]!=='@')h='@'+h;
-    const a=makeAccount(h,3);S.accounts.push(a);save();d.remove();openDrop=null;go('feed/'+a.id);toast('Conta criada com 3 posts de exemplo')};d.querySelector('#nh').focus()}
+  const f=d.querySelector('#nf');if(f){f.onsubmit=async e=>{e.preventDefault();let h=d.querySelector('#nh').value.trim().replace(/\s+/g,'');if(!h)return;if(h[0]!=='@')h='@'+h;
+    const row=await db(sb.from('accounts').insert({handle:h,position:S.accounts.length}).select('id,handle').single());
+    S.accounts.push({id:row.id,handle:row.handle,posts:[]});d.remove();openDrop=null;go('feed/'+row.id);toast('Conta criada')};d.querySelector('#nh').focus()}
 }
 document.addEventListener('click',()=>{document.querySelector('.drop')?.remove();openDrop=null});
-function newPost(acc){const top=acc.posts[0]?.date;let d=new Date();if(top){d=new Date(top+'T12:00');d.setDate(d.getDate()+2)}
-  return {id:nid(),title:'Novo post',caption:'',date:d.toISOString().slice(0,10),slides:[]}}
+async function examplePost(acc){
+  const p=await createPost(acc);const sl=Array.from({length:3},(_,j)=>({...randPhoto(),position:j}));
+  const rows=await db(sb.from('slides').insert(sl.map(s=>({post_id:p.id,storage_path:s.path,credit:s.credit,position:s.position}))).select('id,storage_path,credit'));
+  p.slides=rows.map(r=>({id:r.id,path:r.storage_path,credit:r.credit}));go(`car/${acc.id}/${p.id}`);
+}
+async function createPost(acc){
+  const top=acc.posts[0]?.date;let d=new Date();if(top){d=new Date(top+'T12:00');d.setDate(d.getDate()+2)}
+  const row=await db(sb.from('posts').insert({account_id:acc.id,title:'Novo post',publish_date:iso(d),position:0}).select('id,title,caption,publish_date,status').single());
+  const p={id:row.id,title:row.title,caption:row.caption,date:row.publish_date,status:row.status,slides:[]};
+  acc.posts.unshift(p);await db(sb.rpc('reorder_posts',{p_account:acc.id,p_ids:acc.posts.map(x=>x.id)}));return p;
+}
 function applySearch(){
   const t=q.trim().toLowerCase();
-  if(route[0]==='contas')app.querySelectorAll('.acc').forEach(a=>a.hidden=t&&!a.dataset.h.toLowerCase().includes(t));
+  if(route[0]==='contas')app.querySelectorAll('.acc').forEach(a=>a.hidden=!!t&&!a.dataset.h.toLowerCase().includes(t));
   if(route[0]==='feed')app.querySelectorAll('.tile').forEach(n=>n.classList.toggle('dim',!!t&&!n.dataset.s.toLowerCase().includes(t)));
 }
 
 /* ======================= 1. Home ======================= */
 function vHome(){
-  const pics=Array.from({length:8},pickPhoto);
-  app.innerHTML=`<main class="view home">
-    <div class="word">Fig.</div>
-    <div class="photo">${pics.map((p,i)=>`<img src="${src(p,600,790)}" alt="" class="${i?'':'on'}" ${i?'loading="lazy"':''}>`).join('')}
+  const pics=Array.from({length:8},randPhoto);
+  app.innerHTML=`<main class="view home"><div class="word">Fig.</div>
+    <div class="photo">${pics.map((p,i)=>`<img src="${src(p,600,790)}" alt="" class="${i?'':'on'}">`).join('')}
       <button aria-label="Abrir o menu com esta foto" id="open"></button></div>
     <div class="word">Feed</div></main>`;
   let i=0;const imgs=app.querySelectorAll('.photo img');
@@ -271,26 +413,27 @@ function vHome(){
 
 /* ======================= 2. Menu ======================= */
 function vMenu(){
-  const p=menuPhoto||pickPhoto();menuPhoto=p;
-  app.innerHTML=`<main class="menu">
-    <div class="blur" style="background-image:url(${src(p,600,790)})"></div><div class="shade"></div>
+  const p=menuPhoto||randPhoto();menuPhoto=p;
+  app.innerHTML=`<main class="menu"><div class="blur" style="${bgi(p,600,790)}"></div><div class="shade"></div>
     <nav aria-label="Menu principal">
       <ol><li><button data-go="contas">1. Contas</button></li><li><button data-go="crono">2. Cronograma</button></li><li><button data-go="down">3. Downloads</button></li></ol>
-      <ol><li><button data-go="perfil">1. Perfil</button></li><li><button data-go="config">2. Configuração</button></li><li><button data-go="home">3. Sair</button></li></ol>
-    </nav>
-    <div class="credit">${esc(credit(p))}</div>
-  </main>`;
+      <ol><li><button data-go="perfil">1. Perfil</button></li><li><button data-go="config">2. Configuração</button></li><li><button id="m-sair">3. Sair</button></li></ol>
+    </nav><div class="credit">credit / ${esc(handleOf(p.credit))}</div></main>`;
   app.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+  document.getElementById('m-sair').onclick=sair;
 }
 
 /* ======================= 3. Contas ======================= */
 function vContas(){
-  app.innerHTML=header('contas')+`<main class="contas"><div class="accs">${S.accounts.map(a=>`
+  app.innerHTML=header('contas')+`<main class="contas">${S.accounts.length?`<div class="accs">${S.accounts.map(a=>`
     <button class="acc" data-id="${a.id}" data-h="${esc(a.handle)}">
-      <div class="g">${Array.from({length:9},(_,i)=>{const s=a.posts[i]?.slides[0];return `<div style="${s?`background-image:url(${src(s,240,312)})`:''}"></div>`}).join('')}</div>
-      <div class="h">${esc(a.handle)}</div></button>`).join('')}</div></main>`;
+      <div class="g">${Array.from({length:9},(_,i)=>`<div style="${bgi(a.posts[i]?.slides[0],240,312)}"></div>`).join('')}</div>
+      <div class="h">${esc(a.handle)}</div></button>`).join('')}</div>`
+    :`<div class="empty"><h2>Comece pela primeira conta</h2><p>Use o botão Criar, lá em cima, para adicionar o @ de um cliente. Ou crie três contas de exemplo para testar.</p>
+      <div class="row2"><button class="pill dark" id="seed">Criar contas de exemplo</button></div></div>`}</main>`;
   bindHeader();applySearch();
   app.querySelectorAll('.acc').forEach(b=>b.onclick=()=>go('feed/'+b.dataset.id));
+  const sd=document.getElementById('seed');if(sd)sd.onclick=async()=>{sd.disabled=true;try{await seedExamples();vContas()}catch(e){sd.disabled=false}};
 }
 
 /* ======================= Arrastar e reorganizar ======================= */
@@ -323,7 +466,7 @@ function sortable(container,{onDrop,onClick}){
     if(!d.started){if(e.type==='pointerup')onClick&&onClick(d.it.dataset.id);return}
     d.it.classList.remove('is-ph');d.g.remove();onDrop([...container.querySelectorAll(':scope > .item')].map(n=>n.dataset.id))};
   window.addEventListener('pointermove',move);window.addEventListener('pointerup',end);window.addEventListener('pointercancel',end);
-  dragCleanup=()=>{window.removeEventListener('pointermove',move);window.removeEventListener('pointerup',end);window.removeEventListener('pointercancel',end)};
+  dragCleanup=()=>{window.removeEventListener('pointermove',move);window.removeEventListener('pointerup',end);window.removeEventListener('pointercancel',end);document.querySelector('.ghost')?.remove()};
   container.onkeydown=e=>{const it=e.target.closest('.item');if(!it)return;
     if(e.key==='Enter'){onClick&&onClick(it.dataset.id);return}
     if(!e.altKey)return;const back=['ArrowLeft','ArrowUp'].includes(e.key),fwd=['ArrowRight','ArrowDown'].includes(e.key);if(!back&&!fwd)return;
@@ -335,58 +478,76 @@ const reorder=(list,ids)=>{const m=new Map(list.map(x=>[x.id,x]));return ids.map
 const MULTI='<svg class="multi" viewBox="0 0 24 24" fill="#fff" style="filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))"><rect x="7" y="3" width="14" height="14" rx="2"/><path d="M5 7v12a2 2 0 0 0 2 2h12" fill="none" stroke="#fff" stroke-width="2"/></svg>';
 
 /* ======================= 4. Feed ======================= */
+async function saveFeedOrder(a,ids){
+  const dates=a.posts.map(p=>p.date).filter(Boolean).sort().reverse();
+  a.posts=reorder(a.posts,ids);
+  if(S.profile.dates_follow&&dates.length===a.posts.length)a.posts.forEach((p,i)=>p.date=dates[i]);
+  try{await db(sb.rpc('reorder_posts',{p_account:a.id,p_ids:ids}))}catch(e){await loadAll();render()}
+}
 function vFeed(){
   const a=accById(route[1]);if(!a)return go('contas');
   app.innerHTML=header('contas',`<span>Contas /</span> ${esc(a.handle)}`)+`<main class="feed">
-    <div class="grid" id="grid">${a.posts.map(p=>{const s=p.slides[0];return `
-      <div class="item tile" tabindex="0" data-id="${p.id}" data-s="${esc(p.title+' '+p.caption)}" style="${s?`background-image:url(${src(s,250,328)})`:''}" aria-label="${esc(p.title)}, ${fmt(p.date)}">
-        ${p.slides.length>1?MULTI:''}<span class="dt">${fmt(p.date)}</span></div>`}).join('')}</div></main>
-    <div class="hint">Arraste para reorganizar · clique para abrir o carrossel</div>`;
+    ${a.posts.length?`<div class="grid" id="grid">${a.posts.map(p=>{const s=p.slides[0];return `
+      <div class="item tile" tabindex="0" data-id="${p.id}" data-s="${esc(p.title+' '+p.caption)}" style="${bgi(s,250,328)}" aria-label="${esc(p.title)}, ${fmt(p.date)}">
+        ${p.slides.length>1?MULTI:''}<span class="dt">${fmt(p.date)}</span></div>`}).join('')}</div>`
+    :`<div class="empty" style="margin-top:12vh"><h2>Monte o primeiro post</h2><p>Envie fotos do seu computador ou comece com fotos de exemplo.</p>
+      <div class="row2"><button class="pill dark" id="e-up">Enviar fotos</button><button class="pill" id="e-ex">Usar fotos de exemplo</button></div></div>`}</main>
+    ${a.posts.length?'<div class="hint">Arraste para reorganizar · clique para abrir o carrossel</div>':''}`;
   bindHeader();applySearch();
-  sortable(document.getElementById('grid'),{
-    onDrop:(ids,kb)=>{const dates=a.posts.map(p=>p.date).filter(Boolean).sort().reverse();a.posts=reorder(a.posts,ids);
-      if(S.datesFollow&&dates.length===a.posts.length)a.posts.forEach((p,i)=>p.date=dates[i]);save();
-      if(kb){const f=document.activeElement?.dataset.id;vFeed();document.querySelector(`[data-id="${f}"]`)?.focus()}else vFeed()},
+  const g=document.getElementById('grid');
+  if(g)sortable(g,{onDrop:async(ids,kb)=>{const f=kb&&document.activeElement?.dataset.id;const p=saveFeedOrder(a,ids);vFeed();if(f)document.querySelector(`[data-id="${f}"]`)?.focus();await p},
     onClick:id=>go(`car/${a.id}/${id}`)});
+  const up=document.getElementById('e-up');if(up)up.onclick=()=>pickFiles({type:'newpost',acc:a.id});
+  const ex=document.getElementById('e-ex');if(ex)ex.onclick=()=>{ex.disabled=true;examplePost(a).catch(()=>ex.disabled=false)};
 }
 
 /* ======================= 5. Carrossel ======================= */
 function vCar(){
   const a=accById(route[1]);const p=a&&a.posts.find(x=>x.id===route[2]);if(!p)return go(a?'feed/'+a.id:'contas');
-  const idx=a.posts.indexOf(p)+1;
+  const idx=a.posts.indexOf(p)+1;const n=p.slides.length;
   app.innerHTML=header('contas',`<span>Contas / <a data-go="feed/${a.id}" style="cursor:pointer">${esc(a.handle)}</a> /</span> Carrossel`)+`<main class="car">
     <div class="prog"><i id="bar"></i></div>
     <div class="meta"><div>${idx}. <span class="t" contenteditable="true" spellcheck="false" id="ttl">${esc(p.title)}</span> (${fmt(p.date)})</div>
-      <div>${p.slides.length} ${p.slides.length===1?'foto':'fotos'} neste post. Arraste para mudar a ordem; a primeira é a capa que aparece no feed.</div></div>
-    <div class="track" id="tr">${p.slides.map(s=>`<div class="item slide" tabindex="0" data-id="${s.id}" style="background-image:url(${src(s,500,658)})"><button class="x" data-x="${s.id}" aria-label="Remover foto">×</button></div>`).join('')}
-      <button class="addslide" id="add">+ adicionar fotos</button></div>
+      <div>${n} ${n===1?'foto':'fotos'} neste post. Arraste para mudar a ordem; a primeira é a capa que aparece no feed.</div></div>
+    <div class="track" id="tr">${p.slides.map(s=>`<div class="item slide" tabindex="0" data-id="${s.id}" style="${bgi(s,500,658)}"><button class="x" data-x="${s.id}" aria-label="Remover foto">×</button></div>`).join('')}
+      ${n<10?'<button class="addslide" id="add">+ adicionar fotos</button>':''}</div>
     <button class="cap ${p.caption?'':'ph'}" id="cap">${p.caption?esc(p.caption):'Clique para escrever a legenda'}</button>
+    <div style="margin:40px 0 0 max(16px,8.1%)"><button class="pill" id="delpost" style="font-size:12px;color:var(--err)">Excluir post</button></div>
   </main>`;
   bindHeader();
   const tr=document.getElementById('tr'),bar=document.getElementById('bar');
   const upd=()=>{const max=tr.scrollWidth-tr.clientWidth;const w=bar.parentNode.clientWidth;const bw=max>0?Math.max(40,w*tr.clientWidth/tr.scrollWidth*.25):40;
     bar.style.width=bw+'px';bar.style.left=(max>0?tr.scrollLeft/max*(w-bw):0)+'px'};tr.onscroll=upd;upd();window.onresize=upd;
-  sortable(tr,{onDrop:ids=>{p.slides=reorder(p.slides,ids);save();vCar()}});
-  tr.querySelectorAll('.x').forEach(b=>b.onclick=e=>{e.stopPropagation();if(p.slides.length===1){toast('O post precisa de pelo menos uma foto');return}
-    p.slides=p.slides.filter(s=>s.id!==b.dataset.x);save();vCar()});
-  document.getElementById('add').onclick=()=>pickFiles({type:'slides',acc:a.id,post:p.id});
+  sortable(tr,{onDrop:async ids=>{p.slides=reorder(p.slides,ids);vCar();
+    try{await db(sb.rpc('reorder_slides',{p_post:p.id,p_ids:ids}))}catch(e){await loadAll();render()}}});
+  tr.querySelectorAll('.x').forEach(b=>b.onclick=async e=>{e.stopPropagation();if(p.slides.length===1){toast('O post precisa de pelo menos uma foto');return}
+    const s=p.slides.find(x=>x.id===b.dataset.x);await db(sb.from('slides').delete().eq('id',s.id));
+    if(!s.path.startsWith('picsum:'))sb.storage.from('fotos').remove([s.path]);
+    p.slides=p.slides.filter(x=>x.id!==s.id);sb.rpc('reorder_slides',{p_post:p.id,p_ids:p.slides.map(x=>x.id)});vCar()});
+  const add=document.getElementById('add');if(add)add.onclick=()=>pickFiles({type:'slides',acc:a.id,post:p.id});
   document.getElementById('cap').onclick=()=>go(`edit/${a.id}/${p.id}`);
-  const t=document.getElementById('ttl');t.onblur=()=>{p.title=t.textContent.trim()||'Sem título';save()};t.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();t.blur()}};
+  const t=document.getElementById('ttl');
+  t.onblur=async()=>{const v=t.textContent.trim()||'Sem título';if(v===p.title)return;p.title=v;await db(sb.from('posts').update({title:v}).eq('id',p.id))};
+  t.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();t.blur()}};
+  const del=document.getElementById('delpost');
+  del.onclick=async()=>{if(!del.dataset.ok){del.dataset.ok=1;del.textContent='Clique de novo para excluir';return}
+    const paths=p.slides.map(s=>s.path).filter(x=>!x.startsWith('picsum:'));
+    await db(sb.from('posts').delete().eq('id',p.id));if(paths.length)sb.storage.from('fotos').remove(paths);
+    a.posts=a.posts.filter(x=>x.id!==p.id);toast('Post excluído');go('feed/'+a.id)};
 }
 
 /* ======================= 6. Editar texto ======================= */
 function vEdit(){
   const a=accById(route[1]);const p=a&&a.posts.find(x=>x.id===route[2]);if(!p)return go('contas');
-  const s=p.slides[0];
-  app.innerHTML=`<main class="edit"><div class="top"><span class="avatar" style="background-color:var(--accent);${s?`background-image:url(${src(s,80,80)})`:''}"></span>
+  app.innerHTML=`<main class="edit"><div class="top"><span class="avatar" style="background-color:var(--accent);${bgi(p.slides[0],80,80)}"></span>
     <span class="h">${esc(a.handle)}</span><button id="cancel">Cancelar</button><button class="done" id="done">Concluir</button></div>
-    <textarea id="ta" aria-label="Legenda do post" placeholder="Escreva a legenda aqui">${esc(p.caption)}</textarea>
+    <textarea id="ta" aria-label="Legenda do post" placeholder="Escreva a legenda aqui" maxlength="2200">${esc(p.caption)}</textarea>
     <div class="count" id="ct"></div></main>`;
   const ta=document.getElementById('ta'),ct=document.getElementById('ct');
   const fit=()=>{ta.style.height='auto';ta.style.height=ta.scrollHeight+'px';ct.textContent=`${ta.value.length} / 2.200 caracteres`};
   ta.oninput=fit;fit();ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length);
   const back=()=>go(`car/${a.id}/${p.id}`);
-  document.getElementById('done').onclick=()=>{p.caption=ta.value.slice(0,2200);save();toast('Legenda salva');back()};
+  document.getElementById('done').onclick=async()=>{const v=ta.value.slice(0,2200);await db(sb.from('posts').update({caption:v}).eq('id',p.id));p.caption=v;toast('Legenda salva');back()};
   document.getElementById('cancel').onclick=back;
   ta.onkeydown=e=>{if(e.key==='Escape')back();if(e.key==='Enter'&&(e.metaKey||e.ctrlKey))document.getElementById('done').click()};
 }
@@ -397,9 +558,8 @@ function vDown(){
   if(!accById(dlAcc))dlAcc=S.accounts[0]?.id;const a=accById(dlAcc);
   app.innerHTML=header('down')+`<main class="dl"><div><h1>Download</h1>
     ${a?`<div class="pick">${S.accounts.map(x=>`<button data-acc="${x.id}" class="${x.id===a.id?'cur':''}">${esc(x.handle)}</button>`).join('')}</div>
-    <div class="opts"><button class="pill" id="png">Baixar grade (.png)</button><button class="pill" id="txt">Baixar legendas e datas (.txt)</button></div>`:'<p class="empty">Crie uma conta para baixar um modelo.</p>'}
-    </div>
-    <div class="mini">${a?a.posts.slice(0,12).map(p=>`<div style="background-image:url(${src(p.slides[0]||{},120,160)})"></div>`).join(''):''}</div>
+    <div class="opts"><button class="pill" id="png">Baixar grade (.png)</button><button class="pill" id="txt">Baixar legendas e datas (.txt)</button></div>`:'<p style="color:var(--muted)">Crie uma conta para baixar um modelo.</p>'}
+    </div><div class="mini">${a?a.posts.slice(0,12).map(p=>`<div style="${bgi(p.slides[0],120,160)}"></div>`).join(''):''}</div>
     <div class="tks">tks<br>Fig.Feed</div></main>`;
   bindHeader();if(!a)return;
   app.querySelectorAll('[data-acc]').forEach(b=>b.onclick=()=>{dlAcc=b.dataset.acc;vDown()});
@@ -409,14 +569,14 @@ function vDown(){
     saveFile(new Blob([`Cronograma ${a.handle}\nOrdem de publicação\n\n`+lines.join('\n')],{type:'text/plain'}),`${a.handle.replace('@','')}-legendas.txt`)};
 }
 function saveFile(blob,name){const u=URL.createObjectURL(blob);const l=document.createElement('a');l.href=u;l.download=name;document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),2000)}
-function loadImg(u){return new Promise(r=>{const i=new Image();i.crossOrigin='anonymous';i.onload=()=>r(i);i.onerror=()=>r(null);i.src=u})}
+function loadImg(u){return new Promise(r=>{if(!u)return r(null);const i=new Image();i.crossOrigin='anonymous';i.onload=()=>r(i);i.onerror=()=>r(null);i.src=u})}
 async function exportPNG(a){
   toast('Montando a imagem…');
-  const W=360,H=450,G=6,cols=3,rows=Math.ceil(a.posts.length/cols);
+  const W=360,H=450,G=6,cols=3,rows=Math.max(1,Math.ceil(a.posts.length/cols));
   const c=document.createElement('canvas');c.width=cols*W+(cols+1)*G;c.height=rows*H+(rows+1)*G+70;
   const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);
   x.fillStyle='#0a0a0a';x.font='500 22px Inter, Arial';x.fillText(a.handle,G+4,42);
-  const imgs=await Promise.all(a.posts.map(p=>p.slides[0]?loadImg(src(p.slides[0],W,H)):null));
+  const imgs=await Promise.all(a.posts.map(p=>loadImg(src(p.slides[0],W,H))));
   imgs.forEach((im,i)=>{const cx=G+(i%cols)*(W+G),cy=70+G+Math.floor(i/cols)*(H+G);x.fillStyle='#d9d9d9';x.fillRect(cx,cy,W,H);
     if(im){const r=Math.max(W/im.width,H/im.height);const w=im.width*r,h=im.height*r;x.save();x.beginPath();x.rect(cx,cy,W,H);x.clip();x.drawImage(im,cx+(W-w)/2,cy+(H-h)/2,w,h);x.restore()}});
   try{c.toBlob(b=>{saveFile(b,`${a.handle.replace('@','')}-grade.png`);toast('Grade baixada')},'image/png')}catch(e){toast('Não deu para gerar a imagem neste navegador')}
@@ -424,57 +584,82 @@ async function exportPNG(a){
 
 /* ======================= Cronograma ======================= */
 function vCrono(){
-  const all=[];S.accounts.forEach(a=>a.posts.forEach(p=>all.push({a,p})));
-  all.sort((m,n)=>m.p.date.localeCompare(n.p.date));
-  const today=new Date().toISOString().slice(0,10);const up=all.filter(x=>x.p.date>=today);
+  const today=iso(new Date());const up=[];
+  S.accounts.forEach(a=>a.posts.forEach(p=>{if(p.date&&p.date>=today)up.push({a,p})}));
+  up.sort((m,n)=>m.p.date.localeCompare(n.p.date));
   const byDay={};up.forEach(x=>(byDay[x.p.date]=byDay[x.p.date]||[]).push(x));
   const wd=d=>['domingo','segunda','terça','quarta','quinta','sexta','sábado'][new Date(d+'T12:00').getDay()];
   app.innerHTML=header('crono')+`<main class="page"><h1>Cronograma</h1><p class="sub">Próximas publicações de todas as contas, em ordem de data.</p>
-    ${Object.keys(byDay).length?Object.entries(byDay).map(([d,xs])=>`<section class="day"><div class="d"><b>${fmt(d)}</b>${wd(d)}</div><div class="rows">
-      ${xs.map(({a,p})=>`<button class="row" data-car="${a.id}/${p.id}"><span class="th" style="${p.slides[0]?`background-image:url(${src(p.slides[0],90,112)})`:''}"></span>
-        <span class="txt"><small>${esc(a.handle)}</small>${esc(p.title)} · ${p.slides.length} foto${p.slides.length>1?'s':''}</span></button>`).join('')}</div></section>`).join('')
-      :'<p class="empty">Nenhuma publicação marcada a partir de hoje.</p>'}</main>`;
+    ${up.length?Object.entries(byDay).map(([d,xs])=>`<section class="day"><div class="d"><b>${fmt(d)}</b>${wd(d)}</div><div class="rows">
+      ${xs.map(({a,p})=>`<button class="row" data-car="${a.id}/${p.id}"><span class="th" style="${bgi(p.slides[0],90,112)}"></span>
+        <span class="txt"><small>${esc(a.handle)}</small>${esc(p.title)} · ${p.slides.length} foto${p.slides.length!==1?'s':''}</span></button>`).join('')}</div></section>`).join('')
+      :'<p style="color:var(--muted)">Nenhuma publicação marcada a partir de hoje.</p>'}</main>`;
   bindHeader();app.querySelectorAll('[data-car]').forEach(b=>b.onclick=()=>go('car/'+b.dataset.car));
 }
 
 /* ======================= Perfil e Configuração ======================= */
 function vPerfil(){
-  app.innerHTML=header('')+`<main class="page"><h1>Perfil</h1><p class="sub">Como você aparece no Fig.Feed.</p>
+  app.innerHTML=header('')+`<main class="page"><h1>Perfil</h1><p class="sub">${esc(USER.email)}</p>
     <form id="pf"><div class="field"><label for="pn">Nome</label><input id="pn" value="${esc(S.profile.name)}"></div>
-    <div class="field"><label for="ph">Seu @</label><input id="ph" value="${esc(S.profile.handle)}"></div>
-    <button class="pill">Salvar</button></form></main>`;
-  bindHeader();document.getElementById('pf').onsubmit=e=>{e.preventDefault();S.profile.name=document.getElementById('pn').value;S.profile.handle=document.getElementById('ph').value;save();toast('Perfil salvo')};
+    <div class="field"><label for="ph">Seu @</label><input id="ph" value="${esc(S.profile.handle)}" placeholder="@seu.perfil"></div>
+    <button class="pill dark">Salvar</button></form></main>`;
+  bindHeader();
+  document.getElementById('pf').onsubmit=async e=>{e.preventDefault();let h=document.getElementById('ph').value.trim();if(h&&h[0]!=='@')h='@'+h;
+    const name=document.getElementById('pn').value.trim();await db(sb.from('profiles').update({name,handle:h}).eq('id',USER.id));
+    S.profile.name=name;S.profile.handle=h;toast('Perfil salvo')};
 }
 function vConfig(){
-  app.innerHTML=header('')+`<main class="page"><h1>Configuração</h1><p class="sub">Ajustes deste navegador.</p>
-    <label class="chk"><input type="checkbox" id="df" ${S.datesFollow?'checked':''}> Ao arrastar um post no feed, as datas acompanham a nova ordem</label>
-    <button class="pill" id="rs">Recomeçar com as contas de exemplo</button></main>`;
-  bindHeader();document.getElementById('df').onchange=e=>{S.datesFollow=e.target.checked;save()};
-  const rs=document.getElementById('rs');rs.onclick=()=>{if(!rs.dataset.ok){rs.dataset.ok=1;rs.textContent='Clique de novo para apagar tudo e recomeçar';return}
-    S=seed();save();toast('Exemplos restaurados');go('contas')};
+  app.innerHTML=header('')+`<main class="page"><h1>Configuração</h1><p class="sub">Preferências da sua conta.</p>
+    <label class="chk"><input type="checkbox" id="df" ${S.profile.dates_follow?'checked':''}> Ao arrastar um post no feed, as datas acompanham a nova ordem</label>
+    <button class="pill" id="seed">Criar mais contas de exemplo</button></main>`;
+  bindHeader();
+  document.getElementById('df').onchange=async e=>{const v=e.target.checked;await db(sb.from('profiles').update({dates_follow:v}).eq('id',USER.id));S.profile.dates_follow=v;toast('Preferência salva')};
+  const sd=document.getElementById('seed');sd.onclick=async()=>{sd.disabled=true;try{await seedExamples();go('contas')}catch(e){sd.disabled=false}};
 }
 
-/* ======================= Fotos do computador ======================= */
+/* ======================= Envio de fotos ======================= */
 let pickCtx=null;
 function pickFiles(ctx){pickCtx=ctx;const f=document.getElementById('file');f.value='';f.click()}
 function shrink(file){return new Promise(res=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{
-  const k=Math.min(1,900/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;
-  c.getContext('2d').drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.8))};im.onerror=()=>res(null);im.src=r.result};r.readAsDataURL(file)})}
+  const k=Math.min(1,1600/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);
+  c.getContext('2d').drawImage(im,0,0,c.width,c.height);c.toBlob(b=>res(b),'image/jpeg',.85)};im.onerror=()=>res(null);im.src=r.result};r.onerror=()=>res(null);r.readAsDataURL(file)})}
+async function uploadSlides(p,files){
+  const room=10-p.slides.length;if(files.length>room)toast(`Só cabem mais ${room} foto(s) neste post`);
+  files=files.slice(0,Math.max(0,room));if(!files.length)return;
+  toast(`Enviando ${files.length} foto(s)…`,20000);
+  const blobs=(await Promise.all(files.map(shrink))).filter(Boolean);const rows=[];
+  for(const b of blobs){const path=`${USER.id}/${p.id}/${crypto.randomUUID()}.jpg`;
+    const {error}=await sb.storage.from('fotos').upload(path,b,{contentType:'image/jpeg'});if(error){toast(traduz(error.message));continue}
+    rows.push({post_id:p.id,storage_path:path,credit:(S.profile.handle||'').replace('@','')||null,position:p.slides.length+rows.length})}
+  if(!rows.length)return;
+  const ins=await db(sb.from('slides').insert(rows).select('id,storage_path,credit'));
+  await signPaths(ins.map(r=>r.storage_path));
+  p.slides.push(...ins.map(r=>({id:r.id,path:r.storage_path,credit:r.credit})));toast('Fotos enviadas');
+}
 document.getElementById('file').onchange=async e=>{
-  const files=[...e.target.files].slice(0,10);if(!files.length||!pickCtx)return;
-  const datas=(await Promise.all(files.map(shrink))).filter(Boolean);const slides=datas.map(d=>({id:nid(),data:d,author:S.profile.handle.replace('@','')}));
-  const a=accById(pickCtx.acc);if(!a)return;
-  if(pickCtx.type==='newpost'){const p=newPost(a);p.slides=slides;a.posts.unshift(p);save();go(`car/${a.id}/${p.id}`)}
-  else{const p=a.posts.find(x=>x.id===pickCtx.post);p.slides.push(...slides);save();vCar()}
+  const files=[...e.target.files];if(!files.length||!pickCtx)return;const a=accById(pickCtx.acc);if(!a)return;
+  try{
+    if(pickCtx.type==='newpost'){const p=await createPost(a);await uploadSlides(p,files);go(`car/${a.id}/${p.id}`)}
+    else{const p=a.posts.find(x=>x.id===pickCtx.post);await uploadSlides(p,files);vCar()}
+  }catch(err){}
 };
 
 /* ======================= Início ======================= */
+let booted=false;
+sb.auth.onAuthStateChange((event,session)=>{
+  setTimeout(async()=>{
+    if(event==='PASSWORD_RECOVERY'){recovery=true;USER=session?.user||null;go('nova-senha');return}
+    if(!booted)return;
+    if(event==='SIGNED_IN'&&(!USER||USER.id!==session.user.id)){USER=session.user;app.innerHTML='<div class="loading">Carregando…</div>';
+      try{await loadAll()}catch(e){}go('home')}
+    if(event==='SIGNED_OUT'){USER=null;S={profile:{name:'',handle:'',dates_follow:true},accounts:[]};go('entrar')}
+  },0);
+});
 (async function boot(){
-  try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
-  try{const r=await fetch(`https://picsum.photos/v2/list?page=${1+rnd(8)}&limit=80`);const j=await r.json();POOL=j.map(x=>[x.id,x.author])}catch(e){}
-  if(POOL.length<20)POOL=FALLBACK;
-  if(!S||!S.accounts){S=seed();save()}
-  render();
+  try{const r=await fetch(`https://picsum.photos/v2/list?page=${1+rnd(8)}&limit=80`);const j=await r.json();if(j.length>20)POOL=j.map(x=>[x.id,x.author])}catch(e){}
+  const {data:{session}}=await sb.auth.getSession();USER=session?.user||null;
+  if(USER){try{await loadAll()}catch(e){}}
+  booted=true;render();
 })();
 </script>
 </body>
