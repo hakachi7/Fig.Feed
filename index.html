@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fig.Feed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#ffffff; --fg:#0a0a0a; --muted:#7a7a7a; --line:#e7e7e7; --tile:#d9d9d9; --soft:#f4f4f4;
+  --accent:#ff1f1f; --drop:#14d36a; --badge:#2f45ff;
+  --f:"Inter","Helvetica Neue",Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--f);font-size:14px;line-height:1.4;-webkit-font-smoothing:antialiased}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;padding:0}
+:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
+img{display:block;max-width:100%}
+.view{min-height:100%}
+
+/* ---------- 1. Home ---------- */
+.home{height:100vh;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
+.home .word{font-size:clamp(44px,6.7vw,128px);font-weight:400;letter-spacing:-.025em;text-align:center;line-height:1}
+.home .photo{width:clamp(130px,19vw,364px);aspect-ratio:364/478;position:relative;overflow:hidden;background:var(--tile)}
+.home .photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .7s ease}
+.home .photo img.on{opacity:1}
+.home .photo button{position:absolute;inset:0;z-index:2}
+
+/* ---------- 2. Menu ---------- */
+.menu{position:fixed;inset:0;overflow:hidden;color:#fff;background:#222}
+.menu .blur{position:absolute;inset:-60px;background-size:cover;background-position:center;filter:blur(28px) saturate(1.05);transform:scale(1.08)}
+.menu .shade{position:absolute;inset:0;background:rgba(0,0,0,.12)}
+.menu nav{position:absolute;left:60%;top:4%;display:flex;flex-direction:column;gap:clamp(18px,2.2vw,34px);font-size:clamp(15px,1.15vw,22px);line-height:1.12}
+.menu ol{list-style:none;margin:0;padding:0}
+.menu li button{color:#fff;text-align:left;padding:0;transition:opacity .2s}
+.menu li button:hover{opacity:.6}
+.menu .credit{position:absolute;left:clamp(16px,4.7vw,90px);bottom:clamp(20px,5vw,60px);font-size:clamp(11px,.85vw,15px)}
+.menu .back{position:absolute;right:clamp(16px,3vw,48px);bottom:clamp(20px,5vw,60px);font-size:13px;color:#fff;opacity:.8}
+@media (max-width:640px){.menu nav{left:auto;right:20px;top:24px}}
+
+/* ---------- Cabeçalho (estilo Cosmos) ---------- */
+.hdr{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;padding:14px max(16px,2.2vw)}
+.hdr .l{display:flex;align-items:center;gap:22px;min-width:0}
+.hdr .r{display:flex;align-items:center;gap:10px;justify-content:flex-end}
+.logo{display:grid;grid-template-columns:repeat(3,6px);gap:2px}
+.logo i{width:6px;height:7.5px;background:var(--fg);display:block}
+.nav a{font-size:15px;color:var(--muted);text-decoration:none;font-weight:500;position:relative;white-space:nowrap;cursor:pointer}
+.nav a.cur{color:var(--fg)}
+.nav .badge{position:absolute;top:-10px;right:-15px;background:var(--badge);color:#fff;font-size:10px;border-radius:99px;min-width:17px;height:17px;display:grid;place-items:center;padding:0 4px}
+.crumb{color:var(--fg);font-weight:500;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb span{color:var(--muted);font-weight:400}
+.search{display:flex;align-items:center;gap:10px;width:min(430px,34vw);border:1px solid var(--line);background:#fafafa;border-radius:99px;padding:10px 16px}
+.search svg{flex:none}
+.search input{border:0;background:none;outline:none;width:100%;font-size:14px}
+.pill{border:1px solid var(--line);border-radius:99px;padding:9px 16px;display:flex;align-items:center;gap:7px;font-weight:500;background:#fff}
+.pill:hover{background:var(--soft)}
+.avatar{width:36px;height:36px;border-radius:50%;background-size:cover;background-position:center;background-color:var(--tile)}
+.who{display:flex;align-items:center;gap:6px}
+.drop{position:absolute;right:max(16px,2.2vw);top:62px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 12px 32px rgba(0,0,0,.08);padding:6px;min-width:210px;display:flex;flex-direction:column;z-index:30}
+.drop button,.drop .lbl{padding:9px 12px;border-radius:8px;text-align:left}
+.drop button:hover{background:var(--soft)}
+.drop .lbl{color:var(--muted);font-size:12px}
+.drop hr{border:0;border-top:1px solid var(--line);margin:4px 0}
+.drop form{display:flex;gap:6px;padding:4px 6px}
+.drop input{flex:1;min-width:0;border:1px solid var(--line);border-radius:8px;padding:7px 9px}
+@media (max-width:760px){.hdr{grid-template-columns:1fr auto}.hdr .mid{display:none}.nav a{font-size:14px}.hdr .l{gap:14px}}
+
+/* ---------- 3. Contas ---------- */
+.contas{min-height:calc(100vh - 66px);display:flex;align-items:center;justify-content:center;padding:40px max(16px,4vw)}
+.accs{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(40px,4.9vw,94px)}
+.acc{display:flex;flex-direction:column;gap:clamp(16px,1.7vw,32px);width:clamp(220px,19vw,364px)}
+.acc .g{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(5px,.42vw,8px)}
+.acc .g div{aspect-ratio:101/131;background:var(--tile) center/cover}
+.acc .g{transition:transform .25s}
+.acc:hover .g{transform:translateY(-4px)}
+.acc .h{font-size:11px;text-align:left}
+.empty{color:var(--muted);text-align:center}
+
+/* ---------- 4. Feed ---------- */
+.feed{display:flex;justify-content:center;padding:50px 16px 80px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(6px,.65vw,10px);width:min(394px,92vw)}
+.item{position:relative;touch-action:none;user-select:none;-webkit-user-select:none}
+.tile{aspect-ratio:125/164;background:var(--tile) center/cover;cursor:grab;transition:opacity .2s}
+.tile .multi{position:absolute;top:6px;right:6px;width:14px;height:14px}
+.tile.dim{opacity:.18}
+.tile .dt{position:absolute;left:6px;bottom:5px;font-size:10px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.5);opacity:0;transition:opacity .2s}
+.grid:hover .tile .dt{opacity:1}
+.is-ph{outline:2px dashed var(--drop);outline-offset:-2px}
+.is-ph > *{opacity:.15}
+.is-ph.tile,.is-ph.slide{background-image:none!important;background-color:var(--soft)}
+.ghost{position:fixed;z-index:80;pointer-events:none;outline:2px solid var(--accent);box-shadow:0 18px 40px rgba(0,0,0,.25);transform:scale(1.04)}
+.hint{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);font-size:12px;color:var(--muted);white-space:nowrap}
+
+/* ---------- 5. Carrossel ---------- */
+.car{padding:0 0 60px}
+.prog{position:relative;height:1px;background:#8a8a8a;margin:56px 0 0 15.4%}
+.prog i{position:absolute;top:-1px;height:3px;background:var(--fg);width:40px;left:0}
+.car .meta{margin:72px 0 34px max(16px,8.1%);font-size:11px;display:flex;flex-direction:column;gap:12px;max-width:260px}
+.car .meta .t{outline:none}
+.car .meta .t:focus{background:var(--soft)}
+.track{display:flex;gap:clamp(24px,4.7vw,64px);overflow-x:auto;padding:0 max(16px,8.1%) 24px;scrollbar-width:none}
+.track::-webkit-scrollbar{display:none}
+.slide{flex:none;width:clamp(170px,18.3vw,250px);aspect-ratio:247/325;background:var(--tile) center/cover;cursor:grab}
+.slide .x{position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.9);font-size:13px;line-height:22px;text-align:center;opacity:0;transition:opacity .2s}
+.slide:hover .x{opacity:1}
+.addslide{flex:none;width:clamp(170px,18.3vw,250px);aspect-ratio:247/325;border:1px dashed #bbb;color:var(--muted);display:grid;place-items:center;font-size:12px}
+.cap{margin:60px 0 0 max(16px,8.1%);max-width:260px;font-size:11px;line-height:1.45;text-align:left;white-space:pre-wrap}
+.cap:hover{background:var(--soft)}
+.cap.ph{color:var(--muted)}
+
+/* ---------- 6. Editar texto ---------- */
+.edit{min-height:100vh;padding:clamp(20px,2.6vw,40px) clamp(16px,2.6vw,40px)}
+.edit .top{display:flex;align-items:center;gap:16px}
+.edit .top .avatar{width:38px;height:38px}
+.edit .top .h{font-size:11px;flex:1}
+.edit .top button{font-size:13px;color:var(--muted)}
+.edit .top button.done{color:var(--fg);font-weight:500}
+.edit textarea{display:block;width:min(820px,100%);margin:clamp(60px,8vw,100px) 0 0;border:0;outline:none;resize:none;font-size:clamp(22px,2.4vw,30px);line-height:1.22;letter-spacing:-.005em;background:none;overflow:hidden;caret-color:var(--fg)}
+.edit .count{font-size:11px;color:var(--muted);margin-top:18px}
+
+/* ---------- 7. Download ---------- */
+.dl{min-height:calc(100vh - 66px);display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:0 max(16px,4.7vw);position:relative}
+.dl h1{font-size:clamp(44px,6.7vw,128px);font-weight:400;letter-spacing:-.025em;margin:0;line-height:1}
+.dl .opts{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.dl .pick{display:flex;gap:14px;flex-wrap:wrap;margin-top:22px;font-size:12px}
+.dl .pick button{color:var(--muted)}
+.dl .pick button.cur{color:var(--fg);text-decoration:underline;text-underline-offset:3px}
+.dl .mini{justify-self:center;display:grid;grid-template-columns:repeat(3,1fr);gap:3px;width:clamp(120px,14vw,190px)}
+.dl .mini div{aspect-ratio:30/40;background:var(--tile) center/cover}
+.dl .tks{position:absolute;left:max(16px,4.7vw);bottom:30px;font-size:11px;line-height:1.3}
+@media (max-width:700px){.dl{grid-template-columns:1fr;gap:40px;padding-block:60px 100px}}
+
+/* ---------- Cronograma / Perfil / Configuração ---------- */
+.page{max-width:820px;margin:0 auto;padding:56px 16px 80px}
+.page h1{font-size:clamp(34px,4vw,56px);font-weight:400;letter-spacing:-.025em;margin:0 0 6px}
+.page .sub{color:var(--muted);margin:0 0 40px}
+.day{display:grid;grid-template-columns:110px 1fr;gap:20px;padding:18px 0;border-top:1px solid var(--line)}
+.day .d{font-size:12px;font-variant-numeric:tabular-nums}
+.day .d b{display:block;font-size:22px;font-weight:400;letter-spacing:-.02em}
+.day .rows{display:flex;flex-direction:column;gap:12px}
+.row{display:flex;gap:14px;align-items:center;text-align:left;width:100%}
+.row .th{width:44px;aspect-ratio:4/5;background:var(--tile) center/cover;flex:none}
+.row small{color:var(--muted);display:block}
+.row .txt{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:18px;max-width:420px}
+.field label{font-size:12px;color:var(--muted)}
+.field input{border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.chk{display:flex;gap:10px;align-items:center;margin-bottom:18px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--fg);color:#fff;padding:9px 16px;border-radius:99px;font-size:13px;z-index:99}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<input type="file" id="file" accept="image/*" multiple hidden>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+/* ======================= Dados ======================= */
+const KEY='figfeed-v2';
+const FALLBACK=[[10,'Paul Jarvis'],[11,'Paul Jarvis'],[13,'Paul Jarvis'],[14,'Paul Jarvis'],[15,'Paul Jarvis'],[16,'Paul Jarvis'],[17,'Paul Jarvis'],[18,'Paul Jarvis'],[19,'Paul Jarvis'],[20,'Aleks Dorohovich'],[21,'Alejandro Escamilla'],[22,'Alejandro Escamilla'],[23,'Alejandro Escamilla'],[24,'Alejandro Escamilla'],[25,'Alejandro Escamilla'],[26,'Vadim Sherbakov'],[27,'Yoni Kaplan-Nadel'],[28,'Jerry Adney'],[29,'Go Wild'],[30,'Shyamanta Baruah'],[31,'How-Soon Ngu'],[32,'Rodrigo Melo'],[33,'Alejandro Escamilla'],[34,'Aleks Dorohovich'],[35,'Shane Colella'],[36,'Vadim Sherbakov'],[37,'Austin Neill'],[38,'Allyson Souza'],[39,'Luke Chesser'],[40,'Ryan Mcguire'],[41,'Nithya Ramanujam'],[42,'Luke Chesser'],[43,'Oleg Chursin'],[44,'Christopher Sardegna'],[45,'Alan Haverty'],[46,'Jeffrey Kam'],[47,'Christopher Sardegna'],[48,'Luke Chesser'],[49,'Margaret Barley'],[50,'Tyler Wanlass'],[51,'Ireneuszm'],[52,'Cierra'],[53,'J Duclos'],[54,'Nicholas Swanson'],[55,'Tyler Wanlass'],[56,'Sebastian Muller'],[57,'Nathan Anderson'],[58,'Tom Butler'],[59,'Art Wave'],[60,'Vadim Sherbakov']];
+const TITLES=['Lançamento','Bastidores','Depoimento','Promo do mês','Dica rápida','Antes e depois','Equipe','Produto novo','Pergunta da semana','Guia em fotos','Citação','Coleção'];
+const CAPS=['Chegou o que vocês pediram. Salva esse post pra não esquecer e marca quem precisa ver isso hoje.','Um pouco do nosso dia a dia por aqui. Quem aí gosta de ver bastidores? Conta nos comentários.','Cliente feliz é o nosso melhor marketing. Obrigado pela confiança de sempre.','Só essa semana: condição especial para quem chamar no direct. Link na bio.','Passo a passo em poucas fotos. Arrasta pro lado, testa e me conta o resultado.','A diferença fala por si. Arrasta pro lado e confere o antes e depois.'];
+let POOL=[];let uid=Date.now();const nid=()=>(uid++).toString(36);
+const rnd=n=>Math.floor(Math.random()*n);
+const pickPhoto=()=>{const p=POOL[rnd(POOL.length)];return {id:nid(),pid:p[0],author:p[1]}};
+const src=(s,w=600,h=750)=>s.data?s.data:`https://picsum.photos/id/${s.pid}/${w}/${h}`;
+const credit=s=>s&&s.author?`credit / @${s.author.toLowerCase().replace(/[^a-z0-9]+/g,'')}`:'credit / @voce';
+
+function makePost(i,baseDate){const d=new Date(baseDate);d.setDate(d.getDate()-i*2);
+  const n=1+rnd(4);return {id:nid(),title:TITLES[i%TITLES.length],caption:CAPS[rnd(CAPS.length)],date:d.toISOString().slice(0,10),slides:Array.from({length:n},pickPhoto)}}
+function makeAccount(handle,count=12){const top=new Date();top.setDate(top.getDate()+14);
+  return {id:nid(),handle,posts:Array.from({length:count},(_,i)=>makePost(i,top))}}
+function seed(){return {datesFollow:true,profile:{name:'Seu nome',handle:'@seu.perfil'},accounts:[makeAccount('@aisdjsadoihasdiohasd'),makeAccount('@4iqwjus890uy8asdj'),makeAccount('@lsmadfauisdagf24214')]}}
+
+let S=null;
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast('Não deu para salvar (fotos enviadas muito pesadas?)')}}
+const accById=id=>S.accounts.find(a=>a.id===id);
+const fmt=d=>{if(!d)return'';const[y,m,dd]=d.split('-');return `${dd}/${m}`};
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,2300)}
+
+/* ======================= Rotas ======================= */
+// #home  #menu  #contas  #feed/ID  #car/ID/POST  #edit/ID/POST  #crono  #down  #perfil  #config
+const app=document.getElementById('app');
+let route=[],menuPhoto=null,q='',openDrop=null,homeTimer=null;
+const go=h=>{location.hash=h};
+window.addEventListener('hashchange',render);
+
+function render(){
+  clearInterval(homeTimer);openDrop=null;
+  route=(location.hash.slice(1)||'home').split('/');
+  const v=route[0];
+  const map={home:vHome,menu:vMenu,contas:vContas,feed:vFeed,car:vCar,edit:vEdit,crono:vCrono,down:vDown,perfil:vPerfil,config:vConfig};
+  (map[v]||vHome)();window.scrollTo(0,0);
+}
+
+/* ======================= Cabeçalho ======================= */
+const LOGO='<span class="logo" aria-hidden="true">'+'<i></i>'.repeat(9)+'</span>';
+function weekCount(){const now=new Date();now.setHours(0,0,0,0);const lim=new Date(now);lim.setDate(lim.getDate()+7);
+  let n=0;S.accounts.forEach(a=>a.posts.forEach(p=>{const d=new Date(p.date+'T12:00');if(d>=now&&d<=lim)n++}));return n}
+function header(cur,crumb){
+  const wc=weekCount();const av=S.accounts[0]?.posts[0]?.slides[0];
+  return `<header class="hdr">
+    <div class="l">
+      <button aria-label="Voltar para o início" data-go="home">${LOGO}</button>
+      ${crumb?`<div class="crumb">${crumb}</div>`:`<nav class="nav" style="display:flex;gap:22px">
+        <a data-go="contas" class="${cur==='contas'?'cur':''}">Contas</a>
+        <a data-go="crono" class="${cur==='crono'?'cur':''}">Cronograma${wc?`<span class="badge">${wc}</span>`:''}</a>
+        <a data-go="down" class="${cur==='down'?'cur':''}">Downloads</a></nav>`}
+    </div>
+    <div class="mid"><label class="search"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#777" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" placeholder="Buscar contas, posts ou legendas" value="${esc(q)}" autocomplete="off"></label></div>
+    <div class="r">
+      <button class="pill" id="criar"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Criar</button>
+      <button class="who" id="me" aria-label="Abrir menu da conta"><span class="avatar" style="background-image:url(${av?src(av,80,80):''})"></span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+    </div></header>`;
+}
+function bindHeader(){
+  app.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+  const qi=document.getElementById('q');
+  if(qi)qi.oninput=e=>{q=e.target.value;applySearch()};
+  if(qi)qi.onkeydown=e=>{if(e.key==='Enter'&&!['contas','feed'].includes(route[0]))go('contas')};
+  document.getElementById('criar').onclick=e=>{e.stopPropagation();dropdown('criar')};
+  document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
+}
+function dropdown(kind){
+  document.querySelector('.drop')?.remove();if(openDrop===kind){openDrop=null;return}openDrop=kind;
+  const d=document.createElement('div');d.className='drop';d.onclick=e=>e.stopPropagation();
+  const inAcc=route[0]==='feed'||route[0]==='car';
+  if(kind==='me'){d.innerHTML=`<span class="lbl">${esc(S.profile.handle)}</span>
+    <button data-a="perfil">Perfil</button><button data-a="config">Configuração</button><hr><button data-a="sair">Sair</button>`}
+  else{d.innerHTML=`<span class="lbl">Nova conta</span><form id="nf"><input id="nh" placeholder="@perfil.do.cliente" required><button class="pill" style="padding:6px 10px">Criar</button></form><hr>
+    ${inAcc?`<button data-a="post">Novo post com fotos de exemplo</button><button data-a="up">Novo post com fotos suas</button>`:`<span class="lbl">Abra uma conta para criar posts</span>`}`}
+  document.body.appendChild(d);
+  d.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{const a=b.dataset.a;d.remove();openDrop=null;
+    if(a==='perfil')go('perfil');if(a==='config')go('config');if(a==='sair')go('home');
+    if(a==='post'){const acc=accById(route[1]);const p=newPost(acc);p.slides=Array.from({length:3},pickPhoto);acc.posts.unshift(p);save();go(`car/${acc.id}/${p.id}`)}
+    if(a==='up')pickFiles({type:'newpost',acc:route[1]});});
+  const f=d.querySelector('#nf');if(f){f.onsubmit=e=>{e.preventDefault();let h=d.querySelector('#nh').value.trim().replace(/\s+/g,'');if(!h)return;if(h[0]!=='@')h='@'+h;
+    const a=makeAccount(h,3);S.accounts.push(a);save();d.remove();openDrop=null;go('feed/'+a.id);toast('Conta criada com 3 posts de exemplo')};d.querySelector('#nh').focus()}
+}
+document.addEventListener('click',()=>{document.querySelector('.drop')?.remove();openDrop=null});
+function newPost(acc){const top=acc.posts[0]?.date;let d=new Date();if(top){d=new Date(top+'T12:00');d.setDate(d.getDate()+2)}
+  return {id:nid(),title:'Novo post',caption:'',date:d.toISOString().slice(0,10),slides:[]}}
+function applySearch(){
+  const t=q.trim().toLowerCase();
+  if(route[0]==='contas')app.querySelectorAll('.acc').forEach(a=>a.hidden=t&&!a.dataset.h.toLowerCase().includes(t));
+  if(route[0]==='feed')app.querySelectorAll('.tile').forEach(n=>n.classList.toggle('dim',!!t&&!n.dataset.s.toLowerCase().includes(t)));
+}
+
+/* ======================= 1. Home ======================= */
+function vHome(){
+  const pics=Array.from({length:8},pickPhoto);
+  app.innerHTML=`<main class="view home">
+    <div class="word">Fig.</div>
+    <div class="photo">${pics.map((p,i)=>`<img src="${src(p,600,790)}" alt="" class="${i?'':'on'}" ${i?'loading="lazy"':''}>`).join('')}
+      <button aria-label="Abrir o menu com esta foto" id="open"></button></div>
+    <div class="word">Feed</div></main>`;
+  let i=0;const imgs=app.querySelectorAll('.photo img');
+  homeTimer=setInterval(()=>{imgs[i].classList.remove('on');i=(i+1)%imgs.length;imgs[i].classList.add('on')},2400);
+  document.getElementById('open').onclick=()=>{menuPhoto=pics[i];go('menu')};
+}
+
+/* ======================= 2. Menu ======================= */
+function vMenu(){
+  const p=menuPhoto||pickPhoto();menuPhoto=p;
+  app.innerHTML=`<main class="menu">
+    <div class="blur" style="background-image:url(${src(p,600,790)})"></div><div class="shade"></div>
+    <nav aria-label="Menu principal">
+      <ol><li><button data-go="contas">1. Contas</button></li><li><button data-go="crono">2. Cronograma</button></li><li><button data-go="down">3. Downloads</button></li></ol>
+      <ol><li><button data-go="perfil">1. Perfil</button></li><li><button data-go="config">2. Configuração</button></li><li><button data-go="home">3. Sair</button></li></ol>
+    </nav>
+    <div class="credit">${esc(credit(p))}</div>
+  </main>`;
+  app.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+}
+
+/* ======================= 3. Contas ======================= */
+function vContas(){
+  app.innerHTML=header('contas')+`<main class="contas"><div class="accs">${S.accounts.map(a=>`
+    <button class="acc" data-id="${a.id}" data-h="${esc(a.handle)}">
+      <div class="g">${Array.from({length:9},(_,i)=>{const s=a.posts[i]?.slides[0];return `<div style="${s?`background-image:url(${src(s,240,312)})`:''}"></div>`}).join('')}</div>
+      <div class="h">${esc(a.handle)}</div></button>`).join('')}</div></main>`;
+  bindHeader();applySearch();
+  app.querySelectorAll('.acc').forEach(b=>b.onclick=()=>go('feed/'+b.dataset.id));
+}
+
+/* ======================= Arrastar e reorganizar ======================= */
+function flip(container,mutate){
+  const kids=[...container.children];const before=new Map(kids.map(k=>[k,k.getBoundingClientRect()]));
+  mutate();
+  kids.forEach(k=>{const a=before.get(k),b=k.getBoundingClientRect();const dx=a.left-b.left,dy=a.top-b.top;
+    if(dx||dy){k.style.transition='none';k.style.transform=`translate(${dx}px,${dy}px)`;
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{k.style.transition='transform .26s cubic-bezier(.2,.7,.2,1)';k.style.transform=''}))}});
+}
+let dragCleanup=null;
+function sortable(container,{onDrop,onClick}){
+  dragCleanup&&dragCleanup();let drag=null;
+  container.onpointerdown=e=>{const it=e.target.closest('.item');if(!it||e.button>0||e.target.closest('.x'))return;
+    drag={it,x:e.clientX,y:e.clientY,started:false,lock:0,pid:e.pointerId}};
+  const move=e=>{
+    if(!drag||e.pointerId!==drag.pid)return;
+    if(!drag.started){if(Math.hypot(e.clientX-drag.x,e.clientY-drag.y)<6)return;
+      drag.started=true;const r=drag.it.getBoundingClientRect();const g=drag.it.cloneNode(true);g.className=drag.it.className+' ghost';g.classList.remove('item');
+      Object.assign(g.style,{left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px'});document.body.appendChild(g);
+      drag.g=g;drag.ox=e.clientX-r.left;drag.oy=e.clientY-r.top;drag.it.classList.add('is-ph')}
+    drag.g.style.left=(e.clientX-drag.ox)+'px';drag.g.style.top=(e.clientY-drag.oy)+'px';
+    const now=performance.now();if(now<drag.lock)return;
+    const under=document.elementFromPoint(e.clientX,e.clientY);const t=under&&under.closest('.item');
+    if(!t||t===drag.it||t.parentNode!==container)return;
+    const kids=[...container.children];const ti=kids.indexOf(t),pi=kids.indexOf(drag.it);
+    flip(container,()=>container.insertBefore(drag.it,ti>pi?t.nextSibling:t));drag.lock=now+170;
+  };
+  const end=e=>{if(!drag||e.pointerId!==drag.pid)return;const d=drag;drag=null;
+    if(!d.started){if(e.type==='pointerup')onClick&&onClick(d.it.dataset.id);return}
+    d.it.classList.remove('is-ph');d.g.remove();onDrop([...container.querySelectorAll(':scope > .item')].map(n=>n.dataset.id))};
+  window.addEventListener('pointermove',move);window.addEventListener('pointerup',end);window.addEventListener('pointercancel',end);
+  dragCleanup=()=>{window.removeEventListener('pointermove',move);window.removeEventListener('pointerup',end);window.removeEventListener('pointercancel',end)};
+  container.onkeydown=e=>{const it=e.target.closest('.item');if(!it)return;
+    if(e.key==='Enter'){onClick&&onClick(it.dataset.id);return}
+    if(!e.altKey)return;const back=['ArrowLeft','ArrowUp'].includes(e.key),fwd=['ArrowRight','ArrowDown'].includes(e.key);if(!back&&!fwd)return;
+    e.preventDefault();const sib=back?it.previousElementSibling:it.nextElementSibling;if(!sib||!sib.classList.contains('item'))return;
+    flip(container,()=>container.insertBefore(it,back?sib:sib.nextSibling));it.focus();
+    onDrop([...container.querySelectorAll(':scope > .item')].map(n=>n.dataset.id),true)};
+}
+const reorder=(list,ids)=>{const m=new Map(list.map(x=>[x.id,x]));return ids.map(i=>m.get(i)).filter(Boolean)};
+const MULTI='<svg class="multi" viewBox="0 0 24 24" fill="#fff" style="filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))"><rect x="7" y="3" width="14" height="14" rx="2"/><path d="M5 7v12a2 2 0 0 0 2 2h12" fill="none" stroke="#fff" stroke-width="2"/></svg>';
+
+/* ======================= 4. Feed ======================= */
+function vFeed(){
+  const a=accById(route[1]);if(!a)return go('contas');
+  app.innerHTML=header('contas',`<span>Contas /</span> ${esc(a.handle)}`)+`<main class="feed">
+    <div class="grid" id="grid">${a.posts.map(p=>{const s=p.slides[0];return `
+      <div class="item tile" tabindex="0" data-id="${p.id}" data-s="${esc(p.title+' '+p.caption)}" style="${s?`background-image:url(${src(s,250,328)})`:''}" aria-label="${esc(p.title)}, ${fmt(p.date)}">
+        ${p.slides.length>1?MULTI:''}<span class="dt">${fmt(p.date)}</span></div>`}).join('')}</div></main>
+    <div class="hint">Arraste para reorganizar · clique para abrir o carrossel</div>`;
+  bindHeader();applySearch();
+  sortable(document.getElementById('grid'),{
+    onDrop:(ids,kb)=>{const dates=a.posts.map(p=>p.date).filter(Boolean).sort().reverse();a.posts=reorder(a.posts,ids);
+      if(S.datesFollow&&dates.length===a.posts.length)a.posts.forEach((p,i)=>p.date=dates[i]);save();
+      if(kb){const f=document.activeElement?.dataset.id;vFeed();document.querySelector(`[data-id="${f}"]`)?.focus()}else vFeed()},
+    onClick:id=>go(`car/${a.id}/${id}`)});
+}
+
+/* ======================= 5. Carrossel ======================= */
+function vCar(){
+  const a=accById(route[1]);const p=a&&a.posts.find(x=>x.id===route[2]);if(!p)return go(a?'feed/'+a.id:'contas');
+  const idx=a.posts.indexOf(p)+1;
+  app.innerHTML=header('contas',`<span>Contas / <a data-go="feed/${a.id}" style="cursor:pointer">${esc(a.handle)}</a> /</span> Carrossel`)+`<main class="car">
+    <div class="prog"><i id="bar"></i></div>
+    <div class="meta"><div>${idx}. <span class="t" contenteditable="true" spellcheck="false" id="ttl">${esc(p.title)}</span> (${fmt(p.date)})</div>
+      <div>${p.slides.length} ${p.slides.length===1?'foto':'fotos'} neste post. Arraste para mudar a ordem; a primeira é a capa que aparece no feed.</div></div>
+    <div class="track" id="tr">${p.slides.map(s=>`<div class="item slide" tabindex="0" data-id="${s.id}" style="background-image:url(${src(s,500,658)})"><button class="x" data-x="${s.id}" aria-label="Remover foto">×</button></div>`).join('')}
+      <button class="addslide" id="add">+ adicionar fotos</button></div>
+    <button class="cap ${p.caption?'':'ph'}" id="cap">${p.caption?esc(p.caption):'Clique para escrever a legenda'}</button>
+  </main>`;
+  bindHeader();
+  const tr=document.getElementById('tr'),bar=document.getElementById('bar');
+  const upd=()=>{const max=tr.scrollWidth-tr.clientWidth;const w=bar.parentNode.clientWidth;const bw=max>0?Math.max(40,w*tr.clientWidth/tr.scrollWidth*.25):40;
+    bar.style.width=bw+'px';bar.style.left=(max>0?tr.scrollLeft/max*(w-bw):0)+'px'};tr.onscroll=upd;upd();window.onresize=upd;
+  sortable(tr,{onDrop:ids=>{p.slides=reorder(p.slides,ids);save();vCar()}});
+  tr.querySelectorAll('.x').forEach(b=>b.onclick=e=>{e.stopPropagation();if(p.slides.length===1){toast('O post precisa de pelo menos uma foto');return}
+    p.slides=p.slides.filter(s=>s.id!==b.dataset.x);save();vCar()});
+  document.getElementById('add').onclick=()=>pickFiles({type:'slides',acc:a.id,post:p.id});
+  document.getElementById('cap').onclick=()=>go(`edit/${a.id}/${p.id}`);
+  const t=document.getElementById('ttl');t.onblur=()=>{p.title=t.textContent.trim()||'Sem título';save()};t.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();t.blur()}};
+}
+
+/* ======================= 6. Editar texto ======================= */
+function vEdit(){
+  const a=accById(route[1]);const p=a&&a.posts.find(x=>x.id===route[2]);if(!p)return go('contas');
+  const s=p.slides[0];
+  app.innerHTML=`<main class="edit"><div class="top"><span class="avatar" style="background-color:var(--accent);${s?`background-image:url(${src(s,80,80)})`:''}"></span>
+    <span class="h">${esc(a.handle)}</span><button id="cancel">Cancelar</button><button class="done" id="done">Concluir</button></div>
+    <textarea id="ta" aria-label="Legenda do post" placeholder="Escreva a legenda aqui">${esc(p.caption)}</textarea>
+    <div class="count" id="ct"></div></main>`;
+  const ta=document.getElementById('ta'),ct=document.getElementById('ct');
+  const fit=()=>{ta.style.height='auto';ta.style.height=ta.scrollHeight+'px';ct.textContent=`${ta.value.length} / 2.200 caracteres`};
+  ta.oninput=fit;fit();ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length);
+  const back=()=>go(`car/${a.id}/${p.id}`);
+  document.getElementById('done').onclick=()=>{p.caption=ta.value.slice(0,2200);save();toast('Legenda salva');back()};
+  document.getElementById('cancel').onclick=back;
+  ta.onkeydown=e=>{if(e.key==='Escape')back();if(e.key==='Enter'&&(e.metaKey||e.ctrlKey))document.getElementById('done').click()};
+}
+
+/* ======================= 7. Download ======================= */
+let dlAcc=null;
+function vDown(){
+  if(!accById(dlAcc))dlAcc=S.accounts[0]?.id;const a=accById(dlAcc);
+  app.innerHTML=header('down')+`<main class="dl"><div><h1>Download</h1>
+    ${a?`<div class="pick">${S.accounts.map(x=>`<button data-acc="${x.id}" class="${x.id===a.id?'cur':''}">${esc(x.handle)}</button>`).join('')}</div>
+    <div class="opts"><button class="pill" id="png">Baixar grade (.png)</button><button class="pill" id="txt">Baixar legendas e datas (.txt)</button></div>`:'<p class="empty">Crie uma conta para baixar um modelo.</p>'}
+    </div>
+    <div class="mini">${a?a.posts.slice(0,12).map(p=>`<div style="background-image:url(${src(p.slides[0]||{},120,160)})"></div>`).join(''):''}</div>
+    <div class="tks">tks<br>Fig.Feed</div></main>`;
+  bindHeader();if(!a)return;
+  app.querySelectorAll('[data-acc]').forEach(b=>b.onclick=()=>{dlAcc=b.dataset.acc;vDown()});
+  document.getElementById('png').onclick=()=>exportPNG(a);
+  document.getElementById('txt').onclick=()=>{
+    const lines=[...a.posts].reverse().map((p,i)=>`${i+1}. ${fmt(p.date)} — ${p.title} (${p.slides.length} foto${p.slides.length>1?'s':''})\n${p.caption||'(sem legenda)'}\n`);
+    saveFile(new Blob([`Cronograma ${a.handle}\nOrdem de publicação\n\n`+lines.join('\n')],{type:'text/plain'}),`${a.handle.replace('@','')}-legendas.txt`)};
+}
+function saveFile(blob,name){const u=URL.createObjectURL(blob);const l=document.createElement('a');l.href=u;l.download=name;document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),2000)}
+function loadImg(u){return new Promise(r=>{const i=new Image();i.crossOrigin='anonymous';i.onload=()=>r(i);i.onerror=()=>r(null);i.src=u})}
+async function exportPNG(a){
+  toast('Montando a imagem…');
+  const W=360,H=450,G=6,cols=3,rows=Math.ceil(a.posts.length/cols);
+  const c=document.createElement('canvas');c.width=cols*W+(cols+1)*G;c.height=rows*H+(rows+1)*G+70;
+  const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);
+  x.fillStyle='#0a0a0a';x.font='500 22px Inter, Arial';x.fillText(a.handle,G+4,42);
+  const imgs=await Promise.all(a.posts.map(p=>p.slides[0]?loadImg(src(p.slides[0],W,H)):null));
+  imgs.forEach((im,i)=>{const cx=G+(i%cols)*(W+G),cy=70+G+Math.floor(i/cols)*(H+G);x.fillStyle='#d9d9d9';x.fillRect(cx,cy,W,H);
+    if(im){const r=Math.max(W/im.width,H/im.height);const w=im.width*r,h=im.height*r;x.save();x.beginPath();x.rect(cx,cy,W,H);x.clip();x.drawImage(im,cx+(W-w)/2,cy+(H-h)/2,w,h);x.restore()}});
+  try{c.toBlob(b=>{saveFile(b,`${a.handle.replace('@','')}-grade.png`);toast('Grade baixada')},'image/png')}catch(e){toast('Não deu para gerar a imagem neste navegador')}
+}
+
+/* ======================= Cronograma ======================= */
+function vCrono(){
+  const all=[];S.accounts.forEach(a=>a.posts.forEach(p=>all.push({a,p})));
+  all.sort((m,n)=>m.p.date.localeCompare(n.p.date));
+  const today=new Date().toISOString().slice(0,10);const up=all.filter(x=>x.p.date>=today);
+  const byDay={};up.forEach(x=>(byDay[x.p.date]=byDay[x.p.date]||[]).push(x));
+  const wd=d=>['domingo','segunda','terça','quarta','quinta','sexta','sábado'][new Date(d+'T12:00').getDay()];
+  app.innerHTML=header('crono')+`<main class="page"><h1>Cronograma</h1><p class="sub">Próximas publicações de todas as contas, em ordem de data.</p>
+    ${Object.keys(byDay).length?Object.entries(byDay).map(([d,xs])=>`<section class="day"><div class="d"><b>${fmt(d)}</b>${wd(d)}</div><div class="rows">
+      ${xs.map(({a,p})=>`<button class="row" data-car="${a.id}/${p.id}"><span class="th" style="${p.slides[0]?`background-image:url(${src(p.slides[0],90,112)})`:''}"></span>
+        <span class="txt"><small>${esc(a.handle)}</small>${esc(p.title)} · ${p.slides.length} foto${p.slides.length>1?'s':''}</span></button>`).join('')}</div></section>`).join('')
+      :'<p class="empty">Nenhuma publicação marcada a partir de hoje.</p>'}</main>`;
+  bindHeader();app.querySelectorAll('[data-car]').forEach(b=>b.onclick=()=>go('car/'+b.dataset.car));
+}
+
+/* ======================= Perfil e Configuração ======================= */
+function vPerfil(){
+  app.innerHTML=header('')+`<main class="page"><h1>Perfil</h1><p class="sub">Como você aparece no Fig.Feed.</p>
+    <form id="pf"><div class="field"><label for="pn">Nome</label><input id="pn" value="${esc(S.profile.name)}"></div>
+    <div class="field"><label for="ph">Seu @</label><input id="ph" value="${esc(S.profile.handle)}"></div>
+    <button class="pill">Salvar</button></form></main>`;
+  bindHeader();document.getElementById('pf').onsubmit=e=>{e.preventDefault();S.profile.name=document.getElementById('pn').value;S.profile.handle=document.getElementById('ph').value;save();toast('Perfil salvo')};
+}
+function vConfig(){
+  app.innerHTML=header('')+`<main class="page"><h1>Configuração</h1><p class="sub">Ajustes deste navegador.</p>
+    <label class="chk"><input type="checkbox" id="df" ${S.datesFollow?'checked':''}> Ao arrastar um post no feed, as datas acompanham a nova ordem</label>
+    <button class="pill" id="rs">Recomeçar com as contas de exemplo</button></main>`;
+  bindHeader();document.getElementById('df').onchange=e=>{S.datesFollow=e.target.checked;save()};
+  const rs=document.getElementById('rs');rs.onclick=()=>{if(!rs.dataset.ok){rs.dataset.ok=1;rs.textContent='Clique de novo para apagar tudo e recomeçar';return}
+    S=seed();save();toast('Exemplos restaurados');go('contas')};
+}
+
+/* ======================= Fotos do computador ======================= */
+let pickCtx=null;
+function pickFiles(ctx){pickCtx=ctx;const f=document.getElementById('file');f.value='';f.click()}
+function shrink(file){return new Promise(res=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{
+  const k=Math.min(1,900/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;
+  c.getContext('2d').drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.8))};im.onerror=()=>res(null);im.src=r.result};r.readAsDataURL(file)})}
+document.getElementById('file').onchange=async e=>{
+  const files=[...e.target.files].slice(0,10);if(!files.length||!pickCtx)return;
+  const datas=(await Promise.all(files.map(shrink))).filter(Boolean);const slides=datas.map(d=>({id:nid(),data:d,author:S.profile.handle.replace('@','')}));
+  const a=accById(pickCtx.acc);if(!a)return;
+  if(pickCtx.type==='newpost'){const p=newPost(a);p.slides=slides;a.posts.unshift(p);save();go(`car/${a.id}/${p.id}`)}
+  else{const p=a.posts.find(x=>x.id===pickCtx.post);p.slides.push(...slides);save();vCar()}
+};
+
+/* ======================= Início ======================= */
+(async function boot(){
+  try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+  try{const r=await fetch(`https://picsum.photos/v2/list?page=${1+rnd(8)}&limit=80`);const j=await r.json();POOL=j.map(x=>[x.id,x.author])}catch(e){}
+  if(POOL.length<20)POOL=FALLBACK;
+  if(!S||!S.accounts){S=seed();save()}
+  render();
+})();
+</script>
+</body>
+</html>

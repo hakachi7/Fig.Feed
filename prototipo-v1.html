@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<title>Fig.Feed</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: estúdio branco estilo Figma — barra fixa no topo, uma tela por vez, as fotos são protagonistas */
+:root{
+  --bg:#f7f6f6; --surface:#ffffff; --fg:#151313; --muted:#7c7575; --line:#e5e1e1;
+  --accent:#ff2b1c; --drop:#12c964; --chip:#efecec;
+  --f-display:"Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --f-body:"Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --f-mono:"DM Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121010; --surface:#1b1919; --fg:#f2efee; --muted:#9b9393; --line:#2d2a2a;
+  --accent:#ff4a3c; --drop:#2fdc80; --chip:#262323; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#121010; --surface:#1b1919; --fg:#f2efee; --muted:#9b9393; --line:#2d2a2a;
+  --accent:#ff4a3c; --drop:#2fdc80; --chip:#262323; color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.45;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:0 48px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Topo */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding-block:14px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.brand{font-family:var(--f-display);font-weight:500;font-size:22px;letter-spacing:-.02em;margin-right:auto}
+.brand b{font-weight:500;color:var(--accent)}
+.tabs{display:flex;gap:4px;flex-wrap:wrap}
+.tab{border:0;background:none;padding:7px 12px;border-radius:999px;color:var(--muted);font-weight:500}
+.tab[aria-current="true"]{background:var(--fg);color:var(--bg)}
+.who{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.dot{width:22px;height:22px;border-radius:50%;flex:none}
+
+.wrap{max-width:1100px;margin:0 auto}
+.head{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.head h1{font-family:var(--f-display);font-weight:500;font-size:clamp(28px,5vw,44px);letter-spacing:-.03em;line-height:1;margin:0;text-wrap:balance}
+.head p{margin:6px 0 0;color:var(--muted);max-width:52ch}
+.head .grow{flex:1;min-width:0}
+.btn{border:1px solid var(--line);background:var(--surface);padding:8px 14px;border-radius:999px;font-weight:500}
+.btn.primary{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.label{font-family:var(--f-mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.check{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+
+/* Contas */
+.accounts{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:28px}
+.acc{border:0;background:none;padding:0;text-align:left;display:flex;flex-direction:column;gap:10px}
+.acc-cover{aspect-ratio:364/478;width:100%;max-width:100%;border-radius:6px;overflow:hidden;display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--line);transition:transform .2s}
+.acc:hover .acc-cover{transform:translateY(-3px)}
+.acc.sel .acc-cover{outline:2px solid var(--accent);outline-offset:3px}
+.acc-cover div{background-size:cover;background-position:center}
+.acc-handle{font-family:var(--f-mono);font-size:13px}
+.acc-meta{font-size:13px;color:var(--muted)}
+.acc-new{border:1.5px dashed var(--line);border-radius:6px;aspect-ratio:364/478;display:flex;flex-direction:column;justify-content:center;gap:10px;padding:20px}
+.acc-new input{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:8px 10px;width:100%}
+
+/* Feed */
+.feed-layout{display:grid;grid-template-columns:minmax(0,520px) minmax(0,1fr);gap:40px;align-items:start}
+@media (max-width:820px){.feed-layout{grid-template-columns:1fr}}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:var(--surface);padding:4px;border-radius:8px;border:1px solid var(--line)}
+.item{position:relative;touch-action:none;user-select:none;-webkit-user-select:none}
+.tile{aspect-ratio:4/5;max-width:100%;border-radius:3px;overflow:hidden;background-size:cover;background-position:center;cursor:grab}
+.tile .cap{position:absolute;left:6px;right:6px;bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:4px;
+  font-family:var(--f-mono);font-size:10px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.45)}
+.tile .ttl{position:absolute;left:8px;top:8px;right:8px;font-weight:700;font-size:13px;line-height:1.1;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.35)}
+.st{width:8px;height:8px;border-radius:50%;flex:none;box-shadow:0 0 0 1.5px #fff}
+.st-rascunho{background:#b9b2b2}.st-pronto{background:#ffb21c}.st-agendado{background:var(--drop)}
+.is-placeholder{outline:2px dashed var(--drop);outline-offset:-2px;border-radius:4px}
+.is-placeholder > *{opacity:.18}
+.ghost{position:fixed;z-index:50;pointer-events:none;box-shadow:0 18px 40px rgba(0,0,0,.28);outline:2px solid var(--accent);border-radius:4px;transform:scale(1.04);transition:transform .12s}
+.add-tile{aspect-ratio:4/5;border:1.5px dashed var(--line);border-radius:3px;display:grid;place-items:center;color:var(--muted);font-size:13px;background:none;width:100%}
+.side{display:flex;flex-direction:column;gap:18px;position:sticky;top:90px}
+@media (max-width:820px){.side{position:static}}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend .st{box-shadow:none}
+.tips{margin:0;padding-left:18px;color:var(--muted);font-size:14px;display:grid;gap:6px;max-width:42ch}
+.stats{display:flex;gap:28px;font-variant-numeric:tabular-nums}
+.stats b{display:block;font-family:var(--f-display);font-size:26px;font-weight:500;letter-spacing:-.02em}
+
+/* Stories */
+.story-head{display:flex;align-items:center;gap:14px;margin-bottom:34px}
+.story-head .dot{width:56px;height:56px}
+.stories{display:flex;align-items:center;gap:14px;overflow-x:auto;padding:30px 4px 40px;min-height:380px}
+.story{flex:none;width:118px;aspect-ratio:9/16;max-width:100%;border-radius:8px;overflow:hidden;background-size:cover;background-position:center;cursor:grab;transition:width .25s cubic-bezier(.2,.7,.2,1)}
+.story.cur{width:178px;outline:2px solid var(--accent);outline-offset:3px}
+.story .n{position:absolute;top:8px;left:8px;font-family:var(--f-mono);font-size:11px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.4)}
+.story .t{position:absolute;left:8px;right:8px;bottom:10px;font-weight:700;font-size:13px;line-height:1.15;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.4)}
+.add-story{flex:none;width:118px;aspect-ratio:9/16;border:1.5px dashed var(--line);border-radius:8px;background:none;color:var(--muted)}
+
+/* Cronograma / carrossel */
+.progress{position:relative;height:2px;background:var(--line);margin:8px 0 28px}
+.progress i{position:absolute;left:0;top:-1px;height:4px;background:var(--fg);border-radius:2px;width:10%}
+.track{display:flex;gap:28px;overflow-x:auto;padding-bottom:16px;scrollbar-width:thin}
+.slot{flex:none;width:250px;display:flex;flex-direction:column;gap:10px}
+.slot .when{font-family:var(--f-mono);font-size:12px;display:flex;justify-content:space-between;color:var(--muted)}
+.slot .when b{color:var(--fg);font-weight:500}
+.slot .pic{aspect-ratio:364/478;max-width:100%;border-radius:6px;background-size:cover;background-position:center;cursor:grab;position:relative}
+.slot .txt{font-size:13px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+
+/* Painel de edição */
+.overlay{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.35);display:flex;justify-content:flex-end}
+.panel{background:var(--surface);width:min(400px,100%);height:100%;overflow:auto;padding:24px max(20px, env(safe-area-inset-right,0px)) 24px 24px;display:flex;flex-direction:column;gap:16px}
+.panel .pv{aspect-ratio:4/5;border-radius:6px;background-size:cover;background-position:center;max-width:100%}
+.field{display:flex;flex-direction:column;gap:6px}
+.field input,.field select,.field textarea{border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:9px 10px;width:100%}
+.field textarea{min-height:110px;resize:vertical}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.danger{color:var(--accent)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:9px 16px;border-radius:999px;font-size:13px;z-index:70}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+<header class="top">
+  <div class="brand">Fig.<b>Feed</b></div>
+  <nav class="tabs" id="tabs">
+    <button class="tab" data-v="contas">Contas</button>
+    <button class="tab" data-v="feed">Feed</button>
+    <button class="tab" data-v="stories">Stories</button>
+    <button class="tab" data-v="cronograma">Cronograma</button>
+  </nav>
+  <div class="who" id="who"></div>
+</header>
+<main class="wrap" id="app"></main>
+<input type="file" id="file" accept="image/*" multiple hidden>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const KEY='figfeed-proto-v1';
+const T=['Lançamento','Bastidores','Depoimento','Promo do mês','Reels: tutorial','Antes e depois','Dica rápida','Equipe','Produto novo','Pergunta da semana','Carrossel: guia','Citação'];
+const CAPS=['Chegou o que vocês pediram. Salva esse post pra não esquecer!','Um pouco do nosso dia a dia por aqui. Quem aí gosta de ver bastidores?','Cliente feliz é o nosso melhor marketing. Obrigado pela confiança!','Só essa semana: condição especial no link da bio.','Passo a passo em 30 segundos. Testa e me conta nos comentários.','A diferença fala por si. Arrasta pro lado e confere.'];
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+let uid=Date.now();const nid=()=>(uid++).toString(36);
+
+function sampleAccount(handle,name,baseHue){
+  const today=new Date();const feed=[];
+  for(let i=0;i<12;i++){const d=new Date(today);d.setDate(today.getDate()+ (11-i)*2 - 8);
+    feed.push({id:nid(),hue:(baseHue+i*23)%360,title:T[i%T.length],caption:pick(CAPS),date:d.toISOString().slice(0,10),
+      status:i<4?'rascunho':i<7?'pronto':'agendado',img:null});}
+  const stories=[];for(let i=0;i<7;i++)stories.push({id:nid(),hue:(baseHue+40+i*31)%360,title:['Enquete','Bom dia','Novidade','Link na bio','Caixinha','Contagem','Repost'][i],img:null});
+  return {id:nid(),handle,name,hue:baseHue,feed,stories,curStory:stories[3].id};
+}
+function seed(){return {view:'contas',active:null,datesFollow:true,accounts:[
+  sampleAccount('@cafe.serido','Café Seridó (exemplo)',22),
+  sampleAccount('@studio.lume','Studio Lume (exemplo)',200),
+  sampleAccount('@atelie.maré','Ateliê Maré (exemplo)',330)]};}
+
+let S;try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+if(!S||!S.accounts)S=seed();
+if(!S.active)S.active=S.accounts[0]?.id;
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast('Não deu para salvar neste navegador (imagens muito pesadas?)')}}
+const acc=()=>S.accounts.find(a=>a.id===S.active)||S.accounts[0];
+const bg=p=>p.img?`url(${p.img})`:`linear-gradient(160deg,hsl(${p.hue} 60% 70%),hsl(${(p.hue+35)%360} 45% 42%))`;
+const fmt=d=>{if(!d)return'sem data';const[y,m,dd]=d.split('-');return `${dd}/${m}`};
+const wk=d=>d?['dom','seg','ter','qua','qui','sex','sáb'][new Date(d+'T12:00').getDay()]:'';
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,2200)}
+
+/* ---------- Arrastar e reorganizar (estilo auto layout) ---------- */
+function flip(container,mutate){
+  const kids=[...container.children];const before=new Map(kids.map(k=>[k,k.getBoundingClientRect()]));
+  mutate();
+  kids.forEach(k=>{const a=before.get(k),b=k.getBoundingClientRect();const dx=a.left-b.left,dy=a.top-b.top;
+    if(dx||dy){k.style.transition='none';k.style.transform=`translate(${dx}px,${dy}px)`;
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{k.style.transition='transform .24s cubic-bezier(.2,.7,.2,1)';k.style.transform=''}));}});
+}
+function sortable(container,{onDrop,onClick}){
+  let drag=null;
+  container.addEventListener('pointerdown',e=>{
+    const it=e.target.closest('.item');if(!it||!container.contains(it)||e.button>0)return;
+    drag={it,x:e.clientX,y:e.clientY,started:false,lock:0,pid:e.pointerId};
+  });
+  window.addEventListener('pointermove',e=>{
+    if(!drag||e.pointerId!==drag.pid)return;
+    const dx=e.clientX-drag.x,dy=e.clientY-drag.y;
+    if(!drag.started){if(Math.hypot(dx,dy)<6)return;
+      drag.started=true;const r=drag.it.getBoundingClientRect();
+      const g=drag.it.cloneNode(true);g.classList.add('ghost');g.classList.remove('item');
+      Object.assign(g.style,{left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px'});
+      document.body.appendChild(g);drag.g=g;drag.ox=e.clientX-r.left;drag.oy=e.clientY-r.top;
+      drag.it.classList.add('is-placeholder');}
+    drag.g.style.left=(e.clientX-drag.ox)+'px';drag.g.style.top=(e.clientY-drag.oy)+'px';
+    const now=performance.now();if(now<drag.lock)return;
+    const under=document.elementFromPoint(e.clientX,e.clientY);const tgt=under&&under.closest('.item');
+    if(!tgt||tgt===drag.it||tgt.parentNode!==container)return;
+    const kids=[...container.children];const ti=kids.indexOf(tgt),pi=kids.indexOf(drag.it);
+    flip(container,()=>container.insertBefore(drag.it,ti>pi?tgt.nextSibling:tgt));
+    drag.lock=now+180;
+  });
+  const end=e=>{
+    if(!drag||e.pointerId!==drag.pid)return;const d=drag;drag=null;
+    if(!d.started){if(e.type==='pointerup'&&onClick)onClick(d.it.dataset.id);return}
+    d.it.classList.remove('is-placeholder');d.g.remove();
+    onDrop([...container.querySelectorAll(':scope > .item')].map(n=>n.dataset.id));
+  };
+  window.addEventListener('pointerup',end);window.addEventListener('pointercancel',end);
+  container.addEventListener('keydown',e=>{
+    const it=e.target.closest('.item');if(!it)return;
+    if(e.key==='Enter'){onClick&&onClick(it.dataset.id);return}
+    if(!e.altKey)return;const back=['ArrowLeft','ArrowUp'].includes(e.key),fwd=['ArrowRight','ArrowDown'].includes(e.key);
+    if(!back&&!fwd)return;e.preventDefault();
+    const sib=back?it.previousElementSibling:it.nextElementSibling;if(!sib||!sib.classList.contains('item'))return;
+    flip(container,()=>container.insertBefore(it,back?sib:sib.nextSibling));it.focus();
+    onDrop([...container.querySelectorAll(':scope > .item')].map(n=>n.dataset.id),true);
+  });
+}
+function reorder(list,ids){const m=new Map(list.map(x=>[x.id,x]));return ids.map(i=>m.get(i)).filter(Boolean)}
+
+/* ---------- Telas ---------- */
+const app=document.getElementById('app');
+function render(){
+  document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-current',t.dataset.v===S.view));
+  const a=acc();
+  document.getElementById('who').innerHTML=a?`<span class="dot" style="background:${bg({hue:a.hue})}"></span>${esc(a.handle)}`:'';
+  ({contas:vContas,feed:vFeed,stories:vStories,cronograma:vCrono})[S.view]();
+}
+
+function vContas(){
+  app.innerHTML=`<div class="head"><div class="grow"><div class="label">Contas gerenciadas</div><h1>Escolha um perfil</h1>
+  <p>Cada cliente tem seu próprio feed, stories e cronograma. As três contas abaixo são exemplos para testar.</p></div></div>
+  <div class="accounts">${S.accounts.map(a=>`
+    <button class="acc ${a.id===S.active?'sel':''}" data-id="${a.id}">
+      <div class="acc-cover">${a.feed.slice(0,12).map(p=>`<div style="background-image:${bg(p)}"></div>`).join('')}</div>
+      <div><div class="acc-handle">${esc(a.handle)}</div><div class="acc-meta">${a.feed.length} posts · ${a.stories.length} stories</div></div>
+    </button>`).join('')}
+    <form class="acc-new" id="newacc"><div class="label">Nova conta</div>
+      <input id="newhandle" placeholder="@perfil.do.cliente" required><button class="btn primary">Adicionar conta</button></form>
+  </div>`;
+  app.querySelectorAll('.acc').forEach(b=>b.onclick=()=>{S.active=b.dataset.id;S.view='feed';save();render()});
+  document.getElementById('newacc').onsubmit=e=>{e.preventDefault();let h=document.getElementById('newhandle').value.trim();if(!h)return;if(h[0]!=='@')h='@'+h;
+    const n=sampleAccount(h,h,Math.floor(Math.random()*360));n.feed=n.feed.slice(0,3);n.feed.forEach(p=>p.status='rascunho');
+    S.accounts.push(n);S.active=n.id;S.view='feed';save();render();toast('Conta criada com 3 posts de exemplo')};
+}
+
+function vFeed(){
+  const a=acc();const c={r:0,p:0,a:0};a.feed.forEach(p=>c[p.status[0]]++);
+  app.innerHTML=`<div class="head"><div class="grow"><div class="label">Feed · ${esc(a.handle)}</div><h1>Grade do feed</h1>
+    <p>Arraste um post para outro lugar e o resto se reorganiza sozinho. O post do topo é o mais recente, como no Instagram.</p></div>
+    <button class="btn primary" id="addpost">+ Adicionar fotos</button></div>
+  <div class="feed-layout">
+    <div class="grid" id="grid">${a.feed.map(p=>`
+      <div class="item tile" tabindex="0" data-id="${p.id}" style="background-image:${bg(p)}" aria-label="${esc(p.title)}, ${fmt(p.date)}">
+        ${p.img?'':`<div class="ttl">${esc(p.title)}</div>`}
+        <div class="cap"><span>${fmt(p.date)}</span><span class="st st-${p.status}" title="${p.status}"></span></div>
+      </div>`).join('')}</div>
+    <aside class="side">
+      <div class="stats"><div><b>${a.feed.length}</b><span class="label">posts</span></div><div><b>${c.a}</b><span class="label">agendados</span></div><div><b>${c.r}</b><span class="label">rascunhos</span></div></div>
+      <div class="legend"><span><i class="st st-rascunho"></i>Rascunho</span><span><i class="st st-pronto"></i>Pronto</span><span><i class="st st-agendado"></i>Agendado</span></div>
+      <label class="check"><input type="checkbox" id="follow" ${S.datesFollow?'checked':''}> As datas acompanham a ordem da grade</label>
+      <ul class="tips"><li>Clique num post para trocar foto, legenda, data e status.</li>
+        <li>Com a caixa acima marcada, ao mover um post as datas se reorganizam: quem está no topo sai por último.</li>
+        <li>No teclado: Alt + setas move o post selecionado.</li>
+        <li>Tudo fica salvo neste navegador.</li></ul>
+      <button class="btn" id="reset">Recomeçar com os exemplos</button>
+    </aside></div>`;
+  sortable(document.getElementById('grid'),{
+    onDrop:(ids,kb)=>{const dates=a.feed.map(p=>p.date).filter(Boolean).sort().reverse();
+      a.feed=reorder(a.feed,ids);if(S.datesFollow&&dates.length===a.feed.length)a.feed.forEach((p,i)=>p.date=dates[i]);
+      save();if(!kb)render();else{const f=document.activeElement?.dataset.id;render();document.querySelector(`[data-id="${f}"]`)?.focus()}},
+    onClick:id=>editPost(id)});
+  document.getElementById('follow').onchange=e=>{S.datesFollow=e.target.checked;save()};
+  document.getElementById('addpost').onclick=()=>pickFiles('feed');
+  document.getElementById('reset').onclick=e=>{if(e.target.dataset.sure){S=seed();S.active=S.accounts[0].id;save();render();toast('Exemplos restaurados')}
+    else{e.target.dataset.sure=1;e.target.textContent='Clique de novo para confirmar';e.target.classList.add('danger')}};
+}
+
+function vStories(){
+  const a=acc();
+  app.innerHTML=`<div class="head"><div class="grow"><div class="label">Stories</div><h1>Sequência de stories</h1>
+    <p>Clique num story para destacá-lo. Arraste para mudar a ordem em que eles aparecem.</p></div>
+    <button class="btn primary" id="addst">+ Adicionar stories</button></div>
+  <div class="story-head"><span class="dot" style="background:${bg({hue:a.hue})}"></span><span class="acc-handle">${esc(a.handle)}</span></div>
+  <div class="stories" id="st">${a.stories.map((s,i)=>`
+    <div class="item story ${s.id===a.curStory?'cur':''}" tabindex="0" data-id="${s.id}" style="background-image:${bg(s)}">
+      <span class="n">${i+1}/${a.stories.length}</span>${s.img?'':`<span class="t">${esc(s.title)}</span>`}</div>`).join('')}</div>
+  <div class="row"><button class="btn" id="delst">Remover story destacado</button></div>`;
+  const box=document.getElementById('st');
+  sortable(box,{onDrop:ids=>{a.stories=reorder(a.stories,ids);save();render()},
+    onClick:id=>{a.curStory=id;save();box.querySelectorAll('.story').forEach(n=>n.classList.toggle('cur',n.dataset.id===id))}});
+  box.querySelector('.cur')?.scrollIntoView({inline:'center',block:'nearest'});
+  document.getElementById('addst').onclick=()=>pickFiles('stories');
+  document.getElementById('delst').onclick=()=>{const i=a.stories.findIndex(s=>s.id===a.curStory);if(i<0)return;a.stories.splice(i,1);
+    a.curStory=a.stories[Math.min(i,a.stories.length-1)]?.id;save();render();toast('Story removido')};
+}
+
+function vCrono(){
+  const a=acc();const list=[...a.feed].reverse();
+  app.innerHTML=`<div class="head"><div class="grow"><div class="label">Cronograma · ${esc(a.handle)}</div><h1>O que sai e quando</h1>
+    <p>Os mesmos posts do feed, agora em linha do tempo, do primeiro a ser publicado ao último. Arraste para mudar a ordem.</p></div></div>
+  <div class="progress"><i id="bar"></i></div>
+  <div class="track" id="tr">${list.map(p=>`
+    <div class="item slot" data-id="${p.id}" tabindex="0">
+      <div class="when"><b>${wk(p.date)} ${fmt(p.date)}</b><span><i class="st st-${p.status}" style="display:inline-block;box-shadow:none"></i> ${p.status}</span></div>
+      <div class="pic" style="background-image:${bg(p)}">${p.img?'':`<div class="ttl" style="position:absolute;left:12px;top:12px;right:12px;font-weight:700;font-size:16px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.35)">${esc(p.title)}</div>`}</div>
+      <div class="txt">${esc(p.caption)}</div></div>`).join('')}</div>`;
+  const tr=document.getElementById('tr'),bar=document.getElementById('bar');
+  const upd=()=>{const max=tr.scrollWidth-tr.clientWidth;const w=Math.max(8,tr.clientWidth/tr.scrollWidth*100);
+    bar.style.width=w+'%';bar.style.left=(max>0?tr.scrollLeft/max*(100-w):0)+'%'};
+  tr.onscroll=upd;upd();
+  sortable(tr,{onDrop:ids=>{const dates=a.feed.map(p=>p.date).filter(Boolean).sort().reverse();
+      a.feed=reorder(a.feed,ids.reverse());if(S.datesFollow&&dates.length===a.feed.length)a.feed.forEach((p,i)=>p.date=dates[i]);save();render()},
+    onClick:id=>editPost(id)});
+}
+
+/* ---------- Editar post ---------- */
+function editPost(id){
+  const a=acc();const p=a.feed.find(x=>x.id===id);if(!p)return;
+  const ov=document.createElement('div');ov.className='overlay';
+  ov.innerHTML=`<form class="panel" id="pf"><div class="row" style="justify-content:space-between;align-items:center"><span class="label">Editar post</span><button type="button" class="btn" id="cl">Fechar</button></div>
+    <div class="pv" style="background-image:${bg(p)}"></div>
+    <button type="button" class="btn" id="ph">Trocar foto</button>
+    <div class="field"><label class="label" for="f-t">Título interno</label><input id="f-t" value="${esc(p.title)}"></div>
+    <div class="field"><label class="label" for="f-c">Legenda</label><textarea id="f-c">${esc(p.caption)}</textarea></div>
+    <div class="row"><div class="field" style="flex:1"><label class="label" for="f-d">Data</label><input type="date" id="f-d" value="${p.date||''}"></div>
+      <div class="field" style="flex:1"><label class="label" for="f-s">Status</label><select id="f-s">${['rascunho','pronto','agendado'].map(s=>`<option ${s===p.status?'selected':''}>${s}</option>`).join('')}</select></div></div>
+    <div class="row"><button class="btn primary">Salvar</button><button type="button" class="btn danger" id="del">Excluir post</button></div></form>`;
+  document.body.appendChild(ov);
+  const close=()=>ov.remove();
+  ov.onclick=e=>{if(e.target===ov)close()};ov.querySelector('#cl').onclick=close;
+  ov.querySelector('#ph').onclick=()=>pickFiles('replace',p,()=>{close();render()});
+  ov.querySelector('#del').onclick=e=>{if(!e.target.dataset.sure){e.target.dataset.sure=1;e.target.textContent='Confirmar exclusão';return}
+    a.feed=a.feed.filter(x=>x.id!==id);save();close();render();toast('Post excluído')};
+  ov.querySelector('#pf').onsubmit=e=>{e.preventDefault();p.title=ov.querySelector('#f-t').value;p.caption=ov.querySelector('#f-c').value;
+    p.date=ov.querySelector('#f-d').value;p.status=ov.querySelector('#f-s').value;save();close();render();toast('Post salvo')};
+  ov.querySelector('#f-t').focus();
+}
+
+/* ---------- Fotos (reduzidas para caber no navegador) ---------- */
+let pickCtx=null;
+function pickFiles(kind,post,done){pickCtx={kind,post,done};const f=document.getElementById('file');f.multiple=kind!=='replace';f.value='';f.click()}
+function shrink(file){return new Promise(res=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{
+  const k=Math.min(1,640/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;
+  c.getContext('2d').drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.78))};im.onerror=()=>res(null);im.src=r.result};r.readAsDataURL(file)})}
+document.getElementById('file').onchange=async e=>{
+  const files=[...e.target.files];if(!files.length||!pickCtx)return;const a=acc();
+  const imgs=(await Promise.all(files.map(shrink))).filter(Boolean);
+  if(pickCtx.kind==='replace'){pickCtx.post.img=imgs[0];save();pickCtx.done&&pickCtx.done();return}
+  if(pickCtx.kind==='feed'){const top=a.feed[0]?.date;imgs.reverse().forEach((img,i)=>{let d='';if(top){const x=new Date(top+'T12:00');x.setDate(x.getDate()+2*(imgs.length-i));d=x.toISOString().slice(0,10)}
+      a.feed.unshift({id:nid(),hue:0,title:'Novo post',caption:'',date:d,status:'rascunho',img})});toast(`${imgs.length} post(s) no topo da grade`)}
+  else{imgs.forEach(img=>a.stories.push({id:nid(),hue:0,title:'',img}));toast(`${imgs.length} story(s) adicionados`)}
+  save();render();
+};
+
+document.getElementById('tabs').onclick=e=>{const b=e.target.closest('.tab');if(!b)return;S.view=b.dataset.v;save();render()};
+render();
+</script>
+
+</body>
+</html>
