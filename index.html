@@ -4,6 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Fig.Feed</title>
+<meta name="description" content="Monte e organize feeds, carrosséis e cronogramas de forma visual.">
+<meta name="theme-color" content="#ffffff">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Fig.Feed">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
@@ -117,7 +126,9 @@ img{display:block;max-width:100%}
 /* ---------- 4. Feed ---------- */
 .feed{display:flex;justify-content:center;padding:50px 16px 80px}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(6px,.65vw,10px);width:min(394px,92vw)}
-.item{position:relative;touch-action:none;user-select:none;-webkit-user-select:none}
+.item{position:relative;touch-action:manipulation;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.armed{transform:scale(.96);transition:transform .15s}
+.avatar{display:block;flex:none}
 .tile{aspect-ratio:125/164;background:var(--tile) center/cover;cursor:grab;transition:opacity .2s}
 .tile .multi{position:absolute;top:6px;right:6px;width:14px;height:14px}
 .tile.dim{opacity:.18}
@@ -186,6 +197,135 @@ img{display:block;max-width:100%}
 .chk{display:flex;gap:10px;align-items:center;margin-bottom:24px}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--fg);color:#fff;padding:9px 16px;border-radius:99px;font-size:13px;z-index:99;max-width:calc(100vw - 32px);text-align:center}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ---------- Painel lateral do post ---------- */
+.ov{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.16);display:flex;justify-content:flex-end;animation:fade .15s}
+@keyframes fade{from{opacity:0}}
+.sp{background:#fff;width:min(460px,100%);height:100%;overflow:auto;display:flex;flex-direction:column;box-shadow:-12px 0 40px rgba(0,0,0,.08);animation:slide .2s cubic-bezier(.2,.7,.2,1)}
+@keyframes slide{from{transform:translateX(30px);opacity:.4}}
+.sp .bar{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:1}
+.sp .bar .sp-close{margin-left:auto;width:32px;height:32px;border-radius:8px;display:grid;place-items:center;color:var(--muted)}
+.sp .bar .sp-close:hover{background:var(--soft)}
+.sp .body{padding:20px 22px 34px;display:flex;flex-direction:column;gap:16px}
+.sp .ttl{font-size:24px;font-weight:500;letter-spacing:-.02em;border:0;outline:none;width:100%;padding:2px 0;border-radius:6px}
+.sp .ttl:focus{background:var(--soft)}
+.sp dl{display:grid;grid-template-columns:100px minmax(0,1fr);gap:12px 10px;margin:0;align-items:center;font-size:13px}
+.sp dt{color:var(--muted)}
+.sp dd{margin:0;min-width:0}
+.sp input[type=date]{border:1px solid var(--line);border-radius:8px;padding:6px 8px;background:#fff}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);border-radius:99px;padding:4px 10px;font-size:12px;display:inline-flex;align-items:center;gap:6px}
+.chip:hover{background:var(--soft)}
+.chip.on{background:var(--fg);color:#fff;border-color:var(--fg)}
+.sd{width:8px;height:8px;border-radius:50%;display:inline-block;flex:none}
+.st-rascunho{background:#c9c4c4}.st-pronto{background:#f2b01e}.st-agendado{background:#2f45ff}.st-publicado{background:#14b85a}
+.sp h3{font-size:13px;font-weight:600;margin:8px 0 -6px}
+.thumbs{display:flex;gap:6px;flex-wrap:wrap}
+.thumbs div{width:56px;aspect-ratio:4/5;background:var(--tile) center/cover;border-radius:3px}
+.sp textarea{width:100%;min-height:150px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;resize:vertical;font-size:13px;line-height:1.45;outline:none}
+.sp textarea:focus{border-color:#bdbdbd}
+.sp .foot{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.saved{font-size:11px;color:var(--muted)}
+
+/* ---------- Cronograma: semana e quadro ---------- */
+.cr{display:grid;grid-template-columns:230px minmax(0,1fr);gap:14px;padding:6px max(16px,2.2vw) 30px;min-height:calc(100vh - 66px)}
+.cr-side{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:20px;align-self:start;position:sticky;top:76px}
+.cr-side h2{font-size:15px;font-weight:500;margin:0}
+.cr-side .lbl{font-size:12px;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:6px}
+.acc-f{display:flex;flex-direction:column;gap:2px}
+.acc-f label{display:flex;align-items:center;gap:8px;font-size:13px;padding:5px 6px;border-radius:6px;cursor:pointer;min-width:0}
+.acc-f label:hover{background:var(--soft)}
+.acc-f input{accent-color:var(--fg);margin:0}
+.acc-f .sq{width:12px;height:12px;border-radius:3px;flex:none}
+.acc-f .nm{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.acc-f .n{margin-left:auto;color:var(--muted);font-variant-numeric:tabular-nums}
+.cr-main{background:var(--soft);border-radius:12px;padding:14px;min-width:0}
+.cr-top{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.cr-top h2{font-size:17px;font-weight:500;margin:0 6px;letter-spacing:-.01em}
+.ib{width:28px;height:28px;border-radius:7px;display:grid;place-items:center;color:#555}
+.ib:hover{background:#e4e4e4}
+.seg{display:inline-flex;background:#e6e6e6;border-radius:9px;padding:3px;margin-left:auto}
+.seg button{padding:5px 12px;border-radius:7px;font-size:13px;color:var(--muted);font-weight:500}
+.seg button.on{background:#fff;color:var(--fg);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.cols{display:grid;gap:8px;overflow-x:auto;padding-bottom:4px}
+.cols.week{grid-template-columns:repeat(7,minmax(128px,1fr))}
+.cols.board{grid-template-columns:repeat(4,minmax(190px,1fr))}
+.col{display:flex;flex-direction:column;gap:8px;min-width:0}
+.col .ch{font-size:13px;padding:2px 4px;display:flex;align-items:center;gap:6px;color:#333}
+.col .ch b{font-weight:500}
+.col .ch.today b{background:var(--fg);color:#fff;border-radius:99px;padding:0 7px}
+.col .ch .n{margin-left:auto;color:var(--muted);font-size:12px}
+.zone{background:#e8e8e8;border-radius:10px;padding:6px;display:flex;flex-direction:column;gap:6px;min-height:440px;transition:background .15s,outline-color .15s;outline:2px dashed transparent;outline-offset:-2px}
+.zone.past{background:#ededed}
+.zone.over{background:#e3f6ea;outline-color:var(--drop)}
+.card{background:#fff;border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:6px;cursor:grab;box-shadow:0 1px 2px rgba(0,0,0,.05);touch-action:manipulation;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.card:hover{box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.card .ct{display:flex;gap:8px;align-items:flex-start}
+.card .th{width:34px;aspect-ratio:4/5;background:var(--tile) center/cover;border-radius:3px;flex:none}
+.card .tt{font-size:12.5px;line-height:1.25;min-width:0;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.card .meta{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);min-width:0}
+.tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:1px 6px 1px 4px;border-radius:5px;background:var(--soft);color:#333;max-width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;min-width:0}
+.tag i{width:9px;height:9px;border-radius:2px;flex:none}
+.card.ph{opacity:.25}
+.cardghost{position:fixed;z-index:80;pointer-events:none;transform:rotate(2deg) scale(1.03);box-shadow:0 14px 30px rgba(0,0,0,.18);outline:2px solid var(--accent)}
+.zone .none{font-size:11px;color:#aaa;padding:6px}
+@media (max-width:900px){.cr{grid-template-columns:1fr}.cr-side{position:static;padding:12px;gap:10px}.cr-side .desc,.cr-side .stblock,.cr-side .lbl{display:none}.cr-side .accs-list{flex-direction:row;flex-wrap:wrap;gap:4px}.cr-side .accs-list .n{margin-left:4px}.zone{min-height:200px}}
+
+/* ---------- Perfil: quadro de constância ---------- */
+.prof-top{display:flex;align-items:center;gap:20px;margin-bottom:30px;flex-wrap:wrap}
+.prof-top .avatar{width:84px;height:84px}
+.prof-top h1{margin:0!important}
+.avbtn{position:relative;flex:none}
+.avbtn .lb{position:absolute;left:50%;bottom:-8px;transform:translateX(-50%);font-size:10px;background:#fff;border:1px solid var(--line);border-radius:99px;padding:1px 8px;white-space:nowrap}
+.heat-wrap{border:1px solid var(--line);border-radius:12px;padding:18px 18px 14px;margin:8px 0 14px}
+.heat-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.heat-head h2{font-size:16px;font-weight:500;margin:0}
+.heat-head select{margin-left:auto;border:1px solid var(--line);border-radius:8px;padding:6px 8px;background:#fff;max-width:100%}
+.heat-scroll{overflow-x:auto;padding-bottom:6px}
+.heat{display:flex;gap:3px;width:max-content}
+.wk{display:flex;flex-direction:column;gap:3px}
+.wk .mo{height:15px;font-size:10px;color:var(--muted);white-space:nowrap;width:11px;overflow:visible}
+.wk .wd{height:11px;font-size:10px;line-height:11px;color:var(--muted);padding-right:4px;width:26px}
+.cell{width:11px;height:11px;border-radius:2px;background:#ececec;display:block}
+.cell.l1{background:#cfcfcf}.cell.l2{background:#9a9a9a}.cell.l3{background:#555}.cell.l4{background:#111}
+.cell.fut{background:#fff;box-shadow:inset 0 0 0 1px #e3e3e3}
+.cell.fut.f1{box-shadow:inset 0 0 0 1.5px #9a9a9a}.cell.fut.f2{box-shadow:inset 0 0 0 1.5px #333}
+.cell.today{outline:1.5px solid var(--accent);outline-offset:1px}
+.cell[data-d]{cursor:pointer}
+.heat-foot{display:flex;align-items:center;gap:5px;justify-content:flex-end;font-size:11px;color:var(--muted);margin-top:10px;flex-wrap:wrap}
+.heat-foot .sep{width:14px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:46px}
+.stats div{background:var(--soft);border-radius:10px;padding:12px 14px}
+.stats b{display:block;font-size:24px;font-weight:500;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stats span{font-size:12px;color:var(--muted)}
+.tip{position:fixed;z-index:90;background:var(--fg);color:#fff;font-size:11px;line-height:1.35;padding:6px 9px;border-radius:7px;pointer-events:none;max-width:260px}
+.page h2.sec{font-size:16px;font-weight:500;margin:0 0 14px}
+@media (max-width:600px){.stats{grid-template-columns:1fr}}
+
+/* ---------- Conta: foto e ajustes ---------- */
+.crumb-row{display:flex;align-items:center;gap:10px;min-width:0}
+.crumb-row .avatar{width:26px;height:26px;flex:none}
+.more{width:28px;height:28px;border-radius:7px;display:grid;place-items:center;color:#666;flex:none}
+.more:hover{background:var(--soft)}
+.cols.board .zone{max-height:calc(100vh - 230px);overflow-y:auto;min-height:300px}
+.acc .h{display:flex;align-items:center;gap:8px}
+.acc .h .avatar{width:20px;height:20px}
+.install{border:1px solid var(--line);border-radius:12px;padding:16px;max-width:520px;font-size:13px;line-height:1.5;margin-top:30px}
+.install b{font-weight:600}
+
+/* ---------- Celular ---------- */
+@media (max-width:600px){
+  .hint{font-size:11px;bottom:12px}
+  .hdr{padding:10px 12px;gap:8px}
+  .hdr .pill .lab{display:none}
+  .hdr .pill{padding:8px 10px}
+  .nav{gap:14px!important}
+  .nav a{font-size:13.5px}
+  .crumb{font-size:14px}
+  .car .meta{margin-top:36px}
+  .prog{margin-top:30px}
+  .home{grid-template-columns:1fr auto 1fr}
+}
 </style>
 </head>
 <body>
@@ -234,6 +374,15 @@ function traduz(m=''){
 /* ======================= Dados (vindos do banco) ======================= */
 let S={profile:{name:'',handle:'',dates_follow:true},accounts:[]};
 const accById=id=>S.accounts.find(a=>a.id===id);
+const ACC_COLORS=['#ff5a36','#2f45ff','#14b85a','#a855f7','#f2b01e','#0ea5e9','#ec4899','#64748b'];
+const accColor=a=>ACC_COLORS[Math.max(0,S.accounts.indexOf(a))%ACC_COLORS.length];
+const STATUS=[['rascunho','Rascunho'],['pronto','Pronto'],['agendado','Agendado'],['publicado','Publicado']];
+const stName=s=>(STATUS.find(x=>x[0]===s)||[0,s])[1];
+const accAv=a=>a.avatar?{path:a.avatar}:a.posts[0]?.slides[0];
+const accAvHTML=a=>`<span class="avatar" style="${bgi(accAv(a),60,60)}"></span>`;
+const profAv=()=>S.profile.avatar_path?{path:S.profile.avatar_path}:S.accounts[0]?.posts[0]?.slides[0];
+const DOTS='<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>';
+const XICON='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>';
 
 async function signPaths(paths){
   const need=[...new Set(paths)].filter(p=>p&&!p.startsWith('picsum:')&&!URLS[p]);if(!need.length)return;
@@ -243,14 +392,14 @@ async function signPaths(paths){
 async function loadAll(){
   const [prof,accs,posts,slides]=await Promise.all([
     db(sb.from('profiles').select('*').eq('id',USER.id).maybeSingle()),
-    db(sb.from('accounts').select('id,handle,position').order('position').order('created_at')),
+    db(sb.from('accounts').select('id,handle,position,avatar_path').order('position').order('created_at')),
     db(sb.from('posts').select('id,account_id,title,caption,publish_date,status,position').order('position').order('created_at')),
     db(sb.from('slides').select('id,post_id,storage_path,credit,position').order('position').order('created_at'))]);
   S.profile=prof||{name:'',handle:'',dates_follow:true};
   const byPost={};slides.forEach(s=>(byPost[s.post_id]=byPost[s.post_id]||[]).push({id:s.id,path:s.storage_path,credit:s.credit}));
   const byAcc={};posts.forEach(p=>(byAcc[p.account_id]=byAcc[p.account_id]||[]).push({id:p.id,title:p.title,caption:p.caption,date:p.publish_date,status:p.status,slides:byPost[p.id]||[]}));
-  S.accounts=accs.map(a=>({id:a.id,handle:a.handle,posts:byAcc[a.id]||[]}));
-  await signPaths(slides.map(s=>s.storage_path));
+  S.accounts=accs.map(a=>({id:a.id,handle:a.handle,avatar:a.avatar_path,posts:byAcc[a.id]||[]}));
+  await signPaths([...slides.map(s=>s.storage_path),...accs.map(a=>a.avatar_path),S.profile.avatar_path]);
 }
 
 // Contas de exemplo, para testar sem precisar enviar fotos
@@ -260,8 +409,9 @@ async function seedExamples(){
   for(let k=0;k<handles.length;k++){
     const acc=await db(sb.from('accounts').insert({handle:handles[k],position:base+k}).select('id').single());
     const top=new Date();top.setDate(top.getDate()+14);
-    const rows=Array.from({length:12},(_,i)=>{const d=new Date(top);d.setDate(d.getDate()-i*2);
-      return {account_id:acc.id,title:TITLES[i],caption:CAPS[rnd(CAPS.length)],publish_date:iso(d),position:i,status:i<4?'rascunho':i<8?'pronto':'agendado'}});
+    const today=iso(new Date());
+    const rows=Array.from({length:15},(_,i)=>{const d=new Date(top);d.setDate(d.getDate()-i*3+rnd(2));const ds=iso(d);
+      return {account_id:acc.id,title:TITLES[i%TITLES.length],caption:CAPS[rnd(CAPS.length)],publish_date:ds,position:i,status:ds<today?'publicado':['rascunho','pronto','agendado'][i%3]}});
     const ps=await db(sb.from('posts').insert(rows).select('id,position'));
     const sl=[];ps.forEach(p=>{const n=1+rnd(4);for(let j=0;j<n;j++){const ph=randPhoto();sl.push({post_id:p.id,storage_path:ph.path,credit:ph.credit,position:j})}});
     await db(sb.from('slides').insert(sl));
@@ -278,7 +428,7 @@ const go=h=>{if(location.hash.slice(1)===h)render();else location.hash=h};
 window.addEventListener('hashchange',render);
 
 function render(){
-  clearInterval(homeTimer);openDrop=null;document.querySelector('.drop')?.remove();dragCleanup&&dragCleanup();window.onresize=null;
+  clearInterval(homeTimer);openDrop=null;closePanel();hideTip();document.querySelector('.drop')?.remove();dragCleanup&&dragCleanup();window.onresize=null;
   route=(location.hash.slice(1)||'home').split('/');const v=route[0];
   if(recovery&&v!=='nova-senha')return go('nova-senha');
   if(!USER&&!AUTH.includes(v))return go('entrar');
@@ -342,17 +492,17 @@ function vAuth(mode){
 /* ======================= Cabeçalho ======================= */
 function weekCount(){const now=iso(new Date());const lim=new Date();lim.setDate(lim.getDate()+7);const l=iso(lim);
   let n=0;S.accounts.forEach(a=>a.posts.forEach(p=>{if(p.date&&p.date>=now&&p.date<=l)n++}));return n}
-function header(cur,crumb){
-  const wc=weekCount();const av=S.accounts[0]?.posts[0]?.slides[0];
+function header(cur,crumb,before='',after=''){
+  const wc=weekCount();const av=profAv();
   return `<header class="hdr">
     <div class="l"><button aria-label="Voltar para o início" data-go="home">${LOGO()}</button>
-      ${crumb?`<div class="crumb">${crumb}</div>`:`<nav class="nav" style="display:flex;gap:22px">
+      ${crumb?`<div class="crumb-row">${before}<div class="crumb">${crumb}</div>${after}</div>`:`<nav class="nav" style="display:flex;gap:22px">
         <a data-go="contas" class="${cur==='contas'?'cur':''}">Contas</a>
         <a data-go="crono" class="${cur==='crono'?'cur':''}">Cronograma${wc?`<span class="badge">${wc}</span>`:''}</a>
         <a data-go="down" class="${cur==='down'?'cur':''}">Downloads</a></nav>`}</div>
     <div class="mid"><label class="search"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#777" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
       <input id="q" placeholder="Buscar contas, posts ou legendas" value="${esc(q)}" autocomplete="off"></label></div>
-    <div class="r"><button class="pill" id="criar"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Criar</button>
+    <div class="r"><button class="pill" id="criar"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg><span class="lab">Criar</span></button>
       <button class="who" id="me" aria-label="Abrir menu da conta"><span class="avatar" style="${bgi(av,80,80)}"></span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button></div></header>`;
 }
@@ -425,15 +575,34 @@ function vMenu(){
 
 /* ======================= 3. Contas ======================= */
 function vContas(){
-  app.innerHTML=header('contas')+`<main class="contas">${S.accounts.length?`<div class="accs">${S.accounts.map(a=>`
-    <button class="acc" data-id="${a.id}" data-h="${esc(a.handle)}">
+  app.innerHTML=header('contas')+`<main class="contas">${S.accounts.length?`<div class="accs" id="accs">${S.accounts.map(a=>`
+    <button class="acc item" data-id="${a.id}" data-h="${esc(a.handle)}">
       <div class="g">${Array.from({length:9},(_,i)=>`<div style="${bgi(a.posts[i]?.slides[0],240,312)}"></div>`).join('')}</div>
-      <div class="h">${esc(a.handle)}</div></button>`).join('')}</div>`
+      <div class="h">${a.avatar?accAvHTML(a):''}${esc(a.handle)}</div></button>`).join('')}</div>`
     :`<div class="empty"><h2>Comece pela primeira conta</h2><p>Use o botão Criar, lá em cima, para adicionar o @ de um cliente. Ou crie três contas de exemplo para testar.</p>
-      <div class="row2"><button class="pill dark" id="seed">Criar contas de exemplo</button></div></div>`}</main>`;
+      <div class="row2"><button class="pill dark" id="seed">Criar contas de exemplo</button></div></div>`}</main>
+    ${S.accounts.length>1?'<div class="hint">Arraste uma conta para mudar a ordem · no celular, segure e arraste</div>':''}`;
   bindHeader();applySearch();
-  app.querySelectorAll('.acc').forEach(b=>b.onclick=()=>go('feed/'+b.dataset.id));
+  const box=document.getElementById('accs');
+  if(box)sortable(box,{onDrop:async ids=>{S.accounts=reorder(S.accounts,ids);vContas();try{await db(sb.rpc('reorder_accounts',{p_ids:ids}))}catch(e){}},
+    onClick:id=>go('feed/'+id)});
   const sd=document.getElementById('seed');if(sd)sd.onclick=async()=>{sd.disabled=true;try{await seedExamples();vContas()}catch(e){sd.disabled=false}};
+}
+function accMenu(a,btn){
+  document.querySelector('.drop')?.remove();if(openDrop==='acc'){openDrop=null;return}openDrop='acc';
+  const d=document.createElement('div');d.className='drop';d.onclick=e=>e.stopPropagation();
+  const r=btn.getBoundingClientRect();Object.assign(d.style,{position:'fixed',right:'auto',left:Math.max(8,Math.min(r.left,innerWidth-250))+'px',top:(r.bottom+8)+'px'});
+  d.innerHTML=`<span class="lbl">Renomear conta</span><form id="rf"><input id="rh" value="${esc(a.handle)}" required aria-label="Novo @ da conta"><button class="pill" style="padding:6px 10px">Salvar</button></form><hr>
+    <button data-a="foto">Trocar foto da conta</button><hr><button data-a="del" style="color:var(--err)">Apagar conta</button>`;
+  document.body.appendChild(d);
+  d.querySelector('#rf').onsubmit=async e=>{e.preventDefault();let h=d.querySelector('#rh').value.trim().replace(/\s+/g,'');if(!h)return;if(h[0]!=='@')h='@'+h;
+    await db(sb.from('accounts').update({handle:h}).eq('id',a.id));a.handle=h;d.remove();openDrop=null;toast('Conta renomeada');vFeed()};
+  d.querySelector('[data-a="foto"]').onclick=()=>{d.remove();openDrop=null;pickFiles({type:'accavatar',acc:a.id})};
+  const del=d.querySelector('[data-a="del"]');
+  del.onclick=async()=>{if(!del.dataset.ok){del.dataset.ok=1;del.textContent=`Clique de novo para apagar ${a.handle} e ${a.posts.length} post${a.posts.length===1?'':'s'}`;return}
+    const paths=a.posts.flatMap(p=>p.slides.map(s=>s.path)).filter(x=>!x.startsWith('picsum:'));if(a.avatar)paths.push(a.avatar);
+    await db(sb.from('accounts').delete().eq('id',a.id));if(paths.length)sb.storage.from('fotos').remove(paths);
+    S.accounts=S.accounts.filter(x=>x.id!==a.id);d.remove();openDrop=null;toast('Conta apagada');go('contas')};
 }
 
 /* ======================= Arrastar e reorganizar ======================= */
@@ -445,12 +614,18 @@ function flip(container,mutate){
       requestAnimationFrame(()=>requestAnimationFrame(()=>{k.style.transition='transform .26s cubic-bezier(.2,.7,.2,1)';k.style.transform=''}))}});
 }
 let dragCleanup=null;
+// No toque: segure ~0,3 s para começar a arrastar; deslizar sem segurar continua rolando a tela.
+let blockTouch=false;
+document.addEventListener('touchmove',e=>{if(blockTouch)e.preventDefault()},{passive:false});
+function armTouch(st,el){if(st.touch)st.timer=setTimeout(()=>{st.armed=true;blockTouch=true;el.classList.add('armed');if(navigator.vibrate)navigator.vibrate(12)},320)}
+function disarm(st,el){clearTimeout(st.timer);blockTouch=false;el.classList.remove('armed')}
 function sortable(container,{onDrop,onClick}){
   dragCleanup&&dragCleanup();let drag=null;
   container.onpointerdown=e=>{const it=e.target.closest('.item');if(!it||e.button>0||e.target.closest('.x'))return;
-    drag={it,x:e.clientX,y:e.clientY,started:false,lock:0,pid:e.pointerId}};
+    drag={it,x:e.clientX,y:e.clientY,started:false,lock:0,pid:e.pointerId,touch:e.pointerType==='touch',armed:e.pointerType!=='touch'};armTouch(drag,it)};
   const move=e=>{
     if(!drag||e.pointerId!==drag.pid)return;
+    if(!drag.armed){if(Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>8){disarm(drag,drag.it);drag=null}return}
     if(!drag.started){if(Math.hypot(e.clientX-drag.x,e.clientY-drag.y)<6)return;
       drag.started=true;const r=drag.it.getBoundingClientRect();const g=drag.it.cloneNode(true);g.className=drag.it.className+' ghost';g.classList.remove('item');
       Object.assign(g.style,{left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px'});document.body.appendChild(g);
@@ -462,7 +637,7 @@ function sortable(container,{onDrop,onClick}){
     const kids=[...container.children];const ti=kids.indexOf(t),pi=kids.indexOf(drag.it);
     flip(container,()=>container.insertBefore(drag.it,ti>pi?t.nextSibling:t));drag.lock=now+170;
   };
-  const end=e=>{if(!drag||e.pointerId!==drag.pid)return;const d=drag;drag=null;
+  const end=e=>{if(!drag||e.pointerId!==drag.pid)return;const d=drag;drag=null;disarm(d,d.it);
     if(!d.started){if(e.type==='pointerup')onClick&&onClick(d.it.dataset.id);return}
     d.it.classList.remove('is-ph');d.g.remove();onDrop([...container.querySelectorAll(':scope > .item')].map(n=>n.dataset.id))};
   window.addEventListener('pointermove',move);window.addEventListener('pointerup',end);window.addEventListener('pointercancel',end);
@@ -486,14 +661,15 @@ async function saveFeedOrder(a,ids){
 }
 function vFeed(){
   const a=accById(route[1]);if(!a)return go('contas');
-  app.innerHTML=header('contas',`<span>Contas /</span> ${esc(a.handle)}`)+`<main class="feed">
+  app.innerHTML=header('contas',`<span>Contas /</span> ${esc(a.handle)}`,accAvHTML(a),`<button class="more" id="accmore" aria-label="Ajustes da conta">${DOTS}</button>`)+`<main class="feed">
     ${a.posts.length?`<div class="grid" id="grid">${a.posts.map(p=>{const s=p.slides[0];return `
       <div class="item tile" tabindex="0" data-id="${p.id}" data-s="${esc(p.title+' '+p.caption)}" style="${bgi(s,250,328)}" aria-label="${esc(p.title)}, ${fmt(p.date)}">
         ${p.slides.length>1?MULTI:''}<span class="dt">${fmt(p.date)}</span></div>`}).join('')}</div>`
     :`<div class="empty" style="margin-top:12vh"><h2>Monte o primeiro post</h2><p>Envie fotos do seu computador ou comece com fotos de exemplo.</p>
       <div class="row2"><button class="pill dark" id="e-up">Enviar fotos</button><button class="pill" id="e-ex">Usar fotos de exemplo</button></div></div>`}</main>
-    ${a.posts.length?'<div class="hint">Arraste para reorganizar · clique para abrir o carrossel</div>':''}`;
+    ${a.posts.length?'<div class="hint">Arraste para reorganizar (no celular, segure) · toque para abrir</div>':''}`;
   bindHeader();applySearch();
+  document.getElementById('accmore').onclick=e=>{e.stopPropagation();accMenu(a,e.currentTarget)};
   const g=document.getElementById('grid');
   if(g)sortable(g,{onDrop:async(ids,kb)=>{const f=kb&&document.activeElement?.dataset.id;const p=saveFeedOrder(a,ids);vFeed();if(f)document.querySelector(`[data-id="${f}"]`)?.focus();await p},
     onClick:id=>go(`car/${a.id}/${id}`)});
@@ -505,14 +681,14 @@ function vFeed(){
 function vCar(){
   const a=accById(route[1]);const p=a&&a.posts.find(x=>x.id===route[2]);if(!p)return go(a?'feed/'+a.id:'contas');
   const idx=a.posts.indexOf(p)+1;const n=p.slides.length;
-  app.innerHTML=header('contas',`<span>Contas / <a data-go="feed/${a.id}" style="cursor:pointer">${esc(a.handle)}</a> /</span> Carrossel`)+`<main class="car">
+  app.innerHTML=header('contas',`<span>Contas / <a data-go="feed/${a.id}" style="cursor:pointer">${esc(a.handle)}</a> /</span> Carrossel`,accAvHTML(a))+`<main class="car">
     <div class="prog"><i id="bar"></i></div>
     <div class="meta"><div>${idx}. <span class="t" contenteditable="true" spellcheck="false" id="ttl">${esc(p.title)}</span> (${fmt(p.date)})</div>
       <div>${n} ${n===1?'foto':'fotos'} neste post. Arraste para mudar a ordem; a primeira é a capa que aparece no feed.</div></div>
     <div class="track" id="tr">${p.slides.map(s=>`<div class="item slide" tabindex="0" data-id="${s.id}" style="${bgi(s,500,658)}"><button class="x" data-x="${s.id}" aria-label="Remover foto">×</button></div>`).join('')}
       ${n<10?'<button class="addslide" id="add">+ adicionar fotos</button>':''}</div>
     <button class="cap ${p.caption?'':'ph'}" id="cap">${p.caption?esc(p.caption):'Clique para escrever a legenda'}</button>
-    <div style="margin:40px 0 0 max(16px,8.1%)"><button class="pill" id="delpost" style="font-size:12px;color:var(--err)">Excluir post</button></div>
+    <div style="margin:40px 0 0 max(16px,8.1%)"><button class="pill" id="det" style="font-size:12px">Status, data e detalhes</button> <button class="pill" id="delpost" style="font-size:12px;color:var(--err)">Excluir post</button></div>
   </main>`;
   bindHeader();
   const tr=document.getElementById('tr'),bar=document.getElementById('bar');
@@ -529,6 +705,7 @@ function vCar(){
   const t=document.getElementById('ttl');
   t.onblur=async()=>{const v=t.textContent.trim()||'Sem título';if(v===p.title)return;p.title=v;await db(sb.from('posts').update({title:v}).eq('id',p.id))};
   t.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();t.blur()}};
+  document.getElementById('det').onclick=()=>openPanel(a.id,p.id,()=>{if(route[0]==='car')vCar()});
   const del=document.getElementById('delpost');
   del.onclick=async()=>{if(!del.dataset.ok){del.dataset.ok=1;del.textContent='Clique de novo para excluir';return}
     const paths=p.slides.map(s=>s.path).filter(x=>!x.startsWith('picsum:'));
@@ -582,39 +759,220 @@ async function exportPNG(a){
   try{c.toBlob(b=>{saveFile(b,`${a.handle.replace('@','')}-grade.png`);toast('Grade baixada')},'image/png')}catch(e){toast('Não deu para gerar a imagem neste navegador')}
 }
 
-/* ======================= Cronograma ======================= */
-function vCrono(){
-  const today=iso(new Date());const up=[];
-  S.accounts.forEach(a=>a.posts.forEach(p=>{if(p.date&&p.date>=today)up.push({a,p})}));
-  up.sort((m,n)=>m.p.date.localeCompare(n.p.date));
-  const byDay={};up.forEach(x=>(byDay[x.p.date]=byDay[x.p.date]||[]).push(x));
-  const wd=d=>['domingo','segunda','terça','quarta','quinta','sexta','sábado'][new Date(d+'T12:00').getDay()];
-  app.innerHTML=header('crono')+`<main class="page"><h1>Cronograma</h1><p class="sub">Próximas publicações de todas as contas, em ordem de data.</p>
-    ${up.length?Object.entries(byDay).map(([d,xs])=>`<section class="day"><div class="d"><b>${fmt(d)}</b>${wd(d)}</div><div class="rows">
-      ${xs.map(({a,p})=>`<button class="row" data-car="${a.id}/${p.id}"><span class="th" style="${bgi(p.slides[0],90,112)}"></span>
-        <span class="txt"><small>${esc(a.handle)}</small>${esc(p.title)} · ${p.slides.length} foto${p.slides.length!==1?'s':''}</span></button>`).join('')}</div></section>`).join('')
-      :'<p style="color:var(--muted)">Nenhuma publicação marcada a partir de hoje.</p>'}</main>`;
-  bindHeader();app.querySelectorAll('[data-car]').forEach(b=>b.onclick=()=>go('car/'+b.dataset.car));
+/* ======================= Painel lateral do post ======================= */
+let panelFlush=null;
+function closePanel(){if(panelFlush){panelFlush();panelFlush=null}document.getElementById('ov')?.remove();document.removeEventListener('keydown',panelEsc)}
+function panelEsc(e){if(e.key==='Escape')closePanel()}
+function openPanel(accId,postId,onChange){
+  const a=accById(accId);const p=a&&a.posts.find(x=>x.id===postId);if(!p)return;
+  closePanel();
+  const ov=document.createElement('div');ov.className='ov';ov.id='ov';
+  const chips=()=>STATUS.map(([k,n])=>`<button class="chip ${p.status===k?'on':''}" data-s="${k}" aria-pressed="${p.status===k}"><i class="sd st-${k}"></i>${n}</button>`).join('');
+  ov.innerHTML=`<aside class="sp" role="dialog" aria-modal="true" aria-label="Detalhes do post">
+    <div class="bar"><button class="pill" id="sp-pub"></button><span class="saved" id="sp-saved" aria-live="polite"></span>
+      <button class="sp-close" id="sp-x" aria-label="Fechar">${XICON}</button></div>
+    <div class="body">
+      <input class="ttl" id="sp-t" value="${esc(p.title)}" aria-label="Título do post" maxlength="120">
+      <dl>
+        <dt>Conta</dt><dd><span class="tag"><i style="background:${accColor(a)}"></i>${esc(a.handle)}</span></dd>
+        <dt>Status</dt><dd class="chips" id="sp-st">${chips()}</dd>
+        <dt>Data</dt><dd><input type="date" id="sp-d" value="${p.date||''}" aria-label="Data de publicação"></dd>
+        <dt>Na grade</dt><dd>${a.posts.indexOf(p)+1}º post, de cima para baixo</dd>
+      </dl>
+      <h3>Fotos (${p.slides.length})</h3>
+      <div class="thumbs">${p.slides.map(s=>`<div style="${bgi(s,112,140)}"></div>`).join('')}</div>
+      <div><button class="pill" id="sp-car">Abrir carrossel</button></div>
+      <h3>Legenda</h3>
+      <textarea id="sp-c" maxlength="2200" placeholder="Escreva a legenda aqui" aria-label="Legenda">${esc(p.caption)}</textarea>
+      <div class="foot"><button class="pill" id="sp-del" style="color:var(--err)">Excluir post</button></div>
+    </div></aside>`;
+  document.body.appendChild(ov);document.addEventListener('keydown',panelEsc);
+  const $=id=>document.getElementById(id);
+  const pubLabel=()=>{$('sp-pub').innerHTML=p.status==='publicado'?'✓ Publicado':'Marcar como publicado'};pubLabel();
+  const saved=()=>{const s=$('sp-saved');if(!s)return;s.textContent='Salvo';clearTimeout(saved.t);saved.t=setTimeout(()=>{if($('sp-saved'))$('sp-saved').textContent=''},1600)};
+  const upd=async f=>{await db(sb.from('posts').update(f).eq('id',p.id));saved();onChange&&onChange()};
+  const setStatus=s=>{p.status=s;$('sp-st').innerHTML=chips();pubLabel();upd({status:s})};
+  ov.onclick=e=>{if(e.target===ov)closePanel()};
+  $('sp-x').onclick=closePanel;$('sp-x').focus();
+  $('sp-st').onclick=e=>{const b=e.target.closest('[data-s]');if(b&&b.dataset.s!==p.status)setStatus(b.dataset.s)};
+  $('sp-pub').onclick=()=>setStatus(p.status==='publicado'?'agendado':'publicado');
+  $('sp-t').onchange=e=>{const v=e.target.value.trim()||'Sem título';p.title=v;upd({title:v})};
+  $('sp-t').onkeydown=e=>{if(e.key==='Enter')e.target.blur()};
+  $('sp-d').onchange=e=>{p.date=e.target.value||null;upd({publish_date:p.date})};
+  let timer=null;const flush=()=>{if(timer){clearTimeout(timer);timer=null;const v=$('sp-c')?.value??p.caption;if(v!==p.caption){p.caption=v;upd({caption:v})}}};
+  panelFlush=flush;
+  $('sp-c').oninput=()=>{clearTimeout(timer);timer=setTimeout(()=>{timer=1;flush()},700)};
+  $('sp-car').onclick=()=>{closePanel();go(`car/${a.id}/${p.id}`)};
+  const del=$('sp-del');
+  del.onclick=async()=>{if(!del.dataset.ok){del.dataset.ok=1;del.textContent='Clique de novo para excluir';return}
+    const paths=p.slides.map(s=>s.path).filter(x=>!x.startsWith('picsum:'));
+    await db(sb.from('posts').delete().eq('id',p.id));if(paths.length)sb.storage.from('fotos').remove(paths);
+    a.posts=a.posts.filter(x=>x.id!==p.id);panelFlush=null;closePanel();toast('Post excluído');onChange&&onChange()};
 }
 
-/* ======================= Perfil e Configuração ======================= */
-function vPerfil(){
-  app.innerHTML=header('')+`<main class="page"><h1>Perfil</h1><p class="sub">${esc(USER.email)}</p>
-    <form id="pf"><div class="field"><label for="pn">Nome</label><input id="pn" value="${esc(S.profile.name)}"></div>
-    <div class="field"><label for="ph">Seu @</label><input id="ph" value="${esc(S.profile.handle)}" placeholder="@seu.perfil"></div>
-    <button class="pill dark">Salvar</button></form></main>`;
+/* ======================= Arrastar cartões entre colunas ======================= */
+function cardDrag(root,{onDrop,onClick}){
+  dragCleanup&&dragCleanup();let d=null;
+  root.onpointerdown=e=>{const c=e.target.closest('.card');if(!c||e.button>0)return;d={c,x:e.clientX,y:e.clientY,pid:e.pointerId,on:false,z:null,touch:e.pointerType==='touch',armed:e.pointerType!=='touch'};armTouch(d,c)};
+  const move=e=>{
+    if(!d||e.pointerId!==d.pid)return;
+    if(!d.armed){if(Math.hypot(e.clientX-d.x,e.clientY-d.y)>8){disarm(d,d.c);d=null}return}
+    if(!d.on){if(Math.hypot(e.clientX-d.x,e.clientY-d.y)<6)return;d.on=true;const r=d.c.getBoundingClientRect();
+      const g=d.c.cloneNode(true);g.classList.add('cardghost');Object.assign(g.style,{left:r.left+'px',top:r.top+'px',width:r.width+'px'});
+      document.body.appendChild(g);d.g=g;d.ox=e.clientX-r.left;d.oy=e.clientY-r.top;d.c.classList.add('ph')}
+    d.g.style.left=(e.clientX-d.ox)+'px';d.g.style.top=(e.clientY-d.oy)+'px';
+    const z=document.elementFromPoint(e.clientX,e.clientY)?.closest('.zone');const ok=z&&root.contains(z)?z:null;
+    root.querySelectorAll('.zone.over').forEach(x=>{if(x!==ok)x.classList.remove('over')});if(ok&&ok!==d.c.parentNode)ok.classList.add('over');d.z=ok;
+    const r=root.getBoundingClientRect();if(e.clientX>r.right-40)root.scrollLeft+=12;else if(e.clientX<r.left+40)root.scrollLeft-=12;
+    if(ok){const zr=ok.getBoundingClientRect();if(e.clientY>zr.bottom-40)ok.scrollTop+=12;else if(e.clientY<zr.top+40)ok.scrollTop-=12}
+  };
+  const end=e=>{if(!d||e.pointerId!==d.pid)return;const x=d;d=null;disarm(x,x.c);
+    if(!x.on){if(e.type==='pointerup')onClick(x.c.dataset.a,x.c.dataset.p);return}
+    x.g.remove();x.c.classList.remove('ph');root.querySelectorAll('.zone.over').forEach(z=>z.classList.remove('over'));
+    if(x.z&&x.z!==x.c.parentNode)onDrop(x.c.dataset.a,x.c.dataset.p,x.z.dataset.z)};
+  window.addEventListener('pointermove',move);window.addEventListener('pointerup',end);window.addEventListener('pointercancel',end);
+  dragCleanup=()=>{window.removeEventListener('pointermove',move);window.removeEventListener('pointerup',end);window.removeEventListener('pointercancel',end);document.querySelector('.cardghost')?.remove()};
+  root.onkeydown=e=>{const c=e.target.closest('.card');if(c&&(e.key==='Enter'||e.key===' ')){e.preventDefault();onClick(c.dataset.a,c.dataset.p)}};
+}
+
+/* ======================= Cronograma: semana e quadro ======================= */
+let crView='semana',crWeek=null;const crHidden=new Set();
+const MESES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+const DIAS=['seg','ter','qua','qui','sex','sáb','dom'];
+const DIAS_LONGOS=['segunda','terça','quarta','quinta','sexta','sábado','domingo'];
+const monday=d=>{const x=new Date(d);x.setHours(12,0,0,0);x.setDate(x.getDate()-((x.getDay()+6)%7));return x};
+const addDays=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
+const wdIdx=ds=>(new Date(ds+'T12:00').getDay()+6)%7;
+const CHEV_L='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>';
+const CHEV_R='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>';
+function visiblePosts(){const r=[];S.accounts.forEach(a=>{if(!crHidden.has(a.id))a.posts.forEach(p=>r.push({a,p}))});return r}
+function cardHTML({a,p},withDate){return `<div class="card" data-a="${a.id}" data-p="${p.id}" tabindex="0" role="button" aria-label="${esc(p.title)}, ${esc(a.handle)}, ${p.date?fmt(p.date):'sem data'}, ${stName(p.status)}">
+  <div class="ct"><span class="th" style="${bgi(p.slides[0],70,88)}"></span><span class="tt">${esc(p.title)}</span></div>
+  <div class="meta"><span class="tag"><i style="background:${accColor(a)}"></i>${esc(a.handle)}</span>${withDate?`<span style="margin-left:auto;white-space:nowrap">${p.date?fmt(p.date):'sem data'}</span>`:`<i class="sd st-${p.status}" title="${stName(p.status)}" style="margin-left:auto"></i>`}</div></div>`}
+function weekLabel(){const a=crWeek,b=addDays(crWeek,6);
+  return a.getMonth()===b.getMonth()?`${MESES[a.getMonth()]} ${a.getFullYear()}`:`${MESES[a.getMonth()].slice(0,3)} – ${MESES[b.getMonth()].slice(0,3)} ${b.getFullYear()}`}
+function vCrono(){
+  if(!crWeek)crWeek=monday(new Date());
+  const vis=visiblePosts();const cnt=k=>vis.filter(x=>x.p.status===k).length;
+  app.innerHTML=header('crono')+`<main class="cr">
+    <aside class="cr-side">
+      <div class="desc"><h2>Cronograma</h2><p style="color:var(--muted);font-size:12px;margin:6px 0 0;line-height:1.45">Arraste um cartão (no celular, segure e arraste) para mudar ${crView==='semana'?'o dia da publicação':'o status'}. Clique nele para ver os detalhes.</p></div>
+      <div><div class="lbl"><span>Contas</span><span>${S.accounts.length}</span></div><div class="acc-f accs-list">${S.accounts.length?S.accounts.map(a=>`<label><input type="checkbox" data-f="${a.id}" ${crHidden.has(a.id)?'':'checked'}><span class="sq" style="background:${accColor(a)}"></span><span class="nm">${esc(a.handle)}</span><span class="n">${a.posts.length}</span></label>`).join(''):'<span style="font-size:12px;color:var(--muted)">Nenhuma conta ainda.</span>'}</div></div>
+      <div class="stblock"><div class="lbl"><span>Status</span></div><div class="acc-f">${STATUS.map(([k,n])=>`<label style="cursor:default"><i class="sd st-${k}"></i>${n}<span class="n">${cnt(k)}</span></label>`).join('')}</div></div>
+    </aside>
+    <section class="cr-main"><div class="cr-top">
+      ${crView==='semana'?`<button class="ib" id="prev" aria-label="Semana anterior">${CHEV_L}</button><button class="ib" id="next" aria-label="Próxima semana">${CHEV_R}</button><h2>${weekLabel()}</h2><button class="pill" id="hoje" style="padding:4px 10px;font-size:12px">Hoje</button>`:'<h2>Quadro de status</h2>'}
+      <div class="seg"><button data-v="semana" class="${crView==='semana'?'on':''}" aria-pressed="${crView==='semana'}">Semana</button><button data-v="quadro" class="${crView==='quadro'?'on':''}" aria-pressed="${crView==='quadro'}">Quadro</button></div>
+    </div><div id="cols"></div></section></main>`;
   bindHeader();
+  app.querySelectorAll('[data-f]').forEach(c=>c.onchange=()=>{c.checked?crHidden.delete(c.dataset.f):crHidden.add(c.dataset.f);vCrono()});
+  app.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{crView=b.dataset.v;vCrono()});
+  const pv=document.getElementById('prev');
+  if(pv){pv.onclick=()=>{crWeek=addDays(crWeek,-7);vCrono()};document.getElementById('next').onclick=()=>{crWeek=addDays(crWeek,7);vCrono()};document.getElementById('hoje').onclick=()=>{crWeek=monday(new Date());vCrono()}}
+  renderCols(vis);
+}
+function renderCols(vis){
+  const box=document.getElementById('cols');const today=iso(new Date());
+  if(crView==='semana'){
+    box.className='cols week';
+    box.innerHTML=Array.from({length:7},(_,i)=>{const d=addDays(crWeek,i);const ds=iso(d);const xs=vis.filter(x=>x.p.date===ds);
+      return `<div class="col"><div class="ch ${ds===today?'today':''}"><b>${d.getDate()}</b>${DIAS[i]}<span class="n">${xs.length||''}</span></div>
+        <div class="zone ${ds<today?'past':''}" data-z="${ds}">${xs.map(x=>cardHTML(x,false)).join('')}</div></div>`}).join('');
+  }else{
+    box.className='cols board';
+    box.innerHTML=STATUS.map(([k,n])=>{const xs=vis.filter(x=>x.p.status===k).sort((m,o)=>(m.p.date||'9').localeCompare(o.p.date||'9'));
+      return `<div class="col"><div class="ch"><i class="sd st-${k}"></i><b>${n}</b><span class="n">${xs.length}</span></div>
+        <div class="zone" data-z="${k}">${xs.map(x=>cardHTML(x,true)).join('')}</div></div>`}).join('');
+  }
+  cardDrag(box,{onClick:(aid,pid)=>openPanel(aid,pid,()=>{if(route[0]==='crono')vCrono()}),
+    onDrop:async(aid,pid,z)=>{const p=accById(aid)?.posts.find(x=>x.id===pid);if(!p)return;const week=crView==='semana';
+      if(week)p.date=z;else p.status=z;vCrono();
+      try{await db(sb.from('posts').update(week?{publish_date:z}:{status:z}).eq('id',pid));toast(week?`Movido para ${DIAS_LONGOS[wdIdx(z)]}, ${fmt(z)}`:`Status: ${stName(z)}`)}
+      catch(e){await loadAll();vCrono()}}});
+}
+
+/* ======================= Perfil com quadro de constância ======================= */
+let heatAcc='';
+function showTip(el,text){let t=document.getElementById('tip');if(!t){t=document.createElement('div');t.id='tip';t.className='tip';t.setAttribute('role','tooltip');document.body.appendChild(t)}
+  t.textContent=text;const r=el.getBoundingClientRect();t.style.left=Math.max(8,Math.min(innerWidth-t.offsetWidth-8,r.left+r.width/2-t.offsetWidth/2))+'px';t.style.top=Math.max(8,r.top-t.offsetHeight-8)+'px'}
+function hideTip(){document.getElementById('tip')?.remove()}
+function vPerfil(){
+  const today=iso(new Date());const map={};
+  S.accounts.forEach(a=>{if(heatAcc&&heatAcc!==a.id)return;a.posts.forEach(p=>{if(!p.date)return;const past=p.date<=today;
+    const ok=past?(p.status==='publicado'||p.status==='agendado'):p.status!=='rascunho';if(ok)(map[p.date]=map[p.date]||[]).push({a,p})})});
+  const start=addDays(monday(new Date()),-52*7),weeks=61,startIso=iso(start);
+  let total=0,fut=0;Object.entries(map).forEach(([d,xs])=>{if(d<=today&&d>=startIso)total+=xs.length;if(d>today)fut+=xs.length});
+  let cols='<div class="wk"><span class="mo"></span>'+['seg','','qua','','sex','',''].map(w=>`<span class="wd">${w}</span>`).join('')+'</div>';
+  for(let w=0;w<weeks;w++){const ws=addDays(start,w*7);let mo=w===0?MESES[ws.getMonth()].slice(0,3):'';let cells='';
+    for(let i=0;i<7;i++){const d=addDays(ws,i);const ds=iso(d);if(d.getDate()===1&&w>0)mo=MESES[d.getMonth()].slice(0,3);
+      const n=(map[ds]||[]).length;const f=ds>today;
+      const cls=f?`fut ${n>=2?'f2':n?'f1':''}`:(n>=4?'l4':n===3?'l3':n===2?'l2':n?'l1':'');
+      cells+=`<span class="cell ${cls} ${ds===today?'today':''}" data-d="${ds}"></span>`}
+    cols+=`<div class="wk"><span class="mo">${mo}</span>${cells}</div>`}
+  const wkHas=w=>{for(let i=0;i<7;i++){const ds=iso(addDays(w,i));if(ds<=today&&map[ds])return true}return false};
+  let streak=0,w=monday(new Date());if(!wkHas(w))w=addDays(w,-7);while(streak<520&&wkHas(w)){streak++;w=addDays(w,-7)}
+  const from13=iso(addDays(new Date(),-91));let c13=0;Object.entries(map).forEach(([d,xs])=>{if(d<=today&&d>from13)c13+=xs.length});
+  const avg=(c13/13).toFixed(1).replace('.',',');
+  const wdC=[0,0,0,0,0,0,0];Object.entries(map).forEach(([d,xs])=>{if(d<=today)wdC[wdIdx(d)]+=xs.length});
+  const mx=Math.max(...wdC);const best=mx?DIAS_LONGOS[wdC.indexOf(mx)]:'—';
+  app.innerHTML=header('')+`<main class="page" style="max-width:920px">
+    <div class="prof-top"><button class="avbtn" id="pav" aria-label="Trocar foto de perfil"><span class="avatar" style="${bgi(profAv(),168,168)}"></span><span class="lb">trocar</span></button>
+      <div style="min-width:0"><h1>${esc(S.profile.name||'Seu perfil')}</h1><p class="sub" style="margin:4px 0 0">${esc([S.profile.handle,USER.email].filter(Boolean).join(' · '))}</p></div></div>
+    <section class="heat-wrap" aria-label="Quadro de constância">
+      <div class="heat-head"><h2>${total} ${total===1?'post publicado':'posts publicados'} no último ano</h2>
+        <select id="hacc" aria-label="Filtrar por conta"><option value="">Todas as contas</option>${S.accounts.map(a=>`<option value="${a.id}" ${heatAcc===a.id?'selected':''}>${esc(a.handle)}</option>`).join('')}</select></div>
+      <div class="heat-scroll" id="hs"><div class="heat" id="heat">${cols}</div></div>
+      <div class="heat-foot"><span style="margin-right:auto">${fut} ${fut===1?'post agendado':'posts agendados'} pela frente</span>Menos <span class="cell"></span><span class="cell l1"></span><span class="cell l2"></span><span class="cell l3"></span><span class="cell l4"></span> Mais<span class="sep"></span><span class="cell fut f1"></span> Agendado</div>
+    </section>
+    <div class="stats"><div><b>${streak}</b><span>${streak===1?'semana seguida':'semanas seguidas'} com post</span></div>
+      <div><b>${avg}</b><span>posts por semana (últimos 3 meses)</span></div>
+      <div><b style="text-transform:capitalize">${best}</b><span>dia da semana em que mais publica</span></div></div>
+    <h2 class="sec">Seus dados</h2>
+    <form id="pf"><div class="field"><label for="pn">Nome</label><input id="pn" value="${esc(S.profile.name)}"></div>
+      <div class="field"><label for="ph">Seu @</label><input id="ph" value="${esc(S.profile.handle)}" placeholder="@seu.perfil"></div>
+      <button class="pill dark">Salvar</button></form></main>`;
+  bindHeader();
+  const hs=document.getElementById('hs');hs.scrollLeft=hs.scrollWidth;
+  const heat=document.getElementById('heat');
+  heat.onmouseover=e=>{const c=e.target.closest('[data-d]');if(!c)return hideTip();const ds=c.dataset.d;const xs=map[ds]||[];const n=xs.length;const f=ds>today;
+    const hs2=[...new Set(xs.map(x=>x.a.handle))].join(', ');
+    showTip(c,`${DIAS_LONGOS[wdIdx(ds)]}, ${fmt(ds)} · ${n?`${n} post${n>1?'s':''} ${f?'agendado':'publicado'}${n>1?'s':''}`:'nenhum post'}${hs2?' · '+hs2:''}`)};
+  heat.onmouseleave=hideTip;
+  heat.onclick=e=>{const c=e.target.closest('[data-d]');if(!c)return;hideTip();crWeek=monday(new Date(c.dataset.d+'T12:00'));crView='semana';go('crono')};
+  document.getElementById('hacc').onchange=e=>{heatAcc=e.target.value;vPerfil()};
+  document.getElementById('pav').onclick=()=>pickFiles({type:'profavatar'});
   document.getElementById('pf').onsubmit=async e=>{e.preventDefault();let h=document.getElementById('ph').value.trim();if(h&&h[0]!=='@')h='@'+h;
     const name=document.getElementById('pn').value.trim();await db(sb.from('profiles').update({name,handle:h}).eq('id',USER.id));
-    S.profile.name=name;S.profile.handle=h;toast('Perfil salvo')};
+    S.profile.name=name;S.profile.handle=h;toast('Perfil salvo');vPerfil()};
 }
+
+/* ======================= Configuração ======================= */
+let installEvt=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installEvt=e});
 function vConfig(){
   app.innerHTML=header('')+`<main class="page"><h1>Configuração</h1><p class="sub">Preferências da sua conta.</p>
     <label class="chk"><input type="checkbox" id="df" ${S.profile.dates_follow?'checked':''}> Ao arrastar um post no feed, as datas acompanham a nova ordem</label>
-    <button class="pill" id="seed">Criar mais contas de exemplo</button></main>`;
+    <button class="pill" id="seed">Criar mais contas de exemplo</button>
+    <section class="install"><b>Instalar o Fig.Feed no celular</b><br>
+      <b>iPhone:</b> abra o site no Safari, toque em Compartilhar e depois em "Adicionar à Tela de Início".<br>
+      <b>Android:</b> abra no Chrome, toque nos três pontinhos e depois em "Instalar app" ou "Adicionar à tela inicial".
+      ${installEvt?'<div style="margin-top:12px"><button class="pill dark" id="inst">Instalar agora</button></div>':''}</section></main>`;
   bindHeader();
   document.getElementById('df').onchange=async e=>{const v=e.target.checked;await db(sb.from('profiles').update({dates_follow:v}).eq('id',USER.id));S.profile.dates_follow=v;toast('Preferência salva')};
   const sd=document.getElementById('seed');sd.onclick=async()=>{sd.disabled=true;try{await seedExamples();go('contas')}catch(e){sd.disabled=false}};
+  const ib=document.getElementById('inst');if(ib)ib.onclick=async()=>{installEvt.prompt();await installEvt.userChoice;installEvt=null;vConfig()};
+}
+
+/* ======================= Fotos de perfil e de conta ======================= */
+async function setAvatar(ctx,file){
+  toast('Enviando foto…',15000);const b=await shrink(file);if(!b){toast('Não deu para ler essa imagem.');return}
+  const path=`${USER.id}/${ctx.type==='profavatar'?'perfil':'contas'}/${crypto.randomUUID()}.jpg`;
+  const {error}=await sb.storage.from('fotos').upload(path,b,{contentType:'image/jpeg'});if(error){toast(traduz(error.message));return}
+  let old;
+  if(ctx.type==='profavatar'){old=S.profile.avatar_path;await db(sb.from('profiles').update({avatar_path:path}).eq('id',USER.id));S.profile.avatar_path=path}
+  else{const a=accById(ctx.acc);old=a.avatar;await db(sb.from('accounts').update({avatar_path:path}).eq('id',a.id));a.avatar=path}
+  if(old)sb.storage.from('fotos').remove([old]);
+  await signPaths([path]);toast('Foto atualizada');render();
 }
 
 /* ======================= Envio de fotos ======================= */
@@ -637,7 +995,9 @@ async function uploadSlides(p,files){
   p.slides.push(...ins.map(r=>({id:r.id,path:r.storage_path,credit:r.credit})));toast('Fotos enviadas');
 }
 document.getElementById('file').onchange=async e=>{
-  const files=[...e.target.files];if(!files.length||!pickCtx)return;const a=accById(pickCtx.acc);if(!a)return;
+  const files=[...e.target.files];if(!files.length||!pickCtx)return;
+  if(pickCtx.type==='profavatar'||pickCtx.type==='accavatar'){try{await setAvatar(pickCtx,files[0])}catch(err){}return}
+  const a=accById(pickCtx.acc);if(!a)return;
   try{
     if(pickCtx.type==='newpost'){const p=await createPost(a);await uploadSlides(p,files);go(`car/${a.id}/${p.id}`)}
     else{const p=a.posts.find(x=>x.id===pickCtx.post);await uploadSlides(p,files);vCar()}
@@ -660,6 +1020,7 @@ sb.auth.onAuthStateChange((event,session)=>{
   const {data:{session}}=await sb.auth.getSession();USER=session?.user||null;
   if(USER){try{await loadAll()}catch(e){}}
   booted=true;render();
+  if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js').catch(()=>{});
 })();
 </script>
 </body>

@@ -207,3 +207,23 @@ create policy "trocar próprias fotos" on storage.objects
 
 create policy "apagar próprias fotos" on storage.objects
   for delete to authenticated using (bucket_id = 'fotos' and (storage.foldername(name))[1] = (select auth.uid())::text);
+
+-- =====================================================================
+-- Rodada 2: status "publicado", foto de cada conta, ordem das contas
+-- =====================================================================
+alter table public.posts drop constraint if exists posts_status_check;
+alter table public.posts add constraint posts_status_check check (status in ('rascunho', 'pronto', 'agendado', 'publicado'));
+
+alter table public.accounts add column if not exists avatar_path text;
+
+create or replace function public.reorder_accounts(p_ids uuid[])
+returns void language plpgsql security invoker set search_path = public as $$
+begin
+  update public.accounts a
+     set position = t.ord - 1
+    from unnest(p_ids) with ordinality as t(id, ord)
+   where a.id = t.id and a.owner_id = auth.uid();
+end $$;
+
+revoke execute on function public.reorder_accounts(uuid[]) from public, anon;
+grant execute on function public.reorder_accounts(uuid[]) to authenticated;
