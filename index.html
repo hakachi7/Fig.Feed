@@ -1035,7 +1035,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v13.2';
+const VERSAO='v13.3';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   blog:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 5h16v14H4zM8 9h8M8 13h8M8 17h5"/></svg>',
@@ -2391,6 +2391,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v13.3','Nov 2026',['Planejamento em PDF só em preto, branco e cinza']],
   ['v13.2','Nov 2026',['Planejamento em PDF: contracapa no final com a grade do feed','Detalhes do PDF em azul no lugar do vermelho']],
   ['v13.1','Nov 2026',['Mood do feed: cada post aparece uma vez e, se faltar post, entram os fundos de bolinhas','O app agora sempre busca a versão mais nova ao abrir']],
   ['v13','Nov 2026',['Feed da conta: no modo Selecionar, botão “Apagar” manda os posts escolhidos para a Lixeira (dá para recuperar por 30 dias)','Tutorial com dois passos novos: como selecionar posts e como gerar o planejamento do mês','Planejamento em PDF com capa nova, página “Mood do feed” (posts no visual do Instagram) e “Mood dos stories” (celulares com os stories)']],
@@ -2977,7 +2978,7 @@ function planHTML(a,month,objetivo,stories){
   const ps=a.posts.filter(p=>p.date&&p.date.startsWith(month)).sort((x,z)=>(x.date+(hhmm(x.hora)||'99'))<(z.date+(hhmm(z.hora)||'99'))?-1:1);
   const pic=(s,w,h)=>{const u=s?src(s,w,h):'';return u?`<img src="${u}" alt="">`:'<span class="ph"></span>'};
   const av=pic(accAv(a),80,80),hoje=new Date().toLocaleDateString('pt-BR');
-  const ST_={rascunho:['Rascunho','#7a7a7a','#f4f4f4'],pronto:['Pronto','#0a0a0a','#e7e7e7'],agendado:['Agendado','#2f45ff','#eceefe'],publicado:['Publicado','#1e6b3a','#eaf6ee']};
+  const ST_={rascunho:['Rascunho','#7a7a7a','#f2f2f2'],pronto:['Pronto','#0a0a0a','#dedede'],agendado:['Agendado','#fff','#6b6b6b'],publicado:['Publicado','#fff','#0a0a0a']};
   const chip=s=>{const[t,c,b]=ST_[s]||ST_.rascunho;return `<span class="chip" style="color:${c};background:${b}">${t}</span>`};
   const DS=['dom','seg','ter','qua','qui','sex','sáb'];const wd=d=>DS[new Date(d+'T12:00').getDay()];
   const dd=d=>`${d.slice(8,10)}/${d.slice(5,7)}`;
@@ -3010,7 +3011,7 @@ function planHTML(a,month,objetivo,stories){
    <div><div class="obj"><div class="lab">Objetivo do mês</div><p>${objetivo?esc(objetivo):'<span class="muted">Objetivo ainda não definido.</span>'}</p></div>
     <div class="stats"><div><b>${ps.length}</b><span>posts no mês</span></div><div><b>${fmtCnt.reels}</b><span>Reels</span></div><div><b>${fmtCnt.carrossel}</b><span>carrosséis</span></div><div><b>${stories.length}</b><span>stories</span></div></div>
     <div class="two"><div><div class="lab">Pilares de conteúdo</div>${pilHTML}</div>
-     <div><div class="lab">Situação dos posts</div><div class="bar">${['publicado','agendado','pronto','rascunho'].filter(k=>cnt[k]).map(k=>`<i style="flex:${cnt[k]};background:${k==='rascunho'?'#cfcfcf':ST_[k][1]}"></i>`).join('')}</div>
+     <div><div class="lab">Situação dos posts</div><div class="bar">${['publicado','agendado','pronto','rascunho'].filter(k=>cnt[k]).map(k=>`<i style="flex:${cnt[k]};background:${k==='rascunho'?'#e3e3e3':ST_[k][2]}"></i>`).join('')}</div>
       <div class="legend">${['publicado','agendado','pronto','rascunho'].map(k=>`<span>${chip(k)} ${cnt[k]}</span>`).join('')}</div>
       <div class="lab" style="margin-top:5mm">Posts por semana</div><div class="wk">${weeks.map((w,i)=>`<div><span class="v">${w}</span><i style="height:${w/Math.max(1,...weeks)*100}%"></i><small>Sem ${i+1}</small></div>`).join('')}</div></div></div>
     <div class="approve"><div class="lab">Aprovação do planejamento</div><div class="ap"><span><i class="box"></i>Aprovado como está</span><span><i class="box"></i>Aprovado com ajustes (anotados nas próximas páginas)</span></div>
@@ -3076,7 +3077,7 @@ footer{position:absolute;left:14mm;right:14mm;bottom:7mm;display:flex;justify-co
 .two{display:grid;grid-template-columns:1fr 1fr;gap:9mm;margin-top:6mm}
 .pil{display:grid;grid-template-columns:24mm 1fr 20mm;gap:2.5mm;align-items:center;font-size:7.5pt;margin-bottom:2mm}
 .pb{position:relative;height:2.6mm;background:#f4f4f4;border-radius:99px}.pb i{position:absolute;left:0;top:0;bottom:0;background:#0a0a0a;border-radius:99px}
-.pb em{position:absolute;top:-1mm;bottom:-1mm;width:1.2px;background:#2f45ff}.pv small{color:#7a7a7a;font-size:6.5pt}
+.pb em{position:absolute;top:-1mm;bottom:-1mm;width:1.2px;background:#7a7a7a}.pv small{color:#7a7a7a;font-size:6.5pt}
 .bar{display:flex;height:2.6mm;border-radius:99px;overflow:hidden;gap:1px}.bar i{display:block}
 .legend{display:flex;gap:3.5mm;margin-top:2.2mm;font-size:7.5pt;align-items:center;flex-wrap:wrap}
 .wk{display:flex;align-items:flex-end;gap:3mm;height:17mm;border-bottom:1px solid #e7e7e7;padding-top:3mm;margin-bottom:5mm}
@@ -3088,9 +3089,9 @@ footer{position:absolute;left:14mm;right:14mm;bottom:7mm;display:flex;justify-co
 .cal-h{display:grid;grid-template-columns:repeat(7,1fr);gap:1.5mm;font-size:7pt;color:#7a7a7a;text-transform:uppercase;letter-spacing:.08em;margin-bottom:1.5mm}
 .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:1.5mm;height:136mm}
 .day{border:1px solid #e7e7e7;border-radius:2mm;padding:1.6mm;display:flex;flex-direction:column;gap:1.2mm;overflow:hidden;min-height:0}.day.off{border:none;background:#fafafa}
-.dn{display:flex;justify-content:space-between;align-items:center;font-size:8pt}.st{font-size:6pt;color:#2f45ff}
+.dn{display:flex;justify-content:space-between;align-items:center;font-size:8pt}.st{font-size:6pt;color:#7a7a7a}
 .pc{display:flex;gap:1.5mm;align-items:flex-start;min-height:0}.th{width:7mm;height:8.75mm;flex:none;overflow:hidden;border-radius:.8mm}
-.pt{font-size:6.2pt;line-height:1.25;overflow:hidden;max-height:3.75em}.pt em{font-style:normal;color:#2f45ff;font-weight:600}.more{font-size:6pt;color:#7a7a7a}
+.pt{font-size:6.2pt;line-height:1.25;overflow:hidden;max-height:3.75em}.pt em{font-style:normal;color:#0a0a0a;font-weight:600}.more{font-size:6pt;color:#7a7a7a}
 .posts{width:100%;border-collapse:collapse;font-size:7.2pt}
 .posts th{text-align:left;font-size:6.5pt;color:#7a7a7a;text-transform:uppercase;letter-spacing:.06em;font-weight:500;padding:0 2mm 1.5mm 0;border-bottom:1px solid #e7e7e7}
 .posts td{padding:1mm 2mm 1mm 0;border-bottom:1px solid #e7e7e7;vertical-align:middle;line-height:1.3}
