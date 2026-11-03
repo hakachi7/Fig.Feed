@@ -1,0 +1,28 @@
+# Versões do Fig.Feed
+
+A versão no ar é sempre a da branch **main**: https://hakachi7.github.io/Fig.Feed/
+
+Cada versão também tem uma branch própria, com o código exatamente como estava naquela versão. Elas servem só para consulta: o site não muda por causa delas.
+
+| Versão | Nome | O que trouxe | Branch | Commit |
+| --- | --- | --- | --- | --- |
+| v8 | Conteúdo do cliente | Abas Feed, Stories, Prévia e Relatório em cada conta; relatório com PDF e link de 30 dias | [versao-8-stories-previa-relatorio](https://github.com/hakachi7/Fig.Feed/tree/versao-8-stories-previa-relatorio) | [461a3c1](https://github.com/hakachi7/Fig.Feed/commit/461a3c14a1cc698f5caac5ef79803aba529816c0) |
+| v7 | Organização | Lixeira de 30 dias, Biblioteca de fotos, página inicial pública, Planos | [versao-7-lixeira-e-biblioteca](https://github.com/hakachi7/Fig.Feed/tree/versao-7-lixeira-e-biblioteca) | [621cc5e](https://github.com/hakachi7/Fig.Feed/commit/621cc5e2ab29943b7b667715e8b19ee46979bf14) |
+| v6 | Conta e avisos | 404 nova, sem internet, erro, modo atualização; Segurança, Excluir conta, Ajuda, Novidades, Termos, Privacidade | [versao-6-conta-e-avisos](https://github.com/hakachi7/Fig.Feed/tree/versao-6-conta-e-avisos) | [879476f](https://github.com/hakachi7/Fig.Feed/commit/879476f9ac07ff7413a8e674d987721bd9eb1ce9) |
+| v5 | Administração | Aba Admin para GM e administradores: usuários, funções e atividade | [versao-5-admin](https://github.com/hakachi7/Fig.Feed/tree/versao-5-admin) | [8266c17](https://github.com/hakachi7/Fig.Feed/commit/8266c17ddb5f1ad2597934b1e820591424478721) |
+| v4 | Primeiro acesso | Login revisado, e-mail confirmado, tutorial de boas-vindas, tela de carregamento | [versao-4-login-e-tutorial](https://github.com/hakachi7/Fig.Feed/tree/versao-4-login-e-tutorial) | [7de9158](https://github.com/hakachi7/Fig.Feed/commit/7de915820bdc668716c722b9f20e0d8f03f70b6c) |
+| v3 | Navegação | Menu no ícone de grade, página 404, aviso de sem internet | [versao-3-menu-e-404](https://github.com/hakachi7/Fig.Feed/tree/versao-3-menu-e-404) | [6d69443](https://github.com/hakachi7/Fig.Feed/commit/6d6944392256c494bd21297003b1b95d7842f3d1) |
+| v2 | Nuvem | Login, dados no Supabase, carrossel, cronograma, download, app instalável | [versao-1-e-2-prototipo-e-nuvem](https://github.com/hakachi7/Fig.Feed/tree/versao-1-e-2-prototipo-e-nuvem) | [9e684e6](https://github.com/hakachi7/Fig.Feed/commit/9e684e6140829d1a2b9d809384b49987d4053cca) |
+| v1 | Protótipo | Feed com arrastar e soltar, salvo só no navegador (arquivo `prototipo-v1.html`) | [versao-1-e-2-prototipo-e-nuvem](https://github.com/hakachi7/Fig.Feed/tree/versao-1-e-2-prototipo-e-nuvem) | [9e684e6](https://github.com/hakachi7/Fig.Feed/commit/9e684e6140829d1a2b9d809384b49987d4053cca) |
+
+A v1 e a v2 foram enviadas juntas, por isso dividem a mesma branch.
+
+## Banco de dados de cada versão
+
+As mudanças do Supabase ficam na pasta `supabase/`: `schema.sql` (v2), `admin.sql` (v5), `v6.sql`, `v7.sql` e `v8.sql`. Todas já estão aplicadas no projeto Fig-Free.
+
+## Ao lançar uma versão nova
+
+1. Subir `VERSAO` no `index.html` e o `CACHE` no `sw.js`.
+2. Acrescentar a versão no topo da lista `NOVIDADES` (no `index.html`) e nesta tabela.
+3. Criar a branch da versão: `versao-9-<nome-curto>`.

@@ -2,6 +2,10 @@
 
 Aplicação web para social medias montarem e organizarem feeds, carrosséis e cronogramas de forma visual: arraste um post e a grade se reorganiza sozinha, como o auto layout do Figma.
 
+## Versões
+
+A lista de todas as versões, com o código de cada uma, está em [VERSOES.md](VERSOES.md).
+
 ## Arquivos
 
 - `index.html` — o app (v5): login, contas, feed, carrossel, legenda, painel do post, cronograma (semana e quadro), perfil com quadro de constância e download. Salva tudo no Supabase.
