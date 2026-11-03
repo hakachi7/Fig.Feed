@@ -704,6 +704,23 @@ a.pill{text-decoration:none;color:var(--fg)}a.pill.dark{color:#fff}
 @media (max-width:560px){.sel-bar{left:12px;right:12px;transform:none;max-width:none;border-radius:16px;padding:10px;bottom:12px;flex-wrap:wrap}
   .sel-bar b{width:100%;text-align:center;margin:0}.sel-bar .pill{flex:1 1 0;justify-content:center;font-size:12px;padding:9px 6px;white-space:nowrap}}
 body:has(.sel-bar) .toast{bottom:110px}
+
+/* ---------- V12: prévia com foto de perfil, destaques editáveis e PNG ---------- */
+.pv-tog{flex-wrap:wrap;justify-content:center}
+.pv-avbtn{position:relative;flex:none;border-radius:50%}.pv-avbtn .lb{position:absolute;inset:0;border-radius:50%;display:grid;place-items:center;font-size:12px;color:#fff;background:rgba(0,0,0,.38);opacity:0;transition:opacity .15s}
+.pv-avbtn:hover .lb,.pv-avbtn:focus-visible .lb{opacity:1}
+@media (hover:none){.pv-avbtn .lb{opacity:1;background:none;inset:auto 0 -2px 0;color:var(--fg);font-size:10px;transform:translateY(100%)}}
+.pv-hl{scrollbar-width:none}.pv-hl::-webkit-scrollbar{display:none}
+.pv-hl button{display:flex;flex-direction:column;align-items:center;gap:5px;flex:none;width:66px}
+.pv-hl button span{width:60px;height:60px;border-radius:50%;background:#efefef center/cover;box-shadow:0 0 0 2px #fff,0 0 0 3px #dbdbdb;display:grid;place-items:center;font-size:20px;color:#777;font-weight:500}
+.pv-hl button span.add{background:#fff;font-size:28px;font-weight:300;color:#111;box-shadow:0 0 0 1px #c9c9c9}
+.pv-hl button:hover span{filter:brightness(.94)}
+.pv-hl small{font-size:11px;max-width:66px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hl-prev{display:flex;justify-content:center;margin:14px 0 4px}
+.hl-big{width:110px;height:110px;border-radius:50%;background:#efefef center/cover;box-shadow:0 0 0 3px #fff,0 0 0 4px #dbdbdb;display:grid;place-items:center;font-size:40px;color:#777}
+.hl-pick{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;max-height:190px;overflow:auto;padding:2px}
+.hl-pick button{aspect-ratio:1;border-radius:50%;background:var(--tile) center/cover}
+.hl-pick button.on{outline:2px solid var(--fg);outline-offset:2px}
 </style>
 </head>
 <body>
@@ -781,7 +798,7 @@ async function loadAll(){
   const byPost={};slides.forEach(s=>(byPost[s.post_id]=byPost[s.post_id]||[]).push({id:s.id,path:s.storage_path,credit:s.credit}));
   const byAcc={};posts.forEach(p=>(byAcc[p.account_id]=byAcc[p.account_id]||[]).push({id:p.id,title:p.title,caption:p.caption,date:p.publish_date,status:p.status,pilar:p.pilar||'',formato:p.formato||null,hora:p.hora||null,cta:p.cta||'',slides:byPost[p.id]||[]}));
   S.accounts=accs.map(a=>({id:a.id,handle:a.handle,avatar:a.avatar_path,display_name:a.display_name||'',bio:a.bio||'',followers:a.followers,following:a.following,highlights:a.highlights||[],pilares:a.pilares||[],posts:byAcc[a.id]||[]}));
-  await signPaths([...slides.map(s=>s.storage_path),...accs.map(a=>a.avatar_path),S.profile.avatar_path]);
+  await signPaths([...slides.map(s=>s.storage_path),...accs.map(a=>a.avatar_path),...accs.flatMap(a=>(a.highlights||[]).map(h=>h&&h.path)),S.profile.avatar_path].filter(Boolean));
 }
 
 // Contas de exemplo, para testar sem precisar enviar fotos
@@ -993,7 +1010,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v11';
+const VERSAO='v12';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   blog:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 5h16v14H4zM8 9h8M8 13h8M8 17h5"/></svg>',
@@ -2339,6 +2356,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v12','Nov 2026',['Prévia: toque na foto de perfil para trocar','Destaques em círculos: “+ Novo” para criar e toque em um destaque para trocar nome e capa (foto enviada ou dos posts), mover ou remover','Baixar a prévia do perfil em PNG']],
   ['v11','Nov 2026',['Selecionar posts no feed da conta: toque em “Selecionar”, marque os posts e exporte só eles','Exportar os selecionados como fotos (.zip, com uma pasta por post e as legendas), grade (PNG) ou legendas (.txt)']],
   ['v10','Nov 2026',['Templates de feed: em uma conta, “+ Criar → Usar um template” monta a grade de rascunhos','Blog com dicas, tutoriais e novidades','Fale com a gente: mande um pedido de ajuda e veja a resposta no app','Planos: veja o seu plano e use cupons','Admin: Templates, Blog, Suporte e Assinaturas (planos, testes grátis e cupons)']],
   ['v9','Nov 2026',['Planejamento do mês em PDF para o cliente aprovar (Downloads)','Objetivo do mês e pilares de conteúdo de cada conta','No post: formato (foto, carrossel ou Reels), horário, pilar e chamada para ação','Tipo de cada story: imagem, vídeo, enquete, caixinha, link ou contagem']],
@@ -2543,7 +2561,7 @@ async function vBiblioteca(){
     files=(data||[]).filter(f=>!f.name.endsWith('/.emptyFolderPlaceholder'));
     const accOfPost={};S.accounts.forEach(a=>a.posts.forEach(p=>accOfPost[p.id]=a.id));
     sl.forEach(s=>{used[s.storage_path]=accOfPost[s.post_id]||'lixeira'});
-    S.accounts.forEach(a=>{if(a.avatar)used[a.avatar]=used[a.avatar]||a.id});if(S.profile.avatar_path)used[S.profile.avatar_path]='perfil';
+    S.accounts.forEach(a=>{if(a.avatar)used[a.avatar]=used[a.avatar]||a.id;(a.highlights||[]).forEach(h=>{if(h&&h.path)used[h.path]=used[h.path]||a.id})});if(S.profile.avatar_path)used[S.profile.avatar_path]='perfil';
     await signPaths(files.map(f=>f.name));
   }catch(err){if(route[0]==='biblioteca')vErro('FF-503');return}
   if(route[0]!=='biblioteca')return;
@@ -2643,34 +2661,42 @@ async function vStories(){
 
 /* ======================= V8: Prévia estilo Instagram ======================= */
 const fmtNum=n=>n==null?'—':Number(n).toLocaleString('pt-BR');
+const HL_MAX=8;
+// Destaque: {name, path} — path é uma foto enviada (pasta destaques) ou a foto de um post
+const hlList=a=>(a.highlights||[]).slice(0,HL_MAX).map(h=>typeof h==='string'?{name:h}:{name:h.name||'',path:h.path||null});
+const hlCircle=(h,size=120)=>h.path?`style="${bgi({path:h.path},size,size)}"`:'';
 function vPrevia(){
   const a=accById(route[1]);if(!a)return v404('conta');
-  const covers=a.posts.map(p=>p.slides[0]);const hl=(a.highlights||[]).slice(0,6);
+  const hl=hlList(a);
   const nome=a.display_name||a.handle.replace(/^@/,'');
   app.innerHTML=accHeader(a,'previa')+`<main class="pv">
-    <div class="pv-tog" role="group" aria-label="Modo"><button class="pill dark" aria-pressed="true">Prévia</button><button class="pill" data-go="feed/${a.id}">Editar grade</button></div>
+    <div class="pv-tog" role="group" aria-label="Modo"><button class="pill dark" aria-pressed="true">Prévia</button><button class="pill" data-go="feed/${a.id}">Editar grade</button><button class="pill" id="pv-png">Baixar PNG</button></div>
     <section class="pv-phone" aria-label="Prévia do perfil ${esc(a.handle)}">
-      <div class="pv-head"><span class="avatar pv-av" style="${bgi(accAv(a),200,200)}"></span>
+      <div class="pv-head"><button class="pv-avbtn" id="pv-av" aria-label="Trocar foto de perfil"><span class="avatar pv-av" style="${bgi(accAv(a),200,200)}"></span><span class="lb">trocar</span></button>
         <div class="pv-nums"><div><b>${fmtNum(a.posts.length)}</b><span>posts</span></div><div><b>${fmtNum(a.followers)}</b><span>seguidores</span></div><div><b>${fmtNum(a.following)}</b><span>seguindo</span></div></div></div>
       <div class="pv-bio"><b>${esc(nome)}</b>${a.bio?`<p>${esc(a.bio)}</p>`:'<p class="muted">Sem bio ainda.</p>'}</div>
-      <button class="pill pv-edit" id="pv-edit">Editar perfil da prévia</button>
-      ${hl.length?`<div class="pv-hl">${hl.map((h,i)=>`<div><span style="${bgi(covers[i]||covers[0],120,120)}"></span><small>${esc(h.name||h)}</small></div>`).join('')}</div>`:''}
+      <button class="pill pv-edit" id="pv-edit">Editar perfil</button>
+      <div class="pv-hl" aria-label="Destaques">${hl.map((h,i)=>`<button data-hl="${i}" aria-label="Editar destaque ${esc(h.name||i+1)}"><span ${hlCircle(h)}>${h.path?'':esc((h.name||'?')[0].toUpperCase())}</span><small>${esc(h.name)}</small></button>`).join('')}
+        ${hl.length<HL_MAX?`<button data-hl="novo" aria-label="Novo destaque"><span class="add">+</span><small>Novo</small></button>`:''}</div>
       <div class="pv-tabs" role="tablist"><span class="cur" role="tab" aria-selected="true">Posts</span><span role="tab" aria-disabled="true">Reels</span><span role="tab" aria-disabled="true">Marcados</span></div>
       ${a.posts.length?`<div class="pv-grid">${a.posts.map(p=>`<a data-go="car/${a.id}/${p.id}" aria-label="${esc(p.title)}" style="${bgi(p.slides[0],300,375)}"></a>`).join('')}</div>`
         :`<p class="muted" style="text-align:center;padding:40px 0">Nenhum post ainda. Monte a grade em "Editar grade".</p>`}
     </section></main>`;
   bindHeader();
   document.getElementById('pv-edit').onclick=()=>pvForm(a);
+  document.getElementById('pv-av').onclick=()=>pickFiles({type:'accavatar',acc:a.id});
+  document.getElementById('pv-png').onclick=e=>previaPNG(a,e.currentTarget);
+  app.querySelectorAll('[data-hl]').forEach(b=>b.onclick=()=>hlEditor(a,b.dataset.hl==='novo'?null:+b.dataset.hl));
 }
 function pvForm(a){
   const ov=document.createElement('div');ov.className='ov';ov.id='ov';
-  ov.innerHTML=`<form class="pv-form" role="dialog" aria-modal="true" aria-labelledby="pvf-t"><h2 id="pvf-t">Perfil da prévia</h2>
+  ov.innerHTML=`<form class="pv-form" role="dialog" aria-modal="true" aria-labelledby="pvf-t"><h2 id="pvf-t">Perfil</h2>
     <p class="muted" style="margin:0 0 6px;font-size:13px">Só aparece aqui no Fig.Feed, para mostrar como o perfil vai ficar.</p>
     <label for="pf-n">Nome</label><input class="field" id="pf-n" maxlength="60" value="${esc(a.display_name||'')}" placeholder="${esc(a.handle.replace(/^@/,''))}">
     <label for="pf-b">Bio <small id="pf-c"></small></label><textarea class="field" id="pf-b" maxlength="150" rows="3">${esc(a.bio||'')}</textarea>
     <div class="two"><div><label for="pf-s">Seguidores</label><input class="field" id="pf-s" type="number" min="0" value="${a.followers??''}"></div>
       <div><label for="pf-g">Seguindo</label><input class="field" id="pf-g" type="number" min="0" value="${a.following??''}"></div></div>
-    <label for="pf-h">Destaques (separe por vírgula, até 6)</label><input class="field" id="pf-h" value="${esc((a.highlights||[]).map(h=>h.name||h).join(', '))}" placeholder="Cardápio, Bastidores, Clientes">
+    <p class="muted" style="margin:14px 0 0;font-size:12px">A foto de perfil e os destaques você troca tocando neles na prévia.</p>
     <div class="acts-row"><button class="pill dark">Salvar</button><button type="button" class="pill" id="pf-x">Cancelar</button></div></form>`;
   document.body.appendChild(ov);
   const close=()=>{ov.remove();document.removeEventListener('keydown',esc_)};const esc_=e=>{if(e.key==='Escape')close()};
@@ -2679,9 +2705,79 @@ function pvForm(a){
   document.getElementById('pf-n').focus();
   ov.querySelector('form').onsubmit=async e=>{e.preventDefault();
     const num=id=>{const v=document.getElementById(id).value;return v===''?null:Math.max(0,parseInt(v,10)||0)};
-    const row={display_name:document.getElementById('pf-n').value.trim(),bio:b.value.trim().slice(0,150),followers:num('pf-s'),following:num('pf-g'),
-      highlights:document.getElementById('pf-h').value.split(',').map(x=>x.trim()).filter(Boolean).slice(0,6).map(name=>({name}))};
-    await db(sb.from('accounts').update(row).eq('id',a.id));Object.assign(a,row);close();toast('Prévia atualizada');vPrevia()};
+    const row={display_name:document.getElementById('pf-n').value.trim(),bio:b.value.trim().slice(0,150),followers:num('pf-s'),following:num('pf-g')};
+    await db(sb.from('accounts').update(row).eq('id',a.id));Object.assign(a,row);close();toast('Perfil atualizado');vPrevia()};
+}
+// Editor de um destaque: nome e capa (foto enviada ou foto de um post da conta)
+function hlEditor(a,idx){
+  const list=hlList(a);const novo=idx==null;const h=novo?{name:'',path:null}:{...list[idx]};
+  const fotos=[];a.posts.forEach(p=>p.slides.forEach(sl=>{if(fotos.length<24&&sl.path&&!fotos.includes(sl.path))fotos.push(sl.path)}));
+  const ov=document.createElement('div');ov.className='ov';ov.id='ov';
+  const close=()=>{ov.remove();document.removeEventListener('keydown',esc_)};const esc_=e=>{if(e.key==='Escape')close()};
+  const draw=()=>{ov.innerHTML=`<form class="pv-form hl-ed" role="dialog" aria-modal="true" aria-labelledby="hl-t" novalidate><h2 id="hl-t">${novo?'Novo destaque':'Destaque'}</h2>
+    <div class="hl-prev"><span class="hl-big" ${hlCircle(h,240)}>${h.path?'':esc((h.name||'?')[0].toUpperCase())}</span></div>
+    <label for="hl-n">Nome <small id="hl-c"></small></label><input class="field" id="hl-n" maxlength="15" value="${esc(h.name)}" placeholder="Ex.: Cardápio">
+    <label>Capa</label><div class="acts-row" style="margin:0 0 10px"><button type="button" class="pill" id="hl-up">Enviar foto</button>${h.path?'<button type="button" class="pill" id="hl-rm-img">Tirar foto</button>':''}</div>
+    ${fotos.length?`<p class="muted" style="margin:0 0 8px;font-size:12px">Ou escolha uma foto dos posts:</p><div class="hl-pick">${fotos.map(fp=>`<button type="button" data-fp="${esc(fp)}" class="${h.path===fp?'on':''}" style="${bgi({path:fp},120,120)}" aria-label="Usar esta foto" aria-pressed="${h.path===fp}"></button>`).join('')}</div>`:''}
+    ${novo?'':`<div class="acts-row" style="margin-top:16px"><button type="button" class="pill" id="hl-l" ${idx===0?'disabled':''}>← Mover</button><button type="button" class="pill" id="hl-r" ${idx>=list.length-1?'disabled':''}>Mover →</button></div>`}
+    <div class="acts-row"><button class="pill dark">Salvar</button><button type="button" class="pill" id="hl-x">Cancelar</button>${novo?'':'<button type="button" class="danger-link" id="hl-del" style="margin-left:auto">Remover</button>'}</div></form>`;
+    const n=ov.querySelector('#hl-n'),c=ov.querySelector('#hl-c');const cnt=()=>c.textContent=`(${n.value.length}/15)`;cnt();
+    n.oninput=()=>{h.name=n.value;cnt();if(!h.path)ov.querySelector('.hl-big').textContent=(n.value||'?')[0].toUpperCase()};
+    ov.querySelector('#hl-x').onclick=close;
+    ov.querySelector('#hl-up').onclick=()=>{const f=document.createElement('input');f.type='file';f.accept='image/*';
+      f.onchange=async()=>{const file=f.files[0];if(!file)return;toast('Enviando foto…',15000);const b=await shrink(file);if(!b)return toast('Não deu para ler essa imagem.');
+        const path=`${USER.id}/destaques/${crypto.randomUUID()}.jpg`;const {error}=await sb.storage.from('fotos').upload(path,b,{contentType:'image/jpeg'});
+        if(error)return toast(traduz(error.message));await signPaths([path]);h.path=path;toast('Foto enviada');draw()};f.click()};
+    const ri=ov.querySelector('#hl-rm-img');if(ri)ri.onclick=()=>{h.path=null;draw()};
+    ov.querySelectorAll('[data-fp]').forEach(b=>b.onclick=()=>{h.path=b.dataset.fp;draw()});
+    const save=async(nl,msg)=>{const old=(a.highlights||[]).map(x=>typeof x==='string'?{name:x}:x).map(x=>x.path).filter(Boolean);
+      await db(sb.from('accounts').update({highlights:nl}).eq('id',a.id));a.highlights=nl;
+      const sobra=old.filter(pth=>pth.includes('/destaques/')&&!nl.some(x=>x.path===pth));if(sobra.length)sb.storage.from('fotos').remove(sobra).then(()=>{},()=>{});
+      close();toast(msg);vPrevia()};
+    const move=d=>{const nl=[...list];[nl[idx],nl[idx+d]]=[nl[idx+d],nl[idx]];save(nl,'Ordem salva')};
+    const l=ov.querySelector('#hl-l');if(l)l.onclick=()=>move(-1);const r=ov.querySelector('#hl-r');if(r)r.onclick=()=>move(1);
+    const del=ov.querySelector('#hl-del');if(del)del.onclick=()=>{if(confirm(`Remover o destaque "${h.name||'sem nome'}"?`))save(list.filter((_,i)=>i!==idx),'Destaque removido')};
+    ov.querySelector('form').onsubmit=e=>{e.preventDefault();h.name=n.value.trim();if(!h.name)return toast('Dê um nome ao destaque.');
+      const item={name:h.name,path:h.path||null};const nl=[...list];if(novo)nl.push(item);else nl[idx]=item;save(nl,novo?'Destaque criado':'Destaque salvo')};
+    n.focus()};
+  draw();document.body.appendChild(ov);document.addEventListener('keydown',esc_);ov.onclick=e=>{if(e.target===ov)close()};
+}
+// Baixa a prévia como imagem PNG (1080 px de largura, como no celular)
+async function previaPNG(a,btn){
+  btn.disabled=true;const old=btn.textContent;btn.textContent='Montando…';
+  try{
+    const K=3,W=360*K,P=16*K,F='Inter, "Helvetica Neue", Arial, sans-serif';const hl=hlList(a);const nome=a.display_name||a.handle.replace(/^@/,'');
+    const c=document.createElement('canvas');const x=c.getContext('2d');
+    const wrap=(t,max,font)=>{x.font=font;const out=[];String(t||'').split('\n').forEach(par=>{let line='';par.split(' ').forEach(w=>{const tt=line?line+' '+w:w;if(x.measureText(tt).width>max&&line){out.push(line);line=w}else line=tt});out.push(line)});return out};
+    const fBio=`400 ${13*K}px ${F}`;const bio=a.bio?wrap(a.bio,W-2*P,fBio):[];
+    const cell=(W-2*K)/3,cellH=cell*5/4,rows=Math.ceil(a.posts.length/3);
+    const yHead=P,avS=86*K,yName=yHead+avS+16*K,yBio=yName+8*K,yHl=yBio+bio.length*19*K+(hl.length?22*K:6*K),hlS=60*K;
+    const yTabs=yHl+(hl.length?hlS+34*K:0),yGrid=yTabs+40*K;
+    c.width=W;c.height=yGrid+rows*(cellH+2*K)+P;
+    x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);
+    const img=async(s,w,h)=>s?loadImg(src(s,w,h)):null;
+    const cover=(im,cx,cy,w,h)=>{if(!im)return;const r=Math.max(w/im.width,h/im.height);x.drawImage(im,cx+(w-im.width*r)/2,cy+(h-im.height*r)/2,im.width*r,im.height*r)};
+    const circle=async(s,cx,cy,d,letra)=>{x.save();x.beginPath();x.arc(cx+d/2,cy+d/2,d/2,0,Math.PI*2);x.clip();x.fillStyle='#e4e4e4';x.fillRect(cx,cy,d,d);
+      const im=await img(s,240,240);if(im)cover(im,cx,cy,d,d);else if(letra){x.fillStyle='#777';x.font=`500 ${d*.38}px ${F}`;x.textAlign='center';x.textBaseline='middle';x.fillText(letra,cx+d/2,cy+d/2);x.textAlign='left';x.textBaseline='alphabetic'}x.restore()};
+    await circle(accAv(a),P,yHead,avS);
+    const nums=[[fmtNum(a.posts.length),'posts'],[fmtNum(a.followers),'seguidores'],[fmtNum(a.following),'seguindo']];
+    const nx=P+avS+22*K,nw=(W-P-nx)/3;x.textAlign='center';
+    nums.forEach(([v,l],i)=>{const cx=nx+nw*i+nw/2;x.fillStyle='#0a0a0a';x.font=`600 ${16*K}px ${F}`;x.fillText(v,cx,yHead+avS/2-2*K);x.font=`400 ${13*K}px ${F}`;x.fillText(l,cx,yHead+avS/2+17*K)});
+    x.textAlign='left';x.fillStyle='#0a0a0a';x.font=`600 ${13*K}px ${F}`;x.fillText(nome,P,yName);
+    x.font=fBio;bio.forEach((l,i)=>x.fillText(l,P,yBio+(i+1)*19*K-4*K));
+    for(let i=0;i<hl.length;i++){const hx=P+i*(hlS+14*K);if(hx+hlS>W)break;
+      x.strokeStyle='#dbdbdb';x.lineWidth=K;x.beginPath();x.arc(hx+hlS/2,yHl+hlS/2,hlS/2+3*K,0,Math.PI*2);x.stroke();
+      await circle(hl[i].path?{path:hl[i].path}:null,hx,yHl,hlS,(hl[i].name||'?')[0].toUpperCase());
+      x.fillStyle='#0a0a0a';x.font=`400 ${11*K}px ${F}`;x.textAlign='center';let t=hl[i].name;while(x.measureText(t).width>hlS+12*K&&t.length>1)t=t.slice(0,-1);
+      x.fillText(t===hl[i].name?t:t+'…',hx+hlS/2,yHl+hlS+16*K);x.textAlign='left'}
+    x.fillStyle='#e7e7e7';x.fillRect(0,yTabs,W,K);x.fillStyle='#0a0a0a';x.fillRect(W/3*0+W/6-30*K,yTabs,60*K,K*1.5);
+    x.font=`600 ${12*K}px ${F}`;x.textAlign='center';x.fillText('Posts',W/6,yTabs+26*K);x.fillStyle='#7a7a7a';x.font=`400 ${12*K}px ${F}`;x.fillText('Reels',W/2,yTabs+26*K);x.fillText('Marcados',W*5/6,yTabs+26*K);x.textAlign='left';
+    const ims=await Promise.all(a.posts.map(p=>img(p.slides[0],540,675)));
+    ims.forEach((im,i)=>{const cx=(i%3)*(cell+K),cy=yGrid+Math.floor(i/3)*(cellH+2*K);x.fillStyle='#d9d9d9';x.fillRect(cx,cy,cell,cellH);x.save();x.beginPath();x.rect(cx,cy,cell,cellH);x.clip();cover(im,cx,cy,cell,cellH);x.restore()});
+    await new Promise((res,rej)=>c.toBlob(b=>{if(!b)return rej();saveFile(b,`${a.handle.replace('@','')}-previa.png`);res()},'image/png'));
+    toast('Prévia baixada');
+  }catch(err){toast('Não deu para gerar a imagem neste navegador.')}
+  btn.textContent=old;btn.disabled=false;
 }
 
 /* ======================= V8: Relatório do mês ======================= */

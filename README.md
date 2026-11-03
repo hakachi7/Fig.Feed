@@ -87,3 +87,10 @@ Abra o `index.html` no navegador, crie uma conta e entre. As fotos de exemplo v�
 - A barra de baixo exporta só os selecionados: **Fotos (.zip)** com uma pasta por post (fotos + legenda) e um `legendas.txt` geral, **Grade (PNG)** e **Legendas (.txt)**.
 - O .zip é montado no próprio navegador com a biblioteca JSZip (carregada só na hora de exportar).
 
+## Novidades da v12 — Prévia do perfil
+
+- Toque na foto de perfil da prévia para trocar a foto da conta.
+- O painel "Editar perfil" agora se chama só **Perfil** (nome, bio, seguidores e seguindo).
+- **Destaques** em círculos, até 8: o círculo **+ Novo** cria um destaque; tocar num destaque abre o painel para trocar o nome (até 15 letras) e a capa — enviando uma foto ou escolhendo uma foto dos posts —, mover para os lados ou remover. As fotos enviadas ficam em `fotos/<usuário>/destaques/` e contam como "em uso" na Biblioteca.
+- **Baixar PNG**: a prévia inteira em imagem de 1080 px de largura.
+
