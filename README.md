@@ -72,3 +72,12 @@ Abra o `index.html` no navegador, crie uma conta e entre. As fotos de exemplo v�
 - No painel do post: formato (foto, carrossel ou Reels), horário, pilar e chamada para ação.
 - Tipo de cada story: imagem, vídeo, enquete, caixinha, link ou contagem regressiva.
 - Banco: `supabase/v9.sql` (já aplicado no Fig-Free).
+
+## Novidades da v10 — Admin completo
+
+- **Templates:** o admin monta grades prontas (Foto, Texto ou Vazio em cada quadrado, formato 4:5, 1:1 ou 9:16) e escolhe quem pode usar. O usuário aplica numa conta em "+ Criar → Usar um template" e os posts entram no topo do feed como rascunho.
+- **Blog:** editor por blocos (título, texto, foto, galeria, GIF, vídeo do YouTube/Vimeo, link, botão com link, citação, divisor e espaço), com capa, rascunho, agendamento, lixeira e opção de aparecer em Novidades. Páginas públicas em `#blog`.
+- **Suporte:** o usuário abre um pedido em Ajuda → "Fale com a gente" e vê as respostas no app; o admin responde, usa respostas prontas e marca como resolvido.
+- **Assinaturas:** plano de cada pessoa (Grátis, Pro, Agência), com ou sem prazo, testes grátis e cupons. O usuário vê o próprio plano e usa cupons na página Planos. A cobrança automática e os limites dos planos ainda não estão ligados.
+- Banco: `supabase/v10.sql` (já aplicado).
+

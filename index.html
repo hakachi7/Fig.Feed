@@ -576,6 +576,118 @@ kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;borde
   .prog{margin-top:30px}
   .home{grid-template-columns:1fr auto 1fr}
 }
+
+/* ---------- V10: Admin completo (Templates, Blog, Suporte, Assinaturas) ---------- */
+.adm .field,.te-side .field,.be .field,.sup-form .field,.sup-adm .field,.cup .field,.cup-new .field,.sp .field{max-width:none;margin-bottom:0;display:block}
+.ta{height:auto!important;padding:10px 12px!important;resize:vertical;line-height:1.45;font:inherit;font-size:14px}
+.field.sm{height:34px;width:auto;font-size:12px;padding:0 8px;border-radius:8px}
+.mut{color:var(--muted)}.mono{font-family:ui-monospace,Menlo,monospace;letter-spacing:.02em}
+.adm-head{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px;margin-bottom:26px}.adm-head>div{flex:1 1 300px;min-width:0}.adm-head .sub{margin:0}
+.adm-n{display:inline-grid;place-items:center;min-width:17px;height:17px;padding:0 5px;border-radius:99px;background:var(--badge);color:#fff;font-size:10px;margin-left:6px;vertical-align:1px}
+.adm-empty{border:1px dashed #d4d4d4;border-radius:14px;padding:44px 16px;text-align:center;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:20px}.adm-empty p{margin:0}
+.adm-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 28px}
+.adm-stats div{background:var(--soft);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:3px}.adm-stats b{font-size:22px;font-weight:400}.adm-stats span{font-size:12px;color:var(--muted)}
+.adm-stats.sm{margin:16px 0 0}.adm-stats.sm b{font-size:15px;font-weight:500}
+.warn-s{background:#fff7dc;border:1px solid #f1d98a;border-radius:10px;padding:12px 14px;font-size:13px;line-height:1.5;margin:0 0 24px}
+.crumb2{font-size:12px;color:var(--muted);text-decoration:none;display:inline-block;margin-bottom:18px}.crumb2 a{color:var(--muted);cursor:pointer;text-decoration:none}
+.rad{display:flex;align-items:center;gap:8px;font-size:13px;margin:6px 0;cursor:pointer}.rad input{accent-color:var(--fg);margin:0}
+a.pill{text-decoration:none;color:var(--fg)}a.pill.dark{color:#fff}
+.pill.plain{border-color:transparent;background:none;text-decoration:underline;text-underline-offset:3px}
+/* Templates */
+.tpl-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:36px 26px;margin-top:22px}
+.tpl-card,.tpl-pick{display:flex;flex-direction:column;gap:10px;text-align:left;width:100%}
+.tpl-card:hover .tpl-g,.tpl-pick:hover .tpl-g{transform:translateY(-3px)}
+.tpl-g{display:grid;gap:3px;transition:transform .2s}
+.tpl-s{background:var(--tile) center/cover;display:grid;place-items:center;font-size:11px;color:#333;min-width:0}
+.tpl-s.texto{background:var(--soft);font-weight:500}.tpl-s.vazio{background:#fff;outline:1px dashed #c8c8c8;outline-offset:-1px}
+.tpl-n{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:13px}.tpl-n b{font-weight:500}.tpl-n .mut{font-size:12px;white-space:nowrap}
+.tpl-card small,.tpl-pick small{font-size:12px;color:var(--muted)}
+.tpl-pick{border:1px solid var(--line);border-radius:12px;padding:12px}.tpl-pick:hover{background:var(--soft)}.tpl-pick .tpl-g{max-width:180px}
+.te,.be{display:flex;flex-wrap:wrap;align-items:stretch;min-height:calc(100vh - 110px)}
+.te-main{flex:999 1 520px;min-width:0;padding:28px 24px 60px;display:flex;flex-direction:column;align-items:center;gap:18px}
+.te-main .crumb2{align-self:flex-start}
+.te-grid{display:grid;gap:3px;width:100%}
+.te-grid .tpl-s{position:relative;align-items:end;justify-items:start;padding:0}
+.te-grid .tpl-s span{font-size:10px;background:rgba(255,255,255,.88);border-radius:99px;padding:2px 7px;margin:6px}
+.te-count{display:flex;align-items:center;gap:14px;font-size:12px;color:var(--muted)}.te-count .pill{width:36px;height:36px;padding:0;justify-content:center}
+.te-side{flex:1 1 320px;max-width:100%;border-left:1px solid var(--line);padding:28px 26px 44px;display:flex;flex-direction:column}
+.te-side h1{font-size:28px;font-weight:400;letter-spacing:-.02em;margin:0 0 6px}
+.te-side .chips{margin-top:2px}
+/* Blog público */
+.blog{max-width:1080px}.blog-post{max-width:720px}
+.blog-post h1{font-size:clamp(32px,4.4vw,52px);line-height:1.08;margin:8px 0 10px}.blog-post>.sub{font-size:17px;margin-bottom:30px}
+.bl-cat{display:block;font-size:12px;color:var(--muted)}
+.bl-cover{width:100%;object-fit:cover;background:var(--tile);margin:0 0 34px}
+.bl-body{font-size:16px;line-height:1.7}.bl-body h2{font-size:24px;font-weight:500;letter-spacing:-.015em;margin:40px 0 10px;line-height:1.25}
+.bl-body p{margin:0 0 18px}.bl-body figure{margin:30px 0}.bl-body figure img{width:100%;object-fit:cover;background:var(--tile)}
+.bl-body figcaption{font-size:13px;color:var(--muted);margin-top:8px}
+.bl-body blockquote{margin:30px 0;padding:4px 0 4px 20px;border-left:2px solid var(--fg);font-size:20px;line-height:1.45}
+.bl-gal{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;margin:30px 0}.bl-gal img{width:100%;object-fit:cover;background:var(--tile)}
+.bl-gif{position:relative}.bl-gif>span{position:absolute;left:10px;top:10px;background:#fff;font-size:10px;font-weight:600;padding:3px 7px;border-radius:99px}
+.bl-vid{position:relative;aspect-ratio:16/9;margin:30px 0;background:#000}.bl-vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.bl-link{display:flex;flex-direction:column;gap:3px;border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:26px 0;text-decoration:none;color:var(--fg)}
+.bl-link:hover{background:var(--soft)}.bl-link span{color:#444;font-size:14px}.bl-link small{color:var(--muted);font-size:12px}
+.bl-btn{margin:28px 0}.bl-hr{border:0;border-top:1px solid var(--line);margin:36px 0}
+.bl-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:40px 26px;margin-top:28px}
+.bl-card{display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--fg)}.bl-card b{font-size:18px;font-weight:500;letter-spacing:-.01em;line-height:1.3}.bl-card .mut{font-size:14px;line-height:1.5}
+.bl-th{display:block;aspect-ratio:16/9;background:var(--soft) center/cover;transition:transform .2s}.bl-card:hover .bl-th{transform:translateY(-3px)}
+.bl-th.sm{width:96px;flex:none}
+.bl-row{display:grid;grid-template-columns:96px minmax(0,1fr) minmax(0,1.2fr) auto;gap:16px;align-items:center;width:100%;text-align:left;padding:12px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
+.bl-row:hover{background:var(--soft)}.bl-row .nm{display:flex;flex-direction:column;min-width:0}.bl-row .nm b{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.bl-row small{color:var(--muted)}
+/* Blog: editor */
+.be-pal{flex:1 1 210px;max-width:100%;border-right:1px solid var(--line);padding:24px 16px}
+.be-pal-g{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:8px 0 12px}
+.be-pal-g button{background:var(--soft);border-radius:8px;padding:12px 6px;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px}
+.be-pal-g button:hover{background:#e9e9e9}
+.be-main{flex:999 1 520px;min-width:0;padding:28px 24px 80px;display:flex;flex-direction:column;align-items:stretch;gap:16px;max-width:760px;margin:0 auto}
+.be-cat{align-self:flex-start;border:1px solid var(--line);border-radius:99px;padding:5px 10px;background:#fff;font-size:12px}
+.be-title,.be-sub{border:0;outline:none;resize:none;overflow:hidden;background:none;width:100%;padding:2px 0;border-radius:6px}
+.be-title{font-size:clamp(30px,3.6vw,42px);letter-spacing:-.02em;line-height:1.12}.be-sub{font-size:17px;color:#555}
+.be-title:focus,.be-sub:focus{background:var(--soft)}
+.be-b{border:1px solid var(--line);border-radius:12px;padding:12px 14px 14px;display:flex;flex-direction:column;gap:6px;background:#fff}
+.be-b:focus-within{border-color:#bdbdbd;box-shadow:0 4px 18px rgba(0,0,0,.05)}
+.be-tools{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--muted);margin-bottom:4px}
+.be-tools>span{display:flex;align-items:center;gap:6px;margin-right:auto}
+.be-tools button{width:28px;height:28px;border-radius:7px;color:#555}.be-tools button:hover{background:var(--soft)}.be-tools button[disabled]{opacity:.3;cursor:default}
+.be-b .lbl-s{margin:10px 0 4px}.be-b .lbl-s .field{margin-top:6px;color:var(--fg)}
+.be-h2{font-size:20px!important;font-weight:500}
+.be-img{width:100%;object-fit:cover;background:var(--tile);border-radius:6px;max-height:520px}
+.be-ph{border:1px dashed #cfcfcf;border-radius:8px;padding:26px 12px;text-align:center;color:var(--muted);font-size:12px;display:grid;place-items:center}
+.be-gal{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+.be-gal span{background:var(--tile) center/cover;position:relative;border-radius:4px}
+.be-gal button{position:absolute;top:5px;right:5px;width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.92);font-size:14px}
+.be-btnprev{padding:10px 0 2px}
+.be-add{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px;color:var(--muted);padding-top:6px}
+.be-side{flex:1 1 290px;max-width:100%;border-left:1px solid var(--line);padding:24px 24px 44px;display:flex;flex-direction:column}
+.be-slug{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}.be-slug .field{flex:1;min-width:0}
+/* Suporte */
+.sup-form{display:flex;flex-direction:column;max-width:620px}
+.sup-th{display:flex;flex-direction:column;gap:12px;margin:26px 0;max-width:620px}
+.sup-m{max-width:88%;border-radius:12px;padding:10px 14px;background:var(--soft)}.sup-m.adm{background:#eef1ff;align-self:flex-start}.sup-m.me{align-self:flex-end}
+.sup-m small{display:block;font-size:11px;color:var(--muted);margin-bottom:4px}.sup-m p{margin:0;font-size:14px;line-height:1.5}
+.sup-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid #f0f0f0;text-decoration:none;color:var(--fg);font-size:13px}
+.sup-row:hover{background:var(--soft)}.sup-row .nm{display:flex;flex-direction:column;min-width:0}.sup-row .nm b{font-weight:500}.sup-row small{color:var(--muted)}
+.sup-row .mut{display:flex;align-items:center;gap:6px;white-space:nowrap;font-size:12px}
+.sup-adm{display:flex;flex-wrap:wrap;align-items:stretch;min-height:calc(100vh - 110px)}
+.sup-l{flex:1 1 360px;max-width:100%;border-right:1px solid var(--line);padding:32px 20px}
+.sup-l h1{font-size:32px;font-weight:400;letter-spacing:-.02em;margin:0 0 6px}
+.sup-it{display:flex;gap:12px;padding:13px 10px;border-bottom:1px solid #f0f0f0;text-decoration:none;color:var(--fg);font-size:13px;border-radius:6px}
+.sup-it:hover,.sup-it.cur{background:var(--soft)}.sup-it .avatar{width:28px;height:28px;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:600}
+.sup-it .nm{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}.sup-it-h{display:flex;justify-content:space-between;gap:8px}.sup-it-h b{font-weight:500}.sup-it small{color:var(--muted);font-size:11px}
+.sup-r{flex:999 1 520px;min-width:0;padding:32px 40px 60px}
+.sup-top{display:flex;flex-wrap:wrap;align-items:flex-start;gap:14px;justify-content:space-between}
+.sup-top h2{font-size:24px;font-weight:400;margin:4px 0;letter-spacing:-.01em}.sup-top .mut{font-size:12px}
+.sup-rh{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+/* Assinaturas e planos */
+.pl-tag{font-size:12px;border-radius:99px;padding:3px 10px;background:var(--soft)}.pl-tag.pro{background:#e8ebff;color:#2133c4}.pl-tag.agencia{background:#111;color:#fff}
+.cup-new{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:4px 12px;align-items:end;background:var(--soft);border-radius:12px;padding:6px 14px 14px}
+.cup-new .lbl-s{margin:8px 0 0}.cup-new .field{margin-top:6px;color:var(--fg)}.cup-new .cn-desc{grid-column:span 2}.cup-new .pill{justify-content:center;height:44px}
+.cup-row{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) minmax(0,1.4fr) 130px}.cup-acts{display:flex;gap:14px;justify-content:flex-end}
+.my-plan{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;text-align:left;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:0 0 22px}
+.my-plan>div{display:flex;flex-direction:column}.my-plan small{color:var(--muted);font-size:12px}.my-plan b{font-size:22px;font-weight:500}.my-plan span{font-size:13px;color:var(--muted)}
+.cup{display:flex;gap:8px;flex:1 1 300px;max-width:420px}.cup .field{flex:1;min-width:0}
+@media (max-width:760px){.te-side,.be-side,.be-pal{border-left:0;border-right:0;border-top:1px solid var(--line)}.be-pal{order:3}.sup-l{border-right:0}.sup-r{padding:24px 16px}
+  .bl-row{grid-template-columns:72px minmax(0,1fr)}.bl-th.sm{width:72px}.cup-row{grid-template-columns:minmax(0,1fr) auto}.cup-new .cn-desc{grid-column:auto}}
 </style>
 </head>
 <body>
@@ -697,7 +809,7 @@ function render(){
     admin:vAdmin,'boas-vindas':vTutorial,
     termos:vTermos,privacidade:vPrivacidade,ajuda:vAjuda,novidades:vNovidades,seguranca:vSeguranca,excluir:vExcluir,
     erro:()=>vErro(),'sem-internet':vOffline,
-    planos:vPlanos,lixeira:vLixeira,biblioteca:vBiblioteca,
+    planos:vPlanos,lixeira:vLixeira,biblioteca:vBiblioteca,blog:vBlog,suporte:vSuporte,
     stories:vStories,previa:vPrevia,relatorio:vRelatorio,r:vRelPublico};
   document.title='Fig.Feed';
   try{(map[v]||v404)()}catch(err){console.error(err);vErro('FF-501')}window.scrollTo(0,0);
@@ -865,9 +977,10 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v9';
+const VERSAO='v10';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
+  blog:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 5h16v14H4zM8 9h8M8 13h8M8 17h5"/></svg>',
   home:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M3 11 12 4l9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>',
   contas:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>',
   crono:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>',
@@ -886,7 +999,7 @@ function appMenuHTML(){
   const accs=S.accounts.slice(0,5).map(a=>`<button class="it ${route[1]===a.id?'cur':''}" data-g="feed/${a.id}">${accAvHTML(a)}<span class="h">${esc(a.handle)}</span></button>`).join('');
   return item('home','Início')+item('contas','Contas')+item('crono','Cronograma',wc?`<span class="n" title="Posts nos próximos 7 dias">${wc}</span>`:'')+item('down','Downloads')+item('biblioteca','Biblioteca')+item('lixeira','Lixeira')
     +(accs?`<hr><span class="lbl">Suas contas</span>${accs}${S.accounts.length>5?`<button class="it" data-g="contas" style="color:var(--muted)">Ver todas (${S.accounts.length})</button>`:''}`:'')
-    +`<hr>${isAdmin()?item('admin','Admin'):''}${item('perfil','Perfil')}${item('seguranca','Segurança')}${item('config','Configuração')}${item('ajuda','Ajuda')}<button class="it danger" data-a="sair">${IC.sair}Sair</button>`
+    +`<hr>${isAdmin()?item('admin','Admin'):''}${item('perfil','Perfil')}${item('seguranca','Segurança')}${item('config','Configuração')}${item('blog','Blog')}${item('ajuda','Ajuda')}<button class="it danger" data-a="sair">${IC.sair}Sair</button>`
     +`<button class="ver" data-g="novidades">Fig.Feed ${VERSAO} · Novidades</button>`;
 }
 function closeDrop(){document.querySelector('.drop')?.remove();openDrop=null;document.getElementById('appmenu')?.setAttribute('aria-expanded','false')}
@@ -898,14 +1011,15 @@ function dropdown(kind){
   else if(kind==='me'){d.innerHTML=`<span class="lbl">${esc(S.profile.handle||USER.email)}</span>
     <button data-a="perfil">Perfil</button><button data-a="seguranca">Segurança</button><button data-a="config">Configuração</button><button data-a="planos">Planos</button><button data-a="ajuda">Ajuda</button><hr><button data-a="sair">Sair</button>`}
   else{d.innerHTML=`<span class="lbl">Nova conta</span><form id="nf"><input id="nh" placeholder="@perfil.do.cliente" required><button class="pill" style="padding:6px 10px">Criar</button></form><hr>
-    ${inAcc?`<button data-a="post">Novo post com fotos de exemplo</button><button data-a="up">Novo post com fotos suas</button>`:`<span class="lbl">Abra uma conta para criar posts</span>`}`}
+    ${inAcc?`<button data-a="post">Novo post com fotos de exemplo</button><button data-a="up">Novo post com fotos suas</button><button data-a="tpl">Usar um template</button>`:`<span class="lbl">Abra uma conta para criar posts</span>`}`}
   document.body.appendChild(d);
   d.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>{closeDrop();go(b.dataset.g)});
   if(kind==='app')d.querySelector('button')?.focus();
   d.querySelectorAll('[data-a]').forEach(b=>b.onclick=async()=>{const a=b.dataset.a;closeDrop();
     if(a==='perfil')go('perfil');if(a==='config')go('config');if(a==='seguranca')go('seguranca');if(a==='ajuda')go('ajuda');if(a==='planos')go('planos');if(a==='sair')sair();
     if(a==='post')examplePost(accById(route[1]));
-    if(a==='up')pickFiles({type:'newpost',acc:route[1]});});
+    if(a==='up')pickFiles({type:'newpost',acc:route[1]});
+    if(a==='tpl')openTemplatePicker(accById(route[1]));});
   const f=d.querySelector('#nf');if(f){f.onsubmit=async e=>{e.preventDefault();let h=d.querySelector('#nh').value.trim().replace(/\s+/g,'');if(!h)return;if(h[0]!=='@')h='@'+h;
     const row=await db(sb.from('accounts').insert({handle:h,position:S.accounts.length}).select('id,handle').single());
     S.accounts.push({id:row.id,handle:row.handle,posts:[]});d.remove();openDrop=null;go('feed/'+row.id);toast('Conta criada')};d.querySelector('#nh').focus()}
@@ -1383,15 +1497,18 @@ async function admLoad(){
     db(sb.from('role_invites').select('email,role,created_at').order('created_at',{ascending:false})),
     db(sb.from('activity_log').select('id,actor_id,category,action,target_user,details,created_at').order('created_at',{ascending:false}).limit(300))]);
   ADM.users=users||[];ADM.invites=invites||[];ADM.log=log||[];ADM.loaded=true;
+  try{const {count}=await sb.from('support_tickets').select('id',{count:'exact',head:true}).eq('status','aberto');ADM.openTickets=count||0}catch(e){}
 }
 function admTabs(cur){
-  const soon=n=>`<span title="Em breve">${n}<small>em breve</small></span>`;
-  return `<nav class="adm-tabs" aria-label="Seções do Admin"><a data-go="admin" class="${cur==='usuarios'?'cur':''}">Usuários e funções</a>
-    <a data-go="admin/atividade" class="${cur==='atividade'?'cur':''}">Atividade</a>${soon('Templates')}${soon('Blog')}${soon('Suporte')}${soon('Assinaturas')}</nav>`;
+  const t=(g,id,n,extra='')=>`<a data-go="${g}" class="${cur===id?'cur':''}">${n}${extra}</a>`;
+  const open=ADM.openTickets?`<span class="adm-n" title="Pedidos abertos">${ADM.openTickets}</span>`:'';
+  return `<nav class="adm-tabs" aria-label="Seções do Admin">${t('admin','usuarios','Usuários e funções')}${t('admin/templates','templates','Templates')}${t('admin/blog','blog','Blog')}${t('admin/suporte','suporte','Suporte',open)}${t('admin/assinaturas','assinaturas','Assinaturas')}${t('admin/atividade','atividade','Atividade')}</nav>`;
 }
 function vAdmin(){
   if(!isAdmin())return v404();
   document.title='Admin · Fig.Feed';
+  const own={templates:admTemplates,template:admTemplateEditor,blog:()=>route[2]?admBlogEditor():admBlog(),suporte:admSuporte,assinaturas:admAssinaturas}[route[1]];
+  if(own){if(!ADM.loaded&&!['suporte','assinaturas'].includes(route[1]))admLoad().catch(()=>{});return own()}
   const draw=()=>{if(route[0]!=='admin'||!isAdmin())return;(route[1]==='atividade'?admAtividade:admUsuarios)()};
   if(ADM.loaded)draw();
   else{app.innerHTML=header('admin')+admTabs(route[1]==='atividade'?'atividade':'usuarios')+`<main class="page adm"><p class="sub">Carregando…</p></main>`;bindHeader()}
@@ -1469,6 +1586,17 @@ function admLogText(e){
     case 'convite aceito':return `${tgt} criou a conta e virou ${roleName(d.funcao)}`;
     case 'convidou por e-mail':return `${actor}convidou ${esc(d.email)} como ${roleName(d.funcao)}`;
     case 'cancelou convite':return `${actor}cancelou o convite de ${esc(d.email)}`;
+    case 'mudou o plano':return `${actor}mudou o plano de ${tgt} de ${PLANO_NOME[d.de]||d.de} para ${PLANO_NOME[d.para]||d.para}${d.dias?` por ${d.dias} dias`:''}`;
+    case 'usou cupom':return `${tgt} usou o cupom ${esc(d.cupom)} (${PLANO_NOME[d.plano]||d.plano}, ${d.dias} dias)`;
+    case 'criou cupom':return `${actor}criou o cupom ${esc(d.cupom)} (${PLANO_NOME[d.plano]||d.plano}, ${d.dias} dias)`;
+    case 'pausou cupom':case 'ativou cupom':case 'apagou cupom':return `${actor}${esc(e.action.split(' ')[0])} o cupom ${esc(d.cupom)}`;
+    case 'salvou o template':return `${actor}salvou o template “${esc(d.nome)}” (${d.status==='publicado'?'publicado':'rascunho'})`;
+    case 'apagou o template':return `${actor}apagou o template “${esc(d.nome)}”`;
+    case 'salvou post do blog':return `${actor}salvou o post “${esc(d.titulo)}” no blog (${esc(d.status)})`;
+    case 'moveu post do blog para a lixeira':return `${actor}mandou o post “${esc(d.titulo)}” para a lixeira`;
+    case 'tirou post do blog da lixeira':return `${actor}tirou o post “${esc(d.titulo)}” da lixeira`;
+    case 'respondeu pedido de ajuda':return `${actor}respondeu ${tgt}: “${esc(d.assunto)}”`;
+    case 'resolveu pedido de ajuda':case 'reabriu pedido de ajuda':return `${actor}${e.action.split(' ')[0]} o pedido de ${tgt}: “${esc(d.assunto)}”`;
     default:return `${actor}${esc(e.action)}`}
 }
 function admAtividade(){
@@ -1544,6 +1672,515 @@ document.getElementById('file').onchange=async e=>{
   }catch(err){}
 };
 
+/* ======================= V10: Admin completo — Templates, Blog, Suporte e Assinaturas ======================= */
+const PLANO_NOME={gratis:'Grátis',pro:'Pro',agencia:'Agência'};
+// Plano que vale agora: se o prazo passou, volta a ser Grátis
+const planoVencido=p=>!!(p&&p.plano&&p.plano!=='gratis'&&p.plano_ate&&new Date(p.plano_ate)<new Date());
+const planoEf=p=>!p||!p.plano||p.plano==='gratis'||planoVencido(p)?'gratis':p.plano;
+const temPro=()=>['pro','agencia'].includes(planoEf(S.profile));
+const FMT_RATIO={'4:5':'4 / 5','1:1':'1 / 1','9:16':'9 / 16','16:9':'16 / 9'};
+const stillHere=h=>location.hash===h;
+// Registro de atividades feito pela tela (as regras do banco só deixam admins gravarem)
+function admLog(category,action,details={},target=null){sb.from('activity_log').insert({category,action,details,target_user:target}).then(()=>{},()=>{})}
+function admShell(cur,inner,max=980){app.innerHTML=header('admin')+admTabs(cur)+`<main class="page adm" style="max-width:${max}px">${inner}</main>`;bindHeader()}
+const admLoading=cur=>admShell(cur,'<p class="sub">Carregando…</p>');
+const chipsHTML=(opts,cur,attr)=>`<div class="chips" role="group" aria-label="Filtrar">${opts.map(([k,n])=>`<button class="chip ${cur===k?'on':''}" ${attr}="${k}" aria-pressed="${cur===k}">${n}</button>`).join('')}</div>`;
+
+/* ---------- Templates ---------- */
+let TPL={list:[],filter:'todos'},TE=null;
+const SLOT_NOME={foto:'Foto',texto:'Texto',vazio:'Vazio'};
+const TPL_QUEM={todos:'Todos',pro:'Pro e Agência',admins:'Só admins'};
+const tplCount=t=>t.slots.filter(s=>s!=='vazio').length;
+const tplCols=t=>t.tipo==='carrossel'?Math.min(Math.max(t.slots.length,1),4):3;
+function tplPreview(t){
+  return `<div class="tpl-g" style="grid-template-columns:repeat(${tplCols(t)},minmax(0,1fr))" aria-hidden="true">${t.slots.map((s,i)=>
+    `<div class="tpl-s ${s}" style="aspect-ratio:${FMT_RATIO[t.formato]||'4 / 5'};${s==='foto'?`background-image:url('${TUT_IMG[i%9]}')`:''}">${s==='texto'?'Aa':''}</div>`).join('')}</div>`;
+}
+async function admTemplates(){
+  const h=location.hash;admLoading('templates');
+  try{TPL.list=await db(sb.from('feed_templates').select('*').order('position').order('created_at'))}catch(e){return}
+  if(stillHere(h))drawTemplates();
+}
+function drawTemplates(){
+  const f=TPL.filter;const list=TPL.list.filter(t=>f==='todos'||t.status===f);
+  admShell('templates',`<div class="adm-head"><div><h1>Templates</h1><p class="sub">Grades prontas que os usuários escolhem em "+ Criar → Usar um template".</p></div>
+    <button class="pill dark" data-go="admin/template/novo">+ Novo template</button></div>
+    ${chipsHTML([['todos','Todos'],['publicado','Publicados'],['rascunho','Rascunhos']],f,'data-f')}
+    ${list.length?`<div class="tpl-list">${list.map(t=>`<button class="tpl-card" data-t="${t.id}">${tplPreview(t)}
+      <span class="tpl-n"><b>${esc(t.name)}</b><span class="mut"><span class="rd" style="background:${t.status==='publicado'?'#14b85a':'#f2b01e'}"></span>${t.status==='publicado'?'Publicado':'Rascunho'}</span></span>
+      <small>${t.tipo==='carrossel'?'Carrossel':'Feed'} · ${tplCount(t)} ${t.tipo==='carrossel'?'slides':'posts'} · ${t.formato} · ${TPL_QUEM[t.quem]}</small></button>`).join('')}</div>`
+      :`<div class="adm-empty"><p>${f==='todos'?'Nenhum template ainda.':'Nada aqui.'}</p>${f==='todos'?'<button class="pill" data-go="admin/template/novo">Criar o primeiro template</button>':''}</div>`}`,1180);
+  app.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{TPL.filter=b.dataset.f;drawTemplates()});
+  app.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>go('admin/template/'+b.dataset.t));
+  bindGo();
+}
+async function admTemplateEditor(){
+  const id=route[2]||'novo';const h=location.hash;
+  if(id==='novo')TE={name:'',tipo:'feed',formato:'4:5',slots:['foto','texto','foto','texto','foto','texto','foto','texto','foto'],descricao:'',quem:'todos',status:'rascunho'};
+  else{admLoading('templates');try{TE=await db(sb.from('feed_templates').select('*').eq('id',id).maybeSingle())}catch(e){return}
+    if(!stillHere(h))return;if(!TE)return v404()}
+  drawTemplateEditor();
+}
+function drawTemplateEditor(){
+  const t=TE;const n=t.slots.length;const cnt=s=>t.slots.filter(x=>x===s).length;const cols=tplCols(t);
+  const chip=(k,v,label)=>`<button class="chip ${t[k]===v?'on':''}" data-k="${k}" data-v="${v}" aria-pressed="${t[k]===v}">${label}</button>`;
+  app.innerHTML=header('admin')+admTabs('templates')+`<div class="te">
+    <main class="te-main"><div class="crumb2"><a data-go="admin/templates">Templates</a> / ${t.id?esc(t.name||'Sem nome'):'Novo template'}</div>
+      <p class="adm-note" style="margin:0;text-align:center">Clique num quadrado para trocar entre Foto, Texto e Vazio.</p>
+      <div class="te-grid" style="grid-template-columns:repeat(${cols},minmax(0,1fr));max-width:${t.tipo==='carrossel'?cols*140:420}px">
+        ${t.slots.map((s,i)=>`<button class="tpl-s ${s}" data-i="${i}" style="aspect-ratio:${FMT_RATIO[t.formato]};${s==='foto'?`background-image:url('${TUT_IMG[i%9]}')`:''}" aria-label="Quadrado ${i+1}: ${SLOT_NOME[s]}"><span>${SLOT_NOME[s]}</span></button>`).join('')}</div>
+      <div class="te-count"><button class="pill" id="te-menos" ${n<=1?'disabled':''} aria-label="Tirar um quadrado">−</button>
+        <span>${n} ${n===1?'quadrado':'quadrados'} · ${cnt('foto')} ${cnt('foto')===1?'foto':'fotos'} · ${cnt('texto')} ${cnt('texto')===1?'texto':'textos'}</span>
+        <button class="pill" id="te-mais" ${n>=12?'disabled':''} aria-label="Pôr mais um quadrado">+</button></div>
+    </main>
+    <aside class="te-side"><h1>${t.id?'Editar template':'Novo template'}</h1>
+      <label class="lbl-s" for="te-n">Nome</label><input class="field" id="te-n" maxlength="60" value="${esc(t.name)}" placeholder="Ex.: Xadrez 3×3">
+      <span class="lbl-s">Tipo</span><div class="chips">${chip('tipo','feed','Feed')}${chip('tipo','carrossel','Carrossel')}</div>
+      <span class="lbl-s">Formato</span><div class="chips">${chip('formato','4:5','4:5')}${chip('formato','1:1','1:1')}${chip('formato','9:16','9:16')}</div>
+      <label class="lbl-s" for="te-d">Descrição</label><textarea class="field ta" id="te-d" maxlength="200" rows="3" placeholder="Quando usar este template">${esc(t.descricao)}</textarea>
+      <span class="lbl-s">Quem pode usar</span>
+      ${[['todos','Todos os usuários'],['pro','Só planos Pro e Agência'],['admins','Só administradores (para testar)']].map(([v,l])=>`<label class="rad"><input type="radio" name="te-q" value="${v}" ${t.quem===v?'checked':''}> ${l}</label>`).join('')}
+      <div class="acts-row" style="margin-top:22px"><button class="pill dark" id="te-pub">${t.status==='publicado'?'Salvar':'Publicar template'}</button>
+        <button class="pill" id="te-ras">${t.status==='publicado'?'Voltar para rascunho':'Salvar rascunho'}</button></div>
+      ${t.id?'<button class="danger-link" id="te-del" style="margin-top:18px;text-align:left">Apagar template</button>':''}
+    </aside></div>`;
+  bindHeader();
+  const keep=()=>{t.name=document.getElementById('te-n').value;t.descricao=document.getElementById('te-d').value;t.quem=document.querySelector('[name="te-q"]:checked')?.value||'todos'};
+  app.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>{keep();const i=+b.dataset.i;t.slots[i]={foto:'texto',texto:'vazio',vazio:'foto'}[t.slots[i]];drawTemplateEditor();app.querySelector(`[data-i="${i}"]`)?.focus()});
+  app.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{keep();t[b.dataset.k]=b.dataset.v;drawTemplateEditor()});
+  document.getElementById('te-mais').onclick=()=>{keep();t.slots.push(t.slots.length%2?'texto':'foto');drawTemplateEditor()};
+  document.getElementById('te-menos').onclick=()=>{keep();t.slots.pop();drawTemplateEditor()};
+  const save=async status=>{keep();if(!t.name.trim())return toast('Dê um nome ao template.');
+    if(!t.slots.some(s=>s!=='vazio'))return toast('Deixe pelo menos um quadrado com Foto ou Texto.');
+    const row={name:t.name.trim(),tipo:t.tipo,formato:t.formato,slots:t.slots,descricao:t.descricao.trim(),quem:t.quem,status,updated_at:new Date().toISOString()};
+    try{if(t.id)await db(sb.from('feed_templates').update(row).eq('id',t.id));else await db(sb.from('feed_templates').insert(row));
+      admLog('conteudo','salvou o template',{nome:row.name,status});toast(status==='publicado'?'Template publicado':'Rascunho salvo');go('admin/templates')}catch(e){}};
+  document.getElementById('te-pub').onclick=()=>save('publicado');
+  document.getElementById('te-ras').onclick=()=>save('rascunho');
+  const del=document.getElementById('te-del');
+  if(del)del.onclick=async()=>{if(!confirm(`Apagar o template "${t.name}"? Quem já usou não perde nada.`))return;
+    try{await db(sb.from('feed_templates').delete().eq('id',t.id));admLog('conteudo','apagou o template',{nome:t.name});toast('Template apagado');go('admin/templates')}catch(e){}};
+}
+// Lado do usuário: "+ Criar → Usar um template" dentro de uma conta
+async function openTemplatePicker(acc){
+  if(!acc)return;let list=[];
+  try{list=await db(sb.from('feed_templates').select('*').eq('status','publicado').order('position').order('created_at'))}catch(e){return}
+  closePanel();
+  const lock=t=>t.quem==='pro'&&!temPro()&&!isAdmin();
+  const ov=document.createElement('div');ov.className='ov';ov.id='ov';ov.onclick=e=>{if(e.target===ov)closePanel()};
+  ov.innerHTML=`<aside class="sp" role="dialog" aria-modal="true" aria-labelledby="tp-t"><div class="bar"><span class="saved" id="tp-t">Usar um template em ${esc(acc.handle)}</span><button class="sp-close" id="tp-x" aria-label="Fechar">${XICON}</button></div>
+    <div class="body">${list.length?`<p class="role-help">Os posts entram no topo do feed como rascunho, prontos para receber fotos e legendas.</p>${list.map(t=>`<button class="tpl-pick" data-t="${t.id}">${tplPreview(t)}
+      <span class="tpl-n"><b>${esc(t.name)}</b>${lock(t)?'<span class="tag">Pro</span>':''}</span><small>${esc(t.descricao||`${t.tipo==='carrossel'?'Carrossel':'Feed'} · ${tplCount(t)} ${t.tipo==='carrossel'?'slides':'posts'}`)}</small></button>`).join('')}`
+      :'<p class="role-help">Ainda não há templates publicados.</p>'}</div></aside>`;
+  document.body.appendChild(ov);document.addEventListener('keydown',panelEsc);
+  ov.querySelector('#tp-x').onclick=closePanel;
+  ov.querySelectorAll('[data-t]').forEach(b=>b.onclick=async()=>{const t=list.find(x=>x.id===b.dataset.t);
+    if(lock(t))return toast('Esse template é dos planos Pro e Agência.',3200);
+    b.disabled=true;try{await applyTemplate(acc,t);closePanel();go('feed/'+acc.id);toast(`Template "${t.name}" aplicado`)}catch(e){b.disabled=false}});
+  (ov.querySelector('[data-t]')||ov.querySelector('#tp-x')).focus();
+}
+async function applyTemplate(acc,t){
+  const top=acc.posts[0]?.date;const base=top?new Date(top+'T12:00'):new Date();
+  const day=k=>{const d=new Date(base);d.setDate(d.getDate()+k);return iso(d)};
+  let rows;
+  if(t.tipo==='carrossel')rows=[{account_id:acc.id,title:t.name,caption:'',publish_date:day(top?2:0),position:0,formato:'carrossel'}];
+  else{const ss=t.slots.filter(s=>s!=='vazio');const n=ss.length;
+    rows=ss.map((s,i)=>({account_id:acc.id,title:s==='foto'?'Post com foto':'Post de texto',caption:'',publish_date:day(2*(n-i)-(top?0:2)),position:i,formato:s==='foto'?'foto':null}))}
+  const ins=await db(sb.from('posts').insert(rows).select('id,title,caption,publish_date,status,position,formato'));
+  ins.sort((a,b)=>a.position-b.position);
+  acc.posts.unshift(...ins.map(r=>({id:r.id,title:r.title,caption:r.caption,date:r.publish_date,status:r.status,pilar:'',formato:r.formato||null,hora:null,cta:'',slides:[]})));
+  await db(sb.rpc('reorder_posts',{p_account:acc.id,p_ids:acc.posts.map(x=>x.id)}));
+}
+
+/* ---------- Blog ---------- */
+const BLOG_CATS=['Dicas','Novidades','Tutorial'];
+let BLOG={cat:'Todos'},BL={list:[],filter:'todos'},BE=null;
+const blogImg=p=>p?`${SB_URL}/storage/v1/object/public/blog/${p}`:'';
+const slugify=s=>String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,80).replace(/-+$/,'');
+// Só deixa links que abrem páginas de verdade (http, https ou e-mail)
+const safeUrl=u=>{u=String(u||'').trim();if(/^(https?:\/\/|mailto:)/i.test(u))return u;return /^[\w-]+(\.[\w-]+)+(\/|$)/i.test(u)?'https://'+u:''};
+function videoEmbed(u){const s=String(u||'');
+  const y=s.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{11})/);if(y)return `https://www.youtube-nocookie.com/embed/${y[1]}`;
+  const v=s.match(/vimeo\.com\/(?:video\/)?(\d+)/);if(v)return `https://player.vimeo.com/video/${v[1]}`;return ''}
+const blogLive=b=>!b.deleted_at&&(b.status==='publicado'||(b.status==='agendado'&&!!b.publish_at&&new Date(b.publish_at)<=new Date()));
+const blogDate=b=>dBR(b.publish_at||b.created_at);
+const toLocalInput=x=>{if(!x)return'';const d=new Date(x);d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,16)};
+function blocksHTML(blocks){
+  const para=t=>esc(t).split(/\n{2,}/).map(x=>`<p>${x.replace(/\n/g,'<br>')}</p>`).join('');
+  return (blocks||[]).map(b=>{switch(b.t){
+    case 'titulo':return b.texto?`<h2>${esc(b.texto)}</h2>`:'';
+    case 'texto':return b.texto?para(b.texto):'';
+    case 'citacao':return b.texto?`<blockquote>${para(b.texto)}</blockquote>`:'';
+    case 'foto':return b.path?`<figure><img src="${blogImg(b.path)}" alt="${esc(b.legenda||'')}" style="aspect-ratio:${FMT_RATIO[b.formato]||'16 / 9'}" loading="lazy">${b.legenda?`<figcaption>${esc(b.legenda)}</figcaption>`:''}</figure>`:'';
+    case 'galeria':return (b.paths||[]).length?`<div class="bl-gal">${b.paths.map(p=>`<img src="${blogImg(p)}" alt="" style="aspect-ratio:${FMT_RATIO[b.formato]||'4 / 5'}" loading="lazy">`).join('')}</div>`:'';
+    case 'gif':return b.path?`<figure class="bl-gif"><img src="${blogImg(b.path)}" alt="${esc(b.legenda||'GIF')}" loading="lazy"><span>GIF</span>${b.legenda?`<figcaption>${esc(b.legenda)}</figcaption>`:''}</figure>`:'';
+    case 'video':{const e=videoEmbed(b.url),u=safeUrl(b.url);
+      return e?`<div class="bl-vid"><iframe src="${e}" title="Vídeo" loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>`:(u?`<p><a class="ul" href="${esc(u)}" target="_blank" rel="noopener">Assistir ao vídeo</a></p>`:'')}
+    case 'link':{const u=safeUrl(b.url);if(!u)return '';let host='';try{host=new URL(u).hostname.replace(/^www\./,'')}catch(e){}
+      return `<a class="bl-link" href="${esc(u)}" target="_blank" rel="noopener"><b>${esc(b.titulo||host||u)}</b>${b.desc?`<span>${esc(b.desc)}</span>`:''}<small>${esc(host)}</small></a>`}
+    case 'botao':{const u=safeUrl(b.url);if(!u||!b.texto)return '';
+      return `<div class="bl-btn" style="text-align:${{esq:'left',dir:'right'}[b.alinhar]||'center'}"><a class="pill ${b.estilo==='contorno'?'':b.estilo==='texto'?'plain':'dark'}" href="${esc(u)}" ${b.nova===false?'':'target="_blank" rel="noopener"'}>${esc(b.texto)}</a></div>`}
+    case 'divisor':return '<hr class="bl-hr">';
+    case 'espaco':return '<div style="height:36px" aria-hidden="true"></div>';
+    default:return ''}}).join('');
+}
+// Páginas públicas do blog: #blog e #blog/endereco-do-post
+async function vBlog(){
+  const slug=route[1];const h=location.hash;
+  app.innerHTML=shell('')+`<main class="page doc"><p class="sub">Carregando…</p></main>`;bindShell();
+  if(slug){let b=null;try{b=await db(sb.from('blog_posts').select('*').eq('slug',slug).maybeSingle())}catch(e){return}
+    if(!stillHere(h))return;if(!b)return v404();
+    document.title=`${b.title} · Blog do Fig.Feed`;
+    const preview=!blogLive(b);
+    app.innerHTML=shell('')+`<main class="page blog-post">${preview?`<div class="warn-s"><b>Prévia:</b> este post ${b.deleted_at?'está na lixeira':b.status==='agendado'?'está agendado':'é um rascunho'}. Só administradores conseguem ver.</div>`:''}
+      <a class="crumb2" href="#blog">← Blog</a><span class="bl-cat">${esc(b.categoria)} · ${blogDate(b)}</span><h1>${esc(b.title)}</h1>${b.subtitle?`<p class="sub">${esc(b.subtitle)}</p>`:''}
+      ${b.cover_path?`<img class="bl-cover" src="${blogImg(b.cover_path)}" alt="" style="aspect-ratio:${FMT_RATIO[b.cover_format]||'16 / 9'}">`:''}
+      <div class="bl-body">${blocksHTML(b.blocks)}</div>
+      ${isAdmin()?`<p style="margin-top:44px"><a class="pill" href="#admin/blog/${b.id}">Editar este post</a></p>`:''}</main>${USER?'':pubFooter()}`;
+    bindShell();return}
+  let list=[];
+  try{list=await db(sb.from('blog_posts').select('id,slug,title,subtitle,categoria,cover_path,cover_format,resumo,status,publish_at,created_at,deleted_at').is('deleted_at',null).order('publish_at',{ascending:false,nullsFirst:false}))}catch(e){return}
+  if(!stillHere(h))return;list=list.filter(blogLive);document.title='Blog · Fig.Feed';
+  const draw=()=>{const cat=BLOG.cat;const xs=list.filter(b=>cat==='Todos'||b.categoria===cat);
+    app.innerHTML=shell('')+`<main class="page blog"><h1>Blog</h1><p class="sub">Dicas, tutoriais e novidades do Fig.Feed.</p>
+      ${chipsHTML([['Todos','Todos'],...BLOG_CATS.map(c=>[c,c])],cat,'data-c')}
+      ${xs.length?`<div class="bl-list">${xs.map(b=>`<a class="bl-card" href="#blog/${b.slug}"><span class="bl-th" style="${b.cover_path?`background-image:url('${blogImg(b.cover_path)}')`:''}"></span>
+        <span class="bl-cat">${esc(b.categoria)} · ${blogDate(b)}</span><b>${esc(b.title)}</b>${b.resumo||b.subtitle?`<span class="mut">${esc(b.resumo||b.subtitle)}</span>`:''}</a>`).join('')}</div>`
+        :'<p class="sub" style="margin-top:28px">Nenhum post por aqui ainda.</p>'}</main>${USER?'':pubFooter()}`;
+    bindShell();app.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{BLOG.cat=b.dataset.c;draw()})};
+  draw();
+}
+// Admin: lista de posts
+const blogSt=b=>b.deleted_at?['lixeira','Na lixeira','#7a7a7a']:blogLive(b)?['publicado','Publicado','#14b85a']
+  :b.status==='agendado'?['agendado','Agendado para '+(b.publish_at?dBR(b.publish_at)+' '+hBR(b.publish_at):'—'),'#2f45ff']:['rascunho','Rascunho','#f2b01e'];
+async function admBlog(){
+  const h=location.hash;admLoading('blog');
+  try{BL.list=await db(sb.from('blog_posts').select('id,slug,title,categoria,cover_path,status,publish_at,created_at,updated_at,deleted_at,blocks').order('updated_at',{ascending:false}))}catch(e){return}
+  if(stillHere(h))drawBlogAdmin();
+}
+function drawBlogAdmin(){
+  const f=BL.filter;const list=BL.list.filter(b=>f==='todos'?!b.deleted_at:blogSt(b)[0]===f);
+  admShell('blog',`<div class="adm-head"><div><h1>Blog</h1><p class="sub">Posts, dicas e novidades que aparecem para todos em <a class="ul" href="#blog">Blog</a>.</p></div>
+    <button class="pill dark" data-go="admin/blog/novo">+ Novo post</button></div>
+    ${chipsHTML([['todos','Todos'],['publicado','Publicados'],['agendado','Agendados'],['rascunho','Rascunhos'],['lixeira','Lixeira']],f,'data-f')}
+    ${list.length?`<div class="adm-list" style="margin-top:20px">${list.map(b=>{const s=blogSt(b);const n=(b.blocks||[]).length;return `<button class="bl-row" data-b="${b.id}">
+      <span class="bl-th sm" style="${b.cover_path?`background-image:url('${blogImg(b.cover_path)}')`:''}"></span>
+      <span class="nm"><b>${esc(b.title||'Sem título')}</b><small>${esc(b.categoria)} · ${n} ${n===1?'bloco':'blocos'}</small></span>
+      <span class="mut hide-sm"><span class="rd" style="background:${s[2]}"></span>${s[1]}</span><span class="mut hide-sm">Editado em ${dBR(b.updated_at)}</span></button>`}).join('')}</div>`
+      :`<div class="adm-empty"><p>${f==='todos'?'Nenhum post ainda.':'Nada aqui.'}</p>${f==='todos'?'<button class="pill" data-go="admin/blog/novo">Escrever o primeiro post</button>':''}</div>`}`);
+  app.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{BL.filter=b.dataset.f;drawBlogAdmin()});
+  app.querySelectorAll('[data-b]').forEach(b=>b.onclick=()=>go('admin/blog/'+b.dataset.b));
+  bindGo();
+}
+// Admin: editor de post com blocos
+const BLOCOS=[['titulo','Título'],['texto','Texto'],['foto','Foto'],['galeria','Galeria'],['gif','GIF'],['video','Vídeo'],['link','Link'],['botao','Botão'],['citacao','Citação'],['divisor','Divisor'],['espaco','Espaço']];
+const blocoNome=t=>(BLOCOS.find(x=>x[0]===t)||[0,t])[1];
+const BL_IC={titulo:'M5 5v14M13 5v14M5 12h8M17 9l2-1v11',texto:'M4 6h16M4 10h16M4 14h10M4 18h12',foto:'M3 5h18v14H3zM3 16l5-5 4 4 3-3 6 6',
+  galeria:'M3 3h8v8H3zM13 3h8v8h-8zM3 13h8v8H3zM13 13h8v8h-8z',gif:'M3 6h18v12H3zM9 10H7v4h2v-2M12 10v4M15 14v-4h3M15 12h2',video:'M3 6h18v12H3zM10 9l5 3-5 3z',
+  link:'M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1',botao:'M3 8h18v8H3zM8 12h8',
+  citacao:'M5 9h4v4H5zM5 13c0 3 1 4 3 5M13 9h4v4h-4zM13 13c0 3 1 4 3 5',divisor:'M3 12h18',espaco:'M12 4v16M8 8l4-4 4 4M8 16l4 4 4-4'};
+const blIcon=t=>`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${BL_IC[t]}"/></svg>`;
+function newBlock(t){return ({foto:{t,formato:'16:9',legenda:''},galeria:{t,formato:'4:5',paths:[]},gif:{t,legenda:''},video:{t,url:''},link:{t,url:'',titulo:'',desc:''},
+  botao:{t,texto:'Saiba mais',url:'',nova:true,estilo:'preto',alinhar:'centro'}})[t]||{t,texto:''}}
+async function admBlogEditor(){
+  const id=route[2]||'novo';const h=location.hash;
+  if(id==='novo')BE={title:'',subtitle:'',slug:'',slugMan:false,categoria:'Dicas',cover_path:null,cover_format:'16:9',blocks:[{t:'texto',texto:''}],resumo:'',status:'rascunho',publish_at:null,visibilidade:'todos',em_novidades:false};
+  else{admLoading('blog');try{BE=await db(sb.from('blog_posts').select('*').eq('id',id).maybeSingle())}catch(e){return}
+    if(!stillHere(h))return;if(!BE)return v404();BE.slugMan=true}
+  drawBlogEditor();
+}
+function pickBlogFiles(accept,multiple){return new Promise(res=>{const f=document.createElement('input');f.type='file';f.accept=accept;f.multiple=!!multiple;f.onchange=()=>res([...f.files]);f.click()})}
+async function uploadBlog(file){
+  const gif=file.type==='image/gif';let blob=file;
+  if(!gif){blob=await shrink(file);if(!blob)throw new Error('Não deu para ler essa imagem.')}
+  if(blob.size>10485760)throw new Error('O arquivo passa de 10 MB.');
+  const path=`${new Date().toISOString().slice(0,7)}/${crypto.randomUUID()}.${gif?'gif':'jpg'}`;
+  const {error}=await sb.storage.from('blog').upload(path,blob,{contentType:gif?'image/gif':'image/jpeg'});if(error)throw error;return path;
+}
+function beBlockHTML(b,i,last){
+  const fld=(k,label,v,ph='',type='text')=>`<label class="lbl-s">${label}<input class="field" type="${type}" data-bi="${i}" data-k="${k}" value="${esc(v||'')}" placeholder="${ph}"></label>`;
+  const chips=(k,opts)=>`<div class="chips">${opts.map(([v,n])=>`<button class="chip ${b[k]===v?'on':''}" data-bi="${i}" data-k="${k}" data-v="${v}" aria-pressed="${b[k]===v}">${n}</button>`).join('')}</div>`;
+  const fmts=['16:9','4:5','1:1','9:16'].map(x=>[x,x]);
+  let body='';
+  switch(b.t){
+    case 'titulo':body=`<input class="field be-h2" data-bi="${i}" data-k="texto" value="${esc(b.texto)}" placeholder="Título da seção" aria-label="Título da seção">`;break;
+    case 'texto':case 'citacao':body=`<textarea class="field ta" rows="${b.t==='texto'?5:3}" data-bi="${i}" data-k="texto" placeholder="${b.t==='texto'?'Escreva o texto. Deixe uma linha em branco para começar outro parágrafo.':'Frase em destaque'}" aria-label="${blocoNome(b.t)}">${esc(b.texto)}</textarea>`;break;
+    case 'foto':case 'gif':body=`${b.path?`<img class="be-img" src="${blogImg(b.path)}" alt="" style="aspect-ratio:${b.t==='gif'?'auto':FMT_RATIO[b.formato]}">`:`<div class="be-ph">${b.t==='gif'?'Nenhum GIF ainda':'Nenhuma foto ainda'}</div>`}
+      <div class="acts-row" style="margin-top:8px"><button class="pill" data-upl="${i}">${b.path?'Trocar':'Enviar'} ${b.t==='gif'?'GIF':'foto'}</button></div>
+      ${b.t==='foto'?`<span class="lbl-s">Formato</span>${chips('formato',fmts)}`:''}${fld('legenda','Legenda (opcional)',b.legenda)}`;break;
+    case 'galeria':body=`${(b.paths||[]).length?`<div class="be-gal">${b.paths.map((p,j)=>`<span style="background-image:url('${blogImg(p)}');aspect-ratio:${FMT_RATIO[b.formato]}"><button data-galrm="${i}:${j}" aria-label="Tirar a foto ${j+1}">×</button></span>`).join('')}</div>`:'<div class="be-ph">Nenhuma foto ainda</div>'}
+      <div class="acts-row" style="margin-top:8px"><button class="pill" data-upl="${i}">+ Fotos</button></div><span class="lbl-s">Formato</span>${chips('formato',fmts.slice(1))}`;break;
+    case 'video':{const e=videoEmbed(b.url);body=`${fld('url','Link do vídeo (YouTube ou Vimeo)',b.url,'https://www.youtube.com/watch?v=…','url')}<p class="role-help">${e?'Vídeo reconhecido: ele aparece tocável no post.':b.url?'Não reconheci como YouTube ou Vimeo: vai aparecer como link.':''}</p>`;break}
+    case 'link':body=`${fld('url','Endereço',b.url,'https://…','url')}${fld('titulo','Título do cartão',b.titulo,'Ex.: Templates de feed prontos')}${fld('desc','Descrição (opcional)',b.desc)}`;break;
+    case 'botao':body=`<div class="be-btnprev" style="text-align:${{esq:'left',dir:'right'}[b.alinhar]||'center'}"><span class="pill ${b.estilo==='contorno'?'':b.estilo==='texto'?'plain':'dark'}">${esc(b.texto||'Botão')}</span></div>
+      ${fld('texto','Texto do botão',b.texto)}${fld('url','Link',b.url,'https://…','url')}
+      <label class="rad"><input type="checkbox" data-bi="${i}" data-k="nova" ${b.nova===false?'':'checked'}> Abrir em nova aba</label>
+      <span class="lbl-s">Estilo</span>${chips('estilo',[['preto','Preto'],['contorno','Contorno'],['texto','Só texto']])}
+      <span class="lbl-s">Alinhar</span>${chips('alinhar',[['esq','Esquerda'],['centro','Centro'],['dir','Direita']])}`;break;
+    case 'divisor':body='<hr class="bl-hr">';break;
+    case 'espaco':body='<div class="be-ph" style="height:36px">Espaço em branco</div>';break;
+  }
+  return `<section class="be-b" id="be-b${i}" aria-label="${blocoNome(b.t)}"><div class="be-tools"><span>${blIcon(b.t)}${blocoNome(b.t)}</span>
+    <button data-mv="${i}:-1" aria-label="Subir bloco" ${i===0?'disabled':''}>↑</button><button data-mv="${i}:1" aria-label="Descer bloco" ${i===last?'disabled':''}>↓</button><button data-rm="${i}" aria-label="Remover bloco">×</button></div>${body}</section>`;
+}
+function drawBlogEditor(focus){
+  const b=BE;const last=b.blocks.length-1;const sc=window.scrollY;
+  const st=[['rascunho','Rascunho'],['agendado','Agendado'],['publicado','Publicado']];
+  const label={rascunho:'Salvar rascunho',agendado:'Agendar',publicado:b.id&&b.status==='publicado'?'Salvar':'Publicar'}[b.status];
+  app.innerHTML=header('admin')+admTabs('blog')+`<div class="be" id="be">
+    <aside class="be-pal" aria-label="Adicionar elemento"><span class="lbl-s" style="margin-top:0">Adicionar elemento</span>
+      <div class="be-pal-g">${BLOCOS.map(([t,n])=>`<button data-add="${t}">${blIcon(t)}${n}</button>`).join('')}</div>
+      <p class="role-help">O elemento entra no fim do post. Use ↑ e ↓ para mudar a ordem.</p></aside>
+    <main class="be-main"><div class="crumb2"><a data-go="admin/blog">Blog</a> / ${b.id?'Editar post':'Novo post'}</div>
+      <select class="be-cat" data-f="categoria" aria-label="Categoria">${BLOG_CATS.map(c=>`<option ${b.categoria===c?'selected':''}>${c}</option>`).join('')}</select>
+      <textarea class="be-title" data-f="title" rows="1" placeholder="Título do post" aria-label="Título do post">${esc(b.title)}</textarea>
+      <textarea class="be-sub" data-f="subtitle" rows="1" placeholder="Subtítulo (opcional)" aria-label="Subtítulo">${esc(b.subtitle)}</textarea>
+      <section class="be-b"><div class="be-tools"><span>${blIcon('foto')}Capa</span></div>
+        ${b.cover_path?`<img class="be-img" src="${blogImg(b.cover_path)}" alt="" style="aspect-ratio:${FMT_RATIO[b.cover_format]}">`:'<div class="be-ph">Sem capa</div>'}
+        <div class="acts-row" style="margin-top:8px"><button class="pill" id="be-cover">${b.cover_path?'Trocar capa':'Enviar capa'}</button>${b.cover_path?'<button class="pill" id="be-cover-x">Tirar capa</button>':''}</div>
+        <span class="lbl-s">Formato da capa</span><div class="chips">${['16:9','4:5','1:1','9:16'].map(x=>`<button class="chip ${b.cover_format===x?'on':''}" data-cf="${x}" aria-pressed="${b.cover_format===x}">${x}</button>`).join('')}</div></section>
+      ${b.blocks.map((x,i)=>beBlockHTML(x,i,last)).join('')}
+      <div class="be-add"><span>Adicionar:</span>${BLOCOS.map(([t,n])=>`<button class="chip" data-add="${t}">${n}</button>`).join('')}</div>
+    </main>
+    <aside class="be-side" aria-label="Configurações do post"><span class="lbl-s" style="margin-top:0">Situação</span>
+      <div class="chips">${st.map(([v,n])=>`<button class="chip ${b.status===v?'on':''}" data-st="${v}" aria-pressed="${b.status===v}">${n}</button>`).join('')}</div>
+      ${b.status==='agendado'?`<label class="lbl-s" for="be-when">Publicar em</label><input class="field" type="datetime-local" id="be-when" data-f="publish_at" value="${toLocalInput(b.publish_at)}">`:''}
+      <label class="lbl-s" for="be-slug">Endereço do post</label><div class="be-slug"><span>/blog/</span><input class="field" id="be-slug" data-f="slug" value="${esc(b.slug)}" placeholder="endereco-do-post"></div>
+      <label class="lbl-s" for="be-res">Resumo (aparece na lista e no Google)</label><textarea class="field ta" id="be-res" data-f="resumo" rows="3" maxlength="300">${esc(b.resumo)}</textarea>
+      <span class="lbl-s">Quem vê</span>
+      <label class="rad"><input type="radio" name="be-vis" data-f="visibilidade" value="todos" ${b.visibilidade==='todos'?'checked':''}> Todo mundo</label>
+      <label class="rad"><input type="radio" name="be-vis" data-f="visibilidade" value="logados" ${b.visibilidade==='logados'?'checked':''}> Só quem tem conta</label>
+      <label class="rad" style="margin-top:10px"><input type="checkbox" data-f="em_novidades" ${b.em_novidades?'checked':''}> Mostrar em Novidades no app</label>
+      <div class="acts-row" style="margin-top:22px"><button class="pill dark" id="be-save">${label}</button>${b.id?`<a class="pill" href="#blog/${esc(b.slug)}" id="be-prev">Ver prévia</a>`:''}</div>
+      ${b.id?`<button class="danger-link" id="be-trash" style="margin-top:18px;text-align:left">${b.deleted_at?'Tirar da lixeira':'Mover para a lixeira'}</button>`:''}
+    </aside></div>`;
+  bindHeader();
+  const root=document.getElementById('be');
+  const grow=el=>{el.style.height='auto';el.style.height=el.scrollHeight+'px'};root.querySelectorAll('.be-title,.be-sub').forEach(grow);
+  window.scrollTo(0,sc);
+  if(focus!=null){const el=document.getElementById('be-b'+focus);el?.scrollIntoView({block:'center'});el?.querySelector('input,textarea,button.pill')?.focus()}
+  // Campos: guardam no rascunho em memória enquanto digita (sem redesenhar a tela)
+  const onField=e=>{const el=e.target;
+    if(el.dataset.bi!=null&&el.dataset.k&&!el.dataset.v){const x=b.blocks[+el.dataset.bi];x[el.dataset.k]=el.type==='checkbox'?el.checked:el.value;
+      if(x.t==='botao'){const pv=el.closest('.be-b').querySelector('.be-btnprev .pill');if(pv&&el.dataset.k==='texto')pv.textContent=el.value||'Botão'}
+      if(x.t==='video'){const hp=el.closest('.be-b').querySelector('.role-help');if(hp)hp.textContent=videoEmbed(el.value)?'Vídeo reconhecido: ele aparece tocável no post.':el.value?'Não reconheci como YouTube ou Vimeo: vai aparecer como link.':''}
+      return}
+    const f=el.dataset.f;if(!f)return;
+    if(f==='publish_at')b.publish_at=el.value?new Date(el.value).toISOString():null;
+    else if(f==='em_novidades')b.em_novidades=el.checked;
+    else b[f]=el.value;
+    if(f==='title'){grow(el);if(!b.slugMan){b.slug=slugify(el.value);const s=document.getElementById('be-slug');if(s)s.value=b.slug}}
+    if(f==='subtitle')grow(el);
+    if(f==='slug')b.slugMan=true};
+  root.addEventListener('input',onField);root.addEventListener('change',onField);
+  root.querySelectorAll('[data-add]').forEach(x=>x.onclick=()=>{b.blocks.push(newBlock(x.dataset.add));drawBlogEditor(b.blocks.length-1)});
+  root.querySelectorAll('[data-mv]').forEach(x=>x.onclick=()=>{const [i,d]=x.dataset.mv.split(':').map(Number);const j=i+d;[b.blocks[i],b.blocks[j]]=[b.blocks[j],b.blocks[i]];drawBlogEditor(j)});
+  root.querySelectorAll('[data-rm]').forEach(x=>x.onclick=()=>{const i=+x.dataset.rm;const bl=b.blocks[i];
+    const vazio=!(bl.texto||bl.path||(bl.paths||[]).length||bl.url);if(!vazio&&!confirm(`Remover o bloco "${blocoNome(bl.t)}"?`))return;b.blocks.splice(i,1);drawBlogEditor()});
+  root.querySelectorAll('button[data-v]').forEach(x=>x.onclick=()=>{b.blocks[+x.dataset.bi][x.dataset.k]=x.dataset.v;drawBlogEditor()});
+  root.querySelectorAll('[data-cf]').forEach(x=>x.onclick=()=>{b.cover_format=x.dataset.cf;drawBlogEditor()});
+  root.querySelectorAll('[data-st]').forEach(x=>x.onclick=()=>{b.status=x.dataset.st;if(b.status==='agendado'&&!b.publish_at){const d=new Date();d.setDate(d.getDate()+1);d.setHours(9,0,0,0);b.publish_at=d.toISOString()}drawBlogEditor()});
+  root.querySelectorAll('[data-galrm]').forEach(x=>x.onclick=()=>{const [i,j]=x.dataset.galrm.split(':').map(Number);b.blocks[i].paths.splice(j,1);drawBlogEditor(i)});
+  root.querySelectorAll('[data-upl]').forEach(x=>x.onclick=async()=>{const i=+x.dataset.upl;const bl=b.blocks[i];
+    const files=await pickBlogFiles(bl.t==='gif'?'image/gif':'image/jpeg,image/png,image/webp',bl.t==='galeria');if(!files.length)return;
+    if(bl.t==='gif'&&files[0].type!=='image/gif')return toast('Escolha um arquivo .gif');
+    toast('Enviando…',20000);
+    try{if(bl.t==='galeria'){for(const f of files.slice(0,12-(bl.paths||[]).length))bl.paths.push(await uploadBlog(f))}else bl.path=await uploadBlog(files[0]);
+      toast('Enviado');drawBlogEditor(i)}catch(err){toast(traduz(err.message))}});
+  document.getElementById('be-cover').onclick=async()=>{const files=await pickBlogFiles('image/jpeg,image/png,image/webp');if(!files.length)return;
+    toast('Enviando…',20000);try{b.cover_path=await uploadBlog(files[0]);toast('Capa enviada');drawBlogEditor()}catch(err){toast(traduz(err.message))}};
+  const cx=document.getElementById('be-cover-x');if(cx)cx.onclick=()=>{b.cover_path=null;drawBlogEditor()};
+  document.getElementById('be-save').onclick=saveBlog;
+  const tr=document.getElementById('be-trash');
+  if(tr)tr.onclick=async()=>{const out=!b.deleted_at;if(out&&!confirm('Mover este post para a lixeira? Ele sai do blog, mas dá para trazer de volta.'))return;
+    try{const deleted_at=out?new Date().toISOString():null;await db(sb.from('blog_posts').update({deleted_at}).eq('id',b.id));b.deleted_at=deleted_at;
+      admLog('conteudo',out?'moveu post do blog para a lixeira':'tirou post do blog da lixeira',{titulo:b.title});toast(out?'Post na lixeira':'Post de volta');out?go('admin/blog'):drawBlogEditor()}catch(e){}};
+}
+async function saveBlog(){
+  const b=BE;if(!b.title.trim())return toast('Escreva um título.');
+  b.slug=slugify(b.slug||b.title);if(!b.slug)return toast('Escolha um endereço para o post.');
+  if(b.status==='agendado'&&!b.publish_at)return toast('Escolha a data e a hora do agendamento.');
+  const agora=new Date().toISOString();
+  const publish_at=b.status==='publicado'?(b.publish_at&&b.publish_at<=agora?b.publish_at:agora):b.publish_at;
+  const row={slug:b.slug,title:b.title.trim(),subtitle:(b.subtitle||'').trim(),categoria:b.categoria,cover_path:b.cover_path,cover_format:b.cover_format,blocks:b.blocks,
+    resumo:(b.resumo||'').trim(),status:b.status,publish_at,visibilidade:b.visibilidade,em_novidades:!!b.em_novidades,updated_at:agora};
+  const btn=document.getElementById('be-save');if(btn)btn.disabled=true;
+  const {data,error}=await (b.id?sb.from('blog_posts').update(row).eq('id',b.id).select('id').single():sb.from('blog_posts').insert(row).select('id').single());
+  if(btn)btn.disabled=false;
+  if(error){toast(error.code==='23505'||/duplicate/i.test(error.message)?'Já existe um post com esse endereço. Troque o endereço do post.':traduz(error.message),4200);return}
+  b.id=data.id;b.publish_at=publish_at;b.slugMan=true;
+  admLog('conteudo','salvou post do blog',{titulo:row.title,status:row.status});
+  toast({rascunho:'Rascunho salvo',agendado:'Post agendado',publicado:'Post publicado'}[b.status]);
+  history.replaceState(null,'','#admin/blog/'+b.id);route=['admin','blog',b.id];drawBlogEditor();
+}
+
+/* ---------- Suporte ---------- */
+const SUP_CATS=[['duvida','Dúvida'],['problema','Problema técnico'],['planos','Planos'],['pagamento','Pagamento'],['sugestao','Sugestão'],['privacidade','Privacidade']];
+const supCat=c=>(SUP_CATS.find(x=>x[0]===c)||[0,c])[1];
+const SUP_ST={aberto:['Aberto','#c4281c'],respondido:['Respondido','#2f45ff'],resolvido:['Resolvido','#14b85a']};
+const supDot=s=>`<span class="rd" style="background:${(SUP_ST[s]||SUP_ST.aberto)[1]}"></span>${(SUP_ST[s]||SUP_ST.aberto)[0]}`;
+const msgHTML=(m,who)=>`<div class="sup-m ${m.from_admin?'adm':'me'}"><small>${esc(who)} · ${dBR(m.created_at)} ${hBR(m.created_at)}</small><p>${esc(m.body).replace(/\n/g,'<br>')}</p></div>`;
+// Lado do usuário: #suporte e #suporte/ID
+async function vSuporte(){
+  const id=route[1];const h=location.hash;
+  app.innerHTML=header('')+`<main class="page" style="max-width:720px"><p class="sub">Carregando…</p></main>`;bindHeader();
+  let tickets=[],msgs=[];
+  try{tickets=await db(sb.from('support_tickets').select('*').eq('user_id',USER.id).order('updated_at',{ascending:false}));
+    if(id)msgs=await db(sb.from('support_messages').select('id,from_admin,body,created_at').eq('ticket_id',id).order('created_at'))}catch(e){return}
+  if(!stillHere(h))return;
+  if(id){const t=tickets.find(x=>x.id===id);if(!t)return v404();
+    if(t.unread_user)sb.rpc('support_mark_read',{ticket:t.id}).then(()=>{},()=>{});
+    document.title=`${t.subject} · Fig.Feed`;
+    app.innerHTML=header('')+`<main class="page" style="max-width:720px"><a class="crumb2" href="#suporte">← Seus pedidos</a>
+      <h1 style="font-size:clamp(26px,3vw,38px)">${esc(t.subject)}</h1><p class="sub">${supCat(t.category)} · ${supDot(t.status)}</p>
+      <div class="sup-th">${msgs.map(m=>msgHTML(m,m.from_admin?'Equipe Fig.Feed':'Você')).join('')}</div>
+      <form id="sup-r" class="sup-form"><label class="lbl-s" for="sup-b">${t.status==='resolvido'?'Escreva aqui para reabrir o pedido':'Responder'}</label>
+        <textarea class="field ta" id="sup-b" rows="4" maxlength="4000"></textarea><div class="acts-row"><button class="pill dark">Enviar</button></div></form></main>`;
+    bindHeader();
+    document.getElementById('sup-r').onsubmit=async e=>{e.preventDefault();const body=document.getElementById('sup-b').value.trim();if(!body)return toast('Escreva a mensagem.');
+      const s=e.submitter;s.disabled=true;try{await db(sb.from('support_messages').insert({ticket_id:t.id,body}));toast('Mensagem enviada');vSuporte()}catch(err){s.disabled=false}};
+    return}
+  document.title='Fale com a gente · Fig.Feed';
+  app.innerHTML=header('')+`<main class="page" style="max-width:720px"><h1>Fale com a gente</h1><p class="sub">Conte o que aconteceu. A resposta aparece aqui e costuma chegar em até 1 dia útil.</p>
+    <form id="sup-n" class="sup-form"><label class="lbl-s" for="sup-s">Assunto</label><input class="field" id="sup-s" maxlength="120" placeholder="Ex.: Não consigo arrastar os posts no celular">
+      <label class="lbl-s" for="sup-c">Sobre o quê</label><select class="field" id="sup-c">${SUP_CATS.map(([k,n])=>`<option value="${k}">${n}</option>`).join('')}</select>
+      <label class="lbl-s" for="sup-b">Mensagem</label><textarea class="field ta" id="sup-b" rows="5" maxlength="4000" placeholder="O que você estava fazendo, o que esperava e o que aconteceu."></textarea>
+      <div class="acts-row"><button class="pill dark">Enviar pedido</button></div></form>
+    ${tickets.length?`<h2 class="adm-h2" style="margin-top:44px">Seus pedidos</h2><div class="adm-list">${tickets.map(t=>`<a class="sup-row" href="#suporte/${t.id}">
+      <span class="nm"><b>${esc(t.subject)}</b><small>${supCat(t.category)} · ${dBR(t.updated_at)}</small></span>
+      <span class="mut">${t.unread_user?'<span class="adm-n">nova resposta</span>':''}${supDot(t.status)}</span></a>`).join('')}</div>`:''}</main>`;
+  bindHeader();
+  document.getElementById('sup-n').onsubmit=async e=>{e.preventDefault();
+    const subject=document.getElementById('sup-s').value.trim(),category=document.getElementById('sup-c').value,body=document.getElementById('sup-b').value.trim();
+    if(!subject||!body)return toast('Preencha o assunto e a mensagem.');
+    const s=e.submitter;s.disabled=true;
+    try{const t=await db(sb.from('support_tickets').insert({subject,category}).select('id').single());
+      await db(sb.from('support_messages').insert({ticket_id:t.id,body}));toast('Pedido enviado');go('suporte/'+t.id)}catch(err){s.disabled=false}};
+}
+// Admin: caixa de pedidos
+let SUP={list:[],filter:'aberto',msgs:[]};
+const RESPOSTAS=[['Recebemos','Oi! Recebemos sua mensagem e já estamos olhando. Assim que tivermos novidades, respondemos por aqui.'],
+  ['Pedir print','Pode mandar um print da tela e contar em qual aparelho e navegador isso acontece? Assim achamos o problema mais rápido.'],
+  ['Resolvido','Prontinho, isso já foi resolvido. Se acontecer de novo, é só responder esta mensagem.'],
+  ['Sugestão anotada','Obrigado pela sugestão! Anotamos aqui para as próximas versões do Fig.Feed.']];
+async function admSuporte(){
+  const h=location.hash;const id=route[2];if(!SUP.list.length)admLoading('suporte');
+  try{if(!ADM.loaded)await admLoad();
+    SUP.list=await db(sb.from('support_tickets').select('*').order('updated_at',{ascending:false}).limit(300));
+    SUP.msgs=id?await db(sb.from('support_messages').select('*').eq('ticket_id',id).order('created_at')):[]}catch(e){return}
+  if(!stillHere(h))return;ADM.openTickets=SUP.list.filter(t=>t.status==='aberto').length;drawSuporte();
+}
+function drawSuporte(){
+  const id=route[2];const f=SUP.filter;const sel=SUP.list.find(t=>t.id===id);
+  const list=SUP.list.filter(t=>f==='todos'||t.status===f||t.id===id); // o pedido aberto na tela continua na lista
+  const uBy=uid=>ADM.users.find(u=>u.id===uid);
+  const nm=uid=>{const u=uBy(uid);return u?(u.name||u.handle||u.email):'Usuário removido'};
+  const av=uid=>`<span class="avatar" style="background:${initialColor(uBy(uid)?.email||uid)}" aria-hidden="true">${esc((nm(uid)||'?').trim()[0]?.toUpperCase()||'?')}</span>`;
+  let thread='<div class="adm-empty"><p>Escolha um pedido para ler a conversa.</p></div>';
+  if(sel){const u=uBy(sel.user_id);
+    thread=`<div class="sup-top"><div><span class="mut">${esc(nm(sel.user_id))}${u?' · '+esc(u.email):''}</span><h2>${esc(sel.subject)}</h2><span class="mut">${supCat(sel.category)} · ${supDot(sel.status)}</span></div>
+      <div class="acts-row" style="margin:0"><button class="pill" id="sp-st">${sel.status==='resolvido'?'Reabrir':'Marcar resolvido'}</button></div></div>
+      ${u?`<div class="adm-stats sm"><div><b>${PLANO_NOME[planoEf(u)]}</b><span>plano</span></div><div><b>${roleName(u.role)}</b><span>função</span></div><div><b>${dBR(u.created_at)}</b><span>entrou em</span></div></div>`:''}
+      <div class="sup-th">${SUP.msgs.map(m=>msgHTML(m,m.from_admin?(m.author_id===USER.id?'Você (equipe)':'Equipe · '+nm(m.author_id)):nm(sel.user_id))).join('')}</div>
+      <form id="sp-r" class="sup-form"><div class="sup-rh"><label class="lbl-s" for="sp-b" style="margin:0">Responder (a pessoa vê em Ajuda → Fale com a gente)</label>
+        <select class="field sm" id="sp-pr" aria-label="Respostas prontas"><option value="">Respostas prontas</option>${RESPOSTAS.map(([n],i)=>`<option value="${i}">${n}</option>`).join('')}</select></div>
+        <textarea class="field ta" id="sp-b" rows="4" maxlength="4000"></textarea><div class="acts-row"><button class="pill dark">Enviar resposta</button></div></form>`}
+  app.innerHTML=header('admin')+admTabs('suporte')+`<div class="sup-adm">
+    <section class="sup-l" aria-label="Lista de pedidos"><h1>Pedidos de ajuda</h1><p class="sub" style="margin-bottom:18px">Mensagens de "Fale com a gente".</p>
+      ${chipsHTML([['aberto','Abertos'],['respondido','Respondidos'],['resolvido','Resolvidos'],['todos','Todos']],f,'data-f')}
+      <div class="adm-list" style="margin-top:16px">${list.map(t=>`<a class="sup-it ${t.id===id?'cur':''}" href="#admin/suporte/${t.id}">${av(t.user_id)}
+        <span class="nm"><span class="sup-it-h"><b>${esc(nm(t.user_id))}</b><small>${dBR(t.updated_at)}</small></span><span>${esc(t.subject)}</span><small class="mut">${supCat(t.category)} · ${supDot(t.status)}</small></span></a>`).join('')
+        ||'<p class="sub" style="margin:18px 0">Nenhum pedido aqui.</p>'}</div></section>
+    <main class="sup-r">${thread}</main></div>`;
+  bindHeader();
+  app.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{SUP.filter=b.dataset.f;drawSuporte()});
+  if(!sel)return;
+  document.getElementById('sp-pr').onchange=e=>{const r=RESPOSTAS[+e.target.value];if(r){const ta=document.getElementById('sp-b');ta.value=r[1];ta.focus()}e.target.value=''};
+  document.getElementById('sp-st').onclick=async e=>{e.currentTarget.disabled=true;const status=sel.status==='resolvido'?'aberto':'resolvido';
+    try{await db(sb.from('support_tickets').update({status,updated_at:new Date().toISOString()}).eq('id',sel.id));
+      admLog('usuarios',status==='resolvido'?'resolveu pedido de ajuda':'reabriu pedido de ajuda',{assunto:sel.subject},sel.user_id);toast(status==='resolvido'?'Pedido resolvido':'Pedido reaberto');admSuporte()}catch(err){}};
+  document.getElementById('sp-r').onsubmit=async e=>{e.preventDefault();const body=document.getElementById('sp-b').value.trim();if(!body)return toast('Escreva a resposta.');
+    const s=e.submitter;s.disabled=true;
+    try{await db(sb.from('support_messages').insert({ticket_id:sel.id,body,from_admin:true}));
+      admLog('usuarios','respondeu pedido de ajuda',{assunto:sel.subject},sel.user_id);toast('Resposta enviada');admSuporte()}catch(err){s.disabled=false}};
+}
+
+/* ---------- Assinaturas: planos e cupons ---------- */
+let ASS={filter:'todos',coupons:[]};
+const ORIGEM={manual:'Liberado à mão',teste:'Teste grátis',cupom:'Cupom'};
+const emTeste=u=>planoEf(u)!=='gratis'&&['teste','cupom'].includes(u.plano_origem);
+async function admAssinaturas(){
+  const h=location.hash;admLoading('assinaturas');
+  try{await admLoad();ASS.coupons=await db(sb.from('coupons').select('*').order('created_at',{ascending:false}))}catch(e){return}
+  if(stillHere(h))drawAssinaturas();
+}
+function drawAssinaturas(){
+  const us=ADM.users;const f=ASS.filter;
+  const match=u=>f==='todos'||(f==='vencidos'?planoVencido(u):f==='teste'?emTeste(u):planoEf(u)===f);
+  const val=u=>planoVencido(u)?`<span style="color:var(--err)">${PLANO_NOME[u.plano]} venceu em ${dBR(u.plano_ate)}</span>`:planoEf(u)==='gratis'?'—':u.plano_ate?'até '+dBR(u.plano_ate):'sem prazo';
+  const cupSt=c=>!c.ativo?'Pausado':c.expira_em&&new Date(c.expira_em)<new Date()?'Vencido':c.max_usos&&c.usos>=c.max_usos?'Esgotado':'Ativo';
+  admShell('assinaturas',`<div class="adm-head"><div><h1>Assinaturas</h1><p class="sub">Quem está em cada plano e até quando.</p></div></div>
+    <div class="warn-s">A cobrança automática ainda não está ligada. Por enquanto você libera planos à mão, dá testes grátis e cria cupons. Os limites de cada plano também ainda não são aplicados.</div>
+    <section class="adm-stats" aria-label="Resumo"><div><b>${us.filter(u=>planoEf(u)==='pro').length}</b><span>no Pro</span></div><div><b>${us.filter(u=>planoEf(u)==='agencia').length}</b><span>na Agência</span></div>
+      <div><b>${us.filter(emTeste).length}</b><span>em teste ou cupom</span></div><div><b>${us.filter(planoVencido).length}</b><span>com plano vencido</span></div></section>
+    ${chipsHTML([['todos','Todos'],['gratis','Grátis'],['pro','Pro'],['agencia','Agência'],['teste','Em teste'],['vencidos','Vencidos']],f,'data-f')}
+    <div class="adm-list" style="margin-top:16px">${us.filter(match).map(u=>`<div class="adm-row">
+      <div class="who2"><span class="avatar" style="background:${initialColor(u.email)}" aria-hidden="true">${esc((u.name||u.email||'?').trim()[0]?.toUpperCase()||'?')}</span><div class="nm"><b>${esc(u.name||u.handle||u.email)}${u.id===USER.id?' (você)':''}</b>${u.name||u.handle?`<small>${esc(u.email)}</small>`:''}</div></div>
+      <span><span class="pl-tag ${planoEf(u)}">${PLANO_NOME[planoEf(u)]}</span></span>
+      <span class="mut hide-sm">${val(u)}${planoEf(u)!=='gratis'&&ORIGEM[u.plano_origem]?` · ${ORIGEM[u.plano_origem]}`:''}</span>
+      <button class="ed" data-u="${u.id}">Mudar plano</button></div>`).join('')||'<p class="sub" style="margin:18px 0">Ninguém aqui.</p>'}</div>
+    <h2 class="adm-h2" style="margin-top:48px">Cupons</h2>
+    <form class="cup-new" id="cup-n" novalidate>
+      <label class="lbl-s">Código<input class="field" id="cn-c" maxlength="30" placeholder="BEMVINDO" autocomplete="off"></label>
+      <label class="lbl-s">Plano<select class="field" id="cn-p"><option value="pro">Pro</option><option value="agencia">Agência</option></select></label>
+      <label class="lbl-s">Dias grátis<input class="field" id="cn-d" type="number" min="1" max="365" value="30"></label>
+      <label class="lbl-s">Máx. de usos<input class="field" id="cn-m" type="number" min="1" placeholder="Sem limite"></label>
+      <label class="lbl-s">Vale até<input class="field" id="cn-e" type="date"></label>
+      <label class="lbl-s cn-desc">Descrição (só para você)<input class="field" id="cn-t" maxlength="120" placeholder="Ex.: 1º mês grátis no Pro"></label>
+      <button class="pill dark">Criar cupom</button></form>
+    <div class="adm-list" style="margin-top:18px">${ASS.coupons.map(c=>`<div class="adm-row cup-row"><div class="nm"><b class="mono">${esc(c.code)}</b><small>${esc(c.descricao||'')}</small></div>
+      <span>${PLANO_NOME[c.plano]} · ${c.dias} dias</span><span class="mut hide-sm">${c.usos}${c.max_usos?'/'+c.max_usos:''} ${c.usos===1?'uso':'usos'} · ${cupSt(c)}${c.expira_em?' · até '+dBR(c.expira_em):''}</span>
+      <span class="cup-acts"><button class="ed" data-tog="${esc(c.code)}">${c.ativo?'Pausar':'Ativar'}</button>${c.usos?'':`<button class="ed" data-del="${esc(c.code)}" style="color:var(--err)">Apagar</button>`}</span></div>`).join('')
+      ||'<p class="sub" style="margin:14px 0">Nenhum cupom ainda. O usuário usa o cupom na página Planos.</p>'}</div>`,1080);
+  app.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{ASS.filter=b.dataset.f;drawAssinaturas()});
+  app.querySelectorAll('[data-u]').forEach(b=>b.onclick=()=>admPlanPanel(ADM.users.find(u=>u.id===b.dataset.u)));
+  app.querySelectorAll('[data-tog]').forEach(b=>b.onclick=async()=>{const c=ASS.coupons.find(x=>x.code===b.dataset.tog);b.disabled=true;
+    try{await db(sb.from('coupons').update({ativo:!c.ativo}).eq('code',c.code));admLog('pagamentos',c.ativo?'pausou cupom':'ativou cupom',{cupom:c.code});admAssinaturas()}catch(e){b.disabled=false}});
+  app.querySelectorAll('[data-del]').forEach(b=>b.onclick=async()=>{if(!confirm(`Apagar o cupom ${b.dataset.del}?`))return;
+    try{await db(sb.from('coupons').delete().eq('code',b.dataset.del));admLog('pagamentos','apagou cupom',{cupom:b.dataset.del});admAssinaturas()}catch(e){}});
+  document.getElementById('cup-n').onsubmit=async e=>{e.preventDefault();
+    const code=document.getElementById('cn-c').value.trim().toUpperCase().replace(/\s+/g,'');const dias=+document.getElementById('cn-d').value;
+    const max=document.getElementById('cn-m').value;const exp=document.getElementById('cn-e').value;
+    if(!/^[A-Z0-9_-]{3,30}$/.test(code))return toast('Use de 3 a 30 letras ou números no código, sem espaço nem acento.',3800);
+    if(!(dias>=1&&dias<=365))return toast('Os dias grátis precisam ser entre 1 e 365.');
+    const row={code,plano:document.getElementById('cn-p').value,dias,max_usos:max?+max:null,expira_em:exp?new Date(exp+'T23:59:59').toISOString():null,descricao:document.getElementById('cn-t').value.trim()};
+    const {error}=await sb.from('coupons').insert(row);
+    if(error)return toast(error.code==='23505'?'Já existe um cupom com esse código.':traduz(error.message),3800);
+    admLog('pagamentos','criou cupom',{cupom:code,plano:row.plano,dias});toast('Cupom criado');admAssinaturas()};
+}
+function admPlanPanel(u){
+  if(!u)return;closePanel();let pl=planoEf(u),dias=null,outro=false;
+  const ov=document.createElement('div');ov.className='ov';ov.id='ov';ov.onclick=e=>{if(e.target===ov)closePanel()};
+  const draw=()=>{ov.innerHTML=`<aside class="sp" role="dialog" aria-modal="true" aria-labelledby="pp-t"><div class="bar"><span class="saved">Mudar plano</span><button class="sp-close" id="pp-x" aria-label="Fechar">${XICON}</button></div>
+    <div class="body"><div><div class="ttl" id="pp-t" style="font-size:22px">${esc(u.name||u.handle||u.email)}</div><span class="saved">${esc(u.email)} · hoje: ${PLANO_NOME[planoEf(u)]}${planoEf(u)!=='gratis'?(u.plano_ate?' até '+dBR(u.plano_ate):' sem prazo'):''}</span></div>
+      <h3>Plano</h3><div class="chips" role="radiogroup" aria-label="Plano">${['gratis','pro','agencia'].map(p=>`<button class="chip ${pl===p?'on':''}" role="radio" aria-checked="${pl===p}" data-p="${p}">${PLANO_NOME[p]}</button>`).join('')}</div>
+      ${pl==='gratis'?'<p class="role-help">A pessoa volta para o plano Grátis na hora.</p>':`<h3>Por quanto tempo</h3><div class="chips" role="radiogroup" aria-label="Prazo">${[[null,'Sem prazo'],[7,'7 dias'],[14,'14 dias'],[30,'30 dias'],['outro','Outro']].map(([d,n])=>{const on=d==='outro'?outro:(!outro&&dias===d);return `<button class="chip ${on?'on':''}" role="radio" aria-checked="${on}" data-d="${d}">${n}</button>`}).join('')}</div>
+        ${outro?`<label class="lbl-s" for="pp-n">Quantos dias</label><input class="field" id="pp-n" type="number" min="1" max="730" value="${dias||60}">`:''}
+        <p class="role-help">${dias||outro?'Quando o prazo acabar, a pessoa volta para o Grátis sozinha.':'Fica liberado até você mudar de novo.'}</p>`}
+      <div class="foot"><button class="pill dark" id="pp-save">Salvar plano</button><button class="pill" id="pp-c">Cancelar</button></div>
+      <p class="role-help">A mudança fica registrada em Atividade.</p></div></aside>`;
+    ov.querySelector('#pp-x').onclick=closePanel;ov.querySelector('#pp-c').onclick=closePanel;
+    ov.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{pl=b.dataset.p;draw();ov.querySelector('[data-p].on')?.focus()});
+    ov.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{const d=b.dataset.d;outro=d==='outro';dias=outro?(dias||60):(d==='null'?null:+d);draw();ov.querySelector('[data-d].on')?.focus()});
+    ov.querySelector('#pp-save').onclick=async()=>{const s=ov.querySelector('#pp-save');
+      let d=pl==='gratis'?null:(outro?+ov.querySelector('#pp-n').value:dias);
+      if(outro&&!(d>=1&&d<=730))return toast('Escolha entre 1 e 730 dias.');
+      s.disabled=true;try{await db(sb.rpc('admin_set_plan',{target:u.id,novo_plano:pl,dias:d}));closePanel();
+        toast(`${u.name||u.email} agora está no ${PLANO_NOME[pl]}${d?` por ${d} dias`:''}`,3400);
+        if(u.id===USER.id)S.profile=await db(sb.from('profiles').select('*').eq('id',USER.id).single());await admLoad();drawAssinaturas()}catch(e){s.disabled=false}}};
+  draw();document.body.appendChild(ov);document.addEventListener('keydown',panelEsc);ov.querySelector('[data-p].on')?.focus();
+}
+
 /* ======================= V6: telas de aviso ======================= */
 const CONTATO='contato@figfeed.com.br'; // troque aqui se o e-mail de contato for outro
 let MANUT=false; // modo "Estamos fazendo uma atualização" (ligado pelo GM em Configuração)
@@ -1582,7 +2219,7 @@ function vManutencao(){
 async function loadManut(){try{const {data}=await sb.from('app_settings').select('value').eq('key','manutencao').maybeSingle();MANUT=!!data?.value?.ativo}catch(e){MANUT=false}}
 
 /* ======================= V6: páginas públicas e da conta ======================= */
-const PUBLIC=['termos','privacidade','ajuda','novidades','planos','r'];
+const PUBLIC=['termos','privacidade','ajuda','novidades','planos','r','blog'];
 function pubHeader(){return `<header class="pub-hdr"><button class="brand" data-go="home" aria-label="Fig.Feed, início">${LOGO()}<span>Fig.Feed</span></button>
   <div class="r"><button class="pill" data-go="entrar">Entrar</button><button class="pill dark" data-go="criar">Criar conta grátis</button></div></header>`}
 const shell=cur=>USER?header(cur):pubHeader();
@@ -1626,7 +2263,7 @@ function vAjuda(){
     <div class="faq" id="faq">${FAQ.map(([qq,a])=>`<details data-s="${esc((qq+' '+a).toLowerCase())}"><summary>${esc(qq)}</summary><p>${esc(a)}</p></details>`).join('')}</div>
     <p class="sub" id="nofaq" hidden style="margin-top:16px">Nada encontrado. Tente outra palavra ou fale com a gente.</p>
     <h2>Atalhos de teclado</h2><div>${KBD.map(([l,k])=>`<div class="kbd-row"><span>${l}</span><span>${k}</span></div>`).join('')}</div>
-    <div class="contact"><div><b>Não achou o que procurava?</b><br><small>Responderemos em até 1 dia útil.</small></div><a class="pill" href="mailto:${CONTATO}">${CONTATO}</a></div></main>`;
+    <div class="contact"><div><b>Não achou o que procurava?</b><br><small>Responderemos em até 1 dia útil.</small></div><div class="acts-row" style="margin:0">${USER?'<button class="pill dark" data-go="suporte">Fale com a gente</button>':''}<a class="pill" href="mailto:${CONTATO}">${CONTATO}</a></div></div></main>`;
   bindShell();
   document.getElementById('hq').oninput=e=>{const t=e.target.value.trim().toLowerCase();let n=0;
     document.querySelectorAll('#faq details').forEach(d=>{const ok=!t||d.dataset.s.includes(t);d.hidden=!ok;if(ok)n++;if(t&&ok)d.open=true});
@@ -1634,6 +2271,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v10','Nov 2026',['Templates de feed: em uma conta, “+ Criar → Usar um template” monta a grade de rascunhos','Blog com dicas, tutoriais e novidades','Fale com a gente: mande um pedido de ajuda e veja a resposta no app','Planos: veja o seu plano e use cupons','Admin: Templates, Blog, Suporte e Assinaturas (planos, testes grátis e cupons)']],
   ['v9','Nov 2026',['Planejamento do mês em PDF para o cliente aprovar (Downloads)','Objetivo do mês e pilares de conteúdo de cada conta','No post: formato (foto, carrossel ou Reels), horário, pilar e chamada para ação','Tipo de cada story: imagem, vídeo, enquete, caixinha, link ou contagem']],
   ['v8','Nov 2026',['Stories: planeje os stories de cada dia e arraste para ordenar','Prévia estilo Instagram com nome, bio, seguidores e destaques','Relatório do mês com gráfico, PDF e link para o cliente (vale 30 dias)','Abas Feed, Stories, Prévia e Relatório dentro de cada conta']],
   ['v7','Nov 2026',['Lixeira: posts e contas apagados ficam 30 dias e podem ser restaurados','Biblioteca com todas as suas fotos, espaço usado e filtro "Sem uso"','Página inicial para quem ainda não tem conta','Página de Planos']],
@@ -1645,8 +2283,11 @@ const NOVIDADES=[
   ['v1','Nov 2026',['Primeira versão: feed com arrastar e soltar']]];
 function vNovidades(){
   app.innerHTML=shell('')+`<main class="page doc"><h1>Novidades</h1><p class="sub">Tudo que mudou no Fig.Feed.</p>
-    ${NOVIDADES.map(([v,d,it])=>`<section class="rel"><div><b>${v}</b><small>${d}</small></div><ul>${it.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></section>`).join('')}</main>`;
+    <div id="nov-blog"></div>${NOVIDADES.map(([v,d,it])=>`<section class="rel"><div><b>${v}</b><small>${d}</small></div><ul>${it.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></section>`).join('')}</main>`;
   bindShell();
+  sb.from('blog_posts').select('slug,title,status,publish_at,deleted_at').eq('em_novidades',true).is('deleted_at',null).order('publish_at',{ascending:false}).limit(5).then(({data})=>{
+    const xs=(data||[]).filter(blogLive);const box=document.getElementById('nov-blog');if(!xs.length||!box)return;
+    box.innerHTML=`<section class="rel"><div><b>Do blog</b><small><a class="ul" href="#blog">Ver todos</a></small></div><ul>${xs.map(b=>`<li><a class="ul" href="#blog/${b.slug}">${esc(b.title)}</a></li>`).join('')}</ul></section>`},()=>{});
 }
 function uaName(ua=''){
   const os=/iPhone/.test(ua)?'iPhone':/iPad/.test(ua)?'iPad':/Android/.test(ua)?'Android':/Macintosh|Mac OS X/.test(ua)?'Mac':/Windows/.test(ua)?'Windows':/Linux/.test(ua)?'Linux':'Aparelho';
@@ -1722,7 +2363,7 @@ async function vExcluir(){
 }
 
 /* ======================= V7: página pública (para quem não tem conta) ======================= */
-function pubFooter(){return `<footer class="pub-foot"><span>© ${new Date().getFullYear()} Fig.Feed</span><a data-go="termos">Termos</a><a data-go="privacidade">Privacidade</a><a data-go="ajuda">Ajuda</a><a data-go="planos">Planos</a></footer>`}
+function pubFooter(){return `<footer class="pub-foot"><span>© ${new Date().getFullYear()} Fig.Feed</span><a data-go="termos">Termos</a><a data-go="privacidade">Privacidade</a><a data-go="blog">Blog</a><a data-go="ajuda">Ajuda</a><a data-go="planos">Planos</a></footer>`}
 function vLanding(){
   document.title='Fig.Feed — monte e organize feeds de forma visual';
   const g=(k)=>Array.from({length:6},(_,i)=>`<div style="background-image:url('${TUT_IMG[(i+k)%9]}')"></div>`).join('');
@@ -1748,15 +2389,26 @@ const PLANOS=[
   {id:'pro',n:'Pro',p:'R$ 29',u:'por mês',it:['Contas ilimitadas','Link do relatório para clientes','Relatório do mês','10 GB de fotos'],b:'Assinar o Pro',top:true},
   {id:'agencia',n:'Agência',p:'R$ 79',u:'por mês',it:['Tudo do Pro','Até 5 pessoas na equipe','Marca da agência nos relatórios','50 GB de fotos'],b:'Falar com a gente'}];
 function vPlanos(){
-  app.innerHTML=shell('')+`<main class="page planos"><h1>Planos</h1><p class="sub">Valores de exemplo. Comece grátis e mude quando precisar.</p>
-    <div class="pl-grid">${PLANOS.map(x=>`<section class="pl ${x.top?'top':''}" aria-label="Plano ${x.n}"><div class="pl-h"><span>${x.n}</span>${x.top?'<span class="tag">Mais escolhido</span>':''}</div>
+  const ef=USER?planoEf(S.profile):null;
+  const meu=USER?`<section class="my-plan" aria-label="Seu plano"><div><small>Seu plano</small><b>${PLANO_NOME[ef]}</b>
+      <span>${ef!=='gratis'?(S.profile.plano_ate?'até '+dBR(S.profile.plano_ate):'sem prazo'):planoVencido(S.profile)?`Seu ${PLANO_NOME[S.profile.plano]} venceu em ${dBR(S.profile.plano_ate)}`:''}</span></div>
+    <form id="cup" class="cup" novalidate><input class="field" id="cup-c" placeholder="Tem um cupom?" aria-label="Código do cupom" autocomplete="off" maxlength="30"><button class="pill">Usar cupom</button></form></section>`:'';
+  app.innerHTML=shell('')+`<main class="page planos"><h1>Planos</h1><p class="sub">Valores de exemplo. Comece grátis e mude quando precisar.</p>${meu}
+    <div class="pl-grid">${PLANOS.map(x=>`<section class="pl ${x.top?'top':''}" aria-label="Plano ${x.n}"><div class="pl-h"><span>${x.n}</span>${ef===x.id?'<span class="tag">Seu plano</span>':x.top?'<span class="tag">Mais escolhido</span>':''}</div>
       <div class="pl-p"><b>${x.p}</b><small>${x.u}</small></div><ul>${x.it.map(i=>`<li>${i}</li>`).join('')}</ul>
-      <button class="pill ${x.top?'dark':''}" data-plan="${x.id}">${x.b}</button></section>`).join('')}</div></main>${USER?'':pubFooter()}`;
+      <button class="pill ${x.top?'dark':''}" data-plan="${x.id}" ${ef===x.id?'disabled':''}>${ef===x.id?'Seu plano atual':x.b}</button></section>`).join('')}</div></main>${USER?'':pubFooter()}`;
   bindShell();
   app.querySelectorAll('[data-plan]').forEach(b=>b.onclick=()=>{const id=b.dataset.plan;
     if(id==='gratis')return USER?toast('Você já está no plano Grátis'):go('criar');
     if(id==='pro')return toast('A assinatura do Pro abre em breve. Avisaremos por e-mail.',4000);
     location.href=`mailto:${CONTATO}?subject=${encodeURIComponent('Plano Agência do Fig.Feed')}`});
+  const f=document.getElementById('cup');
+  if(f)f.onsubmit=async e=>{e.preventDefault();const code=document.getElementById('cup-c').value.trim();if(!code)return toast('Digite o código do cupom.');
+    const s=e.submitter;s.disabled=true;
+    const {data,error}=await sb.rpc('redeem_coupon',{coupon_code:code});s.disabled=false;
+    if(error)return toast(/^[A-ZÀ-Úa-zà-ú]/.test(error.message)&&!/[_(]/.test(error.message)?error.message:traduz(error.message),3800);
+    try{S.profile=await db(sb.from('profiles').select('*').eq('id',USER.id).single())}catch(err){}
+    toast(`Pronto! Você está no ${PLANO_NOME[data]||'novo plano'} até ${dBR(S.profile.plano_ate)}`,4200);vPlanos()};
 }
 
 /* ======================= V7: Lixeira (30 dias) ======================= */
