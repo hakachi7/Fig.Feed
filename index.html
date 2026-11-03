@@ -1035,7 +1035,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v13.1';
+const VERSAO='v13.2';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   blog:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 5h16v14H4zM8 9h8M8 13h8M8 17h5"/></svg>',
@@ -2391,6 +2391,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v13.2','Nov 2026',['Planejamento em PDF: contracapa no final com a grade do feed','Detalhes do PDF em azul no lugar do vermelho']],
   ['v13.1','Nov 2026',['Mood do feed: cada post aparece uma vez e, se faltar post, entram os fundos de bolinhas','O app agora sempre busca a versão mais nova ao abrir']],
   ['v13','Nov 2026',['Feed da conta: no modo Selecionar, botão “Apagar” manda os posts escolhidos para a Lixeira (dá para recuperar por 30 dias)','Tutorial com dois passos novos: como selecionar posts e como gerar o planejamento do mês','Planejamento em PDF com capa nova, página “Mood do feed” (posts no visual do Instagram) e “Mood dos stories” (celulares com os stories)']],
   ['v12','Nov 2026',['Prévia: toque na foto de perfil para trocar','Destaques em círculos: “+ Novo” para criar e toque em um destaque para trocar nome e capa (foto enviada ou dos posts), mover ou remover','Baixar a prévia do perfil em PNG']],
@@ -2985,7 +2986,7 @@ function planHTML(a,month,objetivo,stories){
   const postPages=[];for(let i=0;i<Math.max(1,ps.length);i+=12)postPages.push(ps.slice(i,i+12));
   const byDay={};stories.forEach(s=>(byDay[s.story_date]=byDay[s.story_date]||[]).push(s));
   const days=Object.keys(byDay).sort();const stPages=[];for(let i=0;i<Math.max(1,days.length);i+=8)stPages.push(days.slice(i,i+8));
-  const TOTAL=5+postPages.length+stPages.length;let n=0;
+  const TOTAL=6+postPages.length+stPages.length;let n=0;
   const page=(title,body,cls='')=>{n++;return `<section class="pg ${cls}"><header><div class="l">${mk}<b>Fig.Feed</b><span class="sep">·</span><span>Planejamento</span></div>
     <div class="r"><span class="av">${av}</span><b>${esc(a.handle)}</b><span class="sep">·</span><b>${label}</b></div></header><h1>${title}</h1>${body}
     <footer><span>Gerado no Fig.Feed em ${hoje}</span><span>${n} / ${TOTAL}</span></footer></section>`};
@@ -3046,6 +3047,9 @@ function planHTML(a,month,objetivo,stories){
   // stories e anotações
   stPages.forEach((grp,gi)=>{out+=page(gi?'Stories (continuação)':'Stories e anotações',`<div class="g4"><div class="stories">${grp.length?grp.map(d=>`<div><div class="lab">${wd(d)} · ${dd(d)}</div><div class="srow">${byDay[d].map((s,k)=>`<div class="sx"><span class="si">${pic({path:s.storage_path},90,160)}<em>${k+1}/${byDay[d].length}</em></span><small>${STORY_TIPOS[s.tipo]||'Imagem'}</small></div>`).join('')}</div></div>`).join(''):'<p class="muted" style="font-size:9pt">Nenhum story planejado neste mês.</p>'}</div>
     <div><div class="lab">Anotações e pedidos de ajuste</div><div class="notes">${'<i></i>'.repeat(15)}</div></div></div>`)});
+  // V13.2: contracapa — "tks Fig.Feed" e a grade do feed (12 posts; bolinhas se faltar)
+  const gr=[...a.posts].filter(p=>p.slides[0]).slice(0,12);
+  out+=`<section class="pg fim"><div class="tks">tks<br>Fig.Feed</div><div class="fg">${Array.from({length:12},(_,i)=>`<div>${gr[i]?pic(gr[i].slides[0],200,250):bol(i+5)}</div>`).join('')}</div></section>`;
   return `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Planejamento ${esc(a.handle)} ${label}</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"><style>${PLAN_CSS}</style></head><body>${out}</body></html>`;
 }
@@ -3072,7 +3076,7 @@ footer{position:absolute;left:14mm;right:14mm;bottom:7mm;display:flex;justify-co
 .two{display:grid;grid-template-columns:1fr 1fr;gap:9mm;margin-top:6mm}
 .pil{display:grid;grid-template-columns:24mm 1fr 20mm;gap:2.5mm;align-items:center;font-size:7.5pt;margin-bottom:2mm}
 .pb{position:relative;height:2.6mm;background:#f4f4f4;border-radius:99px}.pb i{position:absolute;left:0;top:0;bottom:0;background:#0a0a0a;border-radius:99px}
-.pb em{position:absolute;top:-1mm;bottom:-1mm;width:1.2px;background:#ff1f1f}.pv small{color:#7a7a7a;font-size:6.5pt}
+.pb em{position:absolute;top:-1mm;bottom:-1mm;width:1.2px;background:#2f45ff}.pv small{color:#7a7a7a;font-size:6.5pt}
 .bar{display:flex;height:2.6mm;border-radius:99px;overflow:hidden;gap:1px}.bar i{display:block}
 .legend{display:flex;gap:3.5mm;margin-top:2.2mm;font-size:7.5pt;align-items:center;flex-wrap:wrap}
 .wk{display:flex;align-items:flex-end;gap:3mm;height:17mm;border-bottom:1px solid #e7e7e7;padding-top:3mm;margin-bottom:5mm}
@@ -3086,7 +3090,7 @@ footer{position:absolute;left:14mm;right:14mm;bottom:7mm;display:flex;justify-co
 .day{border:1px solid #e7e7e7;border-radius:2mm;padding:1.6mm;display:flex;flex-direction:column;gap:1.2mm;overflow:hidden;min-height:0}.day.off{border:none;background:#fafafa}
 .dn{display:flex;justify-content:space-between;align-items:center;font-size:8pt}.st{font-size:6pt;color:#2f45ff}
 .pc{display:flex;gap:1.5mm;align-items:flex-start;min-height:0}.th{width:7mm;height:8.75mm;flex:none;overflow:hidden;border-radius:.8mm}
-.pt{font-size:6.2pt;line-height:1.25;overflow:hidden;max-height:3.75em}.pt em{font-style:normal;color:#ff1f1f;font-weight:600}.more{font-size:6pt;color:#7a7a7a}
+.pt{font-size:6.2pt;line-height:1.25;overflow:hidden;max-height:3.75em}.pt em{font-style:normal;color:#2f45ff;font-weight:600}.more{font-size:6pt;color:#7a7a7a}
 .posts{width:100%;border-collapse:collapse;font-size:7.2pt}
 .posts th{text-align:left;font-size:6.5pt;color:#7a7a7a;text-transform:uppercase;letter-spacing:.06em;font-weight:500;padding:0 2mm 1.5mm 0;border-bottom:1px solid #e7e7e7}
 .posts td{padding:1mm 2mm 1mm 0;border-bottom:1px solid #e7e7e7;vertical-align:middle;line-height:1.3}
@@ -3110,7 +3114,6 @@ footer{position:absolute;left:14mm;right:14mm;bottom:7mm;display:flex;justify-co
 .ig-i{aspect-ratio:4/5;position:relative;overflow:hidden;background:#d9d9d9}
 .ig-i .mc{position:absolute;right:2mm;top:2mm;width:3mm;height:3mm;border:1.3px solid #fff;border-radius:.6mm;box-shadow:1px -1px 0 #fff}
 .ig-i .mr{position:absolute;right:2mm;top:2mm;width:0;height:0;border-left:2.6mm solid #fff;border-top:1.6mm solid transparent;border-bottom:1.6mm solid transparent}
-.ig.txt{background:#ff1f1f;color:#fff}.ig.txt .ig-h{background:#fff;color:#0a0a0a}
 .ig-t{aspect-ratio:4/5;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:1mm}
 .ig-t span{font-size:11pt}.ig-t b{font-size:17pt;font-weight:500;letter-spacing:-.02em;text-transform:uppercase}.ig-t small{font-size:6.5pt;opacity:.85}
 .phones{display:flex;justify-content:center;gap:16mm;height:138mm;align-items:center}
@@ -3119,7 +3122,9 @@ footer{position:absolute;left:14mm;right:14mm;bottom:7mm;display:flex;justify-co
 .sbar{position:absolute;left:3mm;right:3mm;top:3.5mm;display:flex;gap:1mm}.sbar i{flex:1;height:.6mm;border-radius:1mm;background:rgba(255,255,255,.4)}.sbar i.on{background:#fff}
 .shd{position:absolute;left:3mm;right:3mm;top:6mm;display:flex;align-items:center;gap:1.6mm;font-size:7pt;color:#fff;text-shadow:0 0 3px rgba(0,0,0,.5)}.shd .av{width:6mm;height:6mm;border:1px solid #fff}.shd b{font-weight:600}.shd span{opacity:.75}
 .sft{position:absolute;left:3mm;right:3mm;bottom:4mm;display:flex;align-items:center;gap:2mm;color:#fff;font-size:6.5pt}.sft span{flex:1;border:1px solid rgba(255,255,255,.7);border-radius:99px;padding:1.6mm 3mm}.sft i{font-style:normal;font-size:11pt}
-.mood-n{text-align:center;font-size:7pt;color:#8a8a8a;margin:2mm 0 0}`;
+.mood-n{text-align:center;font-size:7pt;color:#8a8a8a;margin:2mm 0 0}
+.fim{padding:0}.tks{position:absolute;left:13.5mm;top:50%;transform:translateY(-50%);font-size:9pt;line-height:1.25}
+.fg{position:absolute;left:202mm;top:50%;transform:translateY(-50%);width:43mm;display:grid;grid-template-columns:repeat(3,1fr);gap:.8mm}.fg div{aspect-ratio:4/5;overflow:hidden;background:#d9d9d9}`;
 
 /* ======================= Início ======================= */
 let booted=false;
