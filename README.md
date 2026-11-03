@@ -53,3 +53,11 @@ Abra o `index.html` no navegador, crie uma conta e entre. As fotos de exemplo v�
 - Página inicial para quem ainda não tem conta, com rodapé (Termos, Privacidade, Ajuda, Planos).
 - Página de Planos (só a tela; a cobrança ainda não está ligada).
 - Banco: `supabase/v7.sql` (já aplicado no Fig-Free).
+
+## Novidades da v8
+
+- Cada conta ganhou abas: Feed, Stories, Prévia e Relatório.
+- Stories: escolha o dia, envie as artes (ou use exemplos), destaque e arraste para ordenar.
+- Prévia estilo Instagram, com nome, bio, seguidores, seguindo e destaques (editáveis só para a prévia).
+- Relatório do mês: números, gráfico por semana, feed do mês, Baixar PDF e Copiar link (o cliente abre sem login por 30 dias).
+- Banco: `supabase/v8.sql` (já aplicado no Fig-Free).

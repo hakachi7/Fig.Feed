@@ -249,6 +249,55 @@ kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;borde
 .lib-it{aspect-ratio:4/5;background:var(--tile) center/cover;position:relative;border-radius:2px}
 .lib-it .free{position:absolute;left:6px;bottom:6px;background:rgba(255,255,255,.92);font-size:10px;border-radius:99px;padding:2px 7px}
 
+
+/* ---------- V8: Stories, Prévia e Relatório ---------- */
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.acc-tabs{margin-top:-4px}
+.stp{padding:34px max(16px,4vw) 80px}
+.st-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:34px}
+.st-top .avatar{width:52px;height:52px}.st-top .muted{font-size:13px}
+.st-day{margin-left:auto}.st-day .field{height:38px;width:auto;border-radius:99px;padding:0 12px}
+.st-row{display:flex;align-items:center;gap:14px;overflow-x:auto;padding:10px 4px 18px}
+.st-it{flex:none;width:118px;aspect-ratio:9/16;border-radius:8px;background:var(--tile) center/cover;position:relative;cursor:grab;transition:width .2s}
+.st-it span{position:absolute;left:8px;bottom:8px;color:#fff;font-size:10px;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.st-it.sel{width:178px;outline:2px solid var(--accent);outline-offset:3px}
+.hint-s{color:var(--muted);font-size:12px;margin:18px 0}
+.pv{display:flex;flex-direction:column;align-items:center;padding:30px 16px 80px}
+.pv-tog{display:flex;gap:8px;margin-bottom:28px}
+.pv-phone{width:min(400px,100%)}
+.pv-head{display:flex;align-items:center;gap:22px}
+.pv-av{width:86px;height:86px;flex:none}
+.pv-nums{display:flex;gap:22px;flex:1;justify-content:center;text-align:center}
+.pv-nums b{display:block;font-size:16px}.pv-nums span{font-size:13px}
+.pv-bio{margin:16px 0 0;font-size:13px}.pv-bio p{margin:3px 0 0;white-space:pre-line;line-height:1.45}
+.pv-edit{width:100%;justify-content:center;margin:14px 0 4px;font-size:13px;padding:7px}
+.pv-hl{display:flex;gap:14px;overflow-x:auto;padding:14px 0 6px}
+.pv-hl div{display:flex;flex-direction:column;align-items:center;gap:5px;flex:none;width:64px}
+.pv-hl span{width:60px;height:60px;border-radius:50%;background:var(--tile) center/cover;box-shadow:0 0 0 2px #fff,0 0 0 3px #dbdbdb}
+.pv-hl small{font-size:11px;max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pv-tabs{display:flex;justify-content:space-around;border-top:1px solid var(--line);margin-top:12px;font-size:12px;color:var(--muted)}
+.pv-tabs span{padding:10px 0}.pv-tabs .cur{color:var(--fg);font-weight:600;box-shadow:inset 0 1px 0 var(--fg)}
+.pv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}.pv-grid a{aspect-ratio:4/5;background:var(--tile) center/cover;cursor:pointer}
+.pv-form{background:#fff;margin:auto;width:min(440px,calc(100vw - 32px));border-radius:16px;padding:24px;max-height:calc(100vh - 40px);overflow:auto;align-self:center}
+.ov:has(.pv-form){justify-content:center}
+.pv-form h2{font-size:18px;font-weight:500;margin:0 0 4px}
+.pv-form label{display:block;font-size:12px;color:var(--muted);margin:14px 0 6px}
+.pv-form textarea.field{height:auto;padding:10px 12px;resize:vertical;font:inherit}
+.pv-form .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rp{max-width:900px}
+.rp-top{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:30px}
+.rp-top h1{margin:0}.rp-av{width:52px;height:52px;flex:none}
+.rp-acts{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.stats.rp-stats{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:700px){.stats.rp-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.rp-bars{display:flex;align-items:flex-end;gap:12px;height:170px;border-bottom:1px solid var(--line);margin:10px 0 40px;padding-top:20px}
+.rp-bars div{flex:1;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;position:relative}
+.rp-bars i{display:block;width:min(70px,60%);background:var(--fg);border-radius:2px 2px 0 0;min-height:2px}
+.rp-bars .v{font-size:12px}.rp-bars small{position:absolute;bottom:-24px;font-size:12px;color:var(--muted)}
+.rp-feed{display:grid;grid-template-columns:repeat(3,minmax(0,128px));gap:6px}
+.rp-feed div{aspect-ratio:4/5;background:var(--tile) center/cover}
+@media print{.hdr,.adm-tabs,.no-print,.toast,.net{display:none!important}.page{padding-top:10px}body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+
 /* ---------- Página não encontrada (404, v3) ---------- */
 .nf{min-height:calc(100vh - 66px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(28px,4vw,48px);padding:40px 16px 80px;text-align:center}
 .nf .num{display:flex;align-items:center;gap:clamp(12px,2.2vw,36px)}
@@ -585,13 +634,13 @@ async function signPaths(paths){
 async function loadAll(){
   const [prof,accs,posts,slides]=await Promise.all([
     db(sb.from('profiles').select('*').eq('id',USER.id).maybeSingle()),
-    db(sb.from('accounts').select('id,handle,position,avatar_path').is('deleted_at',null).order('position').order('created_at')),
+    db(sb.from('accounts').select('id,handle,position,avatar_path,display_name,bio,followers,following,highlights').is('deleted_at',null).order('position').order('created_at')),
     db(sb.from('posts').select('id,account_id,title,caption,publish_date,status,position').is('deleted_at',null).order('position').order('created_at')),
     db(sb.from('slides').select('id,post_id,storage_path,credit,position').order('position').order('created_at'))]);
   S.profile=prof||{name:'',handle:'',dates_follow:true};
   const byPost={};slides.forEach(s=>(byPost[s.post_id]=byPost[s.post_id]||[]).push({id:s.id,path:s.storage_path,credit:s.credit}));
   const byAcc={};posts.forEach(p=>(byAcc[p.account_id]=byAcc[p.account_id]||[]).push({id:p.id,title:p.title,caption:p.caption,date:p.publish_date,status:p.status,slides:byPost[p.id]||[]}));
-  S.accounts=accs.map(a=>({id:a.id,handle:a.handle,avatar:a.avatar_path,posts:byAcc[a.id]||[]}));
+  S.accounts=accs.map(a=>({id:a.id,handle:a.handle,avatar:a.avatar_path,display_name:a.display_name||'',bio:a.bio||'',followers:a.followers,following:a.following,highlights:a.highlights||[],posts:byAcc[a.id]||[]}));
   await signPaths([...slides.map(s=>s.storage_path),...accs.map(a=>a.avatar_path),S.profile.avatar_path]);
 }
 
@@ -626,7 +675,7 @@ function render(){
   if(location.hash.includes('=')){history.replaceState(null,'',location.pathname+location.search+'#home')}
   route=(location.hash.slice(1)||'home').split('/');const v=route[0];
   if(v==='confirmado')return vConfirmado();
-  if(MANUT&&!isAdmin()&&!AUTH.includes(v))return vManutencao();
+  if(MANUT&&!isAdmin()&&!AUTH.includes(v)&&v!=='r')return vManutencao();
   if(recovery&&v!=='nova-senha')return go('nova-senha');
   if(!USER&&v==='home')return vLanding();
   if(!USER&&!AUTH.includes(v)&&!PUBLIC.includes(v))return go('entrar');
@@ -636,7 +685,8 @@ function render(){
     admin:vAdmin,'boas-vindas':vTutorial,
     termos:vTermos,privacidade:vPrivacidade,ajuda:vAjuda,novidades:vNovidades,seguranca:vSeguranca,excluir:vExcluir,
     erro:()=>vErro(),'sem-internet':vOffline,
-    planos:vPlanos,lixeira:vLixeira,biblioteca:vBiblioteca};
+    planos:vPlanos,lixeira:vLixeira,biblioteca:vBiblioteca,
+    stories:vStories,previa:vPrevia,relatorio:vRelatorio,r:vRelPublico};
   document.title='Fig.Feed';
   try{(map[v]||v404)()}catch(err){console.error(err);vErro('FF-501')}window.scrollTo(0,0);
 }
@@ -803,7 +853,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v7';
+const VERSAO='v8';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   home:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M3 11 12 4l9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>',
@@ -985,7 +1035,7 @@ async function saveFeedOrder(a,ids){
 }
 function vFeed(){
   const a=accById(route[1]);if(!a)return v404('conta');
-  app.innerHTML=header('contas',`<span>Contas /</span> ${esc(a.handle)}`,accAvHTML(a),`<button class="more" id="accmore" aria-label="Ajustes da conta">${DOTS}</button>`)+`<main class="feed">
+  app.innerHTML=header('contas',`<span>Contas /</span> ${esc(a.handle)}`,accAvHTML(a),`<button class="more" id="accmore" aria-label="Ajustes da conta">${DOTS}</button>`)+accTabs(a,'feed')+`<main class="feed">
     ${a.posts.length?`<div class="grid" id="grid">${a.posts.map(p=>{const s=p.slides[0];return `
       <div class="item tile" tabindex="0" data-id="${p.id}" data-s="${esc(p.title+' '+p.caption)}" style="${bgi(s,250,328)}" aria-label="${esc(p.title)}, ${fmt(p.date)}">
         ${p.slides.length>1?MULTI:''}<span class="dt">${fmt(p.date)}</span></div>`}).join('')}</div>`
@@ -1461,6 +1511,12 @@ async function uploadSlides(p,files){
 document.getElementById('file').onchange=async e=>{
   const files=[...e.target.files];if(!files.length||!pickCtx)return;
   if(pickCtx.type==='profavatar'||pickCtx.type==='accavatar'){try{await setAvatar(pickCtx,files[0])}catch(err){}return}
+  if(pickCtx.type==='stories'){const c=pickCtx;toast(`Enviando ${files.length} ${files.length===1?'story':'stories'}…`,60000);const rows=[];
+    for(const f of files){const b=await shrink(f);if(!b)continue;const path=`${USER.id}/stories/${crypto.randomUUID()}.jpg`;
+      const {error}=await sb.storage.from('fotos').upload(path,b,{contentType:'image/jpeg'});if(error){toast(traduz(error.message));continue}
+      rows.push({account_id:c.acc,story_date:c.day,storage_path:path,credit:(S.profile.handle||'').replace('@','')||null,position:c.n+rows.length})}
+    if(rows.length){await db(sb.from('stories').insert(rows));toast(`${rows.length} ${rows.length===1?'story enviado':'stories enviados'}`)}
+    if(route[0]==='stories')vStories();return}
   if(pickCtx.type==='biblioteca'){toast(`Enviando ${files.length} ${files.length===1?'foto':'fotos'}…`,60000);let ok=0;
     for(const f of files){const b=await shrink(f);if(!b)continue;
       const {error}=await sb.storage.from('fotos').upload(`${USER.id}/biblioteca/${crypto.randomUUID()}.jpg`,b,{contentType:'image/jpeg'});
@@ -1511,7 +1567,7 @@ function vManutencao(){
 async function loadManut(){try{const {data}=await sb.from('app_settings').select('value').eq('key','manutencao').maybeSingle();MANUT=!!data?.value?.ativo}catch(e){MANUT=false}}
 
 /* ======================= V6: páginas públicas e da conta ======================= */
-const PUBLIC=['termos','privacidade','ajuda','novidades','planos'];
+const PUBLIC=['termos','privacidade','ajuda','novidades','planos','r'];
 function pubHeader(){return `<header class="pub-hdr"><button class="brand" data-go="home" aria-label="Fig.Feed, início">${LOGO()}<span>Fig.Feed</span></button>
   <div class="r"><button class="pill" data-go="entrar">Entrar</button><button class="pill dark" data-go="criar">Criar conta grátis</button></div></header>`}
 const shell=cur=>USER?header(cur):pubHeader();
@@ -1542,7 +1598,8 @@ const FAQ=[
   ['As datas mudam quando eu arrasto?','Se a opção "as datas acompanham a nova ordem" estiver ligada em Configuração, sim: as datas ficam na mesma sequência e passam para os posts na nova ordem. Desligue se quiser que cada post mantenha a própria data.'],
   ['Quantas fotos cabem num carrossel?','Até 10 fotos por post. A primeira é a capa que aparece no feed.'],
   ['O Fig.Feed publica no Instagram por mim?','Ainda não. Ele serve para planejar e organizar. Na hora de postar, baixe a grade e as legendas em Downloads.'],
-  ['Meus clientes conseguem ver meu trabalho?','Por enquanto, só você vê as suas contas. Um link para o cliente acompanhar está nos planos das próximas versões.'],
+  ['Meus clientes conseguem ver meu trabalho?','Sim, pelo relatório do mês. Abra a conta, vá em Relatório e clique em "Copiar link". O cliente abre pelo celular, sem criar conta, e o link vale por 30 dias.'],
+  ['Como planejo os stories?','Abra a conta e vá na aba Stories. Escolha o dia, envie as artes e arraste para mudar a ordem.'],
   ['Como instalo o Fig.Feed no celular?','Em Configuração tem o passo a passo para iPhone e Android.'],
   ['Esqueci minha senha. E agora?','Na tela de entrar, clique em "Esqueceu sua senha?" e siga o link que chegar no seu e-mail.']];
 const KBD=[['Mover post selecionado','<kbd>Alt</kbd> + <kbd>←</kbd> <kbd>→</kbd>'],['Abrir post selecionado','<kbd>Enter</kbd>'],['Salvar legenda','<kbd>Ctrl</kbd> + <kbd>Enter</kbd>'],['Fechar painel','<kbd>Esc</kbd>']];
@@ -1561,6 +1618,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v8','Nov 2026',['Stories: planeje os stories de cada dia e arraste para ordenar','Prévia estilo Instagram com nome, bio, seguidores e destaques','Relatório do mês com gráfico, PDF e link para o cliente (vale 30 dias)','Abas Feed, Stories, Prévia e Relatório dentro de cada conta']],
   ['v7','Nov 2026',['Lixeira: posts e contas apagados ficam 30 dias e podem ser restaurados','Biblioteca com todas as suas fotos, espaço usado e filtro "Sem uso"','Página inicial para quem ainda não tem conta','Página de Planos']],
   ['v6','Nov 2026',['Páginas de Segurança: trocar e-mail e senha e ver os aparelhos conectados','Excluir minha conta','Ajuda, Novidades, Termos de uso e Política de privacidade','Telas novas de página não encontrada, sem internet, erro e atualização']],
   ['v5','Nov 2026',['Aba Admin para GM e administradores: usuários, funções e registro de atividades']],
@@ -1783,6 +1841,172 @@ function libMenu(name,u,btn){
   const del=d.querySelector('[data-a="apagar"]');
   if(del)del.onclick=async()=>{if(!del.dataset.ok){del.dataset.ok=1;del.textContent='Clique de novo para apagar';return}
     closeDrop();const {error}=await sb.storage.from('fotos').remove([name]);if(error)return toast(traduz(error.message));toast('Foto apagada');vBiblioteca()};
+}
+
+/* ======================= V8: abas da conta (Feed, Stories, Prévia, Relatório) ======================= */
+function accTabs(a,cur){
+  const t=(k,l,h)=>`<a data-go="${h}" class="${cur===k?'cur':''}" ${cur===k?'aria-current="page"':''}>${l}</a>`;
+  return `<nav class="adm-tabs acc-tabs" aria-label="Seções da conta">${t('feed','Feed','feed/'+a.id)}${t('stories','Stories','stories/'+a.id)}${t('previa','Prévia','previa/'+a.id)}${t('relatorio','Relatório','relatorio/'+a.id)}</nav>`;
+}
+const accHeader=(a,cur)=>header('contas',`<span>Contas /</span> ${esc(a.handle)}`,accAvHTML(a))+accTabs(a,cur);
+const fmtDia=d=>{const t=iso(new Date());if(d===t)return'hoje';const[y,m,dd]=d.split('-');return `${dd}/${m}`};
+
+/* ======================= V8: Stories ======================= */
+let stSel=null;
+async function vStories(){
+  const a=accById(route[1]);if(!a)return v404('conta');
+  const day=/^\d{4}-\d{2}-\d{2}$/.test(route[2]||'')?route[2]:iso(new Date());
+  app.innerHTML=accHeader(a,'stories')+`<main class="stp"><p class="sub">Carregando…</p></main>`;bindHeader();
+  let list=[];
+  try{list=await db(sb.from('stories').select('id,storage_path,credit,position').eq('account_id',a.id).eq('story_date',day).order('position').order('created_at'));
+    await signPaths(list.map(s=>s.storage_path))}catch(e){if(route[0]==='stories')vErro('FF-504');return}
+  if(route[0]!=='stories'||route[1]!==a.id)return;
+  if(!list.some(s=>s.id===stSel))stSel=list[0]?.id||null;
+  const n=list.length;
+  const draw=()=>{
+    app.innerHTML=accHeader(a,'stories')+`<main class="stp">
+      <div class="st-top"><span class="avatar" style="${bgi(accAv(a),120,120)}"></span><b>${esc(a.handle)}</b>
+        <span class="muted">· ${n} ${n===1?'story':'stories'} para ${fmtDia(day)}</span>
+        <label class="st-day"><span class="sr">Dia</span><input type="date" id="st-d" value="${day}" class="field"></label>
+        <button class="pill dark" id="st-add">+ Adicionar stories</button></div>
+      ${n?`<div class="st-row" id="st-row">${list.map((s,i)=>`<div class="item st-it ${s.id===stSel?'sel':''}" tabindex="0" data-id="${s.id}" role="button"
+          aria-label="Story ${i+1} de ${n}${s.id===stSel?', destacado':''}" aria-pressed="${s.id===stSel}" style="background-image:url('${src({path:s.storage_path},360,640)}')"><span>${i+1}/${n}</span></div>`).join('')}</div>
+        <p class="hint-s">Clique num story para destacar. Arraste para mudar a ordem (no celular, segure antes de arrastar).</p>
+        <button class="pill danger" id="st-del" ${stSel?'':'disabled'}>Remover o story destacado</button>`
+      :`<div class="empty" style="margin:10vh auto 0"><h2>Nenhum story para ${fmtDia(day)}</h2><p>Envie as artes do dia ou comece com fotos de exemplo.</p>
+        <div class="row2"><button class="pill dark" id="st-up">Enviar fotos</button><button class="pill" id="st-ex">Usar fotos de exemplo</button></div></div>`}</main>`;
+    bindHeader();
+    document.getElementById('st-d').onchange=e=>{if(e.target.value)go(`stories/${a.id}/${e.target.value}`)};
+    const addEx=async()=>{const rows=Array.from({length:4},(_,i)=>{const p=randPhoto();return {account_id:a.id,story_date:day,storage_path:p.path,credit:p.credit,position:n+i}});
+      await db(sb.from('stories').insert(rows));toast('Stories de exemplo adicionados');vStories()};
+    document.getElementById('st-add').onclick=e=>{e.stopPropagation();closeDrop();openDrop='st';
+      const d=document.createElement('div');d.className='drop';d.onclick=ev=>ev.stopPropagation();
+      const r=e.currentTarget.getBoundingClientRect();Object.assign(d.style,{position:'fixed',left:'auto',right:Math.max(8,innerWidth-r.right)+'px',top:(r.bottom+8)+'px'});
+      d.innerHTML='<button data-a="up">Enviar fotos</button><button data-a="ex">Usar fotos de exemplo</button>';document.body.appendChild(d);
+      d.querySelector('[data-a="up"]').onclick=()=>{closeDrop();pickFiles({type:'stories',acc:a.id,day,n})};
+      d.querySelector('[data-a="ex"]').onclick=()=>{closeDrop();addEx()}};
+    document.getElementById('st-up')?.addEventListener('click',()=>pickFiles({type:'stories',acc:a.id,day,n}));
+    document.getElementById('st-ex')?.addEventListener('click',addEx);
+    const row=document.getElementById('st-row');
+    if(row)sortable(row,{onClick:id=>{stSel=id;draw();document.querySelector(`.st-it[data-id="${id}"]`)?.focus()},
+      onDrop:async(ids,kb)=>{list=ids.map(id=>list.find(s=>s.id===id));const f=kb&&document.activeElement?.dataset.id;draw();if(f)document.querySelector(`.st-it[data-id="${f}"]`)?.focus();
+        try{await Promise.all(ids.map((id,i)=>sb.from('stories').update({position:i}).eq('id',id)))}catch(e){toast('Não foi possível salvar a ordem')}}});
+    const del=document.getElementById('st-del');
+    if(del)del.onclick=async()=>{const s=list.find(x=>x.id===stSel);if(!s)return;
+      if(!del.dataset.ok){del.dataset.ok=1;del.textContent='Clique de novo para remover';return}
+      await db(sb.from('stories').delete().eq('id',s.id));if(!s.storage_path.startsWith('picsum:'))sb.storage.from('fotos').remove([s.storage_path]);
+      stSel=null;toast('Story removido');vStories()};
+  };
+  draw();
+}
+
+/* ======================= V8: Prévia estilo Instagram ======================= */
+const fmtNum=n=>n==null?'—':Number(n).toLocaleString('pt-BR');
+function vPrevia(){
+  const a=accById(route[1]);if(!a)return v404('conta');
+  const covers=a.posts.map(p=>p.slides[0]);const hl=(a.highlights||[]).slice(0,6);
+  const nome=a.display_name||a.handle.replace(/^@/,'');
+  app.innerHTML=accHeader(a,'previa')+`<main class="pv">
+    <div class="pv-tog" role="group" aria-label="Modo"><button class="pill dark" aria-pressed="true">Prévia</button><button class="pill" data-go="feed/${a.id}">Editar grade</button></div>
+    <section class="pv-phone" aria-label="Prévia do perfil ${esc(a.handle)}">
+      <div class="pv-head"><span class="avatar pv-av" style="${bgi(accAv(a),200,200)}"></span>
+        <div class="pv-nums"><div><b>${fmtNum(a.posts.length)}</b><span>posts</span></div><div><b>${fmtNum(a.followers)}</b><span>seguidores</span></div><div><b>${fmtNum(a.following)}</b><span>seguindo</span></div></div></div>
+      <div class="pv-bio"><b>${esc(nome)}</b>${a.bio?`<p>${esc(a.bio)}</p>`:'<p class="muted">Sem bio ainda.</p>'}</div>
+      <button class="pill pv-edit" id="pv-edit">Editar perfil da prévia</button>
+      ${hl.length?`<div class="pv-hl">${hl.map((h,i)=>`<div><span style="${bgi(covers[i]||covers[0],120,120)}"></span><small>${esc(h.name||h)}</small></div>`).join('')}</div>`:''}
+      <div class="pv-tabs" role="tablist"><span class="cur" role="tab" aria-selected="true">Posts</span><span role="tab" aria-disabled="true">Reels</span><span role="tab" aria-disabled="true">Marcados</span></div>
+      ${a.posts.length?`<div class="pv-grid">${a.posts.map(p=>`<a data-go="car/${a.id}/${p.id}" aria-label="${esc(p.title)}" style="${bgi(p.slides[0],300,375)}"></a>`).join('')}</div>`
+        :`<p class="muted" style="text-align:center;padding:40px 0">Nenhum post ainda. Monte a grade em "Editar grade".</p>`}
+    </section></main>`;
+  bindHeader();
+  document.getElementById('pv-edit').onclick=()=>pvForm(a);
+}
+function pvForm(a){
+  const ov=document.createElement('div');ov.className='ov';ov.id='ov';
+  ov.innerHTML=`<form class="pv-form" role="dialog" aria-modal="true" aria-labelledby="pvf-t"><h2 id="pvf-t">Perfil da prévia</h2>
+    <p class="muted" style="margin:0 0 6px;font-size:13px">Só aparece aqui no Fig.Feed, para mostrar como o perfil vai ficar.</p>
+    <label for="pf-n">Nome</label><input class="field" id="pf-n" maxlength="60" value="${esc(a.display_name||'')}" placeholder="${esc(a.handle.replace(/^@/,''))}">
+    <label for="pf-b">Bio <small id="pf-c"></small></label><textarea class="field" id="pf-b" maxlength="150" rows="3">${esc(a.bio||'')}</textarea>
+    <div class="two"><div><label for="pf-s">Seguidores</label><input class="field" id="pf-s" type="number" min="0" value="${a.followers??''}"></div>
+      <div><label for="pf-g">Seguindo</label><input class="field" id="pf-g" type="number" min="0" value="${a.following??''}"></div></div>
+    <label for="pf-h">Destaques (separe por vírgula, até 6)</label><input class="field" id="pf-h" value="${esc((a.highlights||[]).map(h=>h.name||h).join(', '))}" placeholder="Cardápio, Bastidores, Clientes">
+    <div class="acts-row"><button class="pill dark">Salvar</button><button type="button" class="pill" id="pf-x">Cancelar</button></div></form>`;
+  document.body.appendChild(ov);
+  const close=()=>{ov.remove();document.removeEventListener('keydown',esc_)};const esc_=e=>{if(e.key==='Escape')close()};
+  document.addEventListener('keydown',esc_);ov.onclick=e=>{if(e.target===ov)close()};document.getElementById('pf-x').onclick=close;
+  const b=document.getElementById('pf-b'),c=document.getElementById('pf-c');const cnt=()=>c.textContent=`(${b.value.length}/150)`;b.oninput=cnt;cnt();
+  document.getElementById('pf-n').focus();
+  ov.querySelector('form').onsubmit=async e=>{e.preventDefault();
+    const num=id=>{const v=document.getElementById(id).value;return v===''?null:Math.max(0,parseInt(v,10)||0)};
+    const row={display_name:document.getElementById('pf-n').value.trim(),bio:b.value.trim().slice(0,150),followers:num('pf-s'),following:num('pf-g'),
+      highlights:document.getElementById('pf-h').value.split(',').map(x=>x.trim()).filter(Boolean).slice(0,6).map(name=>({name}))};
+    await db(sb.from('accounts').update(row).eq('id',a.id));Object.assign(a,row);close();toast('Prévia atualizada');vPrevia()};
+}
+
+/* ======================= V8: Relatório do mês ======================= */
+const MESES_RP=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const DIAS_RP=['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+const mesLabel=m=>{const[y,mm]=m.split('-');return `${MESES_RP[+mm-1]} ${y}`};
+const mesShift=(m,k)=>{const[y,mm]=m.split('-').map(Number);const d=new Date(y,mm-1+k,1);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`};
+function reportData(a,month,coverUrl){
+  const ps=a.posts.filter(p=>p.date&&p.date.startsWith(month));
+  const pub=ps.filter(p=>p.status==='publicado').sort((x,y)=>x.date<y.date?-1:1);
+  const [y,mm]=month.split('-').map(Number);const days=new Date(y,mm,0).getDate();const nW=Math.ceil(days/7);
+  const weeks=Array(nW).fill(0);const wd=Array(7).fill(0);
+  pub.forEach(p=>{const d=+p.date.slice(8,10);weeks[Math.min(nW-1,Math.floor((d-1)/7))]++;wd[new Date(p.date+'T12:00').getDay()]++});
+  const top=pub.length?wd.indexOf(Math.max(...wd)):-1;
+  return {v:1,handle:a.handle,name:a.display_name||'',month,label:mesLabel(month),avatar:coverUrl(accAv(a),120,120),
+    total:pub.length,planned:ps.length-pub.length,weeksWith:weeks.filter(Boolean).length,nWeeks:nW,
+    perWeek:(pub.length/nW).toFixed(1).replace('.',','),topDay:top<0?'—':DIAS_RP[top],weeks,
+    feed:pub.map(p=>({t:p.title,d:p.date,img:coverUrl(p.slides[0],300,375)}))};
+}
+function reportHTML(r,own){
+  const max=Math.max(1,...r.weeks);
+  return `<div class="rp-top"><span class="avatar rp-av" style="${r.avatar?`background-image:url('${r.avatar}')`:''}"></span>
+      <div><small class="muted">Relatório · ${esc(r.handle)}</small><h1>${esc(r.label)}</h1></div>
+      <div class="rp-acts no-print">${own?`<button class="pill" id="rp-prev" aria-label="Mês anterior">‹</button><button class="pill" id="rp-next" aria-label="Próximo mês">›</button><button class="pill" id="rp-link">Copiar link</button>`:''}<button class="pill dark" id="rp-pdf">Baixar PDF</button></div></div>
+    <div class="stats rp-stats"><div><b>${r.total}</b><span>posts publicados</span></div><div><b>${r.weeksWith}/${r.nWeeks}</b><span>semanas com post</span></div>
+      <div><b>${r.perWeek}</b><span>posts por semana</span></div><div><b>${r.topDay}</b><span>dia mais usado</span></div></div>
+    ${own&&r.planned?`<p class="muted no-print" style="margin:-24px 0 30px;font-size:13px">Mais ${r.planned} post${r.planned===1?'':'s'} com data neste mês ainda sem status "Publicado". Só os publicados entram no relatório.</p>`:''}
+    <h2 class="sec">Posts por semana</h2>
+    <div class="rp-bars" role="img" aria-label="${r.weeks.map((n,i)=>`Semana ${i+1}: ${n}`).join(', ')}">${r.weeks.map((n,i)=>`<div><span class="v">${n}</span><i style="height:${Math.round(n/max*100)}%"></i><small>Sem ${i+1}</small></div>`).join('')}</div>
+    <h2 class="sec">Feed do mês</h2>
+    ${r.feed.length?`<div class="rp-feed">${r.feed.map(f=>`<div title="${esc(f.t)} · ${fmt(f.d)}" style="${f.img?`background-image:url('${f.img}')`:''}"></div>`).join('')}</div>`
+      :'<p class="muted">Nenhum post publicado neste mês.</p>'}`;
+}
+function vRelatorio(){
+  const a=accById(route[1]);if(!a)return v404('conta');
+  const now=iso(new Date()).slice(0,7);const month=/^\d{4}-\d{2}$/.test(route[2]||'')?route[2]:now;
+  const r=reportData(a,month,(s,w,h)=>src(s,w,h));
+  app.innerHTML=accHeader(a,'relatorio')+`<main class="page rp">${reportHTML(r,true)}</main>`;
+  bindHeader();
+  document.getElementById('rp-prev').onclick=()=>go(`relatorio/${a.id}/${mesShift(month,-1)}`);
+  document.getElementById('rp-next').onclick=()=>go(`relatorio/${a.id}/${mesShift(month,1)}`);
+  document.getElementById('rp-pdf').onclick=()=>{toast('Na janela que abrir, escolha "Salvar como PDF"',3500);setTimeout(()=>print(),300)};
+  const lk=document.getElementById('rp-link');
+  lk.onclick=async()=>{lk.disabled=true;lk.textContent='Criando link…';
+    try{
+      // links das fotos que valem 30 dias, junto com o link do relatório
+      const paths=[accAv(a),...r.feed.length?a.posts.filter(p=>p.date?.startsWith(month)&&p.status==='publicado').map(p=>p.slides[0]):[]].map(s=>s?.path).filter(p=>p&&!p.startsWith('picsum:'));
+      const long={};if(paths.length){const {data}=await sb.storage.from('fotos').createSignedUrls([...new Set(paths)],60*60*24*30);(data||[]).forEach(d=>{if(d.signedUrl)long[d.path]=d.signedUrl})}
+      const pay=reportData(a,month,(s,w,h)=>!s?'':s.path?.startsWith('picsum:')?src(s,w,h):long[s.path]||'');
+      const row=await db(sb.from('report_links').insert({account_id:a.id,month,payload:pay}).select('token').single());
+      const url=(BASE_URL()||location.href.split('#')[0])+'#r/'+row.token;
+      try{await navigator.clipboard.writeText(url);toast('Link copiado. Ele vale por 30 dias.',3500)}
+      catch(e){prompt('Copie o link do relatório (vale por 30 dias):',url)}
+    }catch(e){}
+    lk.disabled=false;lk.textContent='Copiar link'};
+}
+async function vRelPublico(){
+  document.title='Relatório · Fig.Feed';
+  app.innerHTML=`<div class="loading" role="status">Carregando relatório…</div>`;
+  let r=null;try{const {data,error}=await sb.rpc('get_shared_report',{p_token:route[1]||''});if(error)throw error;r=data}catch(e){}
+  if(route[0]!=='r')return;
+  if(!r){app.innerHTML=`<main class="st"><div class="big">Ops.</div><p>Esse link de relatório expirou ou não existe. Peça um link novo para quem te enviou.</p></main>`;return}
+  document.title=`${r.label} · ${r.handle} · Fig.Feed`;
+  app.innerHTML=`<header class="pub-hdr no-print"><span class="brand">${LOGO()}<span>Fig.Feed</span></span><small class="muted">Relatório compartilhado</small></header>
+    <main class="page rp">${reportHTML(r,false)}</main><footer class="pub-foot no-print"><span>Feito com Fig.Feed</span></footer>`;
+  document.getElementById('rp-pdf').onclick=()=>print();
 }
 
 /* ======================= Início ======================= */
