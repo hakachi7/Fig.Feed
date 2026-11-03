@@ -37,3 +37,11 @@ Abra o `index.html` no navegador, crie uma conta e entre. As fotos de exemplo v�
 - **Atividade:** registro de tudo que os administradores fazem, separado por dia e por tipo, com download em planilha (.csv). Não pode ser editado nem apagado.
 - Templates, Blog, Suporte e Assinaturas aparecem como "em breve".
 
+
+## Novidades da v6
+
+- Telas novas: página não encontrada (404), sem internet, erro ("Ops.") e em atualização.
+- Páginas da conta: Segurança (trocar e-mail e senha, aparelhos conectados) e Excluir minha conta.
+- Páginas Ajuda, Novidades, Termos de uso e Política de privacidade (abrem também sem login).
+- Modo atualização: o GM liga em Configuração. Só GM e admins continuam entrando.
+- Banco: `supabase/v6.sql` (já aplicado no Fig-Free).

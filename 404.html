@@ -15,30 +15,33 @@
 html,body{margin:0;height:100%}
 body{background:var(--bg);color:var(--fg);font-family:var(--f);font-size:14px;line-height:1.4;-webkit-font-smoothing:antialiased}
 :focus-visible{outline:2px solid var(--fg);outline-offset:3px}
-header{padding:14px max(16px,2.2vw);display:flex;align-items:center;gap:10px}
-.logo{display:grid;grid-template-columns:repeat(3,6px);gap:2px}
-.logo i{width:6px;height:7.5px;background:var(--fg);display:block}
-header b{font-weight:600;font-size:15px}
-main{min-height:calc(100vh - 66px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(28px,4vw,48px);padding:40px 16px 80px;text-align:center}
-.row{display:flex;align-items:center;gap:clamp(12px,2.2vw,36px)}
-.word{font-size:clamp(64px,10vw,168px);letter-spacing:-.03em;line-height:1}
-.hole{width:clamp(84px,11vw,190px);aspect-ratio:364/478;border:1.5px dashed #bdbdbd;display:grid;place-items:center;color:var(--muted);font-size:clamp(10px,.9vw,13px);padding:8px}
-h1{font-size:18px;font-weight:500;margin:0;letter-spacing:-.01em}
-p{margin:6px 0 0;color:var(--muted)}
-a.pill{display:inline-flex;align-items:center;border-radius:99px;padding:10px 18px;font-weight:500;text-decoration:none;background:var(--fg);color:#fff}
+main{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:40px 16px 90px;text-align:center;position:relative}
+.grid{display:grid;grid-template-columns:repeat(3,56px);gap:6px}
+.grid div{height:70px;background:#d9d9d9 center/cover}
+.grid .hole{background:none;border:1px dashed #bdbdbd}
+.big{font-size:clamp(64px,8vw,104px);letter-spacing:-.03em;line-height:1;color:var(--muted)}
+p{margin:0;color:var(--muted);max-width:380px;line-height:1.5}
+.acts{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+a.pill{display:inline-flex;align-items:center;border-radius:99px;padding:10px 18px;font-weight:500;text-decoration:none;border:1px solid var(--line);color:var(--fg);background:#fff}
+a.pill.dark{background:var(--fg);color:#fff;border-color:var(--fg)}
 a.pill:hover{opacity:.85}
+.tks{position:absolute;left:clamp(16px,4.7vw,68px);bottom:28px;font-size:11px;text-align:left;line-height:1.35}
 </style>
 </head>
 <body>
-<header><span class="logo" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><b>Fig.Feed</b></header>
 <main>
-  <div class="row" aria-hidden="true"><span class="word">4</span><span class="hole">nada aqui</span><span class="word">4</span></div>
-  <div><h1>Essa página não existe.</h1><p>O link pode estar errado, ou a página mudou de lugar.</p></div>
-  <a class="pill" id="home" href="./">Voltar ao Fig.Feed</a>
+  <div class="grid" id="g" aria-hidden="true"></div>
+  <div class="big">404</div>
+  <p>Essa página sumiu da grade. O endereço que você abriu não existe ou mudou de lugar.</p>
+  <div class="acts"><a class="pill dark" id="home" href="./">Voltar para o início</a><a class="pill" id="contas" href="./#contas">Ir para Contas</a></div>
+  <div class="tks" aria-hidden="true">tks<br>Fig.Feed</div>
 </main>
 <script>
-// No GitHub Pages o site fica em /Nome-do-repositório/, então o botão aponta para lá.
-if(location.hostname.endsWith('github.io')){const seg=location.pathname.split('/')[1];if(seg)document.getElementById('home').href='/'+seg+'/'}
+// No GitHub Pages o site fica em /Nome-do-repositório/, então os links e as imagens apontam para lá.
+let base='./';
+if(location.hostname.endsWith('github.io')){const seg=location.pathname.split('/')[1];if(seg)base='/'+seg+'/'}
+document.getElementById('home').href=base;document.getElementById('contas').href=base+'#contas';
+document.getElementById('g').innerHTML=Array.from({length:9},(_,i)=>i===4?'<div class="hole"></div>':`<div style="background-image:url('${base}img/tutorial/bolinhas-${i+1}.jpg')"></div>`).join('');
 </script>
 </body>
 </html>

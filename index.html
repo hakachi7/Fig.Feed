@@ -155,7 +155,66 @@ img{display:block;max-width:100%}
 .drop .danger,.drop .danger svg{color:var(--err)}
 .drop .ver{color:#aaa;font-size:11px;padding:6px 12px 4px}
 
-/* ---------- Página não encontrada (404) ---------- */
+
+/* ---------- V6: telas de aviso ---------- */
+.st{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:40px 16px 90px;text-align:center;position:relative}
+.st .big{font-size:clamp(64px,8vw,104px);font-weight:400;letter-spacing:-.03em;line-height:1;color:var(--muted)}
+.st h1{font-size:clamp(26px,3vw,34px);font-weight:400;letter-spacing:-.02em;margin:0}
+.st p{color:var(--muted);max-width:380px;margin:0;line-height:1.5}
+.st .acts{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.st .small{font-size:12px;max-width:310px}.st .small a{color:var(--fg)}
+.st .tks{position:absolute;left:clamp(16px,4.7vw,68px);bottom:28px;font-size:11px;text-align:left;line-height:1.35}
+.nf-grid{display:grid;grid-template-columns:repeat(3,56px);gap:6px}
+.nf-grid div{height:70px;background:var(--tile) center/cover}
+.nf-grid .hole{background:none;border:1px dashed #bdbdbd}
+.st .one{width:160px;aspect-ratio:4/5;background:var(--tile) center/cover;filter:grayscale(1)}
+.mnt{position:relative}
+.mnt .msg{position:absolute;left:16px;right:16px;bottom:clamp(24px,5vh,48px);text-align:center;font-size:13px}
+.mnt .msg span{display:block;color:var(--muted);margin-top:6px}
+
+/* ---------- V6: páginas da conta e públicas ---------- */
+.pub-hdr{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px max(16px,2.2vw)}
+.pub-hdr .brand{display:flex;align-items:center;gap:12px;font-weight:600;font-size:15px}
+.pub-hdr .r{display:flex;gap:8px}
+.doc{max-width:820px}
+.doc .warn{background:#fff7dc;border:1px solid #f1d98a;border-radius:10px;padding:14px 16px;font-size:13px;line-height:1.5;margin:0 0 36px}
+.doc h2{font-size:18px;font-weight:500;margin:34px 0 12px;letter-spacing:-.01em}
+.doc p,.doc li{line-height:1.6;max-width:600px}
+.doc ul{padding-left:20px;margin:0}
+.help-q{width:100%;margin-bottom:24px}
+.faq details{border-top:1px solid var(--line)}.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{padding:16px 0;cursor:pointer;display:flex;justify-content:space-between;gap:12px;font-weight:500;list-style:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:'+';color:var(--muted);font-weight:400}.faq details[open] summary::after{content:'–'}
+.faq details p{margin:0 0 16px;color:#444}
+.kbd-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;border:1px solid #d6d6d6;border-bottom-width:2px;border-radius:4px;padding:1px 6px;background:#fafafa}
+.contact{border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:44px}
+.contact small{color:var(--muted)}.contact a.pill{text-decoration:none;color:var(--fg)}
+.rel{display:grid;grid-template-columns:140px 1fr;gap:16px;padding:22px 0;border-top:1px solid var(--line)}
+.rel small{display:block;color:var(--muted);font-size:12px;margin-top:4px}.rel ul{line-height:1.75}
+@media (max-width:600px){.rel{grid-template-columns:1fr;gap:6px}}
+.field{width:100%;height:44px;border:1px solid var(--line);border-radius:10px;padding:0 12px;font-size:14px;background:#fff;outline:none}
+.field:focus{border-color:#bdbdbd}
+.sec-block{padding:24px 0;border-bottom:1px solid var(--line)}
+.sec-block h2{font-size:16px;font-weight:500;margin:0}
+.sec-block label,.lbl-s{display:block;font-size:12px;color:var(--muted);margin:14px 0 6px}
+.sec-block .pill{margin-top:14px}
+.msg-inline{font-size:13px;margin-top:10px;line-height:1.45}.msg-inline.ok{color:#1e6b3a}.msg-inline.err{color:var(--err)}
+.dev{display:flex;align-items:center;gap:10px;padding:14px 0;border-top:1px solid var(--line);margin-top:0}
+.sec-block .dev:first-child{margin-top:14px}
+.dev .tag{font-size:11px;background:var(--soft);border-radius:6px;padding:2px 7px}
+.dev time{margin-left:auto;color:var(--muted);font-size:12px}
+.danger-link{color:var(--err);cursor:pointer;font-size:13px}
+.del-box{border:1px solid var(--line);border-radius:14px;padding:18px 18px 4px}
+.del-box>b{display:block;margin-bottom:14px;font-weight:500}
+.dr{display:grid;grid-template-columns:54px 1fr;padding:13px 0;border-top:1px solid var(--line)}
+.muted{color:var(--muted)}.ul{color:inherit;text-decoration:underline;cursor:pointer}
+.acts-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.pill.danger{color:var(--err);border-color:#f0b9b3}.pill.danger[disabled]{opacity:.5;cursor:default}
+.drop .ver{display:block;width:100%;text-align:left;color:#9a9a9a}.drop button.ver:hover{color:var(--fg)}
+
+/* ---------- Página não encontrada (404, v3) ---------- */
 .nf{min-height:calc(100vh - 66px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(28px,4vw,48px);padding:40px 16px 80px;text-align:center}
 .nf .num{display:flex;align-items:center;gap:clamp(12px,2.2vw,36px)}
 .nf .word{font-size:clamp(64px,10vw,168px);font-weight:400;letter-spacing:-.03em;line-height:1}
@@ -532,26 +591,17 @@ function render(){
   if(location.hash.includes('=')){history.replaceState(null,'',location.pathname+location.search+'#home')}
   route=(location.hash.slice(1)||'home').split('/');const v=route[0];
   if(v==='confirmado')return vConfirmado();
+  if(MANUT&&!isAdmin()&&!AUTH.includes(v))return vManutencao();
   if(recovery&&v!=='nova-senha')return go('nova-senha');
-  if(!USER&&!AUTH.includes(v))return go('entrar');
+  if(!USER&&!AUTH.includes(v)&&!PUBLIC.includes(v))return go('entrar');
   if(USER&&AUTH.includes(v)&&!(v==='nova-senha'&&recovery))return go('home');
   const map={entrar:()=>vAuth('entrar'),criar:()=>vAuth('criar'),senha:()=>vAuth('senha'),'nova-senha':()=>vAuth('nova-senha'),
     home:vHome,menu:vMenu,contas:vContas,feed:vFeed,car:vCar,edit:vEdit,crono:vCrono,down:vDown,perfil:vPerfil,config:vConfig,
-    admin:vAdmin,'boas-vindas':vTutorial};
+    admin:vAdmin,'boas-vindas':vTutorial,
+    termos:vTermos,privacidade:vPrivacidade,ajuda:vAjuda,novidades:vNovidades,seguranca:vSeguranca,excluir:vExcluir,
+    erro:()=>vErro(),'sem-internet':vOffline};
   document.title='Fig.Feed';
-  (map[v]||v404)();window.scrollTo(0,0);
-}
-
-/* ======================= Página não encontrada (404) ======================= */
-function v404(kind){
-  const T={conta:['Essa conta não foi encontrada.','Ela pode ter sido excluída, ou o link está incompleto.'],
-    post:['Esse post saiu do feed.','Ele pode ter sido excluído ou movido para outra conta.']}[kind]
-    ||['Essa página não existe.','O link pode estar errado, ou a página mudou de lugar.'];
-  document.title='Página não encontrada · Fig.Feed';
-  app.innerHTML=header('')+`<main class="nf"><div class="num" aria-hidden="true"><span class="word">4</span><span class="hole">nada aqui</span><span class="word">4</span></div>
-    <div><h1>${T[0]}</h1><p>${T[1]}</p></div>
-    <div class="acts"><button class="pill dark" data-go="home">Voltar ao início</button><button class="pill" data-go="contas">Ver contas</button></div></main>`;
-  bindHeader();
+  try{(map[v]||v404)()}catch(err){console.error(err);vErro('FF-501')}window.scrollTo(0,0);
 }
 
 /* ======================= Entrar / Criar conta ======================= */
@@ -592,7 +642,7 @@ function vAuth(mode){
   if(eye)eye.onclick=()=>{const i=document.getElementById('a-pass');const show=i.type==='password';i.type=show?'text':'password';eye.innerHTML=show?EYE:EYE_OFF;eye.setAttribute('aria-label',show?'Esconder senha':'Mostrar senha')};
   const msg=(t,ok)=>{const m=document.getElementById('a-msg');m.textContent=t;m.className='msg '+(ok?'ok':'err');m.hidden=false};
   (document.getElementById('a-email')||document.getElementById('a-pass')).focus();
-  if(authNote&&mode==='entrar'){msg(authNote);authNote=null}
+  if(authNote&&mode==='entrar'){msg(authNote.t||authNote,authNote.ok);authNote=null}
   const resend=document.getElementById('resend');
   resend.onclick=async()=>{const email=document.getElementById('a-email')?.value.trim();if(!email)return;resend.disabled=true;
     try{const {error}=await sb.auth.resend({type:'signup',email,options:{emailRedirectTo:BASE_URL()}});if(error)throw error;
@@ -716,7 +766,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v5';
+const VERSAO='v6';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   home:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M3 11 12 4l9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>',
@@ -726,6 +776,8 @@ const IC={
   perfil:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>',
   config:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></svg>',
   admin:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3 4 6v6c0 4.5 3.4 8.2 8 9 4.6-.8 8-4.5 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>',
+  seguranca:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>',
+  ajuda:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.7M12 17h.01"/></svg>',
   sair:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>'};
 function appMenuHTML(){
   const here=['feed','car'].includes(route[0])?'contas':route[0];const wc=weekCount();
@@ -733,8 +785,8 @@ function appMenuHTML(){
   const accs=S.accounts.slice(0,5).map(a=>`<button class="it ${route[1]===a.id?'cur':''}" data-g="feed/${a.id}">${accAvHTML(a)}<span class="h">${esc(a.handle)}</span></button>`).join('');
   return item('home','Início')+item('contas','Contas')+item('crono','Cronograma',wc?`<span class="n" title="Posts nos próximos 7 dias">${wc}</span>`:'')+item('down','Downloads')
     +(accs?`<hr><span class="lbl">Suas contas</span>${accs}${S.accounts.length>5?`<button class="it" data-g="contas" style="color:var(--muted)">Ver todas (${S.accounts.length})</button>`:''}`:'')
-    +`<hr>${isAdmin()?item('admin','Admin'):''}${item('perfil','Perfil')}${item('config','Configuração')}<button class="it danger" data-a="sair">${IC.sair}Sair</button>`
-    +`<div class="ver">Fig.Feed ${VERSAO}</div>`;
+    +`<hr>${isAdmin()?item('admin','Admin'):''}${item('perfil','Perfil')}${item('seguranca','Segurança')}${item('config','Configuração')}${item('ajuda','Ajuda')}<button class="it danger" data-a="sair">${IC.sair}Sair</button>`
+    +`<button class="ver" data-g="novidades">Fig.Feed ${VERSAO} · Novidades</button>`;
 }
 function closeDrop(){document.querySelector('.drop')?.remove();openDrop=null;document.getElementById('appmenu')?.setAttribute('aria-expanded','false')}
 function dropdown(kind){
@@ -743,14 +795,14 @@ function dropdown(kind){
   const inAcc=route[0]==='feed'||route[0]==='car';
   if(kind==='app'){d.setAttribute('role','menu');d.setAttribute('aria-label','Menu principal');d.innerHTML=appMenuHTML();document.getElementById('appmenu')?.setAttribute('aria-expanded','true')}
   else if(kind==='me'){d.innerHTML=`<span class="lbl">${esc(S.profile.handle||USER.email)}</span>
-    <button data-a="perfil">Perfil</button><button data-a="config">Configuração</button><hr><button data-a="sair">Sair</button>`}
+    <button data-a="perfil">Perfil</button><button data-a="seguranca">Segurança</button><button data-a="config">Configuração</button><button data-a="ajuda">Ajuda</button><hr><button data-a="sair">Sair</button>`}
   else{d.innerHTML=`<span class="lbl">Nova conta</span><form id="nf"><input id="nh" placeholder="@perfil.do.cliente" required><button class="pill" style="padding:6px 10px">Criar</button></form><hr>
     ${inAcc?`<button data-a="post">Novo post com fotos de exemplo</button><button data-a="up">Novo post com fotos suas</button>`:`<span class="lbl">Abra uma conta para criar posts</span>`}`}
   document.body.appendChild(d);
   d.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>{closeDrop();go(b.dataset.g)});
   if(kind==='app')d.querySelector('button')?.focus();
   d.querySelectorAll('[data-a]').forEach(b=>b.onclick=async()=>{const a=b.dataset.a;closeDrop();
-    if(a==='perfil')go('perfil');if(a==='config')go('config');if(a==='sair')sair();
+    if(a==='perfil')go('perfil');if(a==='config')go('config');if(a==='seguranca')go('seguranca');if(a==='ajuda')go('ajuda');if(a==='sair')sair();
     if(a==='post')examplePost(accById(route[1]));
     if(a==='up')pickFiles({type:'newpost',acc:route[1]});});
   const f=d.querySelector('#nf');if(f){f.onsubmit=async e=>{e.preventDefault();let h=d.querySelector('#nh').value.trim().replace(/\s+/g,'');if(!h)return;if(h[0]!=='@')h='@'+h;
@@ -1190,11 +1242,18 @@ function vConfig(){
     <section class="install"><b>Instalar o Fig.Feed no celular</b><br>
       <b>iPhone:</b> abra o site no Safari, toque em Compartilhar e depois em "Adicionar à Tela de Início".<br>
       <b>Android:</b> abra no Chrome, toque nos três pontinhos e depois em "Instalar app" ou "Adicionar à tela inicial".
-      ${installEvt?'<div style="margin-top:12px"><button class="pill dark" id="inst">Instalar agora</button></div>':''}</section></main>`;
+      ${installEvt?'<div style="margin-top:12px"><button class="pill dark" id="inst">Instalar agora</button></div>':''}</section>
+    <h2 class="sec" style="margin-top:40px">Conta</h2><div class="chips"><button class="pill" data-go="seguranca">Segurança</button><button class="pill" data-go="excluir">Excluir minha conta</button></div>
+    <h2 class="sec" style="margin-top:28px">Sobre</h2><div class="chips"><button class="pill" data-go="ajuda">Ajuda</button><button class="pill" data-go="novidades">Novidades</button><button class="pill" data-go="termos">Termos de uso</button><button class="pill" data-go="privacidade">Privacidade</button></div>
+    ${S.profile.role==='gm'?`<section class="install"><b>Modo atualização (só GM)</b><br>Mostra "Estamos fazendo uma atualização" para todo mundo, menos GM e admins.
+      <label class="chk" style="margin:12px 0 0"><input type="checkbox" id="mnt" ${MANUT?'checked':''}> Ligado</label></section>`:''}</main>`;
   bindHeader();
   document.getElementById('df').onchange=async e=>{const v=e.target.checked;await db(sb.from('profiles').update({dates_follow:v}).eq('id',USER.id));S.profile.dates_follow=v;toast('Preferência salva')};
   const sd=document.getElementById('seed');sd.onclick=async()=>{sd.disabled=true;try{await seedExamples();go('contas')}catch(e){sd.disabled=false}};
   document.getElementById('tut').onclick=()=>{tutStep=0;go('boas-vindas')};
+  const mt=document.getElementById('mnt');if(mt)mt.onchange=async e=>{const v=e.target.checked;
+    try{await db(sb.from('app_settings').upsert({key:'manutencao',value:{ativo:v},updated_at:new Date().toISOString()}));MANUT=v;
+      toast(v?'Modo atualização ligado: só GM e admins entram':'Modo atualização desligado')}catch(err){e.target.checked=!v}};
   const ib=document.getElementById('inst');if(ib)ib.onclick=async()=>{installEvt.prompt();await installEvt.userChoice;installEvt=null;vConfig()};
 }
 
@@ -1373,6 +1432,178 @@ document.getElementById('file').onchange=async e=>{
   }catch(err){}
 };
 
+/* ======================= V6: telas de aviso ======================= */
+const CONTATO='contato@figfeed.com.br'; // troque aqui se o e-mail de contato for outro
+let MANUT=false; // modo "Estamos fazendo uma atualização" (ligado pelo GM em Configuração)
+function bindGo(){app.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go))}
+function v404(kind){
+  const T={conta:'Essa conta sumiu da grade. Ela pode ter sido excluída, ou o link está incompleto.',
+    post:'Esse post sumiu da grade. Ele pode ter sido excluído ou movido para outra conta.'}[kind]
+    ||'Essa página sumiu da grade. O endereço que você abriu não existe ou mudou de lugar.';
+  document.title='Página não encontrada · Fig.Feed';
+  const g=TUT_IMG.map((u,i)=>i===4?'<div class="hole"></div>':`<div style="background-image:url('${u}')"></div>`).join('');
+  app.innerHTML=`<main class="st"><div class="nf-grid" aria-hidden="true">${g}</div><div class="big">404</div><p>${T}</p>
+    <div class="acts"><button class="pill dark" data-go="home">Voltar para o início</button><button class="pill" data-go="${USER?'contas':'entrar'}">${USER?'Ir para Contas':'Entrar'}</button></div>
+    <div class="tks" aria-hidden="true">tks<br>Fig.Feed</div></main>`;
+  bindGo();
+}
+function vOffline(){
+  document.title='Sem internet · Fig.Feed';
+  app.innerHTML=`<main class="st"><div class="one" aria-hidden="true" style="background-image:url('${TUT_IMG[3]}')"></div>
+    <h1>Você está sem internet</h1><p>Confira o Wi-Fi ou os dados móveis. O que já estava salvo continua guardado no Fig.Feed; quando a conexão voltar, é só tentar de novo.</p>
+    <button class="pill dark" id="retry">Tentar de novo</button></main>`;
+  document.getElementById('retry').onclick=()=>location.reload();
+}
+function vErro(code='FF-500'){
+  document.title='Algo deu errado · Fig.Feed';
+  app.innerHTML=`<main class="st"><div class="big">Ops.</div><p>Algo deu errado do nosso lado e não conseguimos carregar esta página. Nada do que você fez foi perdido.</p>
+    <div class="acts"><button class="pill dark" id="retry">Tentar de novo</button><button class="pill" id="ini">Voltar para o início</button></div>
+    <p class="small">Se continuar acontecendo, escreva para <a href="mailto:${CONTATO}?subject=Erro%20${code}">${CONTATO}</a> com o código <b>${code}</b>.</p></main>`;
+  document.getElementById('retry').onclick=()=>location.reload();
+  document.getElementById('ini').onclick=()=>{location.hash='#home';location.reload()};
+}
+function vManutencao(){
+  document.title='Em atualização · Fig.Feed';
+  app.innerHTML=`<main class="view home mnt"><div class="word">Fig.</div><div class="photo"><img src="${TUT_IMG[4]}" alt="" class="on"></div><div class="word">Feed</div>
+    <div class="msg" role="status"><b>Estamos fazendo uma atualização</b><span>Voltamos em alguns minutos. Seus dados estão seguros.</span></div></main>`;
+}
+async function loadManut(){try{const {data}=await sb.from('app_settings').select('value').eq('key','manutencao').maybeSingle();MANUT=!!data?.value?.ativo}catch(e){MANUT=false}}
+
+/* ======================= V6: páginas públicas e da conta ======================= */
+const PUBLIC=['termos','privacidade','ajuda','novidades'];
+function pubHeader(){return `<header class="pub-hdr"><button class="brand" data-go="home" aria-label="Fig.Feed, início">${LOGO()}<span>Fig.Feed</span></button>
+  <div class="r"><button class="pill" data-go="entrar">Entrar</button><button class="pill dark" data-go="criar">Criar conta grátis</button></div></header>`}
+const shell=cur=>USER?header(cur):pubHeader();
+const bindShell=()=>USER?bindHeader():bindGo();
+const MODELO=`<div class="warn"><b>Modelo para preencher.</b> Este texto é só uma estrutura. Antes de publicar, revise com um advogado ou use um gerador de termos adequado à LGPD.</div>`;
+function vTermos(){
+  app.innerHTML=shell('')+`<main class="page doc"><h1>Termos de uso</h1><p class="sub">Última atualização: [data]</p>${MODELO}
+    <h2>1. Sobre o Fig.Feed</h2><p>O Fig.Feed é uma ferramenta para planejar e organizar feeds, carrosséis e cronogramas de redes sociais, oferecida por [nome / razão social], CNPJ [número].</p>
+    <h2>2. Sua conta</h2><p>Você é responsável por manter sua senha em segurança e pelas atividades feitas na sua conta.</p>
+    <h2>3. Seu conteúdo</h2><p>As fotos e textos que você envia continuam sendo seus. Você nos autoriza apenas a guardá-los e exibi-los para você dentro do Fig.Feed.</p>
+    <h2>4. Uso permitido</h2><p>Não é permitido enviar conteúdo ilegal, que viole direitos de terceiros ou que tente prejudicar o funcionamento do serviço.</p>
+    <h2>5. Planos e pagamentos</h2><p>[Descrever planos, cobrança, cancelamento e reembolso, se houver.]</p>
+    <h2>6. Encerramento</h2><p>Você pode excluir sua conta a qualquer momento em Segurança → Excluir minha conta. Podemos suspender contas que descumpram estes termos.</p>
+    <h2>7. Contato</h2><p>[e-mail de contato]</p></main>`;
+  bindShell();
+}
+function vPrivacidade(){
+  app.innerHTML=shell('')+`<main class="page doc"><h1>Política de privacidade</h1><p class="sub">Última atualização: [data]</p>${MODELO}
+    <h2>Quais dados coletamos</h2><ul><li>Nome, e-mail e senha (guardada de forma criptografada)</li><li>Contas de clientes, posts, legendas, datas e fotos que você cadastra</li><li>Dados técnicos de acesso, como data e hora de login e o aparelho usado</li></ul>
+    <h2>Para que usamos</h2><p>Para fazer o Fig.Feed funcionar: entrar na sua conta, guardar e mostrar o seu trabalho e enviar e-mails da conta (confirmação e recuperação de senha).</p>
+    <h2>Com quem compartilhamos</h2><p>Com os serviços que hospedam o app: [Supabase — banco de dados e fotos], [GitHub Pages / Hostinger — site], [serviço de e-mail]. Não vendemos seus dados.</p>
+    <h2>Seus direitos</h2><p>Você pode acessar, corrigir e excluir seus dados a qualquer momento. Para excluir tudo, use Segurança → Excluir minha conta.</p>
+    <h2>Encarregado de dados (DPO)</h2><p>[nome e e-mail]</p></main>`;
+  bindShell();
+}
+const FAQ=[
+  ['Como reorganizo o feed?','Abra a conta e arraste os posts na grade. No celular, segure o post por um instante antes de arrastar. A grade se ajeita sozinha.'],
+  ['As datas mudam quando eu arrasto?','Se a opção "as datas acompanham a nova ordem" estiver ligada em Configuração, sim: as datas ficam na mesma sequência e passam para os posts na nova ordem. Desligue se quiser que cada post mantenha a própria data.'],
+  ['Quantas fotos cabem num carrossel?','Até 10 fotos por post. A primeira é a capa que aparece no feed.'],
+  ['O Fig.Feed publica no Instagram por mim?','Ainda não. Ele serve para planejar e organizar. Na hora de postar, baixe a grade e as legendas em Downloads.'],
+  ['Meus clientes conseguem ver meu trabalho?','Por enquanto, só você vê as suas contas. Um link para o cliente acompanhar está nos planos das próximas versões.'],
+  ['Como instalo o Fig.Feed no celular?','Em Configuração tem o passo a passo para iPhone e Android.'],
+  ['Esqueci minha senha. E agora?','Na tela de entrar, clique em "Esqueceu sua senha?" e siga o link que chegar no seu e-mail.']];
+const KBD=[['Mover post selecionado','<kbd>Alt</kbd> + <kbd>←</kbd> <kbd>→</kbd>'],['Abrir post selecionado','<kbd>Enter</kbd>'],['Salvar legenda','<kbd>Ctrl</kbd> + <kbd>Enter</kbd>'],['Fechar painel','<kbd>Esc</kbd>']];
+function vAjuda(){
+  app.innerHTML=shell('')+`<main class="page doc"><h1>Como podemos ajudar?</h1><p class="sub">Respostas rápidas para as dúvidas mais comuns.</p>
+    <label class="search help-q"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#777" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="hq" placeholder="Buscar na ajuda" aria-label="Buscar na ajuda" autocomplete="off"></label>
+    <div class="faq" id="faq">${FAQ.map(([qq,a])=>`<details data-s="${esc((qq+' '+a).toLowerCase())}"><summary>${esc(qq)}</summary><p>${esc(a)}</p></details>`).join('')}</div>
+    <p class="sub" id="nofaq" hidden style="margin-top:16px">Nada encontrado. Tente outra palavra ou fale com a gente.</p>
+    <h2>Atalhos de teclado</h2><div>${KBD.map(([l,k])=>`<div class="kbd-row"><span>${l}</span><span>${k}</span></div>`).join('')}</div>
+    <div class="contact"><div><b>Não achou o que procurava?</b><br><small>Responderemos em até 1 dia útil.</small></div><a class="pill" href="mailto:${CONTATO}">${CONTATO}</a></div></main>`;
+  bindShell();
+  document.getElementById('hq').oninput=e=>{const t=e.target.value.trim().toLowerCase();let n=0;
+    document.querySelectorAll('#faq details').forEach(d=>{const ok=!t||d.dataset.s.includes(t);d.hidden=!ok;if(ok)n++;if(t&&ok)d.open=true});
+    document.getElementById('nofaq').hidden=n>0};
+}
+// Histórico de versões: acrescente a versão nova no topo a cada envio
+const NOVIDADES=[
+  ['v6','Nov 2026',['Páginas de Segurança: trocar e-mail e senha e ver os aparelhos conectados','Excluir minha conta','Ajuda, Novidades, Termos de uso e Política de privacidade','Telas novas de página não encontrada, sem internet, erro e atualização']],
+  ['v5','Nov 2026',['Aba Admin para GM e administradores: usuários, funções e registro de atividades']],
+  ['v4','Nov 2026',['Login revisado e tela de e-mail confirmado','Tutorial de boas-vindas na primeira vez','Tela "Montando seu feed…"']],
+  ['v3','Nov 2026',['Menu no ícone de grade','Página não encontrada','Aviso de sem internet']],
+  ['v2','Nov 2026',['Login e contas salvas na nuvem','Envio de fotos para o carrossel','Cronograma com semana e quadro','Painel do post com status, data e legenda','Quadro de constância no perfil','Download da grade e app instalável no celular']],
+  ['v1','Nov 2026',['Primeira versão: feed com arrastar e soltar']]];
+function vNovidades(){
+  app.innerHTML=shell('')+`<main class="page doc"><h1>Novidades</h1><p class="sub">Tudo que mudou no Fig.Feed.</p>
+    ${NOVIDADES.map(([v,d,it])=>`<section class="rel"><div><b>${v}</b><small>${d}</small></div><ul>${it.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></section>`).join('')}</main>`;
+  bindShell();
+}
+function uaName(ua=''){
+  const os=/iPhone/.test(ua)?'iPhone':/iPad/.test(ua)?'iPad':/Android/.test(ua)?'Android':/Macintosh|Mac OS X/.test(ua)?'Mac':/Windows/.test(ua)?'Windows':/Linux/.test(ua)?'Linux':'Aparelho';
+  const br=/Edg\//.test(ua)?'Edge':/OPR\//.test(ua)?'Opera':/SamsungBrowser/.test(ua)?'Samsung Internet':/CriOS|Chrome\//.test(ua)?'Chrome':/FxiOS|Firefox\//.test(ua)?'Firefox':/Safari\//.test(ua)?'Safari':'navegador';
+  return `${os} · ${br}`;
+}
+function relTime(ts){if(!ts)return'';const m=Math.round((Date.now()-new Date(ts))/60000);
+  if(m<2)return'agora';if(m<60)return`há ${m} min`;const h=Math.round(m/60);if(h<24)return`há ${h} ${h===1?'hora':'horas'}`;const d=Math.round(h/24);return`há ${d} ${d===1?'dia':'dias'}`}
+function vSeguranca(){
+  app.innerHTML=header('')+`<main class="page" style="max-width:620px"><h1>Segurança</h1><p class="sub" style="margin-bottom:16px">${esc(USER.email)}</p>
+    <section class="sec-block"><h2>Trocar e-mail</h2><form id="fe" novalidate><label for="ne">Novo e-mail</label>
+      <input class="field" id="ne" type="email" placeholder="novo@email.com" autocomplete="email"><button class="pill">Enviar confirmação</button><div class="msg-inline" id="em-msg" role="status"></div></form></section>
+    <section class="sec-block"><h2>Trocar senha</h2><form id="fp" novalidate><label for="pa">Senha atual</label><input class="field" id="pa" type="password" autocomplete="current-password">
+      <label for="pw-n">Nova senha</label><input class="field" id="pw-n" type="password" autocomplete="new-password" placeholder="Mínimo 6 caracteres">
+      <button class="pill">Salvar nova senha</button><div class="msg-inline" id="pw-msg" role="status"></div></form></section>
+    <section class="sec-block" style="border-bottom:0"><h2>Aparelhos conectados</h2><div id="devs"><p class="sub" style="margin:14px 0">Carregando…</p></div>
+      <button class="pill" id="outros">Sair de todos os outros aparelhos</button></section>
+    <p style="margin-top:36px"><a class="danger-link" data-go="excluir">Excluir minha conta</a></p></main>`;
+  bindHeader();
+  const say=(id,t,ok)=>{const m=document.getElementById(id);m.textContent=t;m.className='msg-inline '+(ok?'ok':'err')};
+  document.getElementById('fe').onsubmit=async e=>{e.preventDefault();const email=document.getElementById('ne').value.trim();
+    if(!/^\S+@\S+\.\S+$/.test(email))return say('em-msg','Digite um e-mail válido.');
+    if(email.toLowerCase()===USER.email.toLowerCase())return say('em-msg','Esse já é o seu e-mail.');
+    const b=e.submitter;b.disabled=true;
+    try{const {error}=await sb.auth.updateUser({email},{emailRedirectTo:BASE_URL()});if(error)throw error;
+      say('em-msg',`Enviamos um link de confirmação para ${email}. A troca só vale depois que você clicar nele.`,true)}catch(err){say('em-msg',traduz(err.message))}
+    b.disabled=false};
+  document.getElementById('fp').onsubmit=async e=>{e.preventDefault();const atual=document.getElementById('pa').value,nova=document.getElementById('pw-n').value;
+    if(!atual)return say('pw-msg','Digite sua senha atual.');if(nova.length<6)return say('pw-msg','A nova senha precisa ter pelo menos 6 caracteres.');
+    if(nova===atual)return say('pw-msg','A nova senha precisa ser diferente da atual.');
+    const b=e.submitter;b.disabled=true;
+    try{const {error:e1}=await sb.auth.signInWithPassword({email:USER.email,password:atual});if(e1)throw new Error('senha-atual');
+      const {error}=await sb.auth.updateUser({password:nova});if(error)throw error;
+      e.target.reset();say('pw-msg','Senha alterada.',true)}
+    catch(err){say('pw-msg',err.message==='senha-atual'?'A senha atual está incorreta.':traduz(err.message))}
+    b.disabled=false};
+  const loadDevs=async()=>{const box=document.getElementById('devs');if(!box)return;
+    try{const {data,error}=await sb.rpc('my_sessions');if(error)throw error;
+      box.innerHTML=(data||[]).map(s=>`<div class="dev"><span>${esc(uaName(s.user_agent))}</span>${s.is_current?'<span class="tag">Este aparelho</span>':''}<time>${relTime(s.last_seen)}</time></div>`).join('')||'<p class="sub" style="margin:14px 0">Nenhum aparelho encontrado.</p>';
+      document.getElementById('outros').hidden=(data||[]).filter(s=>!s.is_current).length===0}
+    catch(err){box.innerHTML=`<p class="sub" style="margin:14px 0">Não foi possível carregar os aparelhos agora.</p>`}};
+  loadDevs();
+  document.getElementById('outros').onclick=async e=>{const b=e.currentTarget;b.disabled=true;
+    const {error}=await sb.auth.signOut({scope:'others'});b.disabled=false;
+    if(error)return toast(traduz(error.message));toast('Os outros aparelhos foram desconectados');loadDevs()};
+}
+async function vExcluir(){
+  let files=[];try{const {data}=await sb.rpc('my_files');files=data||[]}catch(e){}
+  if(route[0]!=='excluir')return;
+  const nPosts=S.accounts.reduce((n,a)=>n+a.posts.length,0);
+  app.innerHTML=header('')+`<main class="page" style="max-width:620px"><h1>Excluir minha conta</h1><p class="sub">Essa ação não pode ser desfeita.</p>
+    <div class="del-box"><b>Vamos apagar para sempre:</b>
+      <div class="dr"><b>${S.accounts.length}</b><span>${S.accounts.length===1?'conta de cliente':'contas de clientes'}</span></div>
+      <div class="dr"><b>${nPosts}</b><span>posts, com legendas e datas</span></div>
+      <div class="dr"><b>${files.length}</b><span>${files.length===1?'foto enviada':'fotos enviadas'}</span></div></div>
+    <p class="muted" style="margin:22px 0">Quer guardar algo antes? Baixe as grades e legendas em <a class="ul" data-go="down">Downloads</a>.</p>
+    <label class="lbl-s" for="cf">Para confirmar, digite <b>EXCLUIR</b></label><input class="field" id="cf" placeholder="EXCLUIR" autocomplete="off">
+    <div class="acts-row"><button class="pill danger" id="del" disabled>Excluir minha conta para sempre</button><button class="pill" data-go="seguranca">Cancelar</button></div>
+    <div class="msg-inline" id="dm" role="status"></div></main>`;
+  bindHeader();
+  const cf=document.getElementById('cf'),del=document.getElementById('del'),dm=document.getElementById('dm');
+  cf.oninput=()=>del.disabled=cf.value.trim().toUpperCase()!=='EXCLUIR';
+  del.onclick=async()=>{del.disabled=true;cf.disabled=true;del.textContent='Excluindo…';dm.className='msg-inline';dm.textContent='';
+    try{
+      const {data:block,error:e0}=await sb.rpc('can_delete_my_account');if(e0)throw e0;if(typeof block==='string'&&block)throw new Error(block);
+      const names=files.map(f=>f.name);for(let i=0;i<names.length;i+=100){await sb.storage.from('fotos').remove(names.slice(i,i+100))}
+      const {error}=await sb.rpc('delete_my_account');if(error)throw error;
+      await sb.auth.signOut({scope:'local'}).catch(()=>{});
+      authNote={t:'Sua conta foi excluída. Se mudar de ideia, é só criar uma nova.',ok:true};
+      USER=null;S={profile:{name:'',handle:'',dates_follow:true},accounts:[]};go('entrar');
+    }catch(err){dm.className='msg-inline err';dm.textContent=err.message.startsWith('Você é o único')?err.message:traduz(err.message);
+      del.textContent='Excluir minha conta para sempre';cf.disabled=false;del.disabled=false}};
+}
+
 /* ======================= Início ======================= */
 let booted=false;
 sb.auth.onAuthStateChange((event,session)=>{
@@ -1396,7 +1627,10 @@ window.addEventListener('online',netState);window.addEventListener('offline',net
 (async function boot(){
   try{const r=await fetch(`https://picsum.photos/v2/list?page=${1+rnd(8)}&limit=80`);const j=await r.json();if(j.length>20)POOL=j.map(x=>[x.id,x.author])}catch(e){}
   const {data:{session}}=await sb.auth.getSession();USER=session?.user||null;
-  if(USER){try{await loadAll()}catch(e){}}
+  let bootErr=null;
+  await loadManut();
+  if(USER){try{await loadAll()}catch(e){bootErr=e}}
+  if(bootErr){booted=true;(!navigator.onLine||/fetch|network/i.test(bootErr.message||''))?vOffline():vErro();return}
   // Chegou pelo link do e-mail?
   const to=h=>history.replaceState(null,'',location.pathname+'#'+h);
   if(LINK.err){authNote='Esse link expirou ou já foi usado. Entre com seu e-mail e senha. Se a conta ainda não foi confirmada, você pode pedir um novo link.';to(USER?'home':'entrar')}
