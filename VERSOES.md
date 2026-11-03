@@ -6,6 +6,7 @@ Cada versão também tem uma branch própria, com o código exatamente como esta
 
 | Versão | Nome | O que trouxe | Branch | Commit |
 | --- | --- | --- | --- | --- |
+| v11 | Selecionar e exportar | No feed da conta: botão Selecionar, marcar posts com ✓ e exportar só eles em fotos (.zip), grade (PNG) ou legendas (.txt) | [versao-11-selecionar-e-exportar](https://github.com/hakachi7/Fig.Feed/tree/versao-11-selecionar-e-exportar) | (veja a branch) |
 | v10 | Admin completo | Templates de feed, Blog, Fale com a gente (suporte) e Assinaturas com planos, testes grátis e cupons | [versao-10-admin-completo](https://github.com/hakachi7/Fig.Feed/tree/versao-10-admin-completo) | (veja a branch) |
 | v9 | Planejamento | PDF do planejamento do mês para o cliente aprovar; objetivo, pilares, formato com Reels, horário, chamada e tipo de story | [versao-9-planejamento](https://github.com/hakachi7/Fig.Feed/tree/versao-9-planejamento) | (veja a branch) |
 | v8 | Conteúdo do cliente | Abas Feed, Stories, Prévia e Relatório em cada conta; relatório com PDF e link de 30 dias | [versao-8-stories-previa-relatorio](https://github.com/hakachi7/Fig.Feed/tree/versao-8-stories-previa-relatorio) | [461a3c1](https://github.com/hakachi7/Fig.Feed/commit/461a3c14a1cc698f5caac5ef79803aba529816c0) |

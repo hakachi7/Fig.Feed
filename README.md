@@ -81,3 +81,9 @@ Abra o `index.html` no navegador, crie uma conta e entre. As fotos de exemplo v�
 - **Assinaturas:** plano de cada pessoa (Grátis, Pro, Agência), com ou sem prazo, testes grátis e cupons. O usuário vê o próprio plano e usa cupons na página Planos. A cobrança automática e os limites dos planos ainda não estão ligados.
 - Banco: `supabase/v10.sql` (já aplicado).
 
+## Novidades da v11 — Selecionar e exportar
+
+- No feed de uma conta, o botão **Selecionar** mostra um círculo em cada post. Marque os que quiser (ou "Selecionar todos"); arrastar fica pausado enquanto seleciona. Esc ou "Cancelar" saem do modo.
+- A barra de baixo exporta só os selecionados: **Fotos (.zip)** com uma pasta por post (fotos + legenda) e um `legendas.txt` geral, **Grade (PNG)** e **Legendas (.txt)**.
+- O .zip é montado no próprio navegador com a biblioteca JSZip (carregada só na hora de exportar).
+

@@ -688,6 +688,22 @@ a.pill{text-decoration:none;color:var(--fg)}a.pill.dark{color:#fff}
 .cup{display:flex;gap:8px;flex:1 1 300px;max-width:420px}.cup .field{flex:1;min-width:0}
 @media (max-width:760px){.te-side,.be-side,.be-pal{border-left:0;border-right:0;border-top:1px solid var(--line)}.be-pal{order:3}.sup-l{border-right:0}.sup-r{padding:24px 16px}
   .bl-row{grid-template-columns:72px minmax(0,1fr)}.bl-th.sm{width:72px}.cup-row{grid-template-columns:minmax(0,1fr) auto}.cup-new .cn-desc{grid-column:auto}}
+
+/* ---------- V11: selecionar posts do feed para exportar ---------- */
+.feed.col{flex-direction:column;align-items:center;gap:14px}
+.feed-bar{width:min(394px,92vw);display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap;min-height:38px}
+.feed-bar .pill{font-size:13px;padding:7px 14px}.feed-bar .sel-n{margin-right:auto;font-size:13px;color:var(--muted)}
+.grid.sel-mode .tile{cursor:pointer}
+.grid.sel-mode .tile::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,0);transition:background .15s}
+.grid.sel-mode .tile.on::after{background:rgba(255,255,255,.28);box-shadow:inset 0 0 0 2px var(--fg)}
+.tile .ck{position:absolute;top:6px;left:6px;width:22px;height:22px;border-radius:50%;border:1.5px solid #fff;background:rgba(0,0,0,.18);color:transparent;display:grid;place-items:center;z-index:2;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.tile.on .ck{background:var(--fg);border-color:var(--fg);color:#fff}
+.grid.sel-mode .tile .dt{opacity:1}
+.sel-bar{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:40;background:#fff;border:1px solid var(--line);border-radius:99px;box-shadow:0 12px 32px rgba(0,0,0,.12);padding:8px 8px 8px 18px;display:flex;align-items:center;gap:8px;max-width:calc(100vw - 24px);flex-wrap:wrap;justify-content:center}
+.sel-bar b{font-weight:500;font-size:13px;margin-right:4px}.sel-bar .pill{font-size:13px;padding:8px 14px}
+@media (max-width:560px){.sel-bar{left:12px;right:12px;transform:none;max-width:none;border-radius:16px;padding:10px;bottom:12px;flex-wrap:wrap}
+  .sel-bar b{width:100%;text-align:center;margin:0}.sel-bar .pill{flex:1 1 0;justify-content:center;font-size:12px;padding:9px 6px;white-space:nowrap}}
+body:has(.sel-bar) .toast{bottom:110px}
 </style>
 </head>
 <body>
@@ -977,7 +993,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v10';
+const VERSAO='v11';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   blog:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 5h16v14H4zM8 9h8M8 13h8M8 17h5"/></svg>',
@@ -1159,22 +1175,74 @@ async function saveFeedOrder(a,ids){
   if(S.profile.dates_follow&&dates.length===a.posts.length)a.posts.forEach((p,i)=>p.date=dates[i]);
   try{await db(sb.rpc('reorder_posts',{p_account:a.id,p_ids:ids}))}catch(e){await loadAll();render()}
 }
+// V11: modo de seleção do feed (escolher posts para exportar)
+let SEL={acc:null,on:false,ids:new Set()};
+const CHECK='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
 function vFeed(){
   const a=accById(route[1]);if(!a)return v404('conta');
-  app.innerHTML=header('contas',`<span>Contas /</span> ${esc(a.handle)}`,accAvHTML(a),`<button class="more" id="accmore" aria-label="Ajustes da conta">${DOTS}</button>`)+accTabs(a,'feed')+`<main class="feed">
-    ${a.posts.length?`<div class="grid" id="grid">${a.posts.map(p=>{const s=p.slides[0];return `
-      <div class="item tile" tabindex="0" data-id="${p.id}" data-s="${esc(p.title+' '+p.caption)}" style="${bgi(s,250,328)}" aria-label="${esc(p.title)}, ${fmt(p.date)}">
-        ${p.slides.length>1?MULTI:''}<span class="dt">${fmt(p.date)}</span></div>`}).join('')}</div>`
+  if(SEL.acc!==a.id)SEL={acc:a.id,on:false,ids:new Set()};
+  SEL.ids=new Set([...SEL.ids].filter(id=>a.posts.some(p=>p.id===id)));
+  const on=SEL.on,n=SEL.ids.size,all=n===a.posts.length&&n>0;
+  app.innerHTML=header('contas',`<span>Contas /</span> ${esc(a.handle)}`,accAvHTML(a),`<button class="more" id="accmore" aria-label="Ajustes da conta">${DOTS}</button>`)+accTabs(a,'feed')+`<main class="feed col">
+    ${a.posts.length?`<div class="feed-bar">${on?`<span class="sel-n" role="status">${n?`${n} ${n===1?'selecionado':'selecionados'}`:'Toque nos posts para selecionar'}</span>
+        <button class="pill" id="sel-all">${all?'Limpar seleção':'Selecionar todos'}</button><button class="pill" id="sel-x">Cancelar</button>`
+      :`<button class="pill" id="sel">${CHECK}Selecionar</button>`}</div>
+    <div class="grid ${on?'sel-mode':''}" id="grid" ${on?'role="group" aria-label="Escolha os posts para exportar"':''}>${a.posts.map(p=>{const s=p.slides[0];const ck=SEL.ids.has(p.id);return `
+      <div class="item tile ${on&&ck?'on':''}" tabindex="0" data-id="${p.id}" data-s="${esc(p.title+' '+p.caption)}" style="${bgi(s,250,328)}"
+        ${on?`role="checkbox" aria-checked="${ck}"`:''} aria-label="${esc(p.title)}, ${fmt(p.date)}">
+        ${on?`<span class="ck" aria-hidden="true">${CHECK}</span>`:''}${p.slides.length>1?MULTI:''}<span class="dt">${fmt(p.date)}</span></div>`}).join('')}</div>`
     :`<div class="empty" style="margin-top:12vh"><h2>Monte o primeiro post</h2><p>Envie fotos do seu computador ou comece com fotos de exemplo.</p>
       <div class="row2"><button class="pill dark" id="e-up">Enviar fotos</button><button class="pill" id="e-ex">Usar fotos de exemplo</button></div></div>`}</main>
-    ${a.posts.length?'<div class="hint">Arraste para reorganizar (no celular, segure) · toque para abrir</div>':''}`;
+    ${a.posts.length&&!on?'<div class="hint">Arraste para reorganizar (no celular, segure) · toque para abrir</div>':''}
+    ${on&&n?`<div class="sel-bar" role="region" aria-label="Exportar selecionados"><b>${n} ${n===1?'post':'posts'}</b>
+      <button class="pill dark" id="ex-zip">Fotos (.zip)</button><button class="pill" id="ex-png">Grade (PNG)</button><button class="pill" id="ex-txt">Legendas (.txt)</button></div>`:''}`;
   bindHeader();applySearch();
   document.getElementById('accmore').onclick=e=>{e.stopPropagation();accMenu(a,e.currentTarget)};
   const g=document.getElementById('grid');
-  if(g)sortable(g,{onDrop:async(ids,kb)=>{const f=kb&&document.activeElement?.dataset.id;const p=saveFeedOrder(a,ids);vFeed();if(f)document.querySelector(`[data-id="${f}"]`)?.focus();await p},
+  if(g&&!on)sortable(g,{onDrop:async(ids,kb)=>{const f=kb&&document.activeElement?.dataset.id;const p=saveFeedOrder(a,ids);vFeed();if(f)document.querySelector(`[data-id="${f}"]`)?.focus();await p},
     onClick:id=>go(`car/${a.id}/${id}`)});
-  const up=document.getElementById('e-up');if(up)up.onclick=()=>pickFiles({type:'newpost',acc:a.id});
-  const ex=document.getElementById('e-ex');if(ex)ex.onclick=()=>{ex.disabled=true;examplePost(a).catch(()=>ex.disabled=false)};
+  if(g&&on){const tog=el=>{const id=el.dataset.id;SEL.ids.has(id)?SEL.ids.delete(id):SEL.ids.add(id);vFeed();document.querySelector(`.tile[data-id="${id}"]`)?.focus()};
+    g.onclick=e=>{const t=e.target.closest('.tile');if(t)tog(t)};
+    g.onkeydown=e=>{const t=e.target.closest('.tile');if(t&&(e.key===' '||e.key==='Enter')){e.preventDefault();tog(t)}}}
+  const b=id=>document.getElementById(id);
+  if(b('sel'))b('sel').onclick=()=>{SEL.on=true;vFeed();document.querySelector('.tile')?.focus()};
+  if(b('sel-x'))b('sel-x').onclick=()=>{SEL.on=false;SEL.ids.clear();vFeed()};
+  if(b('sel-all'))b('sel-all').onclick=()=>{SEL.ids=all?new Set():new Set(a.posts.map(p=>p.id));vFeed()};
+  const chosen=()=>a.posts.filter(p=>SEL.ids.has(p.id));
+  if(b('ex-png'))b('ex-png').onclick=()=>exportPNG(a,chosen(),'selecionados');
+  if(b('ex-txt'))b('ex-txt').onclick=()=>{saveFile(new Blob([legendasTxt(a,chosen())],{type:'text/plain;charset=utf-8'}),`${a.handle.replace('@','')}-legendas-selecionados.txt`);toast('Legendas baixadas')};
+  if(b('ex-zip'))b('ex-zip').onclick=e=>exportZip(a,chosen(),e.currentTarget);
+  const up=b('e-up');if(up)up.onclick=()=>pickFiles({type:'newpost',acc:a.id});
+  const ex=b('e-ex');if(ex)ex.onclick=()=>{ex.disabled=true;examplePost(a).catch(()=>ex.disabled=false)};
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&SEL.on&&route[0]==='feed'&&!document.getElementById('ov')&&!document.querySelector('.drop')){SEL.on=false;SEL.ids.clear();vFeed()}});
+function legendasTxt(a,posts){
+  const fmtL={foto:'Foto',carrossel:'Carrossel',reels:'Reels'};
+  return `${a.handle} · ${posts.length} ${posts.length===1?'post':'posts'} (da esquerda para a direita, de cima para baixo)\n\n`+posts.map((p,i)=>{
+    const meta=[p.date?fmt(p.date):'sem data',p.hora?String(p.hora).slice(0,5):'',fmtL[p.formato]||(p.slides.length>1?'Carrossel':'Foto'),p.pilar||''].filter(Boolean).join(' · ');
+    return `${String(i+1).padStart(2,'0')}. ${p.title}\n${meta}\n\n${p.caption||'(sem legenda)'}${p.cta?`\n\nChamada: ${p.cta}`:''}`}).join('\n\n— — —\n\n')+'\n';
+}
+let ZIPLIB=null;
+function loadZip(){return ZIPLIB||(ZIPLIB=new Promise((res,rej)=>{const sc=document.createElement('script');sc.src='https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js';
+  sc.onload=()=>window.JSZip?res(window.JSZip):rej(new Error('zip'));sc.onerror=()=>{ZIPLIB=null;rej(new Error('zip'))};document.head.appendChild(sc)}))}
+async function exportZip(a,posts,btn){
+  if(!posts.length)return;btn.disabled=true;const old=btn.textContent;
+  try{
+    const JSZip=await loadZip();const zip=new JSZip();let falhou=0,total=0;
+    const slug=t=>(String(t||'post').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'post').slice(0,40);
+    for(let i=0;i<posts.length;i++){const p=posts[i];btn.textContent=`Preparando ${i+1} de ${posts.length}…`;
+      const pasta=zip.folder(`${String(i+1).padStart(2,'0')}-${slug(p.title)}`);
+      if(!p.slides.length)pasta.file('sem-fotos.txt','Este post ainda não tem fotos.');
+      for(let j=0;j<p.slides.length;j++){total++;
+        try{const r=await fetch(src(p.slides[j],1080,1350));if(!r.ok)throw 0;pasta.file(`${j+1}.jpg`,await r.blob())}catch(err){falhou++}}
+      pasta.file('legenda.txt',`${p.title}\n\n${p.caption||'(sem legenda)'}${p.cta?`\n\nChamada: ${p.cta}`:''}\n`)}
+    zip.file('legendas.txt',legendasTxt(a,posts));
+    btn.textContent='Compactando…';
+    const blob=await zip.generateAsync({type:'blob'});
+    saveFile(blob,`${a.handle.replace('@','')}-selecionados.zip`);
+    toast(falhou?`Baixado, mas ${falhou} de ${total} fotos não vieram. Tente de novo com internet melhor.`:'Fotos baixadas',falhou?5000:2600);
+  }catch(err){toast('Não deu para gerar o arquivo .zip agora. Confira a internet e tente de novo.',4200)}
+  btn.textContent=old;btn.disabled=false;
 }
 
 /* ======================= 5. Carrossel ======================= */
@@ -1247,16 +1315,16 @@ function vDown(){
 }
 function saveFile(blob,name){const u=URL.createObjectURL(blob);const l=document.createElement('a');l.href=u;l.download=name;document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),2000)}
 function loadImg(u){return new Promise(r=>{if(!u)return r(null);const i=new Image();i.crossOrigin='anonymous';i.onload=()=>r(i);i.onerror=()=>r(null);i.src=u})}
-async function exportPNG(a){
+async function exportPNG(a,posts=a.posts,sufixo='grade'){
   toast('Montando a imagem…');
-  const W=360,H=450,G=6,cols=3,rows=Math.max(1,Math.ceil(a.posts.length/cols));
+  const W=360,H=450,G=6,cols=3,rows=Math.max(1,Math.ceil(posts.length/cols));
   const c=document.createElement('canvas');c.width=cols*W+(cols+1)*G;c.height=rows*H+(rows+1)*G+70;
   const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);
   x.fillStyle='#0a0a0a';x.font='500 22px Inter, Arial';x.fillText(a.handle,G+4,42);
-  const imgs=await Promise.all(a.posts.map(p=>loadImg(src(p.slides[0],W,H))));
+  const imgs=await Promise.all(posts.map(p=>loadImg(src(p.slides[0],W,H))));
   imgs.forEach((im,i)=>{const cx=G+(i%cols)*(W+G),cy=70+G+Math.floor(i/cols)*(H+G);x.fillStyle='#d9d9d9';x.fillRect(cx,cy,W,H);
     if(im){const r=Math.max(W/im.width,H/im.height);const w=im.width*r,h=im.height*r;x.save();x.beginPath();x.rect(cx,cy,W,H);x.clip();x.drawImage(im,cx+(W-w)/2,cy+(H-h)/2,w,h);x.restore()}});
-  try{c.toBlob(b=>{saveFile(b,`${a.handle.replace('@','')}-grade.png`);toast('Grade baixada')},'image/png')}catch(e){toast('Não deu para gerar a imagem neste navegador')}
+  try{c.toBlob(b=>{saveFile(b,`${a.handle.replace('@','')}-${sufixo}.png`);toast('Grade baixada')},'image/png')}catch(e){toast('Não deu para gerar a imagem neste navegador')}
 }
 
 /* ======================= Painel lateral do post ======================= */
@@ -2271,6 +2339,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v11','Nov 2026',['Selecionar posts no feed da conta: toque em “Selecionar”, marque os posts e exporte só eles','Exportar os selecionados como fotos (.zip, com uma pasta por post e as legendas), grade (PNG) ou legendas (.txt)']],
   ['v10','Nov 2026',['Templates de feed: em uma conta, “+ Criar → Usar um template” monta a grade de rascunhos','Blog com dicas, tutoriais e novidades','Fale com a gente: mande um pedido de ajuda e veja a resposta no app','Planos: veja o seu plano e use cupons','Admin: Templates, Blog, Suporte e Assinaturas (planos, testes grátis e cupons)']],
   ['v9','Nov 2026',['Planejamento do mês em PDF para o cliente aprovar (Downloads)','Objetivo do mês e pilares de conteúdo de cada conta','No post: formato (foto, carrossel ou Reels), horário, pilar e chamada para ação','Tipo de cada story: imagem, vídeo, enquete, caixinha, link ou contagem']],
   ['v8','Nov 2026',['Stories: planeje os stories de cada dia e arraste para ordenar','Prévia estilo Instagram com nome, bio, seguidores e destaques','Relatório do mês com gráfico, PDF e link para o cliente (vale 30 dias)','Abas Feed, Stories, Prévia e Relatório dentro de cada conta']],
