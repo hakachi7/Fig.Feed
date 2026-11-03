@@ -4,7 +4,8 @@ Aplicação web para social medias montarem e organizarem feeds, carrosséis e c
 
 ## Arquivos
 
-- `index.html` — o app: login, contas, feed, carrossel, legenda, painel do post, cronograma (semana e quadro), perfil com quadro de constância e download. Salva tudo no Supabase.
+- `index.html` — o app (v3): login, contas, feed, carrossel, legenda, painel do post, cronograma (semana e quadro), perfil com quadro de constância e download. Salva tudo no Supabase.
+- `404.html` — página que aparece quando alguém abre um link errado do site.
 - `manifest.webmanifest`, `sw.js` e `icons/` — deixam o Fig.Feed instalável no celular como app.
 - `supabase/schema.sql` — estrutura do banco de dados (tabelas, segurança e funções).
 - `prototipo-v1.html` — primeiro protótipo (salva só no navegador).
@@ -13,3 +14,9 @@ Aplicação web para social medias montarem e organizarem feeds, carrosséis e c
 ## Como abrir
 
 Abra o `index.html` no navegador, crie uma conta e entre. As fotos de exemplo vêm do Unsplash (via Lorem Picsum).
+
+## Novidades da v3
+
+- O ícone de grade no topo agora abre um menu: Início, Contas, Cronograma, Downloads, atalhos para suas contas, Perfil, Configuração e Sair.
+- Página "não encontrada" (404) dentro do app e no site, para links errados ou posts e contas excluídos.
+- Aviso quando a internet cai, para você saber que as mudanças podem não ser salvas.

@@ -109,6 +109,31 @@ img{display:block;max-width:100%}
 .drop hr{border:0;border-top:1px solid var(--line);margin:4px 0}
 .drop form{display:flex;gap:6px;padding:4px 6px}
 .drop input{flex:1;min-width:0;border:1px solid var(--line);border-radius:8px;padding:7px 9px}
+/* ---------- Menu do ícone (V3) ---------- */
+.logo-btn{width:36px;height:36px;margin:-7px -4px -7px -8px;border-radius:9px;display:grid;place-items:center;flex:none;transition:background .15s}
+.logo-btn:hover,.logo-btn[aria-expanded="true"]{background:var(--soft)}
+.drop.left{left:max(16px,2.2vw);right:auto;min-width:250px;max-height:calc(100vh - 80px);overflow-y:auto}
+.drop .it{display:flex;align-items:center;gap:11px;min-height:40px}
+.drop .it svg{flex:none;color:#555}
+.drop .it.cur{background:var(--soft);font-weight:600}
+.drop .it .avatar{width:20px;height:20px;flex:none}
+.drop .it .n{margin-left:auto;background:var(--badge);color:#fff;font-size:10px;border-radius:99px;min-width:17px;height:17px;display:grid;place-items:center;padding:0 4px;font-weight:500}
+.drop .it .h{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.drop .danger,.drop .danger svg{color:var(--err)}
+.drop .ver{color:#aaa;font-size:11px;padding:6px 12px 4px}
+
+/* ---------- Página não encontrada (404) ---------- */
+.nf{min-height:calc(100vh - 66px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(28px,4vw,48px);padding:40px 16px 80px;text-align:center}
+.nf .num{display:flex;align-items:center;gap:clamp(12px,2.2vw,36px)}
+.nf .word{font-size:clamp(64px,10vw,168px);font-weight:400;letter-spacing:-.03em;line-height:1}
+.nf .hole{width:clamp(84px,11vw,190px);aspect-ratio:364/478;border:1.5px dashed #bdbdbd;display:grid;place-items:center;color:var(--muted);font-size:clamp(10px,.9vw,13px);padding:8px}
+.nf h1{font-size:18px;font-weight:500;margin:0;letter-spacing:-.01em}
+.nf p{margin:6px 0 0;color:var(--muted)}
+.nf .acts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+
+/* ---------- Aviso de sem internet ---------- */
+.net{position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:95;background:var(--fg);color:#fff;font-size:12px;padding:8px 14px;border-radius:99px;box-shadow:0 8px 24px rgba(0,0,0,.15);white-space:nowrap}
+
 @media (max-width:760px){.hdr{grid-template-columns:1fr auto}.hdr .mid{display:none}.nav a{font-size:14px}.hdr .l{gap:14px}}
 
 /* ---------- 3. Contas ---------- */
@@ -435,7 +460,20 @@ function render(){
   if(USER&&AUTH.includes(v)&&!(v==='nova-senha'&&recovery))return go('home');
   const map={entrar:()=>vAuth('entrar'),criar:()=>vAuth('criar'),senha:()=>vAuth('senha'),'nova-senha':()=>vAuth('nova-senha'),
     home:vHome,menu:vMenu,contas:vContas,feed:vFeed,car:vCar,edit:vEdit,crono:vCrono,down:vDown,perfil:vPerfil,config:vConfig};
-  (map[v]||vHome)();window.scrollTo(0,0);
+  document.title='Fig.Feed';
+  (map[v]||v404)();window.scrollTo(0,0);
+}
+
+/* ======================= Página não encontrada (404) ======================= */
+function v404(kind){
+  const T={conta:['Essa conta não foi encontrada.','Ela pode ter sido excluída, ou o link está incompleto.'],
+    post:['Esse post saiu do feed.','Ele pode ter sido excluído ou movido para outra conta.']}[kind]
+    ||['Essa página não existe.','O link pode estar errado, ou a página mudou de lugar.'];
+  document.title='Página não encontrada · Fig.Feed';
+  app.innerHTML=header('')+`<main class="nf"><div class="num" aria-hidden="true"><span class="word">4</span><span class="hole">nada aqui</span><span class="word">4</span></div>
+    <div><h1>${T[0]}</h1><p>${T[1]}</p></div>
+    <div class="acts"><button class="pill dark" data-go="home">Voltar ao início</button><button class="pill" data-go="contas">Ver contas</button></div></main>`;
+  bindHeader();
 }
 
 /* ======================= Entrar / Criar conta ======================= */
@@ -495,7 +533,7 @@ function weekCount(){const now=iso(new Date());const lim=new Date();lim.setDate(
 function header(cur,crumb,before='',after=''){
   const wc=weekCount();const av=profAv();
   return `<header class="hdr">
-    <div class="l"><button aria-label="Voltar para o início" data-go="home">${LOGO()}</button>
+    <div class="l"><button class="logo-btn" id="appmenu" aria-label="Abrir menu" aria-haspopup="true" aria-expanded="false">${LOGO()}</button>
       ${crumb?`<div class="crumb-row">${before}<div class="crumb">${crumb}</div>${after}</div>`:`<nav class="nav" style="display:flex;gap:22px">
         <a data-go="contas" class="${cur==='contas'?'cur':''}">Contas</a>
         <a data-go="crono" class="${cur==='crono'?'cur':''}">Cronograma${wc?`<span class="badge">${wc}</span>`:''}</a>
@@ -510,20 +548,43 @@ function bindHeader(){
   app.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
   const qi=document.getElementById('q');
   if(qi){qi.oninput=e=>{q=e.target.value;applySearch()};qi.onkeydown=e=>{if(e.key==='Enter'&&!['contas','feed'].includes(route[0]))go('contas')}}
+  document.getElementById('appmenu').onclick=e=>{e.stopPropagation();dropdown('app')};
   document.getElementById('criar').onclick=e=>{e.stopPropagation();dropdown('criar')};
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
+const VERSAO='v3';
+const IC={
+  home:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M3 11 12 4l9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>',
+  contas:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>',
+  crono:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>',
+  down:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></svg>',
+  perfil:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>',
+  config:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></svg>',
+  sair:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>'};
+function appMenuHTML(){
+  const here=['feed','car'].includes(route[0])?'contas':route[0];const wc=weekCount();
+  const item=(g,label,extra='')=>`<button class="it ${here===g?'cur':''}" data-g="${g}">${IC[g]}${label}${extra}</button>`;
+  const accs=S.accounts.slice(0,5).map(a=>`<button class="it ${route[1]===a.id?'cur':''}" data-g="feed/${a.id}">${accAvHTML(a)}<span class="h">${esc(a.handle)}</span></button>`).join('');
+  return item('home','Início')+item('contas','Contas')+item('crono','Cronograma',wc?`<span class="n" title="Posts nos próximos 7 dias">${wc}</span>`:'')+item('down','Downloads')
+    +(accs?`<hr><span class="lbl">Suas contas</span>${accs}${S.accounts.length>5?`<button class="it" data-g="contas" style="color:var(--muted)">Ver todas (${S.accounts.length})</button>`:''}`:'')
+    +`<hr>${item('perfil','Perfil')}${item('config','Configuração')}<button class="it danger" data-a="sair">${IC.sair}Sair</button>`
+    +`<div class="ver">Fig.Feed ${VERSAO}</div>`;
+}
+function closeDrop(){document.querySelector('.drop')?.remove();openDrop=null;document.getElementById('appmenu')?.setAttribute('aria-expanded','false')}
 function dropdown(kind){
-  document.querySelector('.drop')?.remove();if(openDrop===kind){openDrop=null;return}openDrop=kind;
-  const d=document.createElement('div');d.className='drop';d.onclick=e=>e.stopPropagation();
+  const was=openDrop;closeDrop();if(was===kind)return;openDrop=kind;
+  const d=document.createElement('div');d.className='drop'+(kind==='app'?' left':'');d.onclick=e=>e.stopPropagation();
   const inAcc=route[0]==='feed'||route[0]==='car';
-  if(kind==='me'){d.innerHTML=`<span class="lbl">${esc(S.profile.handle||USER.email)}</span>
+  if(kind==='app'){d.setAttribute('role','menu');d.setAttribute('aria-label','Menu principal');d.innerHTML=appMenuHTML();document.getElementById('appmenu')?.setAttribute('aria-expanded','true')}
+  else if(kind==='me'){d.innerHTML=`<span class="lbl">${esc(S.profile.handle||USER.email)}</span>
     <button data-a="perfil">Perfil</button><button data-a="config">Configuração</button><hr><button data-a="sair">Sair</button>`}
   else{d.innerHTML=`<span class="lbl">Nova conta</span><form id="nf"><input id="nh" placeholder="@perfil.do.cliente" required><button class="pill" style="padding:6px 10px">Criar</button></form><hr>
     ${inAcc?`<button data-a="post">Novo post com fotos de exemplo</button><button data-a="up">Novo post com fotos suas</button>`:`<span class="lbl">Abra uma conta para criar posts</span>`}`}
   document.body.appendChild(d);
-  d.querySelectorAll('[data-a]').forEach(b=>b.onclick=async()=>{const a=b.dataset.a;d.remove();openDrop=null;
+  d.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>{closeDrop();go(b.dataset.g)});
+  if(kind==='app')d.querySelector('button')?.focus();
+  d.querySelectorAll('[data-a]').forEach(b=>b.onclick=async()=>{const a=b.dataset.a;closeDrop();
     if(a==='perfil')go('perfil');if(a==='config')go('config');if(a==='sair')sair();
     if(a==='post')examplePost(accById(route[1]));
     if(a==='up')pickFiles({type:'newpost',acc:route[1]});});
@@ -531,7 +592,15 @@ function dropdown(kind){
     const row=await db(sb.from('accounts').insert({handle:h,position:S.accounts.length}).select('id,handle').single());
     S.accounts.push({id:row.id,handle:row.handle,posts:[]});d.remove();openDrop=null;go('feed/'+row.id);toast('Conta criada')};d.querySelector('#nh').focus()}
 }
-document.addEventListener('click',()=>{document.querySelector('.drop')?.remove();openDrop=null});
+document.addEventListener('click',closeDrop);
+// Teclado no menu: Esc fecha, setas para cima/baixo andam entre os itens
+document.addEventListener('keydown',e=>{
+  const d=document.querySelector('.drop');if(!d)return;
+  if(e.key==='Escape'){const wasApp=openDrop==='app';closeDrop();if(wasApp)document.getElementById('appmenu')?.focus();return}
+  if(openDrop==='app'&&(e.key==='ArrowDown'||e.key==='ArrowUp')){e.preventDefault();
+    const bs=[...d.querySelectorAll('button')];const i=bs.indexOf(document.activeElement);
+    bs[(i+(e.key==='ArrowDown'?1:-1)+bs.length)%bs.length].focus()}
+});
 async function examplePost(acc){
   const p=await createPost(acc);const sl=Array.from({length:3},(_,j)=>({...randPhoto(),position:j}));
   const rows=await db(sb.from('slides').insert(sl.map(s=>({post_id:p.id,storage_path:s.path,credit:s.credit,position:s.position}))).select('id,storage_path,credit'));
@@ -660,7 +729,7 @@ async function saveFeedOrder(a,ids){
   try{await db(sb.rpc('reorder_posts',{p_account:a.id,p_ids:ids}))}catch(e){await loadAll();render()}
 }
 function vFeed(){
-  const a=accById(route[1]);if(!a)return go('contas');
+  const a=accById(route[1]);if(!a)return v404('conta');
   app.innerHTML=header('contas',`<span>Contas /</span> ${esc(a.handle)}`,accAvHTML(a),`<button class="more" id="accmore" aria-label="Ajustes da conta">${DOTS}</button>`)+`<main class="feed">
     ${a.posts.length?`<div class="grid" id="grid">${a.posts.map(p=>{const s=p.slides[0];return `
       <div class="item tile" tabindex="0" data-id="${p.id}" data-s="${esc(p.title+' '+p.caption)}" style="${bgi(s,250,328)}" aria-label="${esc(p.title)}, ${fmt(p.date)}">
@@ -679,7 +748,7 @@ function vFeed(){
 
 /* ======================= 5. Carrossel ======================= */
 function vCar(){
-  const a=accById(route[1]);const p=a&&a.posts.find(x=>x.id===route[2]);if(!p)return go(a?'feed/'+a.id:'contas');
+  const a=accById(route[1]);const p=a&&a.posts.find(x=>x.id===route[2]);if(!p)return v404(a?'post':'conta');
   const idx=a.posts.indexOf(p)+1;const n=p.slides.length;
   app.innerHTML=header('contas',`<span>Contas / <a data-go="feed/${a.id}" style="cursor:pointer">${esc(a.handle)}</a> /</span> Carrossel`,accAvHTML(a))+`<main class="car">
     <div class="prog"><i id="bar"></i></div>
@@ -715,7 +784,7 @@ function vCar(){
 
 /* ======================= 6. Editar texto ======================= */
 function vEdit(){
-  const a=accById(route[1]);const p=a&&a.posts.find(x=>x.id===route[2]);if(!p)return go('contas');
+  const a=accById(route[1]);const p=a&&a.posts.find(x=>x.id===route[2]);if(!p)return v404(a?'post':'conta');
   app.innerHTML=`<main class="edit"><div class="top"><span class="avatar" style="background-color:var(--accent);${bgi(p.slides[0],80,80)}"></span>
     <span class="h">${esc(a.handle)}</span><button id="cancel">Cancelar</button><button class="done" id="done">Concluir</button></div>
     <textarea id="ta" aria-label="Legenda do post" placeholder="Escreva a legenda aqui" maxlength="2200">${esc(p.caption)}</textarea>
@@ -1015,11 +1084,18 @@ sb.auth.onAuthStateChange((event,session)=>{
     if(event==='SIGNED_OUT'){USER=null;S={profile:{name:'',handle:'',dates_follow:true},accounts:[]};go('entrar')}
   },0);
 });
+/* ======================= Aviso de sem internet ======================= */
+function netState(){let n=document.getElementById('net');
+  if(navigator.onLine){if(n){n.remove();toast('Conexão de volta')}return}
+  if(!n){n=document.createElement('div');n.id='net';n.className='net';n.setAttribute('role','status');
+    n.textContent='Sem internet. O que você mudar agora pode não ser salvo.';document.body.appendChild(n)}}
+window.addEventListener('online',netState);window.addEventListener('offline',netState);
+
 (async function boot(){
   try{const r=await fetch(`https://picsum.photos/v2/list?page=${1+rnd(8)}&limit=80`);const j=await r.json();if(j.length>20)POOL=j.map(x=>[x.id,x.author])}catch(e){}
   const {data:{session}}=await sb.auth.getSession();USER=session?.user||null;
   if(USER){try{await loadAll()}catch(e){}}
-  booted=true;render();
+  booted=true;render();netState();
   if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js').catch(()=>{});
 })();
 </script>

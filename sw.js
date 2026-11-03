@@ -1,7 +1,7 @@
 // Fig.Feed — permite instalar o app e abrir a tela inicial mesmo com internet fraca.
 // Busca sempre a versão mais nova primeiro; usa a cópia guardada só se estiver sem conexão.
-const CACHE = 'figfeed-v2';
-const SHELL = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png'];
+const CACHE = 'figfeed-v3';
+const SHELL = ['./', './index.html', './404.html', './manifest.webmanifest', './icons/icon-192.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)));
