@@ -109,3 +109,9 @@ Abra o `index.html` no navegador, crie uma conta e entre. As fotos de exemplo v�
 - v15.3: em Admin › Páginas, a **Página inicial (landing page)** aparece separada do **Início do app**; a landing pode ter nome, banners, aviso e ser desligada (quem tem conta continua entrando). Admins veem a landing em `/#landing`.
 - v15.4: prévia dos pop-ups refeita (tela de mentira com classes próprias, não muda de tamanho em telas grandes); em todo lugar de banner (principal, celular, faixa, carrossel) e na imagem do pop-up há a opção **Aleatório**, que guarda `bolinhas:aleatorio` e sorteia um dos 9 fundos de bolinhas a cada visita.
 - v15.5: na **Página inicial (landing page)**, a aba Banners virou **Imagens da página**: troca a foto do meio (até 12, vão alternando) e as 6 imagens de cada uma das 3 grades, com envio ou Aleatório. Fica em `site_pages.banners.land = {hero:[...], grids:[[6],[6],[6]]}`; sem nada salvo, usa as bolinhas de sempre. A landing não mostra mais banners por cima.
+
+## Novidades da v16 — Menus e cores
+
+- **Admin › Menus**: três menus editáveis — Barra do topo, Menu do ícone de grade e Menu de tela cheia. Em cada um dá para mudar a ordem (↑ ↓), tirar (×) e adicionar botões: páginas do site, páginas criadas a partir de modelos ou um link (outro site ou `/#pagina`). Até 10 botões por menu; "Voltar ao padrão" refaz como era. Fica em `app_settings` (chave `menus`); admins e o GM podem salvar. Admin, "Sua conta" e Sair continuam fixos.
+- **Cores das etiquetas no Cronograma**: no lado esquerdo, tocar no quadradinho de uma conta ou na bolinha de um status abre uma paleta (14 cores, "Outra" para escolher qualquer cor, e "Cor padrão"). A cor da conta fica em `accounts.cor` e vale nos cartões da semana e do quadro; as cores dos status ficam em `profiles.status_cores` e são de cada pessoa.
+- Banco: `supabase/v16.sql`.

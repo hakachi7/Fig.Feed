@@ -931,6 +931,22 @@ body.pg-lock .pub-hdr,body.pg-lock .hdr{position:relative;z-index:20}
 .ld-act{display:flex;gap:3px}.ld-act button{flex:1;height:26px;border:1px solid var(--line);border-radius:6px;display:grid;place-items:center;font-size:12px;background:#fff}.ld-act button:hover{border-color:var(--fg)}.ld-act button:disabled{opacity:.3}
 .ld-add{aspect-ratio:364/478}.ld-t>.bn-rand{margin-top:0}
 .role-help svg{vertical-align:-3px}
+.cpk-b{border:0;padding:0;cursor:pointer}.acc-f .sq.cpk-b{width:14px;height:14px}.acc-f .sd.cpk-b{width:10px;height:10px}
+.cpk-b:hover,.cpk-b:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+.cr-hint{font-size:11px;color:var(--muted);margin:8px 6px 0;line-height:1.4}
+.cpk-pop{position:absolute;z-index:90;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.14);padding:12px;width:236px}
+.cpk-g{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.cpk-g button{aspect-ratio:1;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--line)}.cpk-g button.on{box-shadow:0 0 0 2px var(--fg)}
+.cpk-r{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:12px}.cpk-r label{display:flex;align-items:center;gap:6px}.cpk-r input{width:28px;height:22px;border:0;padding:0;background:none}
+.cpk-r button{text-decoration:underline;text-underline-offset:3px;color:var(--muted)}
+.mn-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.mn-box{border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:8px}.mn-box .role-help{margin:0}
+.mn-bh{display:flex;justify-content:space-between;align-items:baseline}.mn-bh b{font-weight:500}.mn-bh span{font-size:12px}
+.mn-prev{background:var(--soft);border-radius:8px;padding:10px 12px;display:flex;gap:6px 14px;flex-wrap:wrap;font-size:12px;min-height:38px;align-items:center}
+.mn-prev-lista,.mn-prev-cheia{flex-direction:column;align-items:flex-start}.mn-prev-cheia span{font-size:16px;letter-spacing:-.02em}.mn-prev em{color:var(--muted)}
+.mn-list{list-style:none;margin:0;padding:0}.mn-list li{display:flex;align-items:center;gap:6px;padding:7px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
+.mn-n{width:18px;color:var(--muted);font-size:12px}.mn-t{flex:1;min-width:0;display:flex;flex-direction:column}.mn-t b{font-weight:500}.mn-t small{font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mn-list button{width:26px;height:26px;border:1px solid var(--line);border-radius:6px;font-size:12px;flex:none}.mn-list button:disabled{opacity:.3}
+.mn-box .field{max-width:none;margin-top:6px;color:var(--fg)}.mn-add{height:40px}.mn-link .lbl-s{margin:6px 0 0}
 </style>
 </head>
 <body>
@@ -987,7 +1003,26 @@ function traduz(m=''){
 let S={profile:{name:'',handle:'',dates_follow:true},accounts:[]};
 const accById=id=>S.accounts.find(a=>a.id===id);
 const ACC_COLORS=['#ff5a36','#2f45ff','#14b85a','#a855f7','#f2b01e','#0ea5e9','#ec4899','#64748b'];
-const accColor=a=>ACC_COLORS[Math.max(0,S.accounts.indexOf(a))%ACC_COLORS.length];
+const accColor=a=>a?.cor||ACC_COLORS[Math.max(0,S.accounts.indexOf(a))%ACC_COLORS.length];
+// Cores das etiquetas (v16): cada pessoa pode trocar a cor das contas e dos status
+const ST_DEF={rascunho:'#c9c4c4',pronto:'#f2b01e',agendado:'#2f45ff',publicado:'#14b85a'};
+const PALETA=['#ff5a36','#f2b01e','#14b85a','#0ea5e9','#2f45ff','#a855f7','#ec4899','#64748b','#c9c4c4','#8fb04a','#d9775a','#6fc4b3','#b3527a','#0a0a0a'];
+function applyStCores(){let el=document.getElementById('st-cores');if(!el){el=document.createElement('style');el.id='st-cores';document.head.appendChild(el)}
+  const c=S.profile?.status_cores||{};el.textContent=Object.keys(ST_DEF).filter(k=>/^#[0-9a-f]{6}$/i.test(c[k]||'')).map(k=>`.st-${k}{background:${c[k]}!important}`).join('')}
+function colorPick(btn,cur,def,onPick){
+  document.getElementById('cpk')?.remove();
+  const d=document.createElement('div');d.id='cpk';d.className='cpk-pop';d.setAttribute('role','dialog');d.setAttribute('aria-label','Escolher cor');
+  d.innerHTML=`<div class="cpk-g">${PALETA.map(c=>`<button style="background:${c}" data-c="${c}" aria-label="Cor ${c}" class="${(cur||'').toLowerCase()===c?'on':''}"></button>`).join('')}</div>
+    <div class="cpk-r"><label>Outra <input type="color" value="${cur||def}"></label><button data-c="">Cor padrão</button></div>`;
+  document.body.appendChild(d);const r=btn.getBoundingClientRect();
+  d.style.left=Math.max(8,Math.min(innerWidth-d.offsetWidth-8,r.left+scrollX))+'px';d.style.top=(r.bottom+scrollY+6)+'px';
+  const close=()=>{d.remove();document.removeEventListener('click',out,true);document.removeEventListener('keydown',k)};
+  const out=e=>{if(!d.contains(e.target)&&e.target!==btn)close()};const k=e=>{if(e.key==='Escape'){close();btn.focus()}};
+  setTimeout(()=>document.addEventListener('click',out,true));document.addEventListener('keydown',k);
+  d.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{close();onPick(b.dataset.c||null)});
+  d.querySelector('input[type=color]').onchange=e=>{close();onPick(e.target.value)};
+  d.querySelector('button').focus();
+}
 const STATUS=[['rascunho','Rascunho'],['pronto','Pronto'],['agendado','Agendado'],['publicado','Publicado']];
 const stName=s=>(STATUS.find(x=>x[0]===s)||[0,s])[1];
 const accAv=a=>a.avatar?{path:a.avatar}:a.posts[0]?.slides[0];
@@ -1004,13 +1039,14 @@ async function signPaths(paths){
 async function loadAll(){
   const [prof,accs,posts,slides]=await Promise.all([
     db(sb.from('profiles').select('*').eq('id',USER.id).maybeSingle()),
-    db(sb.from('accounts').select('id,handle,position,avatar_path,display_name,bio,followers,following,highlights,pilares').is('deleted_at',null).order('position').order('created_at')),
+    db(sb.from('accounts').select('id,handle,position,avatar_path,display_name,bio,followers,following,highlights,pilares,cor').is('deleted_at',null).order('position').order('created_at')),
     db(sb.from('posts').select('id,account_id,title,caption,publish_date,status,position,pilar,formato,hora,cta').is('deleted_at',null).order('position').order('created_at')),
     db(sb.from('slides').select('id,post_id,storage_path,credit,position').order('position').order('created_at'))]);
   S.profile=prof||{name:'',handle:'',dates_follow:true};
   const byPost={};slides.forEach(s=>(byPost[s.post_id]=byPost[s.post_id]||[]).push({id:s.id,path:s.storage_path,credit:s.credit}));
   const byAcc={};posts.forEach(p=>(byAcc[p.account_id]=byAcc[p.account_id]||[]).push({id:p.id,title:p.title,caption:p.caption,date:p.publish_date,status:p.status,pilar:p.pilar||'',formato:p.formato||null,hora:p.hora||null,cta:p.cta||'',slides:byPost[p.id]||[]}));
-  S.accounts=accs.map(a=>({id:a.id,handle:a.handle,avatar:a.avatar_path,display_name:a.display_name||'',bio:a.bio||'',followers:a.followers,following:a.following,highlights:a.highlights||[],pilares:a.pilares||[],posts:byAcc[a.id]||[]}));
+  S.accounts=accs.map(a=>({id:a.id,handle:a.handle,avatar:a.avatar_path,display_name:a.display_name||'',bio:a.bio||'',followers:a.followers,following:a.following,highlights:a.highlights||[],pilares:a.pilares||[],cor:a.cor||null,posts:byAcc[a.id]||[]}));
+  applyStCores();
   await signPaths([...slides.map(s=>s.storage_path),...accs.map(a=>a.avatar_path),...accs.flatMap(a=>(a.highlights||[]).map(h=>h&&h.path)),S.profile.avatar_path].filter(Boolean));
 }
 
@@ -1036,7 +1072,7 @@ async function seedExamples(){
 const AUTH=['entrar','criar','senha','nova-senha'];
 const app=document.getElementById('app');
 let route=[],menuPhoto=null,q='',openDrop=null,homeTimer=null,recovery=false;
-const go=h=>{if(location.hash.slice(1)===h)render();else location.hash=h};
+const go=h=>{if(/^https?:\/\//i.test(h)){window.open(h,'_blank','noopener');return}if(location.hash.slice(1)===h)render();else location.hash=h};
 window.addEventListener('hashchange',render);
 
 function render(){
@@ -1217,9 +1253,7 @@ function header(cur,crumb,before='',after=''){
   return `<header class="hdr">
     <div class="l"><button class="logo-btn" id="appmenu" aria-label="Abrir menu" aria-haspopup="true" aria-expanded="false">${LOGO()}</button>
       ${crumb?`<div class="crumb-row">${before}<div class="crumb">${crumb}</div>${after}</div>`:`<nav class="nav" style="display:flex;gap:22px">
-        <a data-go="${esc(pgLink('contas'))}" class="${cur==='contas'?'cur':''}">${esc(pgName('contas'))}</a>
-        <a data-go="${esc(pgLink('crono'))}" class="${cur==='crono'?'cur':''}">${esc(pgName('crono'))}${wc?`<span class="badge">${wc}</span>`:''}</a>
-        <a data-go="${esc(pgLink('down'))}" class="${cur==='down'?'cur':''}">${esc(pgName('down'))}</a>${isAdmin()?`
+        ${menuItems('topo').map(it=>`<a ${it.url?`href="${esc(it.url)}" target="_blank" rel="noopener"`:`data-go="${esc(it.go)}"`} class="${cur===it.k?'cur':''}">${esc(it.nome)}${it.k==='crono'&&wc?`<span class="badge">${wc}</span>`:''}</a>`).join('')}${isAdmin()?`
         <a data-go="admin" class="${cur==='admin'?'cur':''}">Admin</a>`:''}</nav>`}</div>
     <div class="mid"><label class="search"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#777" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
       <input id="q" placeholder="Buscar contas, posts ou legendas" value="${esc(q)}" autocomplete="off"></label></div>
@@ -1236,9 +1270,11 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v15.5';
+const VERSAO='v16';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
+  link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
+  pagina:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M6 3h9l4 4v14H6zM14 3v5h5"/></svg>',
   blog:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 5h16v14H4zM8 9h8M8 13h8M8 17h5"/></svg>',
   home:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M3 11 12 4l9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>',
   contas:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>',
@@ -1256,7 +1292,9 @@ function appMenuHTML(){
   const here=['feed','car'].includes(route[0])?'contas':route[0];const wc=weekCount();
   const item=(g,label,extra='')=>`<button class="it ${here===g?'cur':''}" data-g="${g}">${IC[g]}${label}${extra}</button>`;
   const accs=S.accounts.slice(0,5).map(a=>`<button class="it ${route[1]===a.id?'cur':''}" data-g="feed/${a.id}">${accAvHTML(a)}<span class="h">${esc(a.handle)}</span></button>`).join('');
-  return item('home','Início')+item('contas','Contas')+item('crono','Cronograma',wc?`<span class="n" title="Posts nos próximos 7 dias">${wc}</span>`:'')+item('down','Downloads')+item('biblioteca','Biblioteca')+item('lixeira','Lixeira')
+  const mi=it=>it.url?`<a class="it" href="${esc(it.url)}" target="_blank" rel="noopener" role="menuitem">${IC.link||''}${esc(it.nome)}</a>`
+    :`<button class="it ${here===it.k?'cur':''}" data-g="${esc(it.go)}">${IC[it.k]||IC.pagina||''}${esc(it.nome)}${it.k==='crono'&&wc?`<span class="n" title="Posts nos próximos 7 dias">${wc}</span>`:''}</button>`;
+  return menuItems('lista').map(mi).join('')
     +(accs?`<hr><span class="lbl">Suas contas</span>${accs}${S.accounts.length>5?`<button class="it" data-g="contas" style="color:var(--muted)">Ver todas (${S.accounts.length})</button>`:''}`:'')
     +`<hr>${isAdmin()?item('admin','Admin'):''}${item('perfil','Perfil')}${item('seguranca','Segurança')}${item('config','Configuração')}${item('blog','Blog')}${item('ajuda','Ajuda')}<button class="it danger" data-a="sair">${IC.sair}Sair</button>`
     +`<button class="ver" data-g="novidades">Fig.Feed ${VERSAO} · Novidades</button>`;
@@ -1668,8 +1706,9 @@ function vCrono(){
   app.innerHTML=header('crono')+`<main class="cr">
     <aside class="cr-side">
       <div class="desc"><h2>Cronograma</h2><p style="color:var(--muted);font-size:12px;margin:6px 0 0;line-height:1.45">Arraste um cartão (no celular, segure e arraste) para mudar ${crView==='semana'?'o dia da publicação':'o status'}. Clique nele para ver os detalhes.</p></div>
-      <div><div class="lbl"><span>Contas</span><span>${S.accounts.length}</span></div><div class="acc-f accs-list">${S.accounts.length?S.accounts.map(a=>`<label><input type="checkbox" data-f="${a.id}" ${crHidden.has(a.id)?'':'checked'}><span class="sq" style="background:${accColor(a)}"></span><span class="nm">${esc(a.handle)}</span><span class="n">${a.posts.length}</span></label>`).join(''):'<span style="font-size:12px;color:var(--muted)">Nenhuma conta ainda.</span>'}</div></div>
-      <div class="stblock"><div class="lbl"><span>Status</span></div><div class="acc-f">${STATUS.map(([k,n])=>`<label style="cursor:default"><i class="sd st-${k}"></i>${n}<span class="n">${cnt(k)}</span></label>`).join('')}</div></div>
+      <div><div class="lbl"><span>Contas</span><span>${S.accounts.length}</span></div><div class="acc-f accs-list">${S.accounts.length?S.accounts.map(a=>`<label><input type="checkbox" data-f="${a.id}" ${crHidden.has(a.id)?'':'checked'}><button type="button" class="sq cpk-b" data-cacc="${a.id}" style="background:${accColor(a)}" aria-label="Trocar a cor da etiqueta de ${esc(a.handle)}" title="Trocar a cor"></button><span class="nm">${esc(a.handle)}</span><span class="n">${a.posts.length}</span></label>`).join(''):'<span style="font-size:12px;color:var(--muted)">Nenhuma conta ainda.</span>'}</div></div>
+      <div class="stblock"><div class="lbl"><span>Status</span></div><div class="acc-f">${STATUS.map(([k,n])=>`<label style="cursor:default"><button type="button" class="sd st-${k} cpk-b" data-cst="${k}" aria-label="Trocar a cor do status ${n}" title="Trocar a cor"></button>${n}<span class="n">${cnt(k)}</span></label>`).join('')}</div>
+        <p class="cr-hint">Toque no quadradinho ou na bolinha para trocar a cor.</p></div>
     </aside>
     <section class="cr-main"><div class="cr-top">
       ${crView==='semana'?`<button class="ib" id="prev" aria-label="Semana anterior">${CHEV_L}</button><button class="ib" id="next" aria-label="Próxima semana">${CHEV_R}</button><h2>${weekLabel()}</h2><button class="pill" id="hoje" style="padding:4px 10px;font-size:12px">Hoje</button>`:'<h2>Quadro de status</h2>'}
@@ -1677,6 +1716,11 @@ function vCrono(){
     </div><div id="cols"></div></section></main>`;
   bindHeader();
   app.querySelectorAll('[data-f]').forEach(c=>c.onchange=()=>{c.checked?crHidden.delete(c.dataset.f):crHidden.add(c.dataset.f);vCrono()});
+  app.querySelectorAll('[data-cacc]').forEach(b=>b.onclick=e=>{e.preventDefault();e.stopPropagation();const a=accById(b.dataset.cacc);
+    colorPick(b,a.cor,accColor({...a,cor:null}),async c=>{const old=a.cor;a.cor=c;vCrono();try{await db(sb.from('accounts').update({cor:c}).eq('id',a.id));toast('Cor da etiqueta trocada')}catch(err){a.cor=old;vCrono()}})});
+  app.querySelectorAll('[data-cst]').forEach(b=>b.onclick=e=>{e.preventDefault();e.stopPropagation();const k=b.dataset.cst;const cur=(S.profile.status_cores||{})[k];
+    colorPick(b,cur,ST_DEF[k],async c=>{const sc={...(S.profile.status_cores||{})};if(c)sc[k]=c;else delete sc[k];const old=S.profile.status_cores;S.profile.status_cores=sc;applyStCores();
+      try{await db(sb.from('profiles').update({status_cores:sc}).eq('id',USER.id));toast('Cor do status trocada')}catch(err){S.profile.status_cores=old;applyStCores()}})});
   app.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{crView=b.dataset.v;vCrono()});
   const pv=document.getElementById('prev');
   if(pv){pv.onclick=()=>{crWeek=addDays(crWeek,-7);vCrono()};document.getElementById('next').onclick=()=>{crWeek=addDays(crWeek,7);vCrono()};document.getElementById('hoje').onclick=()=>{crWeek=monday(new Date());vCrono()}}
@@ -1812,12 +1856,12 @@ async function admLoad(){
 function admTabs(cur){
   const t=(g,id,n,extra='')=>`<a data-go="${g}" class="${cur===id?'cur':''}">${n}${extra}</a>`;
   const open=ADM.openTickets?`<span class="adm-n" title="Pedidos abertos">${ADM.openTickets}</span>`:'';
-  return `<nav class="adm-tabs" aria-label="Seções do Admin">${t('admin','usuarios','Usuários e funções')}${t('admin/templates','templates','Templates')}${t('admin/paginas','paginas','Páginas')}${t('admin/popups','popups','Pop-ups')}${t('admin/blog','blog','Blog')}${t('admin/suporte','suporte','Suporte',open)}${t('admin/assinaturas','assinaturas','Assinaturas')}${t('admin/atividade','atividade','Atividade')}</nav>`;
+  return `<nav class="adm-tabs" aria-label="Seções do Admin">${t('admin','usuarios','Usuários e funções')}${t('admin/templates','templates','Templates')}${t('admin/paginas','paginas','Páginas')}${t('admin/popups','popups','Pop-ups')}${t('admin/menus','menus','Menus')}${t('admin/blog','blog','Blog')}${t('admin/suporte','suporte','Suporte',open)}${t('admin/assinaturas','assinaturas','Assinaturas')}${t('admin/atividade','atividade','Atividade')}</nav>`;
 }
 function vAdmin(){
   if(!isAdmin())return v404();
   document.title='Admin · Fig.Feed';
-  const own={paginas:()=>route[2]==='modelos'?admModelos():admPaginas(),pagina:admPaginaEditor,popups:admPopups,popup:admPopupEditor,templates:admTemplates,template:admTemplateEditor,blog:()=>route[2]?admBlogEditor():admBlog(),suporte:admSuporte,assinaturas:admAssinaturas}[route[1]];
+  const own={menus:admMenus,paginas:()=>route[2]==='modelos'?admModelos():admPaginas(),pagina:admPaginaEditor,popups:admPopups,popup:admPopupEditor,templates:admTemplates,template:admTemplateEditor,blog:()=>route[2]?admBlogEditor():admBlog(),suporte:admSuporte,assinaturas:admAssinaturas}[route[1]];
   if(own){if(!ADM.loaded&&!['suporte','assinaturas'].includes(route[1]))admLoad().catch(()=>{});return own()}
   const draw=()=>{if(route[0]!=='admin'||!isAdmin())return;(route[1]==='atividade'?admAtividade:admUsuarios)()};
   if(ADM.loaded)draw();
@@ -2584,6 +2628,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v16','Nov 2026',['Cronograma: toque no quadradinho da conta ou na bolinha do status para trocar a cor das etiquetas','Admin › Menus: escolher a ordem e quais botões aparecem na barra do topo, no menu do ícone de grade e no menu de tela cheia (páginas, páginas criadas ou links)']],
   ['v15.5','Nov 2026',['Página inicial: em Admin › Páginas › Imagens da página dá para trocar a foto do meio e as 3 grades que já estão lá (sem banners por cima)']],
   ['v15.4','Nov 2026',['Prévia dos pop-ups refeita: mostra certinho os formatos Central, Canto e Barra, em qualquer tamanho de tela','Banners e imagem dos pop-ups: opção "Aleatório" que mostra um fundo de bolinhas diferente a cada visita']],
   ['v15.3','Nov 2026',['Admin › Páginas: a página inicial (landing page) agora aparece na lista, com nome, banners, aviso e botão de ligar e desligar']],
@@ -3653,9 +3698,10 @@ const PAGE_OF={feed:'contas',car:'contas',edit:'contas',excluir:'seguranca'};
 const PG_RESERVED=new Set(['landing','entrar','criar','senha','nova-senha','home','menu','contas','feed','car','edit','crono','down','perfil','config','admin','boas-vindas',
   'termos','privacidade','ajuda','novidades','seguranca','excluir','erro','sem-internet','planos','lixeira','biblioteca','blog','suporte','stories','previa',
   'relatorio','r','resultados','conectar','conectado','conectar-erro','confirmado','p']);
-let SITE={pages:{},popups:[],loaded:false};
+let SITE={pages:{},popups:[],menus:{},loaded:false};
 async function loadSite(){
-  try{const [pg,pp]=await Promise.all([sb.from('site_pages').select('*'),sb.from('popups').select('*').order('ordem').order('created_at')]);
+  try{const [pg,pp,mn]=await Promise.all([sb.from('site_pages').select('*'),sb.from('popups').select('*').order('ordem').order('created_at'),sb.from('app_settings').select('value').eq('key','menus').maybeSingle()]);
+    if(!mn.error)SITE.menus=mn.data?.value||{};
     if(!pg.error)SITE.pages=Object.fromEntries((pg.data||[]).map(r=>[r.key,r]));if(!pp.error)SITE.popups=pp.data||[];SITE.loaded=true}catch(e){}
 }
 const pgName=(k,d)=>(SITE.pages[k]?.nome)||d||(PG_DEF[k]?.[1])||k;
@@ -3757,12 +3803,13 @@ async function vPaginaCustom(){
 function vMenu(){
   const ph=menuPhoto||randPhoto();menuPhoto=ph;
   const wc=weekCount();const nF=S.accounts.reduce((n,a)=>n+a.posts.reduce((m,p)=>m+p.slides.length,0),0);
-  const items=[['contas',`${S.accounts.length} ${S.accounts.length===1?'cliente':'clientes'}`],['crono',wc?`${wc} esta semana`:'',!!wc],['down','grade e legendas'],['biblioteca',`${nF} ${nF===1?'foto':'fotos'}`],['lixeira','']];
+  const INFO={contas:[`${S.accounts.length} ${S.accounts.length===1?'cliente':'clientes'}`],crono:[wc?`${wc} esta semana`:'',!!wc],down:['grade e legendas'],biblioteca:[`${nF} ${nF===1?'foto':'fotos'}`]};
+  const items=menuItems('cheia');
   const nome=(S.profile.name||'').trim().split(' ')[0];
   const conta=[['perfil','Perfil'],['config','Configuração'],['seguranca','Segurança'],['ajuda','Ajuda']];
   app.innerHTML=`<main class="menu mn2" aria-label="Menu"><div class="blur" style="${bgi(ph,600,790)}"></div><div class="shade"></div>
     <div class="mn-in"><div class="mn-top">${LOGO()}<span class="mn-brand">FIG.FEED</span>${nome?`<span class="mn-hi">Olá, ${esc(nome)}</span>`:''}<button class="mn-x" id="mn-x" aria-label="Fechar menu">${XICON}</button></div>
-      <div class="mn-body"><nav class="mn-main" aria-label="Menu principal">${items.map(([k,info,b],i)=>`<button class="mn-it" data-go="${esc(pgLink(k))}"><span class="n">${String(i+1).padStart(2,'0')}</span><span class="t">${esc(pgName(k))}</span>${info?`<span class="i ${b?'b':''}">${info}</span>`:''}</button>`).join('')}</nav>
+      <div class="mn-body"><nav class="mn-main" aria-label="Menu principal">${items.map((it,i)=>{const [info,b]=INFO[it.k]||[];return `<button class="mn-it" data-go="${esc(it.url||it.go)}"><span class="n">${String(i+1).padStart(2,'0')}</span><span class="t">${esc(it.nome)}</span>${info?`<span class="i ${b?'b':''}">${info}</span>`:it.url?'<span class="i">↗</span>':''}</button>`}).join('')}</nav>
         <div class="mn-side">${S.accounts.length?`<div class="mn-grp"><span class="mn-lbl">SUAS CONTAS</span>${S.accounts.slice(0,5).map(a=>`<button class="mn-acc" data-go="feed/${a.id}">${accAvHTML(a)}${esc(a.handle)}</button>`).join('')}</div>`:''}
           <nav class="mn-grp" aria-label="Sua conta"><span class="mn-lbl">SUA CONTA</span>${conta.map(([k,n])=>`<button class="mn-l" data-go="${esc(pgLink(k))}">${esc(pgName(k,n))}</button>`).join('')}
             ${isAdmin()?`<button class="mn-l" data-go="admin">Admin <span class="mn-gm">${isGM()?'GM':'ADMIN'}</span></button>`:''}<button class="mn-l mn-out" id="mn-sair">Sair</button></nav></div></div>
@@ -3774,6 +3821,62 @@ function vMenu(){
   app.querySelector('.mn-it')?.focus({preventScroll:true});
 }
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&route[0]==='menu'&&!document.querySelector('.drop'))go('home')});
+
+/* ---------- V16: menus editáveis pelos admins ---------- */
+// Cada item: {k:'contas'} (página do site), {k:'p/<endereço>'} (página criada) ou {nome,url} (link)
+const MENU_DEF={topo:['contas','crono','down'],lista:['home','contas','crono','down','biblioteca','lixeira'],cheia:['contas','crono','down','biblioteca','lixeira']};
+const MENU_NOME={topo:'Barra do topo',lista:'Menu do ícone de grade',cheia:'Menu de tela cheia'};
+const MENU_DESC={topo:'Os links ao lado do ícone, no alto de todas as telas do app.',lista:'A lista que abre ao tocar no ícone de grade (depois dela vêm as contas e "Sua conta").',cheia:'Os itens grandes numerados do menu de tela cheia.'};
+const MENU_OPTS=['home','contas','crono','down','biblioteca','lixeira','planos','blog','ajuda','novidades','suporte','perfil','config','seguranca','termos','privacidade'];
+const mnPg=k=>k==='home'&&!SITE.pages.home?.nome?'Início':pgName(k);
+const menuRaw=m=>{const x=SITE.menus?.[m];return Array.isArray(x)&&x.length?x:MENU_DEF[m].map(k=>({k}))};
+function menuItems(m){
+  return menuRaw(m).map(it=>{
+    if(it.url){const u=bnLink(it.url);if(!u)return null;return u.startsWith('#')?{k:'',go:u.slice(1),nome:it.nome||u}:{k:'',url:u,nome:it.nome||u}}
+    if(String(it.k).startsWith('p/')){const c=SITE.pages[it.k.slice(2)];return c||isAdmin()?{k:it.k,go:it.k,nome:it.nome||c?.nome||it.k}:null}
+    return MENU_OPTS.includes(it.k)?{k:it.k,go:pgLink(it.k),nome:it.nome||mnPg(it.k)}:null}).filter(Boolean);
+}
+let MNE=null,MNADD=null;
+async function admMenus(){
+  const h=location.hash;if(!SITE.loaded){admLoading('menus');await loadSite();if(!stillHere(h))return}
+  MNE=JSON.parse(JSON.stringify({topo:menuRaw('topo'),lista:menuRaw('lista'),cheia:menuRaw('cheia')}));MNADD=null;drawMenus();
+}
+const mnNome=it=>it.url?(it.nome||it.url):String(it.k).startsWith('p/')?(SITE.pages[it.k.slice(2)]?.nome||it.k):mnPg(it.k);
+function drawMenus(focus){
+  const custom=Object.values(SITE.pages).filter(c=>c.custom);
+  const box=m=>{const L=MNE[m];const has=k=>L.some(x=>x.k===k);
+    const opts=MENU_OPTS.filter(k=>!has(k)).map(k=>`<option value="${k}">${esc(mnPg(k))}</option>`).join('');
+    const cop=custom.filter(c=>!has('p/'+c.key)).map(c=>`<option value="p/${esc(c.key)}">${esc(c.nome||c.key)}</option>`).join('');
+    return `<section class="mn-box" aria-label="${MENU_NOME[m]}"><div class="mn-bh"><b>${MENU_NOME[m]}</b><span class="mut">${L.length} ${L.length===1?'botão':'botões'}</span></div><p class="role-help">${MENU_DESC[m]}</p>
+      <div class="mn-prev mn-prev-${m}" aria-hidden="true">${L.map(it=>`<span>${esc(mnNome(it))}</span>`).join('')||'<em>vazio</em>'}</div>
+      <ol class="mn-list">${L.map((it,i)=>`<li><span class="mn-n">${i+1}</span><span class="mn-t"><b>${esc(mnNome(it))}</b>${it.url?`<small class="mut">${esc(it.url)}</small>`:String(it.k).startsWith('p/')?'<small class="mut">página criada</small>':''}</span>
+        <button data-mv="${m}:${i}:-1" aria-label="Subir ${esc(mnNome(it))}" ${i?'':'disabled'}>↑</button><button data-mv="${m}:${i}:1" aria-label="Descer ${esc(mnNome(it))}" ${i<L.length-1?'':'disabled'}>↓</button><button class="err" data-rm="${m}:${i}" aria-label="Tirar ${esc(mnNome(it))}">×</button></li>`).join('')}</ol>
+      ${MNADD===m?`<form class="mn-link" data-lf="${m}" novalidate><label class="lbl-s">Nome do botão<input class="field" name="nome" maxlength="30" required placeholder="Ex.: Instagram"></label>
+          <label class="lbl-s">Link<input class="field" name="url" maxlength="300" required placeholder="https://… ou /#planos"></label>
+          <div class="acts-row"><button class="pill dark sm">Adicionar link</button><button type="button" class="pill sm" data-cancel>Cancelar</button></div></form>`
+        :`<select class="field mn-add" data-add="${m}" aria-label="Adicionar botão em ${MENU_NOME[m]}"><option value="">+ Adicionar botão…</option>${opts?`<optgroup label="Páginas do site">${opts}</optgroup>`:''}${cop?`<optgroup label="Páginas criadas">${cop}</optgroup>`:''}<option value="__link">Link (outro site ou endereço)</option></select>`}
+    </section>`};
+  admShell('menus',`<div class="adm-head"><div><h1>Menus</h1><p class="sub">Escolha a ordem e quais botões aparecem em cada menu do app. Vale para todo mundo.</p></div></div>
+    <div class="mn-grid">${['topo','lista','cheia'].map(box).join('')}</div>
+    <div class="acts-row" style="margin-top:22px"><button class="pill dark" id="mn-save">Salvar menus</button><button class="pill" id="mn-reset">Voltar ao padrão</button></div>
+    <p class="adm-note" style="margin-top:14px">Admin, "Sua conta" e Sair continuam sempre no lugar, para ninguém ficar sem saída. Páginas desligadas continuam no menu e mostram o aviso.</p>`,1180);
+  bindGo();
+  app.querySelectorAll('[data-mv]').forEach(b=>b.onclick=()=>{const [m,i,d]=b.dataset.mv.split(':');const L=MNE[m];const a=+i,z=a+ +d;[L[a],L[z]]=[L[z],L[a]];drawMenus(`[data-mv="${m}:${z}:${d}"]`)});
+  app.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{const [m,i]=b.dataset.rm.split(':');MNE[m].splice(+i,1);drawMenus(`[data-add="${m}"]`)});
+  app.querySelectorAll('[data-add]').forEach(sel=>sel.onchange=()=>{const m=sel.dataset.add,v=sel.value;if(!v)return;
+    if(v==='__link'){MNADD=m;drawMenus(`[data-lf="${m}"] [name=nome]`);return}
+    if(MNE[m].length>=10){toast('Até 10 botões por menu.');sel.value='';return}
+    MNE[m].push({k:v});drawMenus(`[data-add="${m}"]`)});
+  app.querySelectorAll('[data-lf]').forEach(f=>{f.onsubmit=e=>{e.preventDefault();const m=f.dataset.lf;const nome=f.nome.value.trim(),url=f.url.value.trim();
+      if(!nome)return toast('Dê um nome ao botão.');if(!bnLink(url))return toast('Link inválido. Use https://… ou /#pagina',3600);
+      if(MNE[m].length>=10)return toast('Até 10 botões por menu.');MNE[m].push({nome,url});MNADD=null;drawMenus(`[data-add="${m}"]`)};
+    f.querySelector('[data-cancel]').onclick=()=>{MNADD=null;drawMenus()}});
+  document.getElementById('mn-reset').onclick=()=>{MNE={topo:MENU_DEF.topo.map(k=>({k})),lista:MENU_DEF.lista.map(k=>({k})),cheia:MENU_DEF.cheia.map(k=>({k}))};MNADD=null;drawMenus();toast('Padrão de volta. Clique em Salvar para valer.',3200)};
+  document.getElementById('mn-save').onclick=async e=>{const b=e.currentTarget;b.disabled=true;
+    try{await db(sb.from('app_settings').upsert({key:'menus',value:MNE,updated_at:new Date().toISOString()}));SITE.menus=JSON.parse(JSON.stringify(MNE));
+      admLog('conteudo','editou os menus');toast('Menus salvos');drawMenus()}catch(err){b.disabled=false}};
+  if(focus)app.querySelector(focus)?.focus();
+}
 
 /* ---------- Pop-ups no site ---------- */
 const POP={timer:null,cleanup:null};
