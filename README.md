@@ -115,3 +115,14 @@ Abra o `index.html` no navegador, crie uma conta e entre. As fotos de exemplo v�
 - **Admin › Menus**: três menus editáveis — Barra do topo, Menu do ícone de grade e Menu de tela cheia. Em cada um dá para mudar a ordem (↑ ↓), tirar (×) e adicionar botões: páginas do site, páginas criadas a partir de modelos ou um link (outro site ou `/#pagina`). Até 10 botões por menu; "Voltar ao padrão" refaz como era. Fica em `app_settings` (chave `menus`); admins e o GM podem salvar. Admin, "Sua conta" e Sair continuam fixos.
 - **Cores das etiquetas no Cronograma**: no lado esquerdo, tocar no quadradinho de uma conta ou na bolinha de um status abre uma paleta (14 cores, "Outra" para escolher qualquer cor, e "Cor padrão"). A cor da conta fica em `accounts.cor` e vale nos cartões da semana e do quadro; as cores dos status ficam em `profiles.status_cores` e são de cada pessoa.
 - Banco: `supabase/v16.sql`.
+
+## Novidades da v17 — Admin completo 2
+
+- **Visão geral** (primeira aba do Admin): pessoas cadastradas, ativas, sem confirmar e suspensas; quantos em cada plano e em teste; contas, posts, stories e espaço usado; suporte aberto, Instagram com problema e erros; gráfico de cadastros por dia (30 dias). Função `admin_stats`.
+- **Planos**: nome, preço, itens, botão, destaque e limites (contas e MB) de cada plano, salvos em `app_settings` (`planos`, só o GM). Com "Aplicar os limites" ligado, o banco não deixa criar conta de cliente além do limite (gatilho `accounts_limit`) e o app avisa antes de enviar fotos além do espaço (`my_storage`). Admins nunca têm limite.
+- **Usuários**: "Abrir" mostra plano, cadastro, último acesso, contas, posts e espaço; envia link para trocar a senha; suspende/reativa (`admin_set_suspended`, a pessoa sai em até 1 hora); exclui a conta e as fotos pela função do servidor `admin-users` (`supabase/functions/admin-users`). Botão **Baixar planilha** (CSV para Excel).
+- **Textos**: página inicial (frase, botões, 3 quadros), perguntas da Ajuda e textos de Termos e Privacidade (com `##` para títulos e `-` para listas), com contador dos campos [entre colchetes] que faltam.
+- **Avisos**: sininho no alto do app, por plano; marca como lido ao abrir. Tabelas `avisos` e `aviso_lidos`.
+- **Configurações**: e-mail de contato, Instagram e WhatsApp (no rodapé público) e descrição para o Google. A imagem de compartilhamento no WhatsApp continua no código.
+- **Saúde**: erros que as pessoas encontraram (tabela `app_errors`, agrupados) e Instagram com erro ou chave para vencer (`admin_ig_status`).
+- Banco: `supabase/v17.sql`.

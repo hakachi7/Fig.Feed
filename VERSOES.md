@@ -6,6 +6,7 @@ Cada versão também tem uma branch própria, com o código exatamente como esta
 
 | Versão | Nome | O que trouxe | Branch | Commit |
 | --- | --- | --- | --- | --- |
+| v17 | Admin completo 2 | Visão geral, Planos editáveis com limites, ações sobre usuários, Textos do site, Avisos (sininho), Configurações, Saúde e planilha de usuários | [versao-17-admin-completo-2](https://github.com/hakachi7/Fig.Feed/tree/versao-17-admin-completo-2) | (veja a branch) |
 | v16 | Menus e cores | Admin › Menus (ordem, tirar e adicionar botões nos 3 menus) e cores das etiquetas de contas e status no Cronograma | [versao-16-menus-e-cores](https://github.com/hakachi7/Fig.Feed/tree/versao-16-menus-e-cores) | (veja a branch) |
 | v15.5 | Imagens da landing | A landing troca as próprias imagens (foto do meio e 3 grades) em vez de ganhar banners por cima | (main) | (veja a main) |
 | v15.4 | Prévia e aleatório | Prévia dos pop-ups corrigida; opção de banner/imagem aleatória com fundos de bolinhas | (main) | (veja a main) |

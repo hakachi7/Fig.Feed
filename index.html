@@ -947,6 +947,37 @@ body.pg-lock .pub-hdr,body.pg-lock .hdr{position:relative;z-index:20}
 .mn-n{width:18px;color:var(--muted);font-size:12px}.mn-t{flex:1;min-width:0;display:flex;flex-direction:column}.mn-t b{font-weight:500}.mn-t small{font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mn-list button{width:26px;height:26px;border:1px solid var(--line);border-radius:6px;font-size:12px;flex:none}.mn-list button:disabled{opacity:.3}
 .mn-box .field{max-width:none;margin-top:6px;color:var(--fg)}.mn-add{height:40px}.mn-link .lbl-s{margin:6px 0 0}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.kpi{background:var(--soft);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:3px;text-align:left;border:1px solid transparent}
+button.kpi:hover{border-color:var(--fg)}.kpi b{font-size:28px;font-weight:400;letter-spacing:-.02em}.kpi span{font-size:13px}.kpi small{font-size:12px;color:var(--muted)}
+.kpi.warn{background:#fff4e5}.kpi.warn b{color:#9a5a00}
+.bars{display:flex;align-items:flex-end;gap:3px;height:110px;border-bottom:1px solid var(--line);margin-top:8px}.bars span{flex:1;background:var(--fg);border-radius:3px 3px 0 0;min-width:3px}.bars span.z{background:#e6e6e6}
+.bars-x{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:4px}
+.ple-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:14px}
+.ple{border:1px solid var(--line);border-radius:12px;padding:16px}.ple-h{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}.ple-h b{font-weight:500;font-size:16px}
+.ple .field,.adm .lbl-s .field,.av-new .field,#cf-f .field{max-width:none;margin-top:6px;color:var(--fg)}
+.faq-ed{list-style:none;margin:10px 0 14px;padding:0;display:flex;flex-direction:column;gap:12px}.faq-ed li{border:1px solid var(--line);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:6px}
+.faq-q{display:flex;align-items:center;gap:6px}.faq-q .field{margin:0!important;flex:1;font-weight:500}.faq-q button{width:30px;height:30px;border:1px solid var(--line);border-radius:6px;flex:none}.faq-q button:disabled{opacity:.3}
+.faq-ed textarea{margin:0!important}
+.tx-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}.tx-doc{font-family:ui-monospace,Menlo,monospace;font-size:13px;line-height:1.5;min-height:520px}
+.tx-prev{border:1px solid var(--line);border-radius:10px;padding:18px 22px;max-height:640px;overflow:auto;margin:0;max-width:none}
+@media (max-width:860px){.tx-two{grid-template-columns:1fr}}
+.tx-warn{background:#fff4e5;color:#7a4500;border-radius:8px;padding:10px 12px;font-size:13px}.tx-ok{background:#eafaf0;color:#0d7a3c;border-radius:8px;padding:10px 12px;font-size:13px}
+mark.ph{background:#fff1b8;color:inherit;border-radius:3px;padding:0 2px}
+.av-new{border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:2px}.av-new>b{font-weight:500}
+.av-row,.sd-row{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid #f0f0f0;font-size:13px}.av-row>div,.sd-row>div{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.av-row b,.sd-row b{font-weight:500;overflow-wrap:anywhere}.av-row small,.sd-row small{font-size:12px}.av-row.is-off b{color:var(--muted)}
+.sd-st{font-size:12px;border-radius:99px;padding:3px 10px;white-space:nowrap}.sd-st.ok{background:#eafaf0;color:#0d7a3c}.sd-st.warn{background:#fff4e5;color:#9a5a00}.sd-st.err{background:#fdecea;color:var(--err)}
+.sd-n{font-variant-numeric:tabular-nums;color:var(--muted)}.sd-row code{font-size:11px;background:var(--soft);border-radius:4px;padding:1px 5px}
+.bell{position:relative;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#444}.bell:hover{background:var(--soft)}
+.bell .bn{position:absolute;top:4px;right:3px;min-width:16px;height:16px;border-radius:99px;background:var(--badge);color:#fff;font-size:10px;display:grid;place-items:center;padding:0 4px;font-weight:600}
+.drop.av-drop{width:min(340px,calc(100vw - 32px));max-height:70vh;overflow:auto}
+.av-it{padding:10px 12px;border-radius:8px;display:flex;flex-direction:column;gap:3px;position:relative;font-size:13px}.av-it+.av-it{border-top:1px solid #f0f0f0}
+.av-it b{font-weight:500;padding-right:14px}.av-it p{margin:0;color:#444;line-height:1.45}.av-it small{color:var(--muted);font-size:11px}.av-it a{font-size:12px;align-self:flex-start}
+.av-dot{position:absolute;right:12px;top:15px;width:8px;height:8px;border-radius:50%;background:var(--badge)}.av-empty{margin:4px 12px 12px;color:var(--muted);font-size:13px}
+.u-info{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13px;margin:14px 0 4px}.u-info dt{color:var(--muted)}.u-info dd{margin:0}
+.u-acts{display:flex;flex-direction:column;align-items:flex-start;gap:8px}.sus-tag{font-size:11px;background:#fdecea;color:var(--err);border-radius:99px;padding:2px 8px;font-weight:500}
+.pub-foot a[target=_blank]{text-decoration:underline}
 </style>
 </head>
 <body>
@@ -995,6 +1026,7 @@ function traduz(m=''){
   if(t.includes('rate limit')||t.includes('security purposes'))return 'Muitas tentativas seguidas. Espere alguns minutos e tente de novo.';
   if(t.includes('valid email')||t.includes('invalid format'))return 'Esse e-mail não parece válido.';
   if(t.includes('máximo de 10'))return 'Um post pode ter no máximo 10 fotos.';
+  if(t.includes('limite de contas'))return m.replace(/^.*limite de contas: /i,'').replace(/^s/,'S')+'. Para ter mais, veja os Planos.';
   if(t.includes('failed to fetch')||t.includes('network'))return 'Sem conexão com o servidor. Confira sua internet.';
   return 'Algo deu errado: '+m;
 }
@@ -1257,7 +1289,7 @@ function header(cur,crumb,before='',after=''){
         <a data-go="admin" class="${cur==='admin'?'cur':''}">Admin</a>`:''}</nav>`}</div>
     <div class="mid"><label class="search"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#777" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
       <input id="q" placeholder="Buscar contas, posts ou legendas" value="${esc(q)}" autocomplete="off"></label></div>
-    <div class="r"><button class="pill" id="criar"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg><span class="lab">Criar</span></button>
+    <div class="r">${bellHTML()}<button class="pill" id="criar"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg><span class="lab">Criar</span></button>
       <button class="who" id="me" aria-label="Abrir menu da conta"><span class="avatar" style="${bgi(av,80,80)}"></span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button></div></header>`;
 }
@@ -1267,10 +1299,11 @@ function bindHeader(){
   if(qi){qi.oninput=e=>{q=e.target.value;applySearch()};qi.onkeydown=e=>{if(e.key==='Enter'&&!['contas','feed'].includes(route[0]))go('contas')}}
   document.getElementById('appmenu').onclick=e=>{e.stopPropagation();dropdown('app')};
   document.getElementById('criar').onclick=e=>{e.stopPropagation();dropdown('criar')};
+  const bl=document.getElementById('bell');if(bl)bl.onclick=e=>{e.stopPropagation();dropdown('avisos')};
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v16';
+const VERSAO='v17';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -1305,6 +1338,8 @@ function dropdown(kind){
   const d=document.createElement('div');d.className='drop'+(kind==='app'?' left':'');d.onclick=e=>e.stopPropagation();
   const inAcc=route[0]==='feed'||route[0]==='car';
   if(kind==='app'){d.setAttribute('role','menu');d.setAttribute('aria-label','Menu principal');d.innerHTML=appMenuHTML();document.getElementById('appmenu')?.setAttribute('aria-expanded','true')}
+  else if(kind==='avisos'){d.classList.add('av-drop');d.setAttribute('role','dialog');d.setAttribute('aria-label','Avisos');d.innerHTML=avisosDropHTML();
+    d.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>closeDrop()));setTimeout(marcarAvisosLidos,600)}
   else if(kind==='me'){d.innerHTML=`<span class="lbl">${esc(S.profile.handle||USER.email)}</span>
     <button data-a="perfil">Perfil</button><button data-a="seguranca">Segurança</button><button data-a="config">Configuração</button><button data-a="planos">Planos</button><button data-a="ajuda">Ajuda</button><hr><button data-a="sair">Sair</button>`}
   else{d.innerHTML=`<span class="lbl">Nova conta</span><form id="nf"><input id="nh" placeholder="@perfil.do.cliente" required><button class="pill" style="padding:6px 10px">Criar</button></form><hr>
@@ -1856,12 +1891,13 @@ async function admLoad(){
 function admTabs(cur){
   const t=(g,id,n,extra='')=>`<a data-go="${g}" class="${cur===id?'cur':''}">${n}${extra}</a>`;
   const open=ADM.openTickets?`<span class="adm-n" title="Pedidos abertos">${ADM.openTickets}</span>`:'';
-  return `<nav class="adm-tabs" aria-label="Seções do Admin">${t('admin','usuarios','Usuários e funções')}${t('admin/templates','templates','Templates')}${t('admin/paginas','paginas','Páginas')}${t('admin/popups','popups','Pop-ups')}${t('admin/menus','menus','Menus')}${t('admin/blog','blog','Blog')}${t('admin/suporte','suporte','Suporte',open)}${t('admin/assinaturas','assinaturas','Assinaturas')}${t('admin/atividade','atividade','Atividade')}</nav>`;
+  return `<nav class="adm-tabs" aria-label="Seções do Admin">${t('admin','painel','Visão geral')}${t('admin/usuarios','usuarios','Usuários')}${t('admin/assinaturas','assinaturas','Assinaturas')}${t('admin/planos','planos','Planos')}${t('admin/suporte','suporte','Suporte',open)}${t('admin/avisos','avisos','Avisos')}${t('admin/paginas','paginas','Páginas')}${t('admin/textos','textos','Textos')}${t('admin/menus','menus','Menus')}${t('admin/popups','popups','Pop-ups')}${t('admin/blog','blog','Blog')}${t('admin/templates','templates','Templates')}${t('admin/atividade','atividade','Atividade')}${t('admin/saude','saude','Saúde')}${t('admin/config','config','Configurações')}</nav>`;
 }
 function vAdmin(){
   if(!isAdmin())return v404();
   document.title='Admin · Fig.Feed';
-  const own={menus:admMenus,paginas:()=>route[2]==='modelos'?admModelos():admPaginas(),pagina:admPaginaEditor,popups:admPopups,popup:admPopupEditor,templates:admTemplates,template:admTemplateEditor,blog:()=>route[2]?admBlogEditor():admBlog(),suporte:admSuporte,assinaturas:admAssinaturas}[route[1]];
+  const own={undefined:admPainel,planos:admPlanos,textos:admTextos,avisos:admAvisos,saude:admSaude,config:admConfig,menus:admMenus,paginas:()=>route[2]==='modelos'?admModelos():admPaginas(),pagina:admPaginaEditor,popups:admPopups,popup:admPopupEditor,templates:admTemplates,template:admTemplateEditor,blog:()=>route[2]?admBlogEditor():admBlog(),suporte:admSuporte,assinaturas:admAssinaturas}[route[1]];
+  if(route[1]!=='textos')TXE=null;if(route[1]!=='planos')PLE=null;
   if(own){if(!ADM.loaded&&!['suporte','assinaturas'].includes(route[1]))admLoad().catch(()=>{});return own()}
   const draw=()=>{if(route[0]!=='admin'||!isAdmin())return;(route[1]==='atividade'?admAtividade:admUsuarios)()};
   if(ADM.loaded)draw();
@@ -1877,10 +1913,11 @@ function admUsuarios(){
   const canCancel=i=>isGM()||!['gm','admin'].includes(i.role);
   const av=u=>u.id===me?`<span class="avatar" style="${bgi(profAv(),60,60)}"></span>`
     :`<span class="avatar" style="background:${initialColor(u.email)}" aria-hidden="true">${esc((u.name||u.email||'?').trim()[0]?.toUpperCase()||'?')}</span>`;
-  const state=u=>!u.confirmed?'E-mail não confirmado':u.last_sign_in_at?'Último acesso em '+dBR(u.last_sign_in_at):'Ainda não entrou';
+  const state=u=>u.suspenso?'<span class="sus-tag">Suspensa</span>':!u.confirmed?'E-mail não confirmado':u.last_sign_in_at?'Último acesso em '+dBR(u.last_sign_in_at):'Ainda não entrou';
   const users=ADM.users.filter(match);
   app.innerHTML=header('admin')+admTabs('usuarios')+`<main class="page adm" style="max-width:980px">
-    <h1>Usuários ${isGM()?'<span class="badge-gm">GM</span>':''}</h1><p class="sub">Quem usa o Fig.Feed e o que cada um pode fazer.</p>
+    <div class="adm-head"><div><h1>Usuários ${isGM()?'<span class="badge-gm">GM</span>':''}</h1><p class="sub">Quem usa o Fig.Feed e o que cada um pode fazer. Toque em "Abrir" para ver os dados, mudar a função, suspender ou excluir.</p></div>
+      <button class="pill" id="u-csv">Baixar planilha</button></div>
     <form class="adm-inv" id="inv" novalidate><input id="inv-email" type="email" placeholder="E-mail da pessoa" aria-label="E-mail da pessoa" autocomplete="off">
       <select id="inv-role" aria-label="Função">${myRoleOpts().map(([r,n])=>`<option value="${r}" ${r==='social_media'?'selected':''}>${n}</option>`).join('')}</select>
       <button class="pill dark" id="inv-go">Dar função</button></form>
@@ -1891,7 +1928,7 @@ function admUsuarios(){
         <div class="who2">${av(u)}<div class="nm"><b>${esc(u.name||u.handle||u.email)}${u.id===me?' (você)':''}</b>${u.name||u.handle?`<small>${esc(u.email)}</small>`:''}</div></div>
         <span><span class="rd r-${esc(u.role)}"></span>${roleName(u.role)}</span>
         <span class="mut hide-sm">${state(u)}</span>
-        ${canEdit(u)?`<button class="ed" data-u="${u.id}">Mudar função</button>`:'<span></span>'}</div>`).join('')
+        <button class="ed" data-u="${u.id}">Abrir</button></div>`).join('')
       ||'<p class="sub" style="margin:18px 0">Ninguém com essa função ainda.</p>'}</div>
     ${ADM.invites.length?`<h2 class="adm-h2">Convites pendentes</h2><div class="adm-list">${ADM.invites.map(i=>`<div class="adm-row">
         <div class="who2"><span class="avatar" style="background:var(--soft)"></span><div class="nm"><b>${esc(i.email)}</b><small>Convidado em ${dBR(i.created_at)}</small></div></div>
@@ -1901,6 +1938,7 @@ function admUsuarios(){
   bindHeader();
   app.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{ADM.filter=b.dataset.f;admUsuarios()});
   app.querySelectorAll('[data-u]').forEach(b=>b.onclick=()=>admPanel(ADM.users.find(u=>u.id===b.dataset.u)));
+  document.getElementById('u-csv').onclick=exportUsuarios;
   app.querySelectorAll('[data-cancel]').forEach(b=>b.onclick=async()=>{
     if(!confirm(`Cancelar o convite de ${b.dataset.cancel}?`))return;b.disabled=true;
     try{await db(sb.rpc('cancel_invite',{invite_email:b.dataset.cancel}));toast('Convite cancelado');await admLoad();admUsuarios()}catch(e){b.disabled=false}});
@@ -1914,28 +1952,48 @@ function admUsuarios(){
       await admLoad();admUsuarios()}catch(err){btn.disabled=false}};
 }
 function admPanel(u){
-  if(!u)return;closePanel();let sel=u.role;
+  if(!u)return;closePanel();let sel=u.role;const canE=u.id!==USER.id&&(isGM()||!['gm','admin'].includes(u.role));
   const ov=document.createElement('div');ov.className='ov';ov.id='ov';ov.onclick=e=>{if(e.target===ov)closePanel()};
   const draw=()=>{ov.innerHTML=`<aside class="sp" role="dialog" aria-modal="true" aria-labelledby="adm-pt">
-    <div class="bar"><span class="saved">Mudar função</span><button class="sp-close" id="ap-x" aria-label="Fechar">${XICON}</button></div>
-    <div class="body"><div><div class="ttl" id="adm-pt" style="font-size:22px">${esc(u.name||u.handle||u.email)}</div><span class="saved">${esc(u.email)}</span></div>
-      <h3>Função</h3><div class="chips" role="radiogroup" aria-label="Função">${myRoleOpts().map(([r,n])=>`<button class="chip ${sel===r?'on':''}" role="radio" aria-checked="${sel===r}" data-r="${r}"><span class="rd r-${r}"></span>${n}</button>`).join('')}</div>
+    <div class="bar"><span class="saved">Usuário</span><button class="sp-close" id="ap-x" aria-label="Fechar">${XICON}</button></div>
+    <div class="body"><div><div class="ttl" id="adm-pt" style="font-size:22px">${esc(u.name||u.handle||u.email)}</div><span class="saved">${esc(u.email)}</span>${u.suspenso?' <span class="sus-tag">Suspensa</span>':''}</div>
+      <dl class="u-info"><dt>Plano</dt><dd>${PLANO_NOME[planoEf(u)]||'Grátis'}${u.plano_ate&&planoEf(u)!=='gratis'?' até '+dBR(u.plano_ate):''}</dd><dt>Cadastro</dt><dd>${dBR(u.created_at)}</dd>
+        <dt>Último acesso</dt><dd>${u.last_sign_in_at?dBR(u.last_sign_in_at):'nunca'}</dd><dt>Contas de clientes</dt><dd>${u.contas??'—'}</dd><dt>Posts</dt><dd>${u.posts??'—'}</dd><dt>Espaço de fotos</dt><dd>${u.espaco!=null?MB(u.espaco):'—'}</dd></dl>
+      ${canE?`<h3>Função</h3><div class="chips" role="radiogroup" aria-label="Função">${myRoleOpts().map(([r,n])=>`<button class="chip ${sel===r?'on':''}" role="radio" aria-checked="${sel===r}" data-r="${r}"><span class="rd r-${r}"></span>${n}</button>`).join('')}</div>
       <p class="role-help">${ROLE_DESC[sel]||''}</p>
       ${sel==='gm'&&u.role!=='gm'?'<p class="role-help" style="color:var(--err)">Outro GM tem o mesmo poder que você, inclusive sobre a sua conta.</p>':''}
       <div class="foot"><button class="pill dark" id="ap-save" ${sel===u.role?'disabled':''}>Salvar função</button><button class="pill" id="ap-cancel">Cancelar</button></div>
-      <p class="role-help">A mudança fica registrada em Atividade.</p></div></aside>`;
-    ov.querySelector('#ap-x').onclick=closePanel;ov.querySelector('#ap-cancel').onclick=closePanel;
+      <p class="role-help">A mudança fica registrada em Atividade.</p>`:`<h3>Função</h3><p><span class="rd r-${esc(u.role)}"></span>${roleName(u.role)}</p><p class="role-help">${u.id===USER.id?'Esta é a sua conta.':'Só o GM muda a função e a conta de outro admin.'}</p>`}
+      ${canE?`<h3>Conta</h3>
+      <div class="u-acts"><button class="pill" id="ap-pw">Enviar link para trocar a senha</button>
+        <button class="pill" id="ap-sus">${u.suspenso?'Reativar a conta':'Suspender a conta'}</button>
+        <button class="danger-link" id="ap-del">Excluir a conta e as fotos</button></div>
+      <p class="role-help">Suspensa, a pessoa não consegue entrar e sai do app em até 1 hora. Os dados ficam guardados. Excluir apaga tudo e não dá para desfazer.</p>`:''}</div></aside>`;
+    ov.querySelector('#ap-x').onclick=closePanel;const apc=ov.querySelector('#ap-cancel');if(apc)apc.onclick=closePanel;
+    const pw=ov.querySelector('#ap-pw');if(pw)pw.onclick=async()=>{if(!confirm(`Enviar para ${u.email} um link para criar uma senha nova?`))return;pw.disabled=true;
+      const {error}=await sb.auth.resetPasswordForEmail(u.email,{redirectTo:BASE_URL()});if(error){pw.disabled=false;return toast(traduz(error.message),4000)}
+      admLog('usuarios','enviou link de troca de senha',{email:u.email},u.id);toast('Link enviado para '+u.email,3600)};
+    const su=ov.querySelector('#ap-sus');if(su)su.onclick=async()=>{const vai=!u.suspenso;
+      if(vai&&!confirm(`Suspender a conta de ${u.email}? A pessoa não vai conseguir entrar até você reativar.`))return;su.disabled=true;
+      try{await db(sb.rpc('admin_set_suspended',{target:u.id,suspender:vai}));u.suspenso=vai;toast(vai?'Conta suspensa':'Conta reativada');await admLoad();admUsuarios();admPanel(ADM.users.find(x=>x.id===u.id))}catch(e){su.disabled=false}};
+    const de=ov.querySelector('#ap-del');if(de)de.onclick=async()=>{
+      const t=prompt(`Isso apaga a conta de ${u.email}, todas as contas de clientes, posts e fotos dela. Não dá para desfazer.\n\nPara confirmar, escreva EXCLUIR:`);
+      if((t||'').trim().toUpperCase()!=='EXCLUIR')return t!=null&&toast('Não excluí: a palavra não confere.');de.disabled=true;toast('Excluindo…',20000);
+      try{const r=await adminCall({action:'delete_user',target:u.id});closePanel();toast(`Conta excluída${r.fotos?` (${r.fotos} fotos apagadas)`:''}`,3600);await admLoad();admUsuarios()}
+      catch(e){de.disabled=false;toast(e.message,5000)}};
     ov.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{sel=b.dataset.r;draw();ov.querySelector(`[data-r="${sel}"]`)?.focus()});
-    ov.querySelector('#ap-save').onclick=async()=>{const s=ov.querySelector('#ap-save');s.disabled=true;
+    const aps=ov.querySelector('#ap-save');if(aps)aps.onclick=async()=>{const s=aps;s.disabled=true;
       try{await db(sb.rpc('set_user_role',{target:u.id,new_role:sel}));closePanel();toast(`${u.name||u.email} agora é ${roleName(sel)}`);await admLoad();admUsuarios()}
       catch(e){s.disabled=false}}};
-  draw();document.body.appendChild(ov);document.addEventListener('keydown',panelEsc);ov.querySelector('.chip.on')?.focus();
+  draw();document.body.appendChild(ov);document.addEventListener('keydown',panelEsc);(ov.querySelector('.chip.on')||ov.querySelector('#ap-x'))?.focus();
 }
 function admLogText(e){
   const d=e.details||{};const u=id=>ADM.users.find(x=>x.id===id);
   const actor=e.actor_id?`<b>${esc(userName(u(e.actor_id))||'Alguém')}</b> `:'';
   const tgt=`<b>${esc(userName(u(e.target_user))||'um usuário removido')}</b>`;
   switch(e.action){
+    case 'suspendeu a conta':case 'reativou a conta':return `${actor}${e.action.split(' ')[0]} a conta de ${tgt}`;
+    case 'excluiu a conta':return `${actor}excluiu a conta de <b>${esc(d.email||'um usuário')}</b>${d.fotos?` e ${d.fotos} fotos`:''}`;
     case 'mudou a função':return `${actor}mudou ${tgt} de ${roleName(d.de)} para ${roleName(d.para)}`;
     case 'convite aceito':return `${tgt} criou a conta e virou ${roleName(d.funcao)}`;
     case 'convidou por e-mail':return `${actor}convidou ${esc(d.email)} como ${roleName(d.funcao)}`;
@@ -2007,6 +2065,7 @@ async function uploadSlides(p,files){
 }
 document.getElementById('file').onchange=async e=>{
   const files=[...e.target.files];if(!files.length||!pickCtx)return;
+  if(!(await espacoOk(files)))return;
   if(pickCtx.type==='profavatar'||pickCtx.type==='accavatar'){try{await setAvatar(pickCtx,files[0])}catch(err){}return}
   if(pickCtx.type==='stories'){const c=pickCtx;toast(`Enviando ${files.length} ${files.length===1?'story':'stories'}…`,60000);const rows=[];
     for(const f of files){const b=await shrink(f);if(!b)continue;const path=`${USER.id}/stories/${crypto.randomUUID()}.jpg`;
@@ -2538,7 +2597,7 @@ function admPlanPanel(u){
 }
 
 /* ======================= V6: telas de aviso ======================= */
-const CONTATO='contato@figfeed.com.br'; // troque aqui se o e-mail de contato for outro
+const CONTATO=()=>SITE.config?.contato||'contato@figfeed.com.br'; // muda em Admin › Configurações
 let MANUT=false; // modo "Estamos fazendo uma atualização" (ligado pelo GM em Configuração)
 function bindGo(){app.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go))}
 function v404(kind){
@@ -2560,10 +2619,11 @@ function vOffline(){
   document.getElementById('retry').onclick=()=>location.reload();
 }
 function vErro(code='FF-500'){
+  logErro(code,'Tela de erro');
   document.title='Algo deu errado · Fig.Feed';
   app.innerHTML=`<main class="st"><div class="big">Ops.</div><p>Algo deu errado do nosso lado e não conseguimos carregar esta página. Nada do que você fez foi perdido.</p>
     <div class="acts"><button class="pill dark" id="retry">Tentar de novo</button><button class="pill" id="ini">Voltar para o início</button></div>
-    <p class="small">Se continuar acontecendo, escreva para <a href="mailto:${CONTATO}?subject=Erro%20${code}">${CONTATO}</a> com o código <b>${code}</b>.</p></main>`;
+    <p class="small">Se continuar acontecendo, escreva para <a href="mailto:${CONTATO()}?subject=Erro%20${code}">${CONTATO()}</a> com o código <b>${code}</b>.</p></main>`;
   document.getElementById('retry').onclick=()=>location.reload();
   document.getElementById('ini').onclick=()=>{location.hash='#home';location.reload()};
 }
@@ -2581,26 +2641,8 @@ function pubHeader(){return `<header class="pub-hdr"><button class="brand" data-
 const shell=cur=>USER?header(cur):pubHeader();
 const bindShell=()=>USER?bindHeader():bindGo();
 const MODELO=`<div class="warn"><b>Modelo para preencher.</b> Este texto é só uma estrutura. Antes de publicar, revise com um advogado ou use um gerador de termos adequado à LGPD.</div>`;
-function vTermos(){
-  app.innerHTML=shell('')+`<main class="page doc"><h1>Termos de uso</h1><p class="sub">Última atualização: [data]</p>${MODELO}
-    <h2>1. Sobre o Fig.Feed</h2><p>O Fig.Feed é uma ferramenta para planejar e organizar feeds, carrosséis e cronogramas de redes sociais, oferecida por [nome / razão social], CNPJ [número].</p>
-    <h2>2. Sua conta</h2><p>Você é responsável por manter sua senha em segurança e pelas atividades feitas na sua conta.</p>
-    <h2>3. Seu conteúdo</h2><p>As fotos e textos que você envia continuam sendo seus. Você nos autoriza apenas a guardá-los e exibi-los para você dentro do Fig.Feed.</p>
-    <h2>4. Uso permitido</h2><p>Não é permitido enviar conteúdo ilegal, que viole direitos de terceiros ou que tente prejudicar o funcionamento do serviço.</p>
-    <h2>5. Planos e pagamentos</h2><p>[Descrever planos, cobrança, cancelamento e reembolso, se houver.]</p>
-    <h2>6. Encerramento</h2><p>Você pode excluir sua conta a qualquer momento em Segurança → Excluir minha conta. Podemos suspender contas que descumpram estes termos.</p>
-    <h2>7. Contato</h2><p>[e-mail de contato]</p></main>`;
-  bindShell();
-}
-function vPrivacidade(){
-  app.innerHTML=shell('')+`<main class="page doc"><h1>Política de privacidade</h1><p class="sub">Última atualização: [data]</p>${MODELO}
-    <h2>Quais dados coletamos</h2><ul><li>Nome, e-mail e senha (guardada de forma criptografada)</li><li>Contas de clientes, posts, legendas, datas e fotos que você cadastra</li><li>Dados técnicos de acesso, como data e hora de login e o aparelho usado</li></ul>
-    <h2>Para que usamos</h2><p>Para fazer o Fig.Feed funcionar: entrar na sua conta, guardar e mostrar o seu trabalho e enviar e-mails da conta (confirmação e recuperação de senha).</p>
-    <h2>Com quem compartilhamos</h2><p>Com os serviços que hospedam o app: [Supabase — banco de dados e fotos], [GitHub Pages / Hostinger — site], [serviço de e-mail]. Não vendemos seus dados.</p>
-    <h2>Seus direitos</h2><p>Você pode acessar, corrigir e excluir seus dados a qualquer momento. Para excluir tudo, use Segurança → Excluir minha conta.</p>
-    <h2>Encarregado de dados (DPO)</h2><p>[nome e e-mail]</p></main>`;
-  bindShell();
-}
+function vTermos(){docPage('termos')}
+function vPrivacidade(){docPage('privacidade')}
 const FAQ=[
   ['Como reorganizo o feed?','Abra a conta e arraste os posts na grade. No celular, segure o post por um instante antes de arrastar. A grade se ajeita sozinha.'],
   ['As datas mudam quando eu arrasto?','Se a opção "as datas acompanham a nova ordem" estiver ligada em Configuração, sim: as datas ficam na mesma sequência e passam para os posts na nova ordem. Desligue se quiser que cada post mantenha a própria data.'],
@@ -2617,10 +2659,10 @@ function vAjuda(){
   app.innerHTML=shell('')+`<main class="page doc"><h1>Como podemos ajudar?</h1><p class="sub">Respostas rápidas para as dúvidas mais comuns.</p>
     <label class="search help-q"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#777" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
       <input id="hq" placeholder="Buscar na ajuda" aria-label="Buscar na ajuda" autocomplete="off"></label>
-    <div class="faq" id="faq">${FAQ.map(([qq,a])=>`<details data-s="${esc((qq+' '+a).toLowerCase())}"><summary>${esc(qq)}</summary><p>${esc(a)}</p></details>`).join('')}</div>
+    <div class="faq" id="faq">${faqList().map(([qq,a])=>`<details data-s="${esc((qq+' '+a).toLowerCase())}"><summary>${esc(qq)}</summary><p>${esc(a)}</p></details>`).join('')}</div>
     <p class="sub" id="nofaq" hidden style="margin-top:16px">Nada encontrado. Tente outra palavra ou fale com a gente.</p>
     <h2>Atalhos de teclado</h2><div>${KBD.map(([l,k])=>`<div class="kbd-row"><span>${l}</span><span>${k}</span></div>`).join('')}</div>
-    <div class="contact"><div><b>Não achou o que procurava?</b><br><small>Responderemos em até 1 dia útil.</small></div><div class="acts-row" style="margin:0">${USER?'<button class="pill dark" data-go="suporte">Fale com a gente</button>':''}<a class="pill" href="mailto:${CONTATO}">${CONTATO}</a></div></div></main>`;
+    <div class="contact"><div><b>Não achou o que procurava?</b><br><small>Responderemos em até 1 dia útil.</small></div><div class="acts-row" style="margin:0">${USER?'<button class="pill dark" data-go="suporte">Fale com a gente</button>':''}<a class="pill" href="mailto:${CONTATO()}">${CONTATO()}</a></div></div></main>`;
   bindShell();
   document.getElementById('hq').oninput=e=>{const t=e.target.value.trim().toLowerCase();let n=0;
     document.querySelectorAll('#faq details').forEach(d=>{const ok=!t||d.dataset.s.includes(t);d.hidden=!ok;if(ok)n++;if(t&&ok)d.open=true});
@@ -2628,6 +2670,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v17','Nov 2026',['Sininho de avisos no alto do app','Admin: Visão geral com os números do Fig.Feed, Planos editáveis (preço, itens e limites), ações sobre usuários (trocar senha, suspender, excluir), Textos do site (página inicial, Ajuda, Termos e Privacidade), Avisos, Configurações, Saúde do sistema e planilha de usuários']],
   ['v16','Nov 2026',['Cronograma: toque no quadradinho da conta ou na bolinha do status para trocar a cor das etiquetas','Admin › Menus: escolher a ordem e quais botões aparecem na barra do topo, no menu do ícone de grade e no menu de tela cheia (páginas, páginas criadas ou links)']],
   ['v15.5','Nov 2026',['Página inicial: em Admin › Páginas › Imagens da página dá para trocar a foto do meio e as 3 grades que já estão lá (sem banners por cima)']],
   ['v15.4','Nov 2026',['Prévia dos pop-ups refeita: mostra certinho os formatos Central, Canto e Barra, em qualquer tamanho de tela','Banners e imagem dos pop-ups: opção "Aleatório" que mostra um fundo de bolinhas diferente a cada visita']],
@@ -2734,7 +2777,7 @@ async function vExcluir(){
 }
 
 /* ======================= V7: página pública (para quem não tem conta) ======================= */
-function pubFooter(){return `<footer class="pub-foot"><span>© ${new Date().getFullYear()} Fig.Feed</span><a data-go="termos">Termos</a><a data-go="privacidade">Privacidade</a><a data-go="blog">Blog</a><a data-go="ajuda">Ajuda</a><a data-go="planos">Planos</a></footer>`}
+function pubFooter(){return `<footer class="pub-foot"><span>© ${new Date().getFullYear()} Fig.Feed</span><a data-go="termos">Termos</a><a data-go="privacidade">Privacidade</a><a data-go="blog">Blog</a><a data-go="ajuda">Ajuda</a><a data-go="planos">Planos</a>${pubSocial()}</footer>`}
 // Imagens da landing: foto do meio (vai trocando) e as 3 grades de 6. Sem nada salvo, usa as bolinhas de sempre.
 const LAND_HERO_DEF=()=>Array.from({length:9},(_,i)=>'bolinhas:'+(i+1));
 const LAND_GRID_DEF=()=>[0,3,6].map(k=>Array.from({length:6},(_,i)=>'bolinhas:'+((i+k)%9+1)));
@@ -2742,17 +2785,17 @@ function landImgs(){const L=SITE.pages.landing?.banners?.land||{};const hero=(L.
   return {hero:hero.length?hero:LAND_HERO_DEF(),grids:gd.map((d,k)=>d.map((x,i)=>L.grids?.[k]?.[i]||x))}}
 function vLanding(){
   document.title='Fig.Feed — monte e organize feeds de forma visual';
-  const LI=landImgs();
+  const LI=landImgs(),LT=landTxt();
   const g=(k)=>LI.grids[k/3].map(p=>`<div style="background-image:url('${anyImg(p)}')"></div>`).join('');
   app.innerHTML=pubHeader()+`<main class="land">
     <section class="home land-hero" aria-label="Fig.Feed"><div class="word">Fig.</div>
       <div class="photo">${LI.hero.map((p,i)=>`<img src="${anyImg(p)}" alt="" class="${i?'':'on'}">`).join('')}</div><div class="word">Feed</div></section>
-    <section class="land-cta"><p>Monte, organize e acompanhe feeds de forma visual.</p>
-      <div class="acts"><button class="pill dark" data-go="criar">Começar grátis</button><button class="pill" id="como">Ver como funciona</button></div></section>
+    <section class="land-cta"><p>${esc(LT.frase)}</p>
+      <div class="acts"><button class="pill dark" data-go="criar">${esc(LT.bt1)}</button><button class="pill" id="como">${esc(LT.bt2)}</button></div></section>
     <section class="land-feat" id="feat">
-      <div><div class="g6" aria-hidden="true">${g(0)}</div><h2>Arraste e a grade se ajeita</h2><p>Mova um post e o feed se reorganiza sozinho. Sem planilha, sem print.</p></div>
-      <div><div class="g6" aria-hidden="true">${g(3)}</div><h2>Cronograma de todos os clientes</h2><p>Semana ou quadro de status. Mude data e status só arrastando.</p></div>
-      <div><div class="g6" aria-hidden="true">${g(6)}</div><h2>Relatório para o cliente</h2><p>Mande um link e o cliente vê o resumo do mês pelo celular, sem criar conta.</p></div>
+      <div><div class="g6" aria-hidden="true">${g(0)}</div><h2>${esc(LT.f[0][0])}</h2><p>${esc(LT.f[0][1])}</p></div>
+      <div><div class="g6" aria-hidden="true">${g(3)}</div><h2>${esc(LT.f[1][0])}</h2><p>${esc(LT.f[1][1])}</p></div>
+      <div><div class="g6" aria-hidden="true">${g(6)}</div><h2>${esc(LT.f[2][0])}</h2><p>${esc(LT.f[2][1])}</p></div>
     </section></main>${pubFooter()}`;
   bindGo();
   document.getElementById('como').onclick=()=>document.getElementById('feat').scrollIntoView({behavior:'smooth'});
@@ -2761,24 +2804,25 @@ function vLanding(){
 }
 
 /* ======================= V7: Planos (só a tela; a cobrança vem depois) ======================= */
-const PLANOS=[
+const PLANOS_DEF=[
   {id:'gratis',n:'Grátis',p:'R$ 0',u:'para começar',it:['Até 2 contas de clientes','Feed, carrossel e cronograma','500 MB de fotos'],b:'Começar grátis'},
   {id:'pro',n:'Pro',p:'R$ 29',u:'por mês',it:['Contas ilimitadas','Link do relatório para clientes','Relatório do mês','10 GB de fotos'],b:'Assinar o Pro',top:true},
   {id:'agencia',n:'Agência',p:'R$ 79',u:'por mês',it:['Tudo do Pro','Até 5 pessoas na equipe','Marca da agência nos relatórios','50 GB de fotos'],b:'Falar com a gente'}];
+let PLANOS=PLANOS_DEF;
 function vPlanos(){
   const ef=USER?planoEf(S.profile):null;
   const meu=USER?`<section class="my-plan" aria-label="Seu plano"><div><small>Seu plano</small><b>${PLANO_NOME[ef]}</b>
       <span>${ef!=='gratis'?(S.profile.plano_ate?'até '+dBR(S.profile.plano_ate):'sem prazo'):planoVencido(S.profile)?`Seu ${PLANO_NOME[S.profile.plano]} venceu em ${dBR(S.profile.plano_ate)}`:''}</span></div>
     <form id="cup" class="cup" novalidate><input class="field" id="cup-c" placeholder="Tem um cupom?" aria-label="Código do cupom" autocomplete="off" maxlength="30"><button class="pill">Usar cupom</button></form></section>`:'';
-  app.innerHTML=shell('')+`<main class="page planos"><h1>Planos</h1><p class="sub">Valores de exemplo. Comece grátis e mude quando precisar.</p>${meu}
-    <div class="pl-grid">${PLANOS.map(x=>`<section class="pl ${x.top?'top':''}" aria-label="Plano ${x.n}"><div class="pl-h"><span>${x.n}</span>${ef===x.id?'<span class="tag">Seu plano</span>':x.top?'<span class="tag">Mais escolhido</span>':''}</div>
-      <div class="pl-p"><b>${x.p}</b><small>${x.u}</small></div><ul>${x.it.map(i=>`<li>${i}</li>`).join('')}</ul>
-      <button class="pill ${x.top?'dark':''}" data-plan="${x.id}" ${ef===x.id?'disabled':''}>${ef===x.id?'Seu plano atual':x.b}</button></section>`).join('')}</div></main>${USER?'':pubFooter()}`;
+  app.innerHTML=shell('')+`<main class="page planos"><h1>Planos</h1><p class="sub">${esc(SITE.planos?.sub||'Valores de exemplo. Comece grátis e mude quando precisar.')}</p>${meu}
+    <div class="pl-grid">${PLANOS.map(x=>`<section class="pl ${x.top?'top':''}" aria-label="Plano ${esc(x.n)}"><div class="pl-h"><span>${esc(x.n)}</span>${ef===x.id?'<span class="tag">Seu plano</span>':x.top?'<span class="tag">Mais escolhido</span>':''}</div>
+      <div class="pl-p"><b>${esc(x.p)}</b><small>${esc(x.u)}</small></div><ul>${x.it.map(i=>`<li>${esc(i)}</li>`).join('')}</ul>
+      <button class="pill ${x.top?'dark':''}" data-plan="${x.id}" ${ef===x.id?'disabled':''}>${ef===x.id?'Seu plano atual':esc(x.b)}</button></section>`).join('')}</div></main>${USER?'':pubFooter()}`;
   bindShell();
   app.querySelectorAll('[data-plan]').forEach(b=>b.onclick=()=>{const id=b.dataset.plan;
     if(id==='gratis')return USER?toast('Você já está no plano Grátis'):go('criar');
     if(id==='pro')return toast('A assinatura do Pro abre em breve. Avisaremos por e-mail.',4000);
-    location.href=`mailto:${CONTATO}?subject=${encodeURIComponent('Plano Agência do Fig.Feed')}`});
+    location.href=`mailto:${CONTATO()}?subject=${encodeURIComponent('Plano Agência do Fig.Feed')}`});
   const f=document.getElementById('cup');
   if(f)f.onsubmit=async e=>{e.preventDefault();const code=document.getElementById('cup-c').value.trim();if(!code)return toast('Digite o código do cupom.');
     const s=e.submitter;s.disabled=true;
@@ -3678,6 +3722,7 @@ sb.auth.onAuthStateChange((event,session)=>{
     if(!booted)return;
     if(event==='SIGNED_IN'&&(!USER||USER.id!==session.user.id)){USER=session.user;app.innerHTML=LOADING;
       try{await Promise.all([loadAll(),loadSite()])}catch(e){}
+      loadAvisos();
       go(route[0]==='confirmado'?'confirmado':needsTutorial()?'boas-vindas':'home')}
     if(event==='USER_UPDATED'&&session?.user)USER=session.user;
     if(event==='SIGNED_OUT'){USER=null;S={profile:{name:'',handle:'',dates_follow:true},accounts:[]};ADM={users:[],invites:[],log:[],filter:'todos',cat:'todos',loaded:false};loadSite().finally(()=>go('entrar'))}
@@ -3698,10 +3743,10 @@ const PAGE_OF={feed:'contas',car:'contas',edit:'contas',excluir:'seguranca'};
 const PG_RESERVED=new Set(['landing','entrar','criar','senha','nova-senha','home','menu','contas','feed','car','edit','crono','down','perfil','config','admin','boas-vindas',
   'termos','privacidade','ajuda','novidades','seguranca','excluir','erro','sem-internet','planos','lixeira','biblioteca','blog','suporte','stories','previa',
   'relatorio','r','resultados','conectar','conectado','conectar-erro','confirmado','p']);
-let SITE={pages:{},popups:[],menus:{},loaded:false};
+let SITE={pages:{},popups:[],menus:{},textos:{},config:{},planos:{},loaded:false};
 async function loadSite(){
-  try{const [pg,pp,mn]=await Promise.all([sb.from('site_pages').select('*'),sb.from('popups').select('*').order('ordem').order('created_at'),sb.from('app_settings').select('value').eq('key','menus').maybeSingle()]);
-    if(!mn.error)SITE.menus=mn.data?.value||{};
+  try{const [pg,pp,mn]=await Promise.all([sb.from('site_pages').select('*'),sb.from('popups').select('*').order('ordem').order('created_at'),sb.from('app_settings').select('key,value').in('key',['menus','textos','config','planos'])]);
+    if(!mn.error){const V=Object.fromEntries((mn.data||[]).map(x=>[x.key,x.value]));SITE.menus=V.menus||{};SITE.textos=V.textos||{};SITE.config=V.config||{};SITE.planos=V.planos||{};applyPlanos();applyConfig()}
     if(!pg.error)SITE.pages=Object.fromEntries((pg.data||[]).map(r=>[r.key,r]));if(!pp.error)SITE.popups=pp.data||[];SITE.loaded=true}catch(e){}
 }
 const pgName=(k,d)=>(SITE.pages[k]?.nome)||d||(PG_DEF[k]?.[1])||k;
@@ -4098,7 +4143,7 @@ const MODELOS=[
   {id:'precos',nome:'Tabela de preços',cat:'Vendas',desc:'Planos com preço e botão para cada um.',thumb:'precos',
     blocks:()=>['Básico','Completo','Agência'].flatMap((n,i)=>[{t:'titulo',texto:`${n} — R$ [valor]`},{t:'texto',texto:'[O que está incluído, um item por linha.]'},{t:'botao',texto:`Quero o ${n}`,url:'/#planos',nova:false,estilo:i===1?'preto':'contorno',alinhar:'esq'},{t:'divisor'}])},
   {id:'contato',nome:'Contato',cat:'Conteúdo',desc:'Formas de falar com você e botão para o Suporte.',thumb:'contato',
-    blocks:()=>[{t:'texto',texto:'Respondemos em até 1 dia útil.'},{t:'botao',texto:'Fale com a gente',url:'/#suporte',nova:false,estilo:'preto',alinhar:'esq'},{t:'link',url:'https://wa.me/55[número]',titulo:'WhatsApp',desc:'[Horário de atendimento]'},{t:'link',url:'mailto:'+CONTATO,titulo:'E-mail',desc:CONTATO}]},
+    blocks:()=>[{t:'texto',texto:'Respondemos em até 1 dia útil.'},{t:'botao',texto:'Fale com a gente',url:'/#suporte',nova:false,estilo:'preto',alinhar:'esq'},{t:'link',url:'https://wa.me/55[número]',titulo:'WhatsApp',desc:'[Horário de atendimento]'},{t:'link',url:'mailto:'+CONTATO(),titulo:'E-mail',desc:CONTATO()}]},
   {id:'aviso',nome:'Estamos trabalhando',cat:'Avisos',desc:'Página de aviso com botão de voltar.',thumb:'aviso',
     blocks:()=>[{t:'texto',texto:'Estamos preparando esta área com cuidado. Volte em breve.'},{t:'botao',texto:'Voltar para o início',url:'/#home',nova:false,estilo:'preto',alinhar:'centro'}]},
   {id:'embreve',nome:'Lançamento em breve',cat:'Avisos',desc:'Data de lançamento e convite para criar conta.',thumb:'embreve',
@@ -4292,6 +4337,334 @@ function drawPopupEditor(){
     catch(e){s.disabled=false}};
 }
 
+/* ======================= V17: Admin completo 2 ======================= */
+const ADMIN_FN=SB_URL+'/functions/v1/admin-users';
+async function adminCall(body){
+  const {data:{session}}=await sb.auth.getSession();
+  const r=await fetch(ADMIN_FN,{method:'POST',headers:{'Content-Type':'application/json',apikey:SB_KEY,Authorization:'Bearer '+(session?.access_token||'')},body:JSON.stringify(body)});
+  const j=await r.json().catch(()=>({error:'Sem resposta do servidor'}));if(!r.ok||j.error)throw new Error(j.error||j.message||('Erro '+r.status));return j;
+}
+const MB=b=>b>=1073741824?(b/1073741824).toFixed(1).replace('.',',')+' GB':b>=1048576?(b/1048576).toFixed(1).replace('.',',')+' MB':Math.round((b||0)/1024)+' KB';
+
+/* ---------- Ajustes salvos (textos, configurações, planos) ---------- */
+async function saveSetting(key,value){
+  await db(sb.from('app_settings').upsert({key,value,updated_at:new Date().toISOString()}));
+  SITE[{textos:'textos',config:'config',planos:'planos',menus:'menus'}[key]]=JSON.parse(JSON.stringify(value));
+}
+function applyConfig(){
+  const c=SITE.config||{};
+  let m=document.querySelector('meta[name="description"]');if(!m){m=document.createElement('meta');m.name='description';document.head.appendChild(m)}
+  if(c.descricao)m.content=c.descricao;
+}
+function applyPlanos(){
+  const P=SITE.planos?.planos;
+  PLANOS=PLANOS_DEF.map(d=>{const x=(Array.isArray(P)?P:[]).find(y=>y.id===d.id)||{};
+    return {...d,...Object.fromEntries(Object.entries(x).filter(([k,v])=>v!==undefined&&v!==null&&!(k!=='contas'&&k!=='mb'&&v==='')))}});
+  PLANOS.forEach(x=>{PLANO_NOME[x.id]=x.n});
+}
+const limitesAtivos=()=>!!SITE.planos?.limites_ativos&&!isAdmin();
+// Antes de enviar fotos: confere o espaço do plano (só quando os limites estão ligados)
+async function espacoOk(files){
+  if(!limitesAtivos())return true;
+  try{const {data}=await sb.rpc('my_storage');if(!data?.limite_mb)return true;
+    const novo=files.reduce((s,f)=>s+Math.min(f.size||0,500000),0);
+    if(data.usado+novo>data.limite_mb*1048576){toast(`Seu plano tem ${MB(data.limite_mb*1048576)} de fotos e você já usa ${MB(data.usado)}. Apague fotos na Biblioteca ou veja os Planos.`,6000);return false}}catch(e){}
+  return true;
+}
+
+/* ---------- Textos do site ---------- */
+const LAND_TXT_DEF={frase:'Monte, organize e acompanhe feeds de forma visual.',bt1:'Começar grátis',bt2:'Ver como funciona',
+  f:[['Arraste e a grade se ajeita','Mova um post e o feed se reorganiza sozinho. Sem planilha, sem print.'],
+     ['Cronograma de todos os clientes','Semana ou quadro de status. Mude data e status só arrastando.'],
+     ['Relatório para o cliente','Mande um link e o cliente vê o resumo do mês pelo celular, sem criar conta.']]};
+const landTxt=()=>{const t=SITE.textos?.landing||{};return {frase:t.frase||LAND_TXT_DEF.frase,bt1:t.bt1||LAND_TXT_DEF.bt1,bt2:t.bt2||LAND_TXT_DEF.bt2,
+  f:LAND_TXT_DEF.f.map((d,i)=>[t.f?.[i]?.[0]||d[0],t.f?.[i]?.[1]||d[1]])}};
+const faqList=()=>{const f=SITE.textos?.faq;return Array.isArray(f)&&f.length?f:FAQ};
+const TERMOS_DEF=`Última atualização: [data]
+
+## 1. Sobre o Fig.Feed
+O Fig.Feed é uma ferramenta para planejar e organizar feeds, carrosséis e cronogramas de redes sociais, oferecida por [nome / razão social], CNPJ [número].
+
+## 2. Sua conta
+Você é responsável por manter sua senha em segurança e pelas atividades feitas na sua conta.
+
+## 3. Seu conteúdo
+As fotos e textos que você envia continuam sendo seus. Você nos autoriza apenas a guardá-los e exibi-los para você dentro do Fig.Feed.
+
+## 4. Uso permitido
+Não é permitido enviar conteúdo ilegal, que viole direitos de terceiros ou que tente prejudicar o funcionamento do serviço.
+
+## 5. Planos e pagamentos
+[Descrever planos, cobrança, cancelamento e reembolso, se houver.]
+
+## 6. Encerramento
+Você pode excluir sua conta a qualquer momento em Segurança → Excluir minha conta. Podemos suspender contas que descumpram estes termos.
+
+## 7. Contato
+[e-mail de contato]`;
+const PRIV_DEF=`Última atualização: [data]
+
+## Quais dados coletamos
+- Nome, e-mail e senha (guardada de forma criptografada)
+- Contas de clientes, posts, legendas, datas e fotos que você cadastra
+- Dados técnicos de acesso, como data e hora de login e o aparelho usado
+
+## Para que usamos
+Para fazer o Fig.Feed funcionar: entrar na sua conta, guardar e mostrar o seu trabalho e enviar e-mails da conta (confirmação e recuperação de senha).
+
+## Com quem compartilhamos
+Com os serviços que hospedam o app: [Supabase — banco de dados e fotos], [GitHub Pages / Hostinger — site], [serviço de e-mail]. Não vendemos seus dados.
+
+## Seus direitos
+Você pode acessar, corrigir e excluir seus dados a qualquer momento. Para excluir tudo, use Segurança → Excluir minha conta.
+
+## Encarregado de dados (DPO)
+[nome e e-mail]`;
+const docTxt=k=>(SITE.textos?.[k]||'').trim()||(k==='termos'?TERMOS_DEF:PRIV_DEF);
+const faltam=t=>(t.match(/\[[^\]\n]{1,80}\]/g)||[]).length;
+// Texto simples → página: "## " vira título, "- " vira lista, linha em branco separa parágrafos
+function docHTML(t){
+  const out=[];let list=null;
+  const fl=()=>{if(list){out.push(`<ul>${list.map(x=>`<li>${x}</li>`).join('')}</ul>`);list=null}};
+  const inl=s=>esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\[([^\]\n]{1,80})\]/g,'<mark class="ph">[$1]</mark>');
+  t.split(/\n{2,}/).forEach(bl=>{const lines=bl.split('\n');
+    lines.forEach((ln,i)=>{const l=ln.trim();if(!l)return;
+      if(l.startsWith('## ')){fl();out.push(`<h2>${inl(l.slice(3))}</h2>`)}
+      else if(/^[-•] /.test(l)){(list=list||[]).push(inl(l.slice(2)))}
+      else if(/^última atualização/i.test(l)&&!out.length){fl();out.push(`<p class="sub">${inl(l)}</p>`)}
+      else{fl();out.push(`<p>${inl(l)}</p>`)}});fl()});
+  return out.join('');
+}
+function docPage(k){
+  const t=docTxt(k);const n=faltam(t);
+  app.innerHTML=shell('')+`<main class="page doc"><h1>${k==='termos'?'Termos de uso':'Política de privacidade'}</h1>
+    ${n?`<div class="warn"><b>Modelo para preencher.</b> Este texto ainda tem ${n} ${n===1?'campo':'campos'} [entre colchetes]. Antes de publicar, revise com um advogado ou use um gerador de termos adequado à LGPD.</div>`:''}
+    ${docHTML(t)}${isAdmin()?`<p style="margin-top:36px"><a class="pill" href="#admin/textos/${k}">Editar este texto</a></p>`:''}</main>${USER?'':pubFooter()}`;
+  bindShell();
+}
+
+/* ---------- Registro de erros ---------- */
+const ERR={n:0,seen:new Set()};
+function logErro(codigo,mensagem){
+  try{const msg=String(mensagem||'').slice(0,500);const key=codigo+'|'+msg;if(ERR.n>=5||ERR.seen.has(key))return;ERR.n++;ERR.seen.add(key);
+    sb.from('app_errors').insert({codigo:String(codigo||'').slice(0,20),mensagem:msg,rota:location.hash.slice(0,200),navegador:navigator.userAgent.slice(0,200),versao:VERSAO}).then(()=>{},()=>{})}catch(e){}
+}
+window.addEventListener('error',e=>{if(e.message&&!/ResizeObserver|Script error/i.test(e.message))logErro('JS',`${e.message} (${(e.filename||'').split('/').pop()}:${e.lineno})`)});
+window.addEventListener('unhandledrejection',e=>{const m=e.reason?.message||String(e.reason||'');if(m&&!/fetch|network|Load failed/i.test(m))logErro('PROMESSA',m)});
+
+/* ---------- Avisos (sininho) ---------- */
+let AVISOS={list:[],lidos:new Set(),loaded:false};
+async function loadAvisos(){
+  if(!USER)return;
+  try{const [a,l]=await Promise.all([sb.from('avisos').select('id,titulo,texto,link,publico,ativo,created_at').eq('ativo',true).order('created_at',{ascending:false}).limit(30),
+      sb.from('aviso_lidos').select('aviso_id').eq('user_id',USER.id)]);
+    const pl=planoEf(S.profile);AVISOS.list=(a.data||[]).filter(x=>x.publico==='todos'||x.publico===pl);AVISOS.lidos=new Set((l.data||[]).map(x=>x.aviso_id));AVISOS.loaded=true}catch(e){}
+  const b=document.getElementById('bell');if(b)b.outerHTML=bellHTML();const nb=document.getElementById('bell');if(nb)nb.onclick=e=>{e.stopPropagation();dropdown('avisos')};
+}
+const avNovos=()=>AVISOS.list.filter(x=>!AVISOS.lidos.has(x.id)).length;
+const BELL_IC='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8M10 20a2 2 0 0 0 4 0"/></svg>';
+function bellHTML(){const n=avNovos();return `<button class="bell" id="bell" aria-label="Avisos${n?` (${n} novo${n>1?'s':''})`:''}" aria-haspopup="true">${BELL_IC}${n?`<span class="bn">${n>9?'9+':n}</span>`:''}</button>`}
+function avisosDropHTML(){
+  if(!AVISOS.list.length)return '<span class="lbl">Avisos</span><p class="av-empty">Nenhum aviso por enquanto.</p>';
+  return '<span class="lbl">Avisos</span>'+AVISOS.list.map(a=>{const u=bnLink(a.link);const novo=!AVISOS.lidos.has(a.id);
+    return `<div class="av-it ${novo?'novo':''}">${novo?'<span class="av-dot" aria-label="Novo"></span>':''}<b>${esc(a.titulo)}</b>${a.texto?`<p>${esc(a.texto)}</p>`:''}<small>${dBR(a.created_at)}</small>
+      ${u?`<a class="ul" ${u.startsWith('#')?`href="${esc(u)}"`:`href="${esc(u)}" target="_blank" rel="noopener"`}>Abrir</a>`:''}</div>`}).join('');
+}
+async function marcarAvisosLidos(){
+  const novos=AVISOS.list.filter(x=>!AVISOS.lidos.has(x.id));if(!novos.length)return;
+  novos.forEach(x=>AVISOS.lidos.add(x.id));
+  try{await sb.from('aviso_lidos').upsert(novos.map(x=>({user_id:USER.id,aviso_id:x.id})),{onConflict:'user_id,aviso_id',ignoreDuplicates:true})}catch(e){}
+  const b=document.getElementById('bell');if(b){b.querySelector('.bn')?.remove();b.setAttribute('aria-label','Avisos')}
+}
+
+/* ---------- Admin: Visão geral ---------- */
+async function admPainel(){
+  const h=location.hash;admLoading('painel');
+  let d;try{d=await db(sb.rpc('admin_stats'))}catch(e){return}
+  if(!stillHere(h))return;
+  const P=d.planos||{};const dias=d.cadastros_dia||[];const mx=Math.max(1,...dias.map(x=>x.n));
+  const tile=(n,l,sub='',go='',warn=false)=>`<${go?`button data-go="${go}"`:'div'} class="kpi ${warn?'warn':''}"><b>${n}</b><span>${l}</span>${sub?`<small>${sub}</small>`:''}</${go?'button':'div'}>`;
+  admShell('painel',`<div class="adm-head"><div><h1>Visão geral</h1><p class="sub">Como o Fig.Feed está hoje. Os números atualizam toda vez que você abre esta tela.</p></div>
+      <button class="pill" id="pn-up">Atualizar</button></div>
+    <h2 class="adm-day" style="margin-top:6px">Pessoas</h2>
+    <div class="kpis">${tile(nBR(d.usuarios),'pessoas cadastradas',`${nBR(d.novos_7)} nos últimos 7 dias · ${nBR(d.novos_30)} em 30`,'admin/usuarios')}
+      ${tile(nBR(d.ativos_7),'entraram nos últimos 7 dias',`${nBR(d.ativos_30)} em 30 dias`)}
+      ${tile(nBR(d.usuarios-d.confirmados),'sem confirmar o e-mail','', 'admin/usuarios', d.usuarios-d.confirmados>0)}
+      ${tile(nBR(d.suspensos),'contas suspensas','','admin/usuarios')}</div>
+    <h2 class="adm-day">Planos</h2>
+    <div class="kpis">${tile(nBR(P.gratis||0),PLANO_NOME.gratis)}${tile(nBR(P.pro||0),PLANO_NOME.pro,'','admin/assinaturas')}${tile(nBR(P.agencia||0),PLANO_NOME.agencia,'','admin/assinaturas')}${tile(nBR(d.testes),'em teste ou com prazo','vencem sozinhos','admin/assinaturas')}</div>
+    <h2 class="adm-day">Uso</h2>
+    <div class="kpis">${tile(nBR(d.contas),'contas de clientes')}${tile(nBR(d.posts),'posts',`${nBR(d.posts_7)} criados em 7 dias`)}${tile(nBR(d.stories),'stories')}${tile(MB(d.espaco_fotos+d.espaco_blog),'de espaço usado',`fotos ${MB(d.espaco_fotos)} · site ${MB(d.espaco_blog)}`)}</div>
+    <h2 class="adm-day">Atenção</h2>
+    <div class="kpis">${tile(nBR(d.suporte_abertos),'pedidos de suporte abertos','','admin/suporte',d.suporte_abertos>0)}${tile(nBR(d.ig_atencao),'Instagram com problema ou para vencer',`${nBR(d.ig_ok)} conectados`,'admin/saude',d.ig_atencao>0)}${tile(nBR(d.erros_7),'erros nos últimos 7 dias','','admin/saude',d.erros_7>0)}</div>
+    <h2 class="adm-day">Cadastros por dia · últimos 30 dias</h2>
+    <div class="bars" role="img" aria-label="Cadastros por dia nos últimos 30 dias: ${dias.reduce((s,x)=>s+x.n,0)} no total">${dias.map(x=>`<span title="${dBR(x.d)}: ${x.n}" style="height:${Math.max(2,Math.round(x.n/mx*100))}%"${x.n?'':' class="z"'}></span>`).join('')}</div>
+    <div class="bars-x"><span>${dias[0]?dBR(dias[0].d):''}</span><span>hoje</span></div>`,1080);
+  bindGo();document.getElementById('pn-up').onclick=admPainel;
+}
+
+/* ---------- Admin: Planos ---------- */
+let PLE=null;
+function admPlanos(){
+  if(!PLE){const P=SITE.planos||{};PLE={limites_ativos:!!P.limites_ativos,sub:P.sub||'',planos:PLANOS.map(x=>({id:x.id,n:x.n,p:x.p,u:x.u,it:[...x.it],b:x.b,top:!!x.top,
+    contas:x.contas??{gratis:2,pro:'',agencia:''}[x.id],mb:x.mb??{gratis:500,pro:10240,agencia:51200}[x.id]}))}}
+  const gm=isGM();const dis=gm?'':'disabled';
+  admShell('planos',`<div class="adm-head"><div><h1>Planos</h1><p class="sub">Nome, preço, o que cada plano inclui e os limites. É o que aparece na página Planos.${gm?'':' Só o GM pode mudar.'}</p></div>
+      <a class="pill" href="#planos">Ver a página Planos</a></div>
+    <section class="pg-site"><div><b>Aplicar os limites</b><p>Ligado, quem passar do limite de contas não consegue criar outra, e quem passar do espaço não consegue enviar fotos. Desligado, os limites só aparecem como texto. Admins nunca têm limite.</p></div>
+      <span class="mut">${PLE.limites_ativos?'Ligado':'Desligado'}</span>${SWITCH(PLE.limites_ativos,'Aplicar os limites',`id="pl-lim" ${dis}`)}</section>
+    <label class="lbl-s">Frase embaixo do título<input class="field" id="pl-sub" maxlength="140" value="${esc(PLE.sub)}" placeholder="Valores de exemplo. Comece grátis e mude quando precisar." ${dis}></label>
+    <div class="ple-grid">${PLE.planos.map((x,i)=>`<section class="ple" aria-label="Plano ${esc(x.n)}"><div class="ple-h"><b>${esc(PLANOS_DEF[i].n)}</b><label class="rad"><input type="checkbox" data-pf="${i}.top" ${x.top?'checked':''} ${dis}> Destacar ("Mais escolhido")</label></div>
+        <div class="bn-two"><label class="lbl-s">Nome<input class="field" data-pf="${i}.n" maxlength="30" value="${esc(x.n)}" ${dis}></label><label class="lbl-s">Preço<input class="field" data-pf="${i}.p" maxlength="20" value="${esc(x.p)}" ${dis}></label></div>
+        <div class="bn-two"><label class="lbl-s">Embaixo do preço<input class="field" data-pf="${i}.u" maxlength="30" value="${esc(x.u)}" ${dis}></label><label class="lbl-s">Texto do botão<input class="field" data-pf="${i}.b" maxlength="30" value="${esc(x.b)}" ${dis}></label></div>
+        <label class="lbl-s">O que inclui (um por linha)<textarea class="field ta" rows="4" data-pf="${i}.it" maxlength="600" ${dis}>${esc(x.it.join('\n'))}</textarea></label>
+        <div class="bn-two"><label class="lbl-s">Limite de contas de clientes<input class="field" type="number" min="1" data-pf="${i}.contas" value="${esc(x.contas)}" placeholder="sem limite" ${dis}></label>
+          <label class="lbl-s">Limite de fotos (MB)<input class="field" type="number" min="1" data-pf="${i}.mb" value="${esc(x.mb)}" placeholder="sem limite" ${dis}></label></div>
+        <p class="role-help">Vazio = sem limite. 1024 MB = 1 GB.</p></section>`).join('')}</div>
+    ${gm?`<div class="acts-row" style="margin-top:20px"><button class="pill dark" id="pl-save">Salvar planos</button><button class="pill" id="pl-reset">Voltar aos valores de antes</button></div>`:''}
+    <p class="adm-note" style="margin-top:14px">A cobrança automática ainda não existe: para dar um plano a alguém, use Assinaturas ou um cupom. Quem já passou do limite quando você ligar continua com o que tem, só não cria mais.</p>`,1180);
+  bindGo();if(!gm)return;
+  const keep=()=>{PLE.sub=document.getElementById('pl-sub').value.trim();app.querySelectorAll('[data-pf]').forEach(el=>{const [i,k]=el.dataset.pf.split('.');const x=PLE.planos[+i];
+    if(k==='top')x.top=el.checked;else if(k==='it')x.it=el.value.split('\n').map(s=>s.trim()).filter(Boolean).slice(0,8);else if(k==='contas'||k==='mb')x[k]=el.value===''?'':Math.max(1,parseInt(el.value,10)||1);else x[k]=el.value.trim()})};
+  document.getElementById('pl-lim').onclick=()=>{keep();PLE.limites_ativos=!PLE.limites_ativos;admPlanos()};
+  document.getElementById('pl-reset').onclick=()=>{if(!confirm('Voltar nomes, preços e limites para os valores de antes?'))return;const lim=PLE.limites_ativos;PLE=null;SITE.planos={limites_ativos:lim};applyPlanos();admPlanos();toast('Valores de antes. Clique em Salvar para valer.',3200)};
+  document.getElementById('pl-save').onclick=async e=>{keep();const b=e.currentTarget;
+    if(PLE.planos.some(x=>!x.n||!x.p))return toast('Todo plano precisa de nome e preço.');
+    if(PLE.limites_ativos&&!SITE.planos?.limites_ativos&&!confirm('Ligar os limites agora? Quem já passou do limite não perde nada, mas não consegue criar mais contas nem enviar mais fotos.'))return;
+    b.disabled=true;try{await saveSetting('planos',PLE);applyPlanos();admLog('pagamentos','editou os planos',{limites:PLE.limites_ativos});toast('Planos salvos');PLE=null;admPlanos()}catch(err){b.disabled=false}};
+}
+
+/* ---------- Admin: Textos do site ---------- */
+let TXE=null;
+function admTextos(){
+  const sub=['landing','ajuda','termos','privacidade'].includes(route[2])?route[2]:'landing';
+  if(!TXE)TXE={landing:landTxt(),faq:faqList().map(x=>[...x]),termos:docTxt('termos'),privacidade:docTxt('privacidade')};
+  const tabs=`<div class="pg-sub" role="tablist">${[['landing','Página inicial'],['ajuda','Ajuda (perguntas)'],['termos','Termos de uso'],['privacidade','Privacidade']].map(([k,n])=>`<a data-go="admin/textos/${k}" class="${sub===k?'cur':''}">${n}${k==='termos'||k==='privacidade'?(faltam(TXE[k])?` <span class="adm-n" title="Campos para preencher">${faltam(TXE[k])}</span>`:''):''}</a>`).join('')}</div>`;
+  let body='';
+  if(sub==='landing'){const L=TXE.landing;
+    body=`<p class="role-help">Os textos da página inicial (quem ainda não entrou). As imagens ficam em Páginas → Página inicial → Imagens da página.</p>
+      <label class="lbl-s">Frase principal<input class="field" data-tx="frase" maxlength="120" value="${esc(L.frase)}"></label>
+      <div class="bn-two"><label class="lbl-s">Botão preto<input class="field" data-tx="bt1" maxlength="30" value="${esc(L.bt1)}"></label><label class="lbl-s">Botão branco<input class="field" data-tx="bt2" maxlength="30" value="${esc(L.bt2)}"></label></div>
+      ${L.f.map((f,i)=>`<section class="bn-box"><b>Quadro ${i+1}</b><label class="lbl-s">Título<input class="field" data-tx="f.${i}.0" maxlength="60" value="${esc(f[0])}"></label><label class="lbl-s">Texto<textarea class="field ta" rows="2" data-tx="f.${i}.1" maxlength="200">${esc(f[1])}</textarea></label></section>`).join('')}`}
+  else if(sub==='ajuda'){
+    body=`<p class="role-help">As perguntas da página Ajuda. A pessoa digita na busca e só aparecem as que combinam.</p>
+      <ol class="faq-ed">${TXE.faq.map(([q,a],i)=>`<li><div class="faq-q"><span class="mn-n">${i+1}</span><input class="field" data-fq="${i}.0" maxlength="120" value="${esc(q)}" aria-label="Pergunta ${i+1}">
+          <button data-fmv="${i}:-1" aria-label="Subir" ${i?'':'disabled'}>↑</button><button data-fmv="${i}:1" aria-label="Descer" ${i<TXE.faq.length-1?'':'disabled'}>↓</button><button class="err" data-frm="${i}" aria-label="Tirar a pergunta ${i+1}">×</button></div>
+          <textarea class="field ta" rows="2" data-fq="${i}.1" maxlength="600" aria-label="Resposta ${i+1}">${esc(a)}</textarea></li>`).join('')}</ol>
+      <button class="pill" id="faq-add">+ Nova pergunta</button>`}
+  else{const n=faltam(TXE[sub]);
+    body=`<p class="role-help">Escreva normalmente. <b>## </b> no começo da linha vira título, <b>- </b> vira item de lista, uma linha em branco começa outro parágrafo, **assim** fica em negrito.</p>
+      ${n?`<p class="tx-warn">Faltam <b>${n}</b> ${n===1?'campo':'campos'} [entre colchetes] para preencher. A Meta pede ${sub==='termos'?'os Termos':'a Política de privacidade'} completo e público para aprovar o Instagram.</p>`:'<p class="tx-ok">Nenhum campo [entre colchetes] faltando.</p>'}
+      <div class="tx-two"><textarea class="field ta tx-doc" id="tx-doc" rows="24" maxlength="20000" aria-label="Texto">${esc(TXE[sub])}</textarea>
+        <div class="tx-prev page doc" aria-label="Prévia" id="tx-prev">${docHTML(TXE[sub])}</div></div>
+      <p class="role-help">Revise com um advogado ou use um gerador de termos adequado à LGPD. Dica: troque [data] pela data de hoje sempre que mudar o texto.</p>`}
+  admShell('textos',`<div class="adm-head"><div><h1>Textos do site</h1><p class="sub">Mude os textos sem mexer no código.</p></div>
+      <a class="pill" href="#${sub==='landing'?'landing':sub}">Ver a página</a></div>${tabs}${body}
+    <div class="acts-row" style="margin-top:22px"><button class="pill dark" id="tx-save">Salvar textos</button><button class="pill" id="tx-reset">Voltar ao texto padrão desta aba</button></div>`,sub==='termos'||sub==='privacidade'?1180:880);
+  bindGo();
+  const keep=()=>{app.querySelectorAll('[data-tx]').forEach(el=>{const p=el.dataset.tx.split('.');if(p[0]==='f')TXE.landing.f[+p[1]][+p[2]]=el.value;else TXE.landing[p[0]]=el.value});
+    app.querySelectorAll('[data-fq]').forEach(el=>{const [i,j]=el.dataset.fq.split('.').map(Number);TXE.faq[i][j]=el.value});
+    const d=document.getElementById('tx-doc');if(d)TXE[sub]=d.value};
+  const doc=document.getElementById('tx-doc');
+  if(doc){let tm;doc.oninput=()=>{clearTimeout(tm);tm=setTimeout(()=>{document.getElementById('tx-prev').innerHTML=docHTML(doc.value);const k=faltam(doc.value);
+    const w=app.querySelector('.tx-warn,.tx-ok');if(w){w.className=k?'tx-warn':'tx-ok';w.innerHTML=k?`Faltam <b>${k}</b> ${k===1?'campo':'campos'} [entre colchetes] para preencher.`:'Nenhum campo [entre colchetes] faltando.'}},250)}}
+  app.querySelectorAll('[data-fmv]').forEach(b=>b.onclick=()=>{keep();const [i,d]=b.dataset.fmv.split(':').map(Number);[TXE.faq[i],TXE.faq[i+d]]=[TXE.faq[i+d],TXE.faq[i]];admTextos()});
+  app.querySelectorAll('[data-frm]').forEach(b=>b.onclick=()=>{keep();TXE.faq.splice(+b.dataset.frm,1);admTextos()});
+  const fa=document.getElementById('faq-add');if(fa)fa.onclick=()=>{keep();TXE.faq.push(['','']);admTextos();const l=app.querySelectorAll('.faq-ed input');l[l.length-1]?.focus()};
+  app.querySelectorAll('.pg-sub a').forEach(a=>a.addEventListener('click',keep,{capture:true}));
+  document.getElementById('tx-reset').onclick=()=>{keep();if(!confirm('Voltar esta aba para o texto padrão? O que você escreveu nela some quando salvar.'))return;
+    if(sub==='landing')TXE.landing=JSON.parse(JSON.stringify(LAND_TXT_DEF));else if(sub==='ajuda')TXE.faq=FAQ.map(x=>[...x]);else TXE[sub]=sub==='termos'?TERMOS_DEF:PRIV_DEF;admTextos()};
+  document.getElementById('tx-save').onclick=async e=>{keep();const b=e.currentTarget;
+    const faq=TXE.faq.map(([q,a])=>[q.trim(),a.trim()]).filter(([q,a])=>q&&a);
+    const v={landing:{frase:TXE.landing.frase.trim(),bt1:TXE.landing.bt1.trim(),bt2:TXE.landing.bt2.trim(),f:TXE.landing.f.map(([a,c])=>[a.trim(),c.trim()])},faq,termos:TXE.termos.trim(),privacidade:TXE.privacidade.trim()};
+    b.disabled=true;try{await saveSetting('textos',v);admLog('conteudo','editou os textos do site',{parte:sub});toast('Textos salvos');TXE=null;admTextos()}catch(err){b.disabled=false}};
+}
+
+/* ---------- Admin: Avisos ---------- */
+async function admAvisos(){
+  const h=location.hash;admLoading('avisos');
+  let list,lidos;try{[list,lidos]=await Promise.all([db(sb.from('avisos').select('*').order('created_at',{ascending:false})),db(sb.from('aviso_lidos').select('aviso_id'))])}catch(e){return}
+  if(!stillHere(h))return;
+  const cnt={};(lidos||[]).forEach(x=>cnt[x.aviso_id]=(cnt[x.aviso_id]||0)+1);
+  const PUB={todos:'Todo mundo',gratis:'Plano Grátis',pro:'Pro',agencia:'Agência'};
+  admShell('avisos',`<div class="adm-head"><div><h1>Avisos</h1><p class="sub">Recados que aparecem no sininho, no alto do app, para quem tem conta.</p></div></div>
+    <form class="av-new" id="av-f" novalidate><b>Novo aviso</b>
+      <label class="lbl-s">Título<input class="field" name="titulo" maxlength="80" required placeholder="Ex.: Manutenção no sábado às 22h"></label>
+      <label class="lbl-s">Texto (opcional)<textarea class="field ta" name="texto" rows="2" maxlength="400"></textarea></label>
+      <div class="bn-two"><label class="lbl-s">Link (opcional)<input class="field" name="link" maxlength="300" placeholder="/#novidades ou https://…"></label>
+        <label class="lbl-s">Para quem<select class="field" name="publico">${Object.entries(PUB).map(([k,n])=>`<option value="${k}">${n}</option>`).join('')}</select></label></div>
+      <div class="acts-row"><button class="pill dark">Publicar aviso</button></div></form>
+    <h2 class="adm-day">Publicados</h2>
+    <div class="pg-list">${list.map(a=>`<div class="av-row ${a.ativo?'':'is-off'}"><div><b>${esc(a.titulo)}</b>${a.texto?`<small class="mut">${esc(a.texto)}</small>`:''}<small class="mut">${dBR(a.created_at)} · ${PUB[a.publico]} · ${cnt[a.id]||0} ${cnt[a.id]===1?'pessoa leu':'pessoas leram'}</small></div>
+        <span class="pg-st">${SWITCH(a.ativo,`${a.titulo}: ${a.ativo?'no ar':'escondido'}`,`data-sw="${a.id}"`)}<span>${a.ativo?'No ar':'Escondido'}</span></span><button class="danger-link" data-del="${a.id}">Apagar</button></div>`).join('')||'<p class="sub">Nenhum aviso ainda.</p>'}</div>
+    <p class="adm-note" style="margin-top:14px">O aviso aparece no app, não vai por e-mail. Para algo que todo mundo precisa ver na hora, use um Pop-up.</p>`,880);
+  bindGo();
+  document.getElementById('av-f').onsubmit=async e=>{e.preventDefault();const f=e.target;const titulo=f.titulo.value.trim(),link=f.link.value.trim();
+    if(!titulo)return toast('Escreva um título.');if(link&&!bnLink(link))return toast('Link inválido. Use https://… ou /#pagina',3600);
+    const s=e.submitter;s.disabled=true;
+    try{await db(sb.from('avisos').insert({titulo,texto:f.texto.value.trim(),link,publico:f.publico.value}));admLog('conteudo','publicou aviso',{titulo});toast('Aviso publicado');admAvisos();loadAvisos()}catch(err){s.disabled=false}};
+  app.querySelectorAll('[data-sw]').forEach(b=>b.onclick=async()=>{const a=list.find(x=>x.id===b.dataset.sw);b.disabled=true;
+    try{await db(sb.from('avisos').update({ativo:!a.ativo}).eq('id',a.id));admAvisos();loadAvisos()}catch(e){b.disabled=false}});
+  app.querySelectorAll('[data-del]').forEach(b=>b.onclick=async()=>{const a=list.find(x=>x.id===b.dataset.del);if(!confirm(`Apagar o aviso "${a.titulo}"?`))return;
+    try{await db(sb.from('avisos').delete().eq('id',a.id));admLog('conteudo','apagou aviso',{titulo:a.titulo});admAvisos();loadAvisos()}catch(e){}});
+}
+
+/* ---------- Admin: Configurações ---------- */
+function admConfig(){
+  const c=SITE.config||{};
+  admShell('config',`<div class="adm-head"><div><h1>Configurações</h1><p class="sub">Dados gerais do Fig.Feed.</p></div></div>
+    <form id="cf-f" novalidate>
+      <label class="lbl-s">E-mail de contato<input class="field" name="contato" type="email" maxlength="120" value="${esc(c.contato||'')}" placeholder="contato@figfeed.com.br"></label>
+      <p class="role-help">Aparece na Ajuda, na tela de erro e no plano Agência.</p>
+      <div class="bn-two"><label class="lbl-s">Instagram do Fig.Feed<input class="field" name="instagram" maxlength="60" value="${esc(c.instagram||'')}" placeholder="@figfeed"></label>
+        <label class="lbl-s">WhatsApp (com DDD)<input class="field" name="whatsapp" maxlength="20" value="${esc(c.whatsapp||'')}" placeholder="81 99999-9999"></label></div>
+      <p class="role-help">Se preencher, aparecem no rodapé das páginas públicas.</p>
+      <label class="lbl-s">Descrição do site (Google)<textarea class="field ta" name="descricao" rows="2" maxlength="160" placeholder="Monte, organize e acompanhe feeds de forma visual.">${esc(c.descricao||'')}</textarea></label>
+      <p class="role-help">Até 160 letras. O Google pode usar este texto no resultado da busca. A imagem e o texto que aparecem quando alguém manda o link no WhatsApp ficam no código do site: me peça se quiser trocar.</p>
+      <div class="acts-row" style="margin-top:18px"><button class="pill dark">Salvar configurações</button></div></form>`,760);
+  bindGo();
+  document.getElementById('cf-f').onsubmit=async e=>{e.preventDefault();const f=e.target;
+    const v={contato:f.contato.value.trim(),instagram:f.instagram.value.trim().replace(/^@?/,f.instagram.value.trim()?'@':''),whatsapp:f.whatsapp.value.replace(/\D/g,''),descricao:f.descricao.value.trim()};
+    if(v.contato&&!/^\S+@\S+\.\S+$/.test(v.contato))return toast('E-mail de contato inválido.');
+    if(v.whatsapp&&!/^\d{10,13}$/.test(v.whatsapp))return toast('WhatsApp: escreva o número com DDD.');
+    const s=e.submitter;s.disabled=true;
+    try{await saveSetting('config',v);applyConfig();admLog('conteudo','editou as configurações');toast('Configurações salvas');admConfig()}catch(err){s.disabled=false}};
+}
+function pubSocial(){const c=SITE.config||{};const ig=c.instagram?`<a href="https://instagram.com/${encodeURIComponent(c.instagram.replace('@',''))}" target="_blank" rel="noopener">Instagram</a>`:'';
+  const wa=c.whatsapp?`<a href="https://wa.me/${c.whatsapp.length<=11?'55':''}${c.whatsapp}" target="_blank" rel="noopener">WhatsApp</a>`:'';return ig+wa}
+
+/* ---------- Admin: Saúde ---------- */
+async function admSaude(){
+  const h=location.hash;admLoading('saude');
+  let errs,ig;try{[errs,ig]=await Promise.all([db(sb.from('app_errors').select('*').order('created_at',{ascending:false}).limit(300)),db(sb.rpc('admin_ig_status'))])}catch(e){return}
+  if(!stillHere(h))return;
+  const G={};errs.forEach(e=>{const k=e.codigo+'|'+e.mensagem;const g=G[k]=G[k]||{codigo:e.codigo,mensagem:e.mensagem,n:0,ultimo:e.created_at,rota:e.rota,pessoas:new Set(),versao:e.versao};g.n++;if(e.user_id)g.pessoas.add(e.user_id)});
+  const gs=Object.values(G).sort((a,b)=>b.ultimo<a.ultimo?-1:1);
+  const now=Date.now();const igSt=c=>c.status!=='ok'?['err',c.status==='erro'?'Com erro':'Desconectado']:c.token_expires_at&&new Date(c.token_expires_at)-now<10*864e5?['warn','Chave vence em '+Math.max(0,Math.ceil((new Date(c.token_expires_at)-now)/864e5))+' dias']:['ok','Ok'];
+  admShell('saude',`<div class="adm-head"><div><h1>Saúde do sistema</h1><p class="sub">Erros que as pessoas encontraram e o estado das conexões com o Instagram.</p></div></div>
+    <h2 class="adm-day" style="margin-top:6px">Instagram (${ig.length})</h2>
+    <div class="pg-list">${ig.map(c=>{const s=igSt(c);return `<div class="sd-row"><div><b>${esc(c.handle)}</b><small class="mut">${c.username?'@'+esc(c.username)+' · ':''}de ${esc(c.dono||'—')}${c.last_sync?' · atualizado em '+dBR(c.last_sync):''}</small>${c.status_msg?`<small class="err">${esc(c.status_msg)}</small>`:''}</div><span class="sd-st ${s[0]}">${s[1]}</span></div>`}).join('')||'<p class="sub">Nenhum Instagram conectado ainda.</p>'}</div>
+    <p class="adm-note">A chave do Instagram é renovada sozinha quando faltam menos de 20 dias. Se aparecer "Com erro" ou "Desconectado", a pessoa precisa conectar de novo na aba Resultados da conta.</p>
+    <div class="adm-head" style="margin-top:30px"><h2 class="adm-day" style="margin:0">Erros (${errs.length}${errs.length>=300?'+':''})</h2>${errs.length?'<button class="pill sm" id="er-clear">Limpar erros</button>':''}</div>
+    <div class="pg-list">${gs.map(g=>`<div class="sd-row"><div><b><code>${esc(g.codigo)}</code> ${esc(g.mensagem||'(sem mensagem)')}</b><small class="mut">última vez em ${dBR(g.ultimo)} ${hBR?hBR(g.ultimo):''} · em ${esc(g.rota||'#')} · ${g.pessoas.size} ${g.pessoas.size===1?'pessoa':'pessoas'}${g.versao?' · '+esc(g.versao):''}</small></div><span class="sd-n">${g.n}×</span></div>`).join('')||'<p class="sub">Nenhum erro registrado. 🎉</p>'}</div>
+    <p class="adm-note">Erros iguais aparecem juntos. Copie o texto e me mande se algum se repetir.</p>`,980);
+  bindGo();
+  const c=document.getElementById('er-clear');if(c)c.onclick=async()=>{if(!confirm('Apagar todos os erros registrados?'))return;try{await db(sb.from('app_errors').delete().gte('id',0));admLog('seguranca','limpou o registro de erros');admSaude()}catch(e){}};
+}
+
+/* ---------- Admin: exportar planilha ---------- */
+function csvDown(nome,rows){
+  const q=v=>{const s=v==null?'':String(v);return /[;"\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s};
+  const blob=new Blob(['﻿'+rows.map(r=>r.map(q).join(';')).join('\r\n')],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=nome;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500);
+}
+function exportUsuarios(){
+  const d=x=>x?new Date(x).toLocaleString('pt-BR'):'';
+  csvDown(`fig-feed-usuarios-${new Date().toISOString().slice(0,10)}.csv`,[['Nome','E-mail','@','Função','Plano','Plano até','Origem do plano','E-mail confirmado','Suspensa','Cadastro','Último acesso','Contas de clientes','Posts','Espaço (MB)'],
+    ...ADM.users.map(u=>[u.name,u.email,u.handle,roleName(u.role),PLANO_NOME[planoEf(u)]||u.plano,u.plano_ate?dBR(u.plano_ate):'',u.plano_origem,u.confirmed?'sim':'não',u.suspenso?'sim':'não',d(u.created_at),d(u.last_sign_in_at),u.contas??'',u.posts??'',u.espaco!=null?(u.espaco/1048576).toFixed(1).replace('.',','):''])]);
+  admLog('seguranca','baixou a planilha de usuários',{linhas:ADM.users.length});
+}
+
 /* ======================= Aviso de sem internet ======================= */
 function netState(){let n=document.getElementById('net');
   if(navigator.onLine){if(n){n.remove();toast('Conexão de volta')}return}
@@ -4313,7 +4686,7 @@ window.addEventListener('online',netState);window.addEventListener('offline',net
   else if(LINK.type==='email_change'){to('config');setTimeout(()=>toast('E-mail atualizado'),400)}
   else if(LINK.type!=='recovery'&&USER&&['','#home'].includes(location.hash)&&needsTutorial())to('boas-vindas');
   if(location.search)history.replaceState(null,'',location.pathname+location.hash);
-  booted=true;render();netState();
+  booted=true;render();netState();if(USER)loadAvisos();
   if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js').catch(()=>{});
 })();
 </script>
