@@ -1304,7 +1304,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v17.1';
+const VERSAO='v17.2';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -1344,7 +1344,7 @@ function dropdown(kind){
   else if(kind==='me'){d.innerHTML=`<span class="lbl">${esc(S.profile.handle||USER.email)}</span>
     <button data-a="perfil">Perfil</button><button data-a="seguranca">Segurança</button><button data-a="config">Configuração</button><button data-a="planos">Planos</button><button data-a="ajuda">Ajuda</button><hr><button data-a="sair">Sair</button>`}
   else{d.innerHTML=`<span class="lbl">Nova conta</span><form id="nf"><input id="nh" placeholder="@perfil.do.cliente" required><button class="pill" style="padding:6px 10px">Criar</button></form><hr>
-    ${inAcc?`<button data-a="post">Novo post com fotos de exemplo</button><button data-a="up">Novo post com fotos suas</button><button data-a="tpl">Usar um template</button>`:`<span class="lbl">Abra uma conta para criar posts</span>`}`}
+    ${inAcc?`<button data-a="feed"><b>Adicionar posts</b><small class="mut" style="display:block;font-size:12px;font-weight:400">Várias fotos de uma vez: cada foto vira um post</small></button><hr><button data-a="up">Novo post com fotos suas</button><button data-a="post">Novo post com fotos de exemplo</button><button data-a="tpl">Usar um template</button>`:`<span class="lbl">Abra uma conta para criar posts</span>`}`}
   document.body.appendChild(d);
   d.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>{closeDrop();go(b.dataset.g)});
   if(kind==='app')d.querySelector('button')?.focus();
@@ -1352,6 +1352,7 @@ function dropdown(kind){
     if(a==='perfil')go('perfil');if(a==='config')go('config');if(a==='seguranca')go('seguranca');if(a==='ajuda')go('ajuda');if(a==='planos')go('planos');if(a==='sair')sair();
     if(a==='post')examplePost(accById(route[1]));
     if(a==='up')pickFiles({type:'newpost',acc:route[1]});
+    if(a==='feed')pickFiles({type:'newfeed',acc:route[1]});
     if(a==='tpl')openTemplatePicker(accById(route[1]));});
   const f=d.querySelector('#nf');if(f){f.onsubmit=async e=>{e.preventDefault();let h=d.querySelector('#nh').value.trim().replace(/\s+/g,'');if(!h)return;if(h[0]!=='@')h='@'+h;
     const row=await db(sb.from('accounts').insert({handle:h,position:S.accounts.length}).select('id,handle').single());
@@ -1377,6 +1378,35 @@ async function createPost(acc){
   const p={id:row.id,title:row.title,caption:row.caption,date:row.publish_date,status:row.status,slides:[]};
   acc.posts.unshift(p);await db(sb.rpc('reorder_posts',{p_account:acc.id,p_ids:acc.posts.map(x=>x.id)}));return p;
 }
+// V17.2: várias fotos de uma vez viram um feed (uma foto por post). A 1ª foto escolhida fica no canto de cima, à esquerda.
+const FEED_MAX=60;
+function feedDates(acc,n){const top=acc.posts[0]?.date;const base=top?new Date(top+'T12:00'):new Date();if(top)base.setDate(base.getDate()+2);
+  return Array.from({length:n},(_,i)=>{const d=new Date(base);d.setDate(d.getDate()+2*(n-1-i));return iso(d)})}
+async function insertFeedPosts(acc,slides){// slides: [{path,credit}] na ordem da grade
+  const ds=feedDates(acc,slides.length);
+  const rows=await db(sb.from('posts').insert(slides.map((_,i)=>({account_id:acc.id,title:'Novo post',publish_date:ds[i],position:i}))).select('id,title,caption,publish_date,status,position'));
+  rows.sort((x,y)=>x.position-y.position);
+  const sl=await db(sb.from('slides').insert(rows.map((r,i)=>({post_id:r.id,storage_path:slides[i].path,credit:slides[i].credit,position:0}))).select('id,post_id,storage_path,credit'));
+  await signPaths(sl.map(x=>x.storage_path).filter(x=>!isStock(x)));
+  const ps=rows.map(r=>{const x=sl.find(z=>z.post_id===r.id);return {id:r.id,title:r.title,caption:r.caption,date:r.publish_date,status:r.status,slides:x?[{id:x.id,path:x.storage_path,credit:x.credit}]:[]}});
+  acc.posts.unshift(...ps);await db(sb.rpc('reorder_posts',{p_account:acc.id,p_ids:acc.posts.map(x=>x.id)}));return ps;
+}
+async function createFeed(acc,files){
+  files=[...files].sort((x,y)=>x.name.localeCompare(y.name,'pt',{numeric:true}));
+  if(files.length>FEED_MAX){toast(`Dá para adicionar até ${FEED_MAX} fotos por vez. Vou usar as primeiras ${FEED_MAX}.`,4000);files=files.slice(0,FEED_MAX)}
+  const credit=(S.profile.handle||'').replace('@','')||null;const ok=[];let falhou=0;
+  for(let i=0;i<files.length;i++){toast(`Enviando ${i+1} de ${files.length}…`,60000);
+    const b=await shrink(files[i]);if(!b){falhou++;continue}
+    const path=`${USER.id}/feed/${crypto.randomUUID()}.jpg`;
+    const {error}=await sb.storage.from('fotos').upload(path,b,{contentType:'image/jpeg'});if(error){falhou++;continue}
+    ok.push({path,credit})}
+  if(!ok.length){toast('Nenhuma foto foi enviada. Confira a internet e tente de novo.',4200);return}
+  toast('Montando o feed…',20000);
+  await insertFeedPosts(acc,ok);
+  toast(`${ok.length} ${ok.length===1?'post adicionado':'posts adicionados'} ao feed${falhou?` · ${falhou} ${falhou===1?'foto não deu':'fotos não deram'} para enviar`:''}`,falhou?5000:3000);
+  if(route[0]==='feed'&&route[1]===acc.id)vFeed();else go('feed/'+acc.id);
+}
+async function exampleFeed(acc){const ps=await insertFeedPosts(acc,Array.from({length:9},()=>randPhoto()));toast(`Feed de exemplo com ${ps.length} posts`);vFeed()}
 function applySearch(){
   const t=q.trim().toLowerCase();
   if(route[0]==='contas')app.querySelectorAll('.acc').forEach(a=>a.hidden=!!t&&!a.dataset.h.toLowerCase().includes(t));
@@ -1498,8 +1528,8 @@ function vFeed(){
       <div class="item tile ${on&&ck?'on':''}" tabindex="0" data-id="${p.id}" data-s="${esc(p.title+' '+p.caption)}" style="${bgi(s,250,328)}"
         ${on?`role="checkbox" aria-checked="${ck}"`:''} aria-label="${esc(p.title)}, ${fmt(p.date)}">
         ${on?`<span class="ck" aria-hidden="true">${CHECK}</span>`:''}${p.slides.length>1?MULTI:''}<span class="dt">${fmt(p.date)}</span></div>`}).join('')}</div>`
-    :`<div class="empty" style="margin-top:12vh"><h2>Monte o primeiro post</h2><p>Envie fotos do seu computador ou comece com fotos de exemplo.</p>
-      <div class="row2"><button class="pill dark" id="e-up">Enviar fotos</button><button class="pill" id="e-ex">Usar fotos de exemplo</button></div></div>`}</main>
+    :`<div class="empty" style="margin-top:12vh"><h2>Monte seu primeiro feed</h2><p>Escolha várias fotos de uma vez: cada foto vira um post, na ordem da grade. Ou comece com um feed de exemplo.</p>
+      <div class="row2"><button class="pill dark" id="e-up">Enviar fotos</button><button class="pill" id="e-ex">Usar feed de exemplo</button></div></div>`}</main>
     ${a.posts.length&&!on?'<div class="hint">Arraste para reorganizar (no celular, segure) · toque para abrir</div>':''}
     ${on&&n?`<div class="sel-bar" role="region" aria-label="Ações dos selecionados"><b>${n} ${n===1?'post':'posts'}</b>
       <button class="pill dark" id="ex-zip">Fotos (.zip)</button><button class="pill" id="ex-png">Grade (PNG)</button><button class="pill" id="ex-txt">Legendas (.txt)</button><button class="pill danger" id="sel-del">${TRASH_I}Apagar</button></div>`:''}`;
@@ -1528,8 +1558,8 @@ function vFeed(){
       a.posts=a.posts.filter(p=>!ids.includes(p.id));SEL.on=false;SEL.ids.clear();vFeed();
       toast(`${k} ${k===1?'post foi':'posts foram'} para a Lixeira (ficam lá por 30 dias)`,3600)}
     catch(err){btn.disabled=false;btn.textContent='Apagar';toast('Não deu para apagar agora. Confira a internet e tente de novo.',4200)}};
-  const up=b('e-up');if(up)up.onclick=()=>pickFiles({type:'newpost',acc:a.id});
-  const ex=b('e-ex');if(ex)ex.onclick=()=>{ex.disabled=true;examplePost(a).catch(()=>ex.disabled=false)};
+  const up=b('e-up');if(up)up.onclick=()=>pickFiles({type:'newfeed',acc:a.id});
+  const ex=b('e-ex');if(ex)ex.onclick=()=>{ex.disabled=true;exampleFeed(a).catch(()=>ex.disabled=false)};
 }
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&SEL.on&&route[0]==='feed'&&!document.getElementById('ov')&&!document.querySelector('.drop')){SEL.on=false;SEL.ids.clear();vFeed()}});
 function legendasTxt(a,posts){
@@ -1572,7 +1602,7 @@ function vCar(){
     <div class="track" id="tr">${p.slides.map(s=>`<div class="item slide" tabindex="0" data-id="${s.id}" style="${bgi(s,500,658)}"><button class="x" data-x="${s.id}" aria-label="Remover foto">×</button></div>`).join('')}
       ${n<10?'<button class="addslide" id="add">+ adicionar fotos</button>':''}</div>
     <button class="cap ${p.caption?'':'ph'}" id="cap">${p.caption?esc(p.caption):'Clique para escrever a legenda'}</button>
-    <div style="margin:40px 0 0 max(16px,8.1%)"><button class="pill" id="det" style="font-size:12px">Status, data e detalhes</button> <button class="pill" id="delpost" style="font-size:12px;color:var(--err)">Excluir post</button></div>
+    <div style="margin:40px 0 0 max(16px,8.1%);display:flex;flex-wrap:wrap;gap:8px;align-items:center"><button class="pill dark" id="savepost" style="font-size:13px">Salvar</button><button class="pill" id="det" style="font-size:12px">Status, data e detalhes</button> <button class="pill" id="delpost" style="font-size:12px;color:var(--err)">Excluir post</button></div>
   </main>`;
   bindHeader();
   const tr=document.getElementById('tr'),bar=document.getElementById('bar');
@@ -1587,7 +1617,11 @@ function vCar(){
   const add=document.getElementById('add');if(add)add.onclick=()=>pickFiles({type:'slides',acc:a.id,post:p.id});
   document.getElementById('cap').onclick=()=>go(`edit/${a.id}/${p.id}`);
   const t=document.getElementById('ttl');
-  t.onblur=async()=>{const v=t.textContent.trim()||'Sem título';if(v===p.title)return;p.title=v;await db(sb.from('posts').update({title:v}).eq('id',p.id))};
+  const saveTitle=async()=>{const v=t.textContent.trim()||'Sem título';if(v===p.title)return;p.title=v;await db(sb.from('posts').update({title:v}).eq('id',p.id))};
+  t.onblur=saveTitle;
+  // V17.2: Salvar guarda o que falta (o título) e volta para o feed; o resto já é salvo na hora
+  document.getElementById('savepost').onclick=async e=>{const b=e.currentTarget;b.disabled=true;b.textContent='Salvando…';t.onblur=null;
+    try{await saveTitle();toast('Post salvo');go('feed/'+a.id)}catch(err){b.disabled=false;b.textContent='Salvar';t.onblur=saveTitle;toast('Não deu para salvar agora. Confira a internet e tente de novo.',4200)}};
   t.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();t.blur()}};
   document.getElementById('det').onclick=()=>openPanel(a.id,p.id,()=>{if(route[0]==='car')vCar()});
   const del=document.getElementById('delpost');
@@ -2081,7 +2115,8 @@ document.getElementById('file').onchange=async e=>{
     toast(ok?`${ok} ${ok===1?'foto enviada':'fotos enviadas'}`:'Nenhuma foto foi enviada');libFilter='sem-uso';if(route[0]==='biblioteca')vBiblioteca();return}
   const a=accById(pickCtx.acc);if(!a)return;
   try{
-    if(pickCtx.type==='newpost'){const p=await createPost(a);await uploadSlides(p,files);go(`car/${a.id}/${p.id}`)}
+    if(pickCtx.type==='newfeed'){await createFeed(a,files)}
+    else if(pickCtx.type==='newpost'){const p=await createPost(a);await uploadSlides(p,files);go(`car/${a.id}/${p.id}`)}
     else{const p=a.posts.find(x=>x.id===pickCtx.post);await uploadSlides(p,files);vCar()}
   }catch(err){}
 };
@@ -2653,6 +2688,7 @@ const FAQ=[
   ['Como conecto o Instagram do cliente?','Abra a conta, toque na aba Resultados e em "Conectar Instagram". Se você tem o login, entre na hora; se não, toque em "Enviar link para o cliente": aparecem mensagens prontas (WhatsApp curto, com passo a passo, e-mail e lembrete) para copiar ou enviar. O cliente entra com o Instagram ou o Facebook, escolhe a empresa e o perfil e autoriza. Precisa ser conta profissional (Comercial ou Criador de conteúdo), mas não precisa de Página no Facebook.'],
   ['O cliente não consegue conectar o Instagram. E agora?','Confira três coisas: o perfil é profissional; na tela "Selecione os ativos" o perfil certo estava escolhido; e a empresa (portfólio) escolhida é a que tem esse perfil. Se o link tiver passado de 7 dias ou já tiver sido usado, gere um novo em Resultados.'],
   ['Como mando o planejamento para o cliente aprovar?','Em Downloads, escolha a conta e o mês, escreva o objetivo e clique em "Baixar planejamento (PDF)". Na janela que abrir, escolha "Salvar como PDF".'],
+  ['Como coloco várias fotos de uma vez no feed?','Dentro da conta, toque em "+ Criar" → "Adicionar posts" e escolha todas as fotos. Cada foto vira um post, na ordem do nome dos arquivos: a primeira fica no canto de cima, à esquerda. Depois é só arrastar para reorganizar. Para um carrossel (várias fotos no mesmo post), use "Novo post com fotos suas".'],
   ['Como planejo os stories?','Abra a conta e vá na aba Stories. Escolha o dia, envie as artes e arraste para mudar a ordem.'],
   ['Como instalo o Fig.Feed no celular?','Em Configuração tem o passo a passo para iPhone e Android.'],
   ['Esqueci minha senha. E agora?','Na tela de entrar, clique em "Esqueceu sua senha?" e siga o link que chegar no seu e-mail.']];
@@ -2672,6 +2708,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v17.2','Nov 2026',['"+ Criar → Adicionar posts": escolha várias fotos de uma vez e cada uma vira um post no feed','Botão Salvar na página do post: salva e volta para o feed','Conta nova: "Monte seu primeiro feed" com várias fotos ou com um feed de exemplo de 9 posts']],
   ['v17.1','Nov 2026',['Conectar Instagram: mensagens prontas para mandar ao cliente (WhatsApp curto, com passo a passo, e-mail, lembrete e reconectar)','Página do cliente com o passo a passo e as dúvidas mais comuns; telas de sucesso e de erro mais claras','O cliente agora entra com o Instagram ou com o Facebook, e a conexão não vence']],
   ['v17','Nov 2026',['Sininho de avisos no alto do app','Admin: Visão geral com os números do Fig.Feed, Planos editáveis (preço, itens e limites), ações sobre usuários (trocar senha, suspender, excluir), Textos do site (página inicial, Ajuda, Termos e Privacidade), Avisos, Configurações, Saúde do sistema e planilha de usuários']],
   ['v16','Nov 2026',['Cronograma: toque no quadradinho da conta ou na bolinha do status para trocar a cor das etiquetas','Admin › Menus: escolher a ordem e quais botões aparecem na barra do topo, no menu do ícone de grade e no menu de tela cheia (páginas, páginas criadas ou links)']],
