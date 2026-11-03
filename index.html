@@ -67,6 +67,23 @@ img{display:block;max-width:100%}
 .tut-prof{display:flex;flex-direction:column;align-items:center;gap:12px}
 .tut-prof .avatar{width:64px;height:64px}
 .tut-prof .tut-grid{grid-template-columns:repeat(3,min(72px,22vw))}
+.tut-sel{display:flex;flex-direction:column;align-items:center;gap:14px}
+.tut-sel .tut-grid{grid-template-columns:repeat(3,min(84px,23vw))}
+.tut-sel .tut-grid div{position:relative}.tut-sel .tut-grid div.on{outline:2px solid var(--fg);outline-offset:-2px}
+.tut-sel .ck{position:absolute;left:6px;top:6px;width:20px;height:20px;border-radius:50%;background:var(--fg);color:#fff;display:grid;place-items:center}
+.tut-sel .ck svg{width:11px;height:11px}.tut-sel .ck.off{background:rgba(255,255,255,.7);border:1.5px solid #fff}
+.tut-sel .bar{display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:center;border:1px solid var(--line);border-radius:14px;padding:7px 8px;box-shadow:0 8px 22px rgba(0,0,0,.08);font-size:11px;background:#fff}
+.tut-sel .bar b{font-weight:500;margin:0 4px}.tut-sel .bar span{border:1px solid var(--line);border-radius:99px;padding:4px 9px}
+.tut-sel .bar .dk{background:var(--fg);color:#fff;border-color:var(--fg)}.tut-sel .bar .del{color:#d9271c;border-color:#f3c9c5}
+.tut-plan{position:relative;width:min(300px,78vw);display:flex;flex-direction:column;align-items:center;gap:22px}
+.tut-plan .sh{width:100%;aspect-ratio:297/210;background:#fff;border:1px solid var(--line);border-radius:4px;box-shadow:0 10px 26px rgba(0,0,0,.1)}
+.tut-plan .s3,.tut-plan .s2{position:absolute;top:0;left:0}.tut-plan .s3{transform:rotate(-6deg) translate(-8px,6px);background:#111}.tut-plan .s2{transform:rotate(3deg) translate(6px,-4px);background:#f4f4f4}
+.tut-plan .s1{position:relative;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
+.tut-plan .w{font-size:min(30px,8vw);letter-spacing:-.025em;text-align:center}
+.tut-plan .im{width:min(62px,16vw);aspect-ratio:364/478;background:var(--tile) center/cover}
+.tut-plan small{position:absolute;left:10px;bottom:8px;font-size:8px;color:var(--muted);display:flex;align-items:center;gap:4px}
+.tut-plan small i{width:10px;height:10px;border-radius:50%;background:var(--tile) center/cover;display:block}
+.tut-plan .btn{background:var(--fg);color:#fff;border-radius:99px;padding:9px 16px;font-size:12px}
 
 /* ---------- Entrar / criar conta (estilo Cosmos) ---------- */
 .auth{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
@@ -701,9 +718,10 @@ a.pill{text-decoration:none;color:var(--fg)}a.pill.dark{color:#fff}
 .grid.sel-mode .tile .dt{opacity:1}
 .sel-bar{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:40;background:#fff;border:1px solid var(--line);border-radius:99px;box-shadow:0 12px 32px rgba(0,0,0,.12);padding:8px 8px 8px 18px;display:flex;align-items:center;gap:8px;max-width:calc(100vw - 24px);flex-wrap:wrap;justify-content:center}
 .sel-bar b{font-weight:500;font-size:13px;margin-right:4px}.sel-bar .pill{font-size:13px;padding:8px 14px}
+.sel-bar .pill.danger{color:#d9271c;border-color:#f3c9c5}.sel-bar .pill.danger:hover{background:#fdeeed}
 @media (max-width:560px){.sel-bar{left:12px;right:12px;transform:none;max-width:none;border-radius:16px;padding:10px;bottom:12px;flex-wrap:wrap}
-  .sel-bar b{width:100%;text-align:center;margin:0}.sel-bar .pill{flex:1 1 0;justify-content:center;font-size:12px;padding:9px 6px;white-space:nowrap}}
-body:has(.sel-bar) .toast{bottom:110px}
+  .sel-bar b{width:100%;text-align:center;margin:0}.sel-bar .pill{flex:1 1 0;justify-content:center;font-size:12px;padding:9px 6px;white-space:nowrap}.sel-bar .pill.danger{flex-basis:100%}}
+body:has(.sel-bar) .toast{bottom:150px}
 
 /* ---------- V12: prévia com foto de perfil, destaques editáveis e PNG ---------- */
 .pv-tog{flex-wrap:wrap;justify-content:center}
@@ -943,7 +961,7 @@ function finishTutorial(){
   try{localStorage.setItem(tutKey(),'1')}catch(e){}
   if(USER){USER.user_metadata={...(USER.user_metadata||{}),onboarded:true};sb.auth.updateUser({data:{onboarded:true}}).catch(()=>{})}
 }
-let tutStep=0;
+let tutStep=0;const TUT_N=5;
 // Fundos de bolinhas do próprio Fig.Feed (pasta img/tutorial)
 const TUT_IMG=Array.from({length:9},(_,i)=>`img/tutorial/bolinhas-${i+1}.jpg`);
 function vTutorial(){
@@ -955,6 +973,13 @@ function vTutorial(){
     {t:'Uma agenda para todos',p:'No cronograma você vê os posts de todas as contas por semana ou por status, e muda a data arrastando.',
      v:`<div class="tut-week">${['seg','ter','qua','qui','sex'].map((d,i)=>`<div class="c"><span class="d">${d}</span>${
        Array.from({length:i%2?1:2},(_,j)=>`<div class="k"><i style="${bg(pics[(i*2+j)%9])}"></i><b style="background:${COLS[(i+j)%3]}"></b></div>`).join('')}</div>`).join('')}</div>`},
+    {t:'Selecione vários posts',p:'No feed da conta, toque em “Selecionar” e marque os posts. Depois baixe as fotos, a grade ou as legendas só deles, ou apague todos de uma vez.',
+     v:`<div class="tut-sel"><div class="tut-grid">${pics.map((p,i)=>`<div class="${[0,2,4,5].includes(i)?'on':''}" style="${bg(p)}">${[0,2,4,5].includes(i)?`<span class="ck">${CHECK}</span>`:'<span class="ck off"></span>'}</div>`).join('')}</div>
+       <div class="bar"><b>4 posts</b><span class="dk">Fotos (.zip)</span><span>Grade</span><span>Legendas</span><span class="del">Apagar</span></div></div>`},
+    {t:'Planejamento do mês em PDF',p:'Em Downloads, escolha a conta e o mês, escreva o objetivo e toque em “Baixar planejamento (PDF)”. Sai com capa, mood do feed e dos stories, calendário e legendas para o cliente aprovar.',
+     v:`<div class="tut-plan"><div class="sh s3"></div><div class="sh s2"></div><div class="sh s1"><span class="w">Fig.</span><span class="im" style="${bg(pics[3])}"></span><span class="w">Feed</span>
+       <small><i style="${bg(pics[0])}"></i>@seu.cliente · Planejamento</small></div>
+       <span class="btn">Baixar planejamento (PDF)</span></div>`},
     {t:'Pronto para começar',p:'Crie a conta do seu primeiro cliente, ou use contas de exemplo para testar sem enviar fotos.',
      v:`<div class="tut-prof"><span class="avatar" style="${bg(pics[0])}"></span><b>@seu.cliente</b>
        <div class="tut-grid">${pics.slice(1,7).map(p=>`<div style="${bg(p)}"></div>`).join('')}</div></div>`}];
@@ -979,7 +1004,7 @@ function vTutorial(){
 }
 function tutKeys(e){
   if(route[0]!=='boas-vindas'){document.removeEventListener('keydown',tutKeys);return}
-  if(e.key==='ArrowRight'&&tutStep<2){tutStep++;vTutorial()}
+  if(e.key==='ArrowRight'&&tutStep<TUT_N-1){tutStep++;vTutorial()}
   if(e.key==='ArrowLeft'&&tutStep>0){tutStep--;vTutorial()}
 }
 
@@ -1010,7 +1035,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v12';
+const VERSAO='v13';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   blog:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 5h16v14H4zM8 9h8M8 13h8M8 17h5"/></svg>',
@@ -1194,6 +1219,7 @@ async function saveFeedOrder(a,ids){
 }
 // V11: modo de seleção do feed (escolher posts para exportar)
 let SEL={acc:null,on:false,ids:new Set()};
+const TRASH_I='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>';
 const CHECK='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
 function vFeed(){
   const a=accById(route[1]);if(!a)return v404('conta');
@@ -1211,8 +1237,8 @@ function vFeed(){
     :`<div class="empty" style="margin-top:12vh"><h2>Monte o primeiro post</h2><p>Envie fotos do seu computador ou comece com fotos de exemplo.</p>
       <div class="row2"><button class="pill dark" id="e-up">Enviar fotos</button><button class="pill" id="e-ex">Usar fotos de exemplo</button></div></div>`}</main>
     ${a.posts.length&&!on?'<div class="hint">Arraste para reorganizar (no celular, segure) · toque para abrir</div>':''}
-    ${on&&n?`<div class="sel-bar" role="region" aria-label="Exportar selecionados"><b>${n} ${n===1?'post':'posts'}</b>
-      <button class="pill dark" id="ex-zip">Fotos (.zip)</button><button class="pill" id="ex-png">Grade (PNG)</button><button class="pill" id="ex-txt">Legendas (.txt)</button></div>`:''}`;
+    ${on&&n?`<div class="sel-bar" role="region" aria-label="Ações dos selecionados"><b>${n} ${n===1?'post':'posts'}</b>
+      <button class="pill dark" id="ex-zip">Fotos (.zip)</button><button class="pill" id="ex-png">Grade (PNG)</button><button class="pill" id="ex-txt">Legendas (.txt)</button><button class="pill danger" id="sel-del">${TRASH_I}Apagar</button></div>`:''}`;
   bindHeader();applySearch();
   document.getElementById('accmore').onclick=e=>{e.stopPropagation();accMenu(a,e.currentTarget)};
   const g=document.getElementById('grid');
@@ -1229,6 +1255,15 @@ function vFeed(){
   if(b('ex-png'))b('ex-png').onclick=()=>exportPNG(a,chosen(),'selecionados');
   if(b('ex-txt'))b('ex-txt').onclick=()=>{saveFile(new Blob([legendasTxt(a,chosen())],{type:'text/plain;charset=utf-8'}),`${a.handle.replace('@','')}-legendas-selecionados.txt`);toast('Legendas baixadas')};
   if(b('ex-zip'))b('ex-zip').onclick=e=>exportZip(a,chosen(),e.currentTarget);
+  // V13: apagar os selecionados (vão para a Lixeira por 30 dias)
+  if(b('sel-del'))b('sel-del').onclick=async e=>{const ps=chosen(),k=ps.length;if(!k)return;
+    if(!confirm(`Apagar ${k} ${k===1?'post':'posts'}? ${k===1?'Ele vai':'Eles vão'} para a Lixeira e dá para recuperar por 30 dias.`))return;
+    const btn=e.currentTarget;btn.disabled=true;btn.textContent='Apagando…';
+    const ids=ps.map(p=>p.id);
+    try{await db(sb.from('posts').update({deleted_at:new Date().toISOString()}).in('id',ids));
+      a.posts=a.posts.filter(p=>!ids.includes(p.id));SEL.on=false;SEL.ids.clear();vFeed();
+      toast(`${k} ${k===1?'post foi':'posts foram'} para a Lixeira (ficam lá por 30 dias)`,3600)}
+    catch(err){btn.disabled=false;btn.textContent='Apagar';toast('Não deu para apagar agora. Confira a internet e tente de novo.',4200)}};
   const up=b('e-up');if(up)up.onclick=()=>pickFiles({type:'newpost',acc:a.id});
   const ex=b('e-ex');if(ex)ex.onclick=()=>{ex.disabled=true;examplePost(a).catch(()=>ex.disabled=false)};
 }
@@ -2356,6 +2391,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v13','Nov 2026',['Feed da conta: no modo Selecionar, botão “Apagar” manda os posts escolhidos para a Lixeira (dá para recuperar por 30 dias)','Tutorial com dois passos novos: como selecionar posts e como gerar o planejamento do mês','Planejamento em PDF com capa nova, página “Mood do feed” (posts no visual do Instagram) e “Mood dos stories” (celulares com os stories)']],
   ['v12','Nov 2026',['Prévia: toque na foto de perfil para trocar','Destaques em círculos: “+ Novo” para criar e toque em um destaque para trocar nome e capa (foto enviada ou dos posts), mover ou remover','Baixar a prévia do perfil em PNG']],
   ['v11','Nov 2026',['Selecionar posts no feed da conta: toque em “Selecionar”, marque os posts e exporte só eles','Exportar os selecionados como fotos (.zip, com uma pasta por post e as legendas), grade (PNG) ou legendas (.txt)']],
   ['v10','Nov 2026',['Templates de feed: em uma conta, “+ Criar → Usar um template” monta a grade de rascunhos','Blog com dicas, tutoriais e novidades','Fale com a gente: mande um pedido de ajuda e veja a resposta no app','Planos: veja o seu plano e use cupons','Admin: Templates, Blog, Suporte e Assinaturas (planos, testes grátis e cupons)']],
@@ -2948,8 +2984,8 @@ function planHTML(a,month,objetivo,stories){
   const postPages=[];for(let i=0;i<Math.max(1,ps.length);i+=12)postPages.push(ps.slice(i,i+12));
   const byDay={};stories.forEach(s=>(byDay[s.story_date]=byDay[s.story_date]||[]).push(s));
   const days=Object.keys(byDay).sort();const stPages=[];for(let i=0;i<Math.max(1,days.length);i+=8)stPages.push(days.slice(i,i+8));
-  const TOTAL=2+postPages.length+stPages.length;let n=0;
-  const page=(title,body)=>{n++;return `<section class="pg"><header><div class="l">${mk}<b>Fig.Feed</b><span class="sep">·</span><span>Planejamento</span></div>
+  const TOTAL=5+postPages.length+stPages.length;let n=0;
+  const page=(title,body,cls='')=>{n++;return `<section class="pg ${cls}"><header><div class="l">${mk}<b>Fig.Feed</b><span class="sep">·</span><span>Planejamento</span></div>
     <div class="r"><span class="av">${av}</span><b>${esc(a.handle)}</b><span class="sep">·</span><b>${label}</b></div></header><h1>${title}</h1>${body}
     <footer><span>Gerado no Fig.Feed em ${hoje}</span><span>${n} / ${TOTAL}</span></footer></section>`};
   // números
@@ -2961,7 +2997,11 @@ function planHTML(a,month,objetivo,stories){
   const pilHTML=pil.length?pil.map(x=>`<div class="pil"><span class="pn">${esc(x.name)}</span><span class="pb"><i style="width:${pct(x.n)}%"></i>${x.meta!=null?`<em style="left:${x.meta}%"></em>`:''}</span><span class="pv">${pct(x.n)}%${x.meta!=null?` <small>meta ${x.meta}%</small>`:''}</span></div>`).join('')+(semPil?`<div class="pil muted"><span class="pn">Sem pilar</span><span class="pb"><i style="width:${pct(semPil)}%;background:#bdbdbd"></i></span><span class="pv">${pct(semPil)}%</span></div>`:'')
     :'<p class="muted" style="font-size:8pt;margin:0">Nenhum pilar definido para esta conta.</p>';
   const grid=[...a.posts].slice(0,12).map(p=>`<div>${pic(p.slides[0],200,250)}${fmtOf(p)!=='foto'?`<i class="${fmtOf(p)}"></i>`:''}</div>`).join('');
-  let out=page('Visão do mês',`<div class="g1">
+  // V13: capa no estilo da página inicial (Fig. · foto · Feed)
+  const capaP=ps.find(p=>p.slides[0])||a.posts.find(p=>p.slides[0]);
+  n++;let out=`<section class="pg capa"><div class="cv"><div class="w">Fig.</div><div class="im">${pic(capaP?.slides[0],728,956)}</div><div class="w">Feed</div></div>
+    <div class="cv-f"><span class="who"><span class="av">${av}</span><b>${esc(a.handle)}</b><span class="sep">·</span>Planejamento de ${label}</span><span>Gerado no Fig.Feed em ${hoje} · ${n} / ${TOTAL}</span></div></section>`;
+  out+=page('Visão do mês',`<div class="g1">
    <div class="phone"><div class="ph-top"><span class="av big">${av}</span><div class="nums"><div><b>${a.posts.length}</b><span>posts</span></div><div><b>${a.followers!=null?Number(a.followers).toLocaleString('pt-BR'):'—'}</b><span>seguidores</span></div><div><b>${a.following!=null?Number(a.following).toLocaleString('pt-BR'):'—'}</b><span>seguindo</span></div></div></div>
     <div class="bio"><b>${esc(a.display_name||a.handle.replace(/^@/,''))}</b>${a.bio?`<br><span class="muted">${esc(a.bio)}</span>`:''}</div>
     <div class="grid3">${grid}</div><div class="cap">Como o feed vai ficar, do post mais novo (em cima) ao mais antigo.</div></div>
@@ -2973,6 +3013,14 @@ function planHTML(a,month,objetivo,stories){
       <div class="lab" style="margin-top:5mm">Posts por semana</div><div class="wk">${weeks.map((w,i)=>`<div><span class="v">${w}</span><i style="height:${w/Math.max(1,...weeks)*100}%"></i><small>Sem ${i+1}</small></div>`).join('')}</div></div></div>
     <div class="approve"><div class="lab">Aprovação do planejamento</div><div class="ap"><span><i class="box"></i>Aprovado como está</span><span><i class="box"></i>Aprovado com ajustes (anotados nas próximas páginas)</span></div>
      <div class="sign"><div>Nome</div><div>Data</div><div>Assinatura</div></div></div></div></div>`);
+  // V13: mood feed (3ª página) — cartões no visual do Instagram com as fotos da conta
+  const moodSrc=[...ps,...a.posts.filter(p=>!ps.includes(p))].filter(p=>p.slides[0]);
+  const card=(p,k)=>`<div class="ig"><div class="ig-h"><span class="av">${av}</span><b>${esc(a.handle.replace(/^@/,''))}</b><span class="dots">···</span></div><div class="ig-i">${p?pic(p.slides[0],400,500):'<span class="ph"></span>'}${p&&fmtOf(p)==='carrossel'?'<i class="mc"></i>':''}${p&&fmtOf(p)==='reels'?'<i class="mr"></i>':''}</div></div>`;
+  const OFF=[-26,4,-40,-8,-30];let mi=0;
+  const moodCols=OFF.map((o,c)=>`<div class="mcol" style="margin-top:${o}mm">${[0,1,2].map(r=>{
+    if(c===1&&r===1)return `<div class="ig txt"><div class="ig-h"><span class="av">${av}</span><b>${esc(a.handle.replace(/^@/,''))}</b><span class="dots">···</span></div><div class="ig-t"><span>${String(m).padStart(2,'0')}</span><b>${MESES_RP[m-1]}</b><small>${ps.length} ${ps.length===1?'post':'posts'} · ${stories.length} stories</small></div></div>`;
+    const p=moodSrc.length?moodSrc[mi++%moodSrc.length]:null;return card(p)}).join('')}</div>`).join('');
+  out+=page('Mood do feed',`<div class="side">${esc(a.handle)} · Mood do feed · ${label}</div><div class="mood">${moodCols}</div>`,'dk');
   // calendário
   const first=new Date(y,m-1,1),lead=(first.getDay()+6)%7,lastD=new Date(y,m,0).getDate();const rows=Math.ceil((lead+lastD)/7);
   const byPostDay={};ps.forEach(p=>(byPostDay[+p.date.slice(8)]=byPostDay[+p.date.slice(8)]||[]).push(p));
@@ -2986,6 +3034,14 @@ function planHTML(a,month,objetivo,stories){
       <td><b class="t">${esc(p.title)}</b><br><span class="muted">${fmtLabel(p)}${p.pilar?' · '+esc(p.pilar):''}</span></td>
       <td class="lg">${p.caption?esc(p.caption.length>320?p.caption.slice(0,317)+'…':p.caption):'<span class="muted">Sem legenda ainda.</span>'}${p.cta?`<div class="cta">Chamada: <b>${esc(p.cta)}</b></div>`:''}</td>
       <td>${chip(p.status)}</td><td class="ok"><i class="box"></i><i class="box"></i></td></tr>`).join('')}</tbody></table>`:'<p class="muted">Nenhum post com data neste mês.</p>')});
+  // V13: mood stories — celulares com os stories do mês (ou fotos dos posts, se ainda não houver stories)
+  const stSrc=stories.length?stories.slice(0,3).map(s=>({u:pic({path:s.storage_path},540,960),d:s.story_date}))
+    :moodSrc.slice(0,3).map(p=>({u:pic(p.slides[0],540,960),d:p.date}));
+  while(stSrc.length<3)stSrc.push({u:'<span class="ph"></span>',d:''});
+  out+=page('Mood dos stories',`<div class="side">${esc(a.handle)} · Mood dos stories · ${label}</div><div class="phones">${stSrc.map((x,i)=>`<div class="fone"><div class="tela">${x.u}
+    <div class="sbar">${stSrc.map((_,k)=>`<i class="${k<=i?'on':''}"></i>`).join('')}</div>
+    <div class="shd"><span class="av">${av}</span><b>${esc(a.handle.replace(/^@/,''))}</b>${x.d?`<span>${dd(x.d)}</span>`:''}</div>
+    <div class="sft"><span>Enviar mensagem</span><i>♡</i></div></div></div>`).join('')}</div>${stories.length?'':'<p class="mood-n">Ainda não há stories neste mês: mostrando fotos dos posts.</p>'}`,'dk');
   // stories e anotações
   stPages.forEach((grp,gi)=>{out+=page(gi?'Stories (continuação)':'Stories e anotações',`<div class="g4"><div class="stories">${grp.length?grp.map(d=>`<div><div class="lab">${wd(d)} · ${dd(d)}</div><div class="srow">${byDay[d].map((s,k)=>`<div class="sx"><span class="si">${pic({path:s.storage_path},90,160)}<em>${k+1}/${byDay[d].length}</em></span><small>${STORY_TIPOS[s.tipo]||'Imagem'}</small></div>`).join('')}</div></div>`).join(''):'<p class="muted" style="font-size:9pt">Nenhum story planejado neste mês.</p>'}</div>
     <div><div class="lab">Anotações e pedidos de ajuste</div><div class="notes">${'<i></i>'.repeat(15)}</div></div></div>`)});
@@ -3039,7 +3095,30 @@ footer{position:absolute;left:14mm;right:14mm;bottom:7mm;display:flex;justify-co
 .stories{display:grid;grid-template-columns:1fr 1fr;gap:5mm 8mm;align-content:start}
 .srow{display:flex;gap:1.6mm;flex-wrap:wrap}.sx{width:13mm}.si{display:block;width:13mm;aspect-ratio:9/16;border-radius:1.2mm;overflow:hidden;position:relative}
 .si em{position:absolute;left:1.2mm;bottom:1mm;font-size:5.5pt;color:#fff;font-style:normal;text-shadow:0 0 2px rgba(0,0,0,.6)}.sx small{display:block;font-size:5.6pt;color:#7a7a7a;margin-top:.6mm;line-height:1.2}
-.notes{display:flex;flex-direction:column;gap:7.5mm;margin-top:2mm}.notes i{display:block;border-bottom:1px solid #d9d9d9}`;
+.notes{display:flex;flex-direction:column;gap:7.5mm;margin-top:2mm}.notes i{display:block;border-bottom:1px solid #d9d9d9}
+.capa{padding:0}.cv{height:100%;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
+.cv .w{font-size:58pt;font-weight:400;letter-spacing:-.025em;text-align:center;line-height:1}.cv .im{width:68mm;aspect-ratio:364/478;overflow:hidden;background:#d9d9d9}
+.cv-f{position:absolute;left:14mm;right:14mm;bottom:9mm;display:flex;justify-content:space-between;align-items:center;font-size:8pt;color:#7a7a7a}
+.cv-f .who{display:flex;align-items:center;gap:6px}.cv-f b{color:#0a0a0a;font-weight:600}.cv-f .av{width:5mm;height:5mm}
+.pg.dk{background:#141414;color:#fff}.pg.dk header,.pg.dk footer{color:#8a8a8a}.pg.dk header b{color:#fff}.pg.dk header svg rect{fill:#fff}.pg.dk footer{border-color:#2c2c2c}.pg.dk .sep{color:#555}
+.side{position:absolute;right:4.5mm;top:50%;transform:translateY(-50%) rotate(90deg);transform-origin:center;white-space:nowrap;font-size:6.5pt;letter-spacing:.14em;text-transform:uppercase;color:#8a8a8a;width:0;display:flex;justify-content:center}
+.mood{display:grid;grid-template-columns:repeat(5,1fr);gap:4mm;height:142mm;overflow:hidden;margin:0 2mm;-webkit-mask-image:linear-gradient(#000 88%,transparent);mask-image:linear-gradient(#000 88%,transparent)}
+.mcol{display:flex;flex-direction:column;gap:4mm}
+.ig{background:#fff;color:#0a0a0a;border-radius:2mm;overflow:hidden;flex:none}
+.ig-h{display:flex;align-items:center;gap:1.6mm;padding:1.8mm 2.2mm;font-size:6.5pt}.ig-h .av{width:4.4mm;height:4.4mm}.ig-h b{font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ig-h .dots{color:#7a7a7a;letter-spacing:.05em}
+.ig-i{aspect-ratio:4/5;position:relative;overflow:hidden;background:#d9d9d9}
+.ig-i .mc{position:absolute;right:2mm;top:2mm;width:3mm;height:3mm;border:1.3px solid #fff;border-radius:.6mm;box-shadow:1px -1px 0 #fff}
+.ig-i .mr{position:absolute;right:2mm;top:2mm;width:0;height:0;border-left:2.6mm solid #fff;border-top:1.6mm solid transparent;border-bottom:1.6mm solid transparent}
+.ig.txt{background:#ff1f1f;color:#fff}.ig.txt .ig-h{background:#fff;color:#0a0a0a}
+.ig-t{aspect-ratio:4/5;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:1mm}
+.ig-t span{font-size:11pt}.ig-t b{font-size:17pt;font-weight:500;letter-spacing:-.02em;text-transform:uppercase}.ig-t small{font-size:6.5pt;opacity:.85}
+.phones{display:flex;justify-content:center;gap:16mm;height:138mm;align-items:center}
+.fone{height:134mm;aspect-ratio:9/18.6;border:1.6mm solid #2b2b2b;border-radius:8mm;background:#000;padding:1mm;box-shadow:0 6mm 14mm rgba(0,0,0,.5)}
+.tela{position:relative;width:100%;height:100%;border-radius:6mm;overflow:hidden;background:#333}
+.sbar{position:absolute;left:3mm;right:3mm;top:3.5mm;display:flex;gap:1mm}.sbar i{flex:1;height:.6mm;border-radius:1mm;background:rgba(255,255,255,.4)}.sbar i.on{background:#fff}
+.shd{position:absolute;left:3mm;right:3mm;top:6mm;display:flex;align-items:center;gap:1.6mm;font-size:7pt;color:#fff;text-shadow:0 0 3px rgba(0,0,0,.5)}.shd .av{width:6mm;height:6mm;border:1px solid #fff}.shd b{font-weight:600}.shd span{opacity:.75}
+.sft{position:absolute;left:3mm;right:3mm;bottom:4mm;display:flex;align-items:center;gap:2mm;color:#fff;font-size:6.5pt}.sft span{flex:1;border:1px solid rgba(255,255,255,.7);border-radius:99px;padding:1.6mm 3mm}.sft i{font-style:normal;font-size:11pt}
+.mood-n{text-align:center;font-size:7pt;color:#8a8a8a;margin:2mm 0 0}`;
 
 /* ======================= Início ======================= */
 let booted=false;
