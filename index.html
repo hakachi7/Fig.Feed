@@ -1035,7 +1035,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v13';
+const VERSAO='v13.1';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   blog:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 5h16v14H4zM8 9h8M8 13h8M8 17h5"/></svg>',
@@ -2391,6 +2391,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v13.1','Nov 2026',['Mood do feed: cada post aparece uma vez e, se faltar post, entram os fundos de bolinhas','O app agora sempre busca a versão mais nova ao abrir']],
   ['v13','Nov 2026',['Feed da conta: no modo Selecionar, botão “Apagar” manda os posts escolhidos para a Lixeira (dá para recuperar por 30 dias)','Tutorial com dois passos novos: como selecionar posts e como gerar o planejamento do mês','Planejamento em PDF com capa nova, página “Mood do feed” (posts no visual do Instagram) e “Mood dos stories” (celulares com os stories)']],
   ['v12','Nov 2026',['Prévia: toque na foto de perfil para trocar','Destaques em círculos: “+ Novo” para criar e toque em um destaque para trocar nome e capa (foto enviada ou dos posts), mover ou remover','Baixar a prévia do perfil em PNG']],
   ['v11','Nov 2026',['Selecionar posts no feed da conta: toque em “Selecionar”, marque os posts e exporte só eles','Exportar os selecionados como fotos (.zip, com uma pasta por post e as legendas), grade (PNG) ou legendas (.txt)']],
