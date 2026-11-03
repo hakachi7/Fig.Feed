@@ -1039,7 +1039,7 @@ function render(){
     erro:()=>vErro(),'sem-internet':vOffline,
     planos:vPlanos,lixeira:vLixeira,biblioteca:vBiblioteca,blog:vBlog,suporte:vSuporte,
     stories:vStories,previa:vPrevia,relatorio:vRelatorio,r:vRelPublico,
-    resultados:vResultados,conectar:vConectar,conectado:vConectado,'conectar-erro':vConectarErro,p:vPaginaCustom};
+    resultados:vResultados,conectar:vConectar,conectado:vConectado,'conectar-erro':vConectarErro,p:vPaginaCustom,landing:vLanding};
   document.title=PG_DEF[gate.k]&&SITE.pages[gate.k]?.nome?`${SITE.pages[gate.k].nome} · Fig.Feed`:'Fig.Feed';
   try{(map[v]||v404)()}catch(err){console.error(err);vErro('FF-501')}window.scrollTo(0,0);
   if(map[v]&&v!=='p')pageExtras(gate,v);else if(v==='p'&&gate.c&&!gate.lock&&gate.c.banners){PG.ban=bannersHTML(gate.c.banners);pgDecor();popupCheck(gate.k)}
@@ -1214,7 +1214,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v15.2';
+const VERSAO='v15.3';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   blog:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 5h16v14H4zM8 9h8M8 13h8M8 17h5"/></svg>',
@@ -2509,7 +2509,7 @@ function vManutencao(){
 async function loadManut(){try{const {data}=await sb.from('app_settings').select('value').eq('key','manutencao').maybeSingle();MANUT=!!data?.value?.ativo}catch(e){MANUT=false}}
 
 /* ======================= V6: páginas públicas e da conta ======================= */
-const PUBLIC=['termos','privacidade','ajuda','novidades','planos','r','blog','conectar','conectado','conectar-erro','p'];
+const PUBLIC=['termos','privacidade','ajuda','novidades','planos','r','blog','conectar','conectado','conectar-erro','p','landing'];
 function pubHeader(){return `<header class="pub-hdr"><button class="brand" data-go="home" aria-label="Fig.Feed, início">${LOGO()}<span>Fig.Feed</span></button>
   <div class="r"><button class="pill" data-go="entrar">Entrar</button><button class="pill dark" data-go="criar">Criar conta grátis</button></div></header>`}
 const shell=cur=>USER?header(cur):pubHeader();
@@ -2562,6 +2562,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v15.3','Nov 2026',['Admin › Páginas: a página inicial (landing page) agora aparece na lista, com nome, banners, aviso e botão de ligar e desligar']],
   ['v15.2','Nov 2026',['Toda conta nova já começa com uma foto de perfil de bolinhas (dá para trocar pela sua em Perfil)']],
   ['v15.1','Nov 2026',['Menu do ícone volta a usar a foto desfocada de fundo, com o crédito do fotógrafo e o botão "↻ outra foto"']],
   ['v15','Nov 2026',['Menu do ícone novo: fundo de bolinhas que dá para trocar, atalhos grandes numerados e sua conta ao lado','Admin › Páginas: todas as páginas do site com nome e link editáveis, quem vê e botão de ligar e desligar','Página desligada mostra o aviso "Estamos trabalhando nessa área" com a página desfocada por trás e a previsão de volta','Banners por página: principal (computador e celular), faixa e carrossel, com as medidas certas','Modelos de páginas para criar páginas novas (FAQ, preços, contato, em breve e outras)','Admin › Pop-ups: nome, ordem, ligar e desligar, onde, quando, quantas vezes e para quem aparecem']],
@@ -3610,16 +3611,16 @@ sb.auth.onAuthStateChange((event,session)=>{
 /* ======================= V15: Páginas do site, banners, aviso com spoiler e pop-ups ======================= */
 // [rota, nome padrão, grupo (pub = pública, app = dentro do app), pode desligar]
 const PAGES=[
-  ['home','Início','pub',false],['entrar','Entrar','pub',false],['criar','Criar conta','pub',true],['planos','Planos','pub',true],
+  ['landing','Página inicial (landing page)','pub',true],['entrar','Entrar','pub',false],['criar','Criar conta','pub',true],['planos','Planos','pub',true],
   ['blog','Blog','pub',true],['ajuda','Ajuda','pub',true],['novidades','Novidades','pub',true],['r','Relatório compartilhado','pub',true],
   ['termos','Termos de uso','pub',false],['privacidade','Política de privacidade','pub',false],
-  ['contas','Contas','app',true],['crono','Cronograma','app',true],['down','Downloads','app',true],['biblioteca','Biblioteca','app',true],
+  ['home','Início do app','app',false],['contas','Contas','app',true],['crono','Cronograma','app',true],['down','Downloads','app',true],['biblioteca','Biblioteca','app',true],
   ['lixeira','Lixeira','app',true],['stories','Stories','app',true],['previa','Prévia do perfil','app',true],['relatorio','Relatório do mês','app',true],
   ['resultados','Resultados','app',true],['suporte','Fale com a gente','app',true],['perfil','Perfil','app',false],['config','Configuração','app',false],
   ['seguranca','Segurança e Excluir conta','app',false]];
 const PG_DEF=Object.fromEntries(PAGES.map(p=>[p[0],p]));
 const PAGE_OF={feed:'contas',car:'contas',edit:'contas',excluir:'seguranca'};
-const PG_RESERVED=new Set(['entrar','criar','senha','nova-senha','home','menu','contas','feed','car','edit','crono','down','perfil','config','admin','boas-vindas',
+const PG_RESERVED=new Set(['landing','entrar','criar','senha','nova-senha','home','menu','contas','feed','car','edit','crono','down','perfil','config','admin','boas-vindas',
   'termos','privacidade','ajuda','novidades','seguranca','excluir','erro','sem-internet','planos','lixeira','biblioteca','blog','suporte','stories','previa',
   'relatorio','r','resultados','conectar','conectado','conectar-erro','confirmado','p']);
 let SITE={pages:{},popups:[],loaded:false};
@@ -3651,7 +3652,7 @@ function pgDecor(){
 new MutationObserver(()=>pgDecor()).observe(app,{childList:true});
 // Decide antes de mostrar a página: se precisa entrar, se está desligada ou se é de outro plano
 function pgGate(v){
-  const k=v==='p'?route[1]:pgKeyOf(v);const c=SITE.pages[k];
+  const k=v==='p'?route[1]:(v==='home'&&!USER)?'landing':pgKeyOf(v);const c=SITE.pages[k];
   if(!c||isAdmin())return {k,c,lock:null};
   if(!pgOn(c))return {k,c,lock:'off'};
   if(c.quem==='logados'&&!USER)return {k,c,redirect:'entrar'};
@@ -3673,9 +3674,10 @@ function pgLock(c,kind,k){
   const nome=c?.nome||pgName(k);
   const pro=kind==='pro';
   const titulo=pro?'Esta página é dos planos Pro e Agência':(c?.aviso_titulo||'Estamos trabalhando nessa área');
-  const texto=pro?`${nome} faz parte dos planos Pro e Agência. Assine para liberar.`:(c?.aviso_texto||`A página ${nome} está passando por melhorias. Seus dados estão guardados e ela volta em breve.`);
+  const texto=pro?`${nome} faz parte dos planos Pro e Agência. Assine para liberar.`:(c?.aviso_texto||(k==='landing'?'O Fig.Feed está passando por melhorias e volta em breve. Quem já tem conta pode entrar normalmente.':`A página ${nome} está passando por melhorias. Seus dados estão guardados e ela volta em breve.`));
   const volta=!pro&&c?.aviso_volta?`<span class="pgl-volta">Previsão de volta: ${dBR(c.aviso_volta)}</span>`:'';
-  const btn=pro?['planos','Ver planos']:({inicio:['home','Voltar para o início'],novidades:['novidades','Ver novidades'],suporte:[USER?'suporte':'ajuda','Fale com a gente'],nenhum:null}[c?.aviso_botao||'inicio']);
+  let btn=pro?['planos','Ver planos']:({inicio:['home','Voltar para o início'],novidades:['novidades','Ver novidades'],suporte:[USER?'suporte':'ajuda','Fale com a gente'],nenhum:null}[c?.aviso_botao||'inicio']);
+  if(k==='landing'&&btn&&btn[0]==='home')btn=['entrar','Entrar na conta'];
   const el=document.createElement('div');el.id='pg-lock';el.className='pg-lock';
   el.innerHTML=`<div class="pgl-in" role="status"><span class="pgl-tag">${pro?'PLANO PRO':'EM OBRA · UMA ESPIADA NO QUE VEM AÍ'}</span><h1>${esc(titulo)}</h1><p>${esc(texto)}</p>${volta}
     <div class="acts-row" style="justify-content:center">${btn?`<button class="pill dark" data-to="${btn[0]}">${btn[1]}</button>`:''}${pro||(btn&&btn[0]===(USER?'home':'novidades'))?'':`<button class="pill" data-to="${USER?'home':'novidades'}">${USER?'Ir para o início':'Ver novidades'}</button>`}</div></div>`;
@@ -3804,7 +3806,7 @@ function drawPaginas(){
   const off=r=>!r.lock&&r.c&&!pgOn(r.c);
   const cnt={todas:all.length,pub:all.filter(r=>r.grupo==='pub').length,app:all.filter(r=>r.grupo==='app').length,custom:all.filter(r=>r.custom).length,off:all.filter(off).length};
   const match=r=>f==='todas'||(f==='off'?off(r):r.grupo===f);
-  const link=r=>r.custom?`/#p/${r.k}`:`/#${pgLink(r.k)}`;
+  const link=r=>r.custom?`/#p/${r.k}`:r.k==='landing'?'/ · quem não entrou':`/#${pgLink(r.k)}`;
   const row=r=>{const on=!off(r);return `<div class="pg-row ${on?'':'is-off'}"><b>${esc(r.nome)}</b><code>${esc(link(r))}</code><span class="mut hide-sm">${QUEM_NOME[r.c?.quem||pgQuem(r.k)]}</span>
     <span class="pg-st">${r.lock?`<span class="mut pg-lk">${LOCK_IC}Sempre no ar</span>`:`${SWITCH(on,`${r.nome}: ${on?'no ar':'desligada'}`,`data-sw="${esc(r.k)}"`)}<span class="${on?'':'err'}">${on?'No ar':'Desligada'}</span>`}</span>
     <button class="ed" data-ed="${esc(r.k)}">Editar</button></div>`};
@@ -3844,7 +3846,7 @@ function pgPanel(k){
   if(!c.key)E.ativo=true;
   let tab='geral';closePanel();
   const nomeP=def?def[1]:(c.nome||k);
-  const quemOps=(def?.[2]==='app')?['logados','pro','admins']:['todos','logados','pro','admins'];
+  const quemOps=k==='landing'?['todos']:(def?.[2]==='app')?['logados','pro','admins']:['todos','logados','pro','admins'];
   const ov=document.createElement('div');ov.className='ov';ov.id='ov';ov.onclick=e=>{if(e.target===ov)closePanel()};
   const keep=()=>{ov.querySelectorAll('[data-e]').forEach(i=>{const f=i.dataset.e;E[f]=i.type==='checkbox'?i.checked:i.value});
     ov.querySelectorAll('[data-bn]').forEach(i=>{const [a,b]=i.dataset.bn.split('.');if(a==='car'){E.banners.carrossel[+b].link=i.value}else{(E.banners[a]=E.banners[a]||{})[b]=i.value}})};
@@ -3856,7 +3858,8 @@ function pgPanel(k){
     const body={geral:`<label class="lbl-s" for="pp-n">Nome da página</label><input class="field" id="pp-n" data-e="nome" maxlength="60" value="${esc(E.nome)}" placeholder="${esc(nomeP)}">
         <p class="role-help">${custom?'É o título da página.':'É o nome que aparece no menu e no título da aba do navegador.'}</p>
         <label class="lbl-s" for="pp-l">Link</label>${custom?`<div class="pp-link"><span>figfeed · /#p/</span><b>${esc(k)}</b></div><p class="role-help">O link das páginas criadas não muda, para não quebrar onde ele já foi divulgado.</p>`
-          :`<div class="pp-link"><span>/#</span><input id="pp-l" data-e="slug" maxlength="60" value="${esc(E.slug)}" placeholder="${esc(k)}"></div><p class="role-help">${k==='home'?'O Início sempre abre no endereço principal.':`O link antigo (/#${k}) continua funcionando.`}</p>`}
+          :k==='landing'||k==='home'?`<div class="pp-link"><span>${k==='landing'?'Endereço principal do site':'/#home'}</span></div><p class="role-help">${k==='landing'?'É a primeira página de quem ainda não entrou na conta. Este link não muda.':'O Início do app sempre abre no endereço principal para quem já entrou.'}</p>${k==='landing'?'<div class="acts-row"><a class="pill" href="#landing">Ver a página inicial</a></div>':''}`
+          :`<div class="pp-link"><span>/#</span><input id="pp-l" data-e="slug" maxlength="60" value="${esc(E.slug)}" placeholder="${esc(k)}"></div><p class="role-help">O link antigo (/#${k}) continua funcionando.</p>`}
         <span class="lbl-s">Quem vê</span><div class="chips">${quemOps.map(q=>`<button class="chip ${E.quem===q?'on':''}" data-q="${q}" aria-pressed="${E.quem===q}">${QUEM_NOME[q]}</button>`).join('')}</div>
         ${lock?`<p class="role-help" style="margin-top:14px">${LOCK_IC} Esta página fica sempre no ar.</p>`:`<div class="pp-on"><div><b>Página no ar</b><p class="role-help">Desligada, quem abrir vê o aviso. Admins continuam vendo a página.</p></div>${SWITCH(E.ativo,'Página no ar','id="pp-on"')}</div>`}
         ${custom?`<div class="acts-row"><a class="pill" href="#admin/pagina/${esc(k)}">Editar conteúdo</a><a class="pill" href="#p/${esc(k)}">Ver página</a></div>`:''}`,
@@ -3907,7 +3910,7 @@ function pgPanel(k){
       if(slug&&Object.values(SITE.pages).some(x=>x.key!==k&&(x.slug===slug||x.key===slug)))return toast('Esse link já é usado por outra página.',3600);
       const fields={nome:E.nome.trim(),quem:E.quem,aviso_titulo:E.aviso_titulo.trim(),aviso_texto:E.aviso_texto.trim(),aviso_volta:E.aviso_volta?new Date(E.aviso_volta+'T09:00:00').toISOString():null,
         aviso_botao:E.aviso_botao,auto_ligar:!!E.auto_ligar,banners:cleanBanners(E.banners)};
-      if(!custom)fields.slug=slug&&slug!==k?slug:null;
+      if(!custom)fields.slug=slug&&slug!==k&&k!=='landing'&&k!=='home'?slug:null;
       if(!lock)fields.ativo=!!E.ativo;
       if(fields.auto_ligar&&!fields.aviso_volta)return toast('Escolha a data de volta para ligar sozinha.',3600);
       s.disabled=true;try{await pgSave(k,fields);admLog('conteudo','editou página',{pagina:fields.nome||nomeP});closePanel();toast('Página salva');

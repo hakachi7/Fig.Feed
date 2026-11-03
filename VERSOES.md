@@ -6,6 +6,7 @@ Cada versão também tem uma branch própria, com o código exatamente como esta
 
 | Versão | Nome | O que trouxe | Branch | Commit |
 | --- | --- | --- | --- | --- |
+| v15.3 | Landing na lista | A página inicial (landing page) aparece em Admin › Páginas, separada do Início do app | (main) | (veja a main) |
 | v15.2 | Foto de perfil inicial | Toda conta nova nasce com uma foto de perfil de bolinhas (uma das 9, sorteada) | (main) | (veja a main) |
 | v15.1 | Fundo do menu | Menu do ícone volta para a foto desfocada de antes (com crédito); o layout novo continua | (main) | (veja a main) |
 | v15 | Páginas e pop-ups | Menu novo com fundo de bolinhas; Admin › Páginas (nome, link, quem vê, ligar/desligar com aviso desfocado, banners, modelos de páginas) e Admin › Pop-ups | [versao-15-paginas-e-popups](https://github.com/hakachi7/Fig.Feed/tree/versao-15-paginas-e-popups) | (veja a branch) |

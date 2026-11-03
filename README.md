@@ -106,3 +106,4 @@ Abra o `index.html` no navegador, crie uma conta e entre. As fotos de exemplo v�
 - Banco: `supabase/v15.sql` (tabelas `site_pages` e `popups`, funções `popup_event` e `site_page_aviso`).
 - v15.1: o fundo do menu voltou a ser a foto desfocada de antes (com o crédito do fotógrafo e o botão "↻ outra foto"); as bolinhas ficaram só no layout.
 - v15.2: toda conta nova nasce com uma foto de perfil de bolinhas (o banco sorteia uma das 9 imagens; `avatar_path = 'bolinhas:N'`). Arquivo: `supabase/v15_2.sql`.
+- v15.3: em Admin › Páginas, a **Página inicial (landing page)** aparece separada do **Início do app**; a landing pode ter nome, banners, aviso e ser desligada (quem tem conta continua entrando). Admins veem a landing em `/#landing`.
