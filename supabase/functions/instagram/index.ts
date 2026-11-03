@@ -1,20 +1,22 @@
-// Fig.Feed — conexão com o Instagram (API do Instagram com login do Instagram)
+// Fig.Feed — conexão com o Instagram (API do Instagram com LOGIN UNIFICADO — apps Meta criados a partir de out/2026)
+// O cliente entra com o Instagram OU com o Facebook. A chave (token de usuário do sistema da empresa) não vence.
 // Rotas:
-//   GET  ?go=<link>            → abre o login do Instagram para aquele link de conexão
+//   GET  ?go=<link>            → abre o login da Meta para aquele link de conexão
 //   GET  ?code=…&state=<link>  → volta da Meta: guarda a chave e busca os números
 //   POST {action:'sync', account_id}       → "Atualizar agora" (usuário logado, dono da conta)
 //   POST {action:'disconnect', account_id} → desconectar (usuário logado, dono da conta)
 //   POST {action:'cron_sync'|'cron_stories', account_id} + header x-cron-secret → agendamento
+// Segredos: IG_APP_ID (= ID do app da Meta), IG_APP_SECRET (= chave secreta do app da Meta), IG_CONFIG_ID (opcional)
 import { createClient } from "jsr:@supabase/supabase-js@2";
 
 const APP_ID = Deno.env.get("IG_APP_ID") ?? "";
 const APP_SECRET = Deno.env.get("IG_APP_SECRET") ?? "";
+const CONFIG_ID = Deno.env.get("IG_CONFIG_ID") ?? "1136611732178374";
 const SITE = Deno.env.get("SITE_URL") ?? "https://hakachi7.github.io/Fig.Feed/";
 const SB_URL = Deno.env.get("SUPABASE_URL")!;
 const SELF = `${SB_URL}/functions/v1/instagram`;
 const GV = "v26.0";
-const G = `https://graph.instagram.com/${GV}`;
-const SCOPES = "instagram_business_basic,instagram_business_manage_insights";
+const G = `https://graph.facebook.com/${GV}`;
 const db = createClient(SB_URL, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, { auth: { persistSession: false } });
 
 const CORS = {
@@ -44,6 +46,7 @@ const ins = (data: any[]) => {
   }
   return o;
 };
+const PROFILE_FIELDS = "id,username,name,profile_picture_url,followers_count,media_count";
 
 // ---------- Coleta ----------
 async function saveThumb(owner: string, mediaId: string, url?: string) {
@@ -66,7 +69,6 @@ async function mediaInsights(id: string, kind: string, token: string) {
   try { return ins((await ig(`/${id}/insights`, token, { metric: METRICS[kind].join(",") })).data); }
   catch (e) {
     if (e instanceof IgError && e.code === 190) throw e;
-    // alguma métrica não aceita para este post: tenta o básico
     try { return ins((await ig(`/${id}/insights`, token, { metric: "reach,views" })).data); } catch { return {}; }
   }
 }
@@ -92,17 +94,8 @@ async function syncAccount(accountId: string, opts: { full?: boolean; storiesOnl
   const { data: acc } = await db.from("ig_connections").select("*").eq("account_id", accountId).maybeSingle();
   const { data: tk } = await db.from("ig_tokens").select("*").eq("account_id", accountId).maybeSingle();
   if (!acc || !tk) return { ok: false, motivo: "sem conexão" };
-  let token = tk.access_token as string;
+  const token = tk.access_token as string; // login unificado: a chave não vence, não precisa renovar
   try {
-    // renova a chave quando faltar menos de 20 dias (e tiver mais de 1 dia)
-    const exp = tk.expires_at ? new Date(tk.expires_at).getTime() : 0;
-    if (exp - Date.now() < 20 * 864e5 && Date.now() - new Date(tk.refreshed_at).getTime() > 864e5) {
-      const r = await ig("https://graph.instagram.com/refresh_access_token", token, { grant_type: "ig_refresh_token" });
-      token = r.access_token;
-      const ex = new Date(Date.now() + (r.expires_in ?? 5184000) * 1000).toISOString();
-      await db.from("ig_tokens").update({ access_token: token, expires_at: ex, refreshed_at: new Date().toISOString() }).eq("account_id", accountId);
-      await db.from("ig_connections").update({ token_expires_at: ex }).eq("account_id", accountId);
-    }
     const { data: thumbs } = await db.from("ig_media").select("media_id").eq("account_id", accountId).not("thumb_url", "is", null);
     const have = new Set((thumbs ?? []).map((t: any) => t.media_id));
     const fields = "id,caption,media_type,media_product_type,permalink,timestamp,thumbnail_url,media_url,like_count,comments_count";
@@ -113,7 +106,7 @@ async function syncAccount(accountId: string, opts: { full?: boolean; storiesOnl
     if (opts.storiesOnly) { await db.from("ig_connections").update({ status: "ok", status_msg: null }).eq("account_id", accountId); return { ok: true }; }
 
     // perfil
-    const me = await ig(`/me`, token, { fields: "user_id,username,name,profile_picture_url,followers_count,media_count" });
+    const me = await ig(`/${acc.ig_user_id}`, token, { fields: PROFILE_FIELDS });
     await db.from("ig_connections").update({
       username: me.username, name: me.name ?? null, profile_picture_url: me.profile_picture_url ?? null,
       followers: me.followers_count ?? null, media_count: me.media_count ?? null,
@@ -184,6 +177,43 @@ async function syncAccount(accountId: string, opts: { full?: boolean; storiesOnl
   }
 }
 
+// Acha o Instagram que o cliente compartilhou (tenta vários caminhos e anota o que a Meta respondeu)
+async function findIgAccount(token: string): Promise<{ id: string; username?: string } | null> {
+  const log = (k: string, v: unknown) => console.log(`[ig-find] ${k}: ${JSON.stringify(v).slice(0, 600)}`);
+  // 1) caminho da documentação
+  try {
+    const r = await ig("/me/assigned_instagram_accounts", token, { fields: "id,username" });
+    log("assigned_instagram_accounts", r);
+    if (r.data?.[0]?.id) return r.data[0];
+  } catch (e) { log("assigned_instagram_accounts erro", (e as Error).message); }
+  // 2) permissões da chave: instagram_basic traz o ID da conta em target_ids
+  try {
+    const d = await ig("/debug_token", `${APP_ID}|${APP_SECRET}`, { input_token: token });
+    const gs = d.data?.granular_scopes ?? [];
+    log("debug_token", { type: d.data?.type, scopes: d.data?.scopes, granular: gs });
+    const ids: string[] = gs.find((g: any) => g.scope === "instagram_basic")?.target_ids
+      ?? gs.find((g: any) => String(g.scope).startsWith("instagram_"))?.target_ids ?? [];
+    for (const id of ids) {
+      try { const p = await ig(`/${id}`, token, { fields: "id,username" }); if (p.username) return p; } catch (e) { log(`perfil ${id} erro`, (e as Error).message); }
+    }
+  } catch (e) { log("debug_token erro", (e as Error).message); }
+  // 3) pela empresa do cliente
+  try {
+    const me = await ig("/me", token, { fields: "id,client_business_id" });
+    log("me", me);
+    if (me.client_business_id) {
+      for (const edge of ["owned_instagram_accounts", "instagram_accounts"]) {
+        try {
+          const r = await ig(`/${me.client_business_id}/${edge}`, token, { fields: "id,username" });
+          log(edge, r);
+          if (r.data?.[0]?.id) return r.data[0];
+        } catch (e) { log(`${edge} erro`, (e as Error).message); }
+      }
+    }
+  } catch (e) { log("me erro", (e as Error).message); }
+  return null;
+}
+
 // ---------- Rotas ----------
 async function userOf(req: Request) {
   const jwt = (req.headers.get("Authorization") ?? "").replace("Bearer ", "");
@@ -206,47 +236,44 @@ Deno.serve(async (req) => {
     if (go) {
       const { data: l } = await db.from("ig_connect_links").select("*").eq("token", go).maybeSingle();
       if (!l || l.used_at || new Date(l.expires_at) < new Date()) return back("conectar-erro/link");
-      const a = new URL("https://www.instagram.com/oauth/authorize");
+      const a = new URL(`https://www.facebook.com/${GV}/dialog/oauth`);
       a.searchParams.set("client_id", APP_ID);
+      a.searchParams.set("config_id", CONFIG_ID);
       a.searchParams.set("redirect_uri", SELF);
       a.searchParams.set("response_type", "code");
-      a.searchParams.set("scope", SCOPES);
-      a.searchParams.set("enable_fb_login", "false");
+      a.searchParams.set("override_default_response_type", "true");
+      a.searchParams.set("prompt", "login"); // mostra as duas opções: Instagram e Facebook
       a.searchParams.set("state", go);
       return new Response(null, { status: 302, headers: { Location: a.toString() } });
     }
     const state = url.searchParams.get("state") ?? "";
     if (url.searchParams.get("error")) return back(`conectar-erro/negado/${state}`);
-    const code = (url.searchParams.get("code") ?? "").replace(/#_$/, "");
+    const code = url.searchParams.get("code") ?? "";
     if (!code || !state) return back("conectar-erro/link");
     const { data: l } = await db.from("ig_connect_links").select("*").eq("token", state).maybeSingle();
     if (!l || l.used_at || new Date(l.expires_at) < new Date()) return back("conectar-erro/link");
     try {
-      // 1) código → chave curta
-      const f = new FormData();
-      f.set("client_id", APP_ID); f.set("client_secret", APP_SECRET); f.set("grant_type", "authorization_code");
-      f.set("redirect_uri", SELF); f.set("code", code);
-      const r1 = await fetch("https://api.instagram.com/oauth/access_token", { method: "POST", body: f }).then((r) => r.json());
-      const short = r1.access_token ?? r1.data?.[0]?.access_token;
-      if (!short) throw new Error(r1.error_message ?? "sem chave");
-      // 2) chave curta → chave de 60 dias
-      const r2 = await ig("https://graph.instagram.com/access_token", short, { grant_type: "ig_exchange_token", client_secret: APP_SECRET });
-      const token = r2.access_token as string;
-      const ex = new Date(Date.now() + (r2.expires_in ?? 5184000) * 1000).toISOString();
-      // 3) quem é
-      const me = await ig("/me", token, { fields: "user_id,username,name,account_type,profile_picture_url,followers_count,media_count" });
-      if (me.account_type && !["BUSINESS", "MEDIA_CREATOR", "CREATOR"].includes(String(me.account_type).toUpperCase())) return back(`conectar-erro/pessoal/${state}`);
-      await db.from("ig_tokens").upsert({ account_id: l.account_id, access_token: token, expires_at: ex, refreshed_at: new Date().toISOString() });
+      // 1) código → chave (token de usuário do sistema da empresa do cliente; não vence)
+      const t = await fetch(`${G}/oauth/access_token?` + new URLSearchParams({ client_id: APP_ID, client_secret: APP_SECRET, redirect_uri: SELF, code })).then((r) => r.json());
+      const token = t.access_token as string;
+      if (!token) throw new Error(t?.error?.message ?? "sem chave");
+      // 2) qual Instagram o cliente compartilhou
+      const first = await findIgAccount(token);
+      if (!first?.id) return back(`conectar-erro/pessoal/${state}`);
+      // 3) perfil
+      const me = await ig(`/${first.id}`, token, { fields: PROFILE_FIELDS });
+      await db.from("ig_tokens").upsert({ account_id: l.account_id, access_token: token, expires_at: null, refreshed_at: new Date().toISOString() });
       await db.from("ig_connections").upsert({
-        account_id: l.account_id, owner_id: l.owner_id, ig_user_id: String(me.user_id ?? me.id), username: me.username, name: me.name ?? null,
+        account_id: l.account_id, owner_id: l.owner_id, ig_user_id: String(me.id ?? first.id), username: me.username ?? first.username, name: me.name ?? null,
         profile_picture_url: me.profile_picture_url ?? null, followers: me.followers_count ?? null, media_count: me.media_count ?? null,
-        status: "ok", status_msg: "Buscando os últimos 30 dias…", token_expires_at: ex, connected_at: new Date().toISOString(),
+        status: "ok", status_msg: "Buscando os últimos 30 dias…", token_expires_at: null, connected_at: new Date().toISOString(),
       });
       await db.from("ig_connect_links").update({ used_at: new Date().toISOString() }).eq("token", state);
-      // primeira coleta em segundo plano
+      // primeira coleta completa numa chamada própria (pelo banco), para o Supabase não cortar no meio
+      const { error: rpcErr } = await db.rpc("ig_sync_now", { p_account: l.account_id, p_full: true });
       // @ts-ignore EdgeRuntime existe no Supabase
-      EdgeRuntime.waitUntil(syncAccount(l.account_id, { full: true }));
-      return back(`conectado/${encodeURIComponent(me.username ?? "")}`);
+      if (rpcErr) { console.error(rpcErr); EdgeRuntime.waitUntil(syncAccount(l.account_id, { full: true })); }
+      return back(`conectado/${encodeURIComponent(me.username ?? first.username ?? "")}`);
     } catch (e) {
       console.error(e);
       return back(`conectar-erro/falhou/${state}`);
@@ -259,7 +286,7 @@ Deno.serve(async (req) => {
   if (String(body.action).startsWith("cron_")) {
     const { data: s } = await db.from("ig_settings").select("value").eq("key", "cron_secret").single();
     if (!s || req.headers.get("x-cron-secret") !== s.value) return json({ erro: "não autorizado" }, 401);
-    return json(await syncAccount(accountId, { storiesOnly: body.action === "cron_stories" }));
+    return json(await syncAccount(accountId, { storiesOnly: body.action === "cron_stories", full: !!body.full }));
   }
   const user = await userOf(req);
   if (!user || !accountId || !(await ownsAccount(user.id, accountId))) return json({ erro: "não autorizado" }, 401);
