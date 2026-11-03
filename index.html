@@ -936,7 +936,10 @@ let POOL=FALLBACK;
 const rnd=n=>Math.floor(Math.random()*n);
 const randPhoto=()=>{const p=POOL[rnd(POOL.length)];return {path:'picsum:'+p[0],credit:p[1]}};
 const URLS={}; // caminho no Storage -> link temporário
+// Fotos que não estão no Storage: picsum (fotos de exemplo) e bolinhas (foto de perfil inicial de cada conta nova)
+const isStock=p=>/^(picsum|bolinhas):/.test(p||'');
 function src(s,w=600,h=750){if(!s)return'';const p=s.path||'';
+  if(p.startsWith('bolinhas:'))return new URL(`img/tutorial/bolinhas-${parseInt(p.slice(9),10)||1}.jpg`,location.href).href;
   if(p.startsWith('picsum:'))return `https://picsum.photos/id/${p.slice(7)}/${w}/${h}`;return URLS[p]||''}
 const bgi=(s,w,h)=>{const u=src(s,w,h);return u?`background-image:url('${u}')`:''};
 const handleOf=c=>c?'@'+String(c).toLowerCase().replace(/[^a-z0-9._]+/g,''):'@voce';
@@ -972,7 +975,7 @@ const DOTS='<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
 const XICON='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>';
 
 async function signPaths(paths){
-  const need=[...new Set(paths)].filter(p=>p&&!p.startsWith('picsum:')&&!URLS[p]);if(!need.length)return;
+  const need=[...new Set(paths)].filter(p=>p&&!isStock(p)&&!URLS[p]);if(!need.length)return;
   const {data}=await sb.storage.from('fotos').createSignedUrls(need,60*60*6);
   (data||[]).forEach(d=>{if(d.signedUrl)URLS[d.path]=d.signedUrl});
 }
@@ -1211,7 +1214,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v15.1';
+const VERSAO='v15.2';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   blog:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 5h16v14H4zM8 9h8M8 13h8M8 17h5"/></svg>',
@@ -1483,7 +1486,7 @@ function vCar(){
     try{await db(sb.rpc('reorder_slides',{p_post:p.id,p_ids:ids}))}catch(e){await loadAll();render()}}});
   tr.querySelectorAll('.x').forEach(b=>b.onclick=async e=>{e.stopPropagation();if(p.slides.length===1){toast('O post precisa de pelo menos uma foto');return}
     const s=p.slides.find(x=>x.id===b.dataset.x);await db(sb.from('slides').delete().eq('id',s.id));
-    if(!s.path.startsWith('picsum:'))sb.storage.from('fotos').remove([s.path]);
+    if(!isStock(s.path))sb.storage.from('fotos').remove([s.path]);
     p.slides=p.slides.filter(x=>x.id!==s.id);sb.rpc('reorder_slides',{p_post:p.id,p_ids:p.slides.map(x=>x.id)});vCar()});
   const add=document.getElementById('add');if(add)add.onclick=()=>pickFiles({type:'slides',acc:a.id,post:p.id});
   document.getElementById('cap').onclick=()=>go(`edit/${a.id}/${p.id}`);
@@ -1913,7 +1916,7 @@ async function setAvatar(ctx,file){
   let old;
   if(ctx.type==='profavatar'){old=S.profile.avatar_path;await db(sb.from('profiles').update({avatar_path:path}).eq('id',USER.id));S.profile.avatar_path=path}
   else{const a=accById(ctx.acc);old=a.avatar;await db(sb.from('accounts').update({avatar_path:path}).eq('id',a.id));a.avatar=path}
-  if(old)sb.storage.from('fotos').remove([old]);
+  if(old&&!isStock(old))sb.storage.from('fotos').remove([old]);
   await signPaths([path]);toast('Foto atualizada');render();
 }
 
@@ -2559,6 +2562,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v15.2','Nov 2026',['Toda conta nova já começa com uma foto de perfil de bolinhas (dá para trocar pela sua em Perfil)']],
   ['v15.1','Nov 2026',['Menu do ícone volta a usar a foto desfocada de fundo, com o crédito do fotógrafo e o botão "↻ outra foto"']],
   ['v15','Nov 2026',['Menu do ícone novo: fundo de bolinhas que dá para trocar, atalhos grandes numerados e sua conta ao lado','Admin › Páginas: todas as páginas do site com nome e link editáveis, quem vê e botão de ligar e desligar','Página desligada mostra o aviso "Estamos trabalhando nessa área" com a página desfocada por trás e a previsão de volta','Banners por página: principal (computador e celular), faixa e carrossel, com as medidas certas','Modelos de páginas para criar páginas novas (FAQ, preços, contato, em breve e outras)','Admin › Pop-ups: nome, ordem, ligar e desligar, onde, quando, quantas vezes e para quem aparecem']],
   ['v14','Nov 2026',['Nova aba Resultados em cada conta: conecte o Instagram e veja visualizações, contas alcançadas, interações, seguidores, melhores posts, formatos, dias e horários','Link para o cliente autorizar o Instagram no celular dele, sem passar senha','Downloads: três PDFs — Planejamento, Resultados e Completo (resultados do mês anterior + planejamento)','Os números atualizam sozinhos todo dia, e os stories a cada 4 horas']],
@@ -2740,7 +2744,7 @@ async function vLixeira(){
       .sort((x,y)=>new Date(y.at)-new Date(x.at));
   }catch(err){if(route[0]==='lixeira')vErro('FF-502');return}
   if(route[0]!=='lixeira')return;
-  const thumb=p=>p?(p.startsWith('picsum:')?src({path:p},120,150):URLS[p]||''):'';
+  const thumb=p=>p?(isStock(p)?src({path:p},120,150):URLS[p]||''):'';
   app.innerHTML=header('')+`<main class="page" style="max-width:820px"><div class="pg-top"><div><h1>Lixeira</h1>
       <p class="sub" style="margin:0">Itens apagados ficam aqui por 30 dias. Depois disso, somem para sempre.</p></div>
       ${items.length?'<button class="pill danger" id="esv">Esvaziar lixeira</button>':''}</div>
@@ -2863,7 +2867,7 @@ async function vStories(){
     const del=document.getElementById('st-del');
     if(del)del.onclick=async()=>{const s=list.find(x=>x.id===stSel);if(!s)return;
       if(!del.dataset.ok){del.dataset.ok=1;del.textContent='Clique de novo para remover';return}
-      await db(sb.from('stories').delete().eq('id',s.id));if(!s.storage_path.startsWith('picsum:'))sb.storage.from('fotos').remove([s.storage_path]);
+      await db(sb.from('stories').delete().eq('id',s.id));if(!isStock(s.storage_path))sb.storage.from('fotos').remove([s.storage_path]);
       stSel=null;toast('Story removido');vStories()};
   };
   draw();
@@ -3034,9 +3038,9 @@ function vRelatorio(){
   lk.onclick=async()=>{lk.disabled=true;lk.textContent='Criando link…';
     try{
       // links das fotos que valem 30 dias, junto com o link do relatório
-      const paths=[accAv(a),...r.feed.length?a.posts.filter(p=>p.date?.startsWith(month)&&p.status==='publicado').map(p=>p.slides[0]):[]].map(s=>s?.path).filter(p=>p&&!p.startsWith('picsum:'));
+      const paths=[accAv(a),...r.feed.length?a.posts.filter(p=>p.date?.startsWith(month)&&p.status==='publicado').map(p=>p.slides[0]):[]].map(s=>s?.path).filter(p=>p&&!isStock(p));
       const long={};if(paths.length){const {data}=await sb.storage.from('fotos').createSignedUrls([...new Set(paths)],60*60*24*30);(data||[]).forEach(d=>{if(d.signedUrl)long[d.path]=d.signedUrl})}
-      const pay=reportData(a,month,(s,w,h)=>!s?'':s.path?.startsWith('picsum:')?src(s,w,h):long[s.path]||'');
+      const pay=reportData(a,month,(s,w,h)=>!s?'':isStock(s.path)?src(s,w,h):long[s.path]||'');
       const row=await db(sb.from('report_links').insert({account_id:a.id,month,payload:pay}).select('token').single());
       const url=(BASE_URL()||location.href.split('#')[0])+'#r/'+row.token;
       try{await navigator.clipboard.writeText(url);toast('Link copiado. Ele vale por 30 dias.',3500)}
