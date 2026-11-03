@@ -6,6 +6,7 @@ Cada versão também tem uma branch própria, com o código exatamente como esta
 
 | Versão | Nome | O que trouxe | Branch | Commit |
 | --- | --- | --- | --- | --- |
+| v15.1 | Fundo do menu | Menu do ícone volta para a foto desfocada de antes (com crédito); o layout novo continua | (main) | (veja a main) |
 | v15 | Páginas e pop-ups | Menu novo com fundo de bolinhas; Admin › Páginas (nome, link, quem vê, ligar/desligar com aviso desfocado, banners, modelos de páginas) e Admin › Pop-ups | [versao-15-paginas-e-popups](https://github.com/hakachi7/Fig.Feed/tree/versao-15-paginas-e-popups) | (veja a branch) |
 | v14 | Resultados do Instagram | Aba Resultados com os números do Instagram (API da Meta), link para o cliente conectar, coleta automática diária e PDFs Resultados e Completo | [versao-14-resultados-instagram](https://github.com/hakachi7/Fig.Feed/tree/versao-14-resultados-instagram) | (veja a branch) |
 | v13 | Apagar e planejamento novo | Apagar vários posts no modo Selecionar, tutorial com Selecionar e Planejamento, PDF do planejamento com capa, Mood do feed e Mood dos stories | [versao-13-apagar-e-planejamento](https://github.com/hakachi7/Fig.Feed/tree/versao-13-apagar-e-planejamento) | (veja a branch) |

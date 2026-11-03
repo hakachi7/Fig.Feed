@@ -889,7 +889,8 @@ body.pg-lock .pub-hdr,body.pg-lock .hdr{position:relative;z-index:20}
 .pop-barra b{font-weight:500}.pop-barra span{opacity:.85}.pop-barra .pill{padding:5px 12px;font-size:12px}.pop-barra .pop-x{background:none;color:#fff;top:50%;transform:translateY(-50%)}
 /* menu do ícone v15 */
 .mn2 .mn-main,.mn2 .mn-grp{position:static}
-.mn2 .shade{background:linear-gradient(90deg,rgba(20,8,24,.55) 0%,rgba(20,8,24,.3) 46%,rgba(20,8,24,.06) 100%)}
+.mn2 .shade{background:linear-gradient(90deg,rgba(0,0,0,.32) 0%,rgba(0,0,0,.16) 50%,rgba(0,0,0,.08) 100%)}
+.mn-cr{opacity:.8}
 .mn-in{position:relative;min-height:100%;height:100%;display:flex;flex-direction:column;padding:28px 48px 30px;overflow-y:auto}
 .mn-top{display:flex;align-items:center;gap:14px}.mn-top .logo i{background:#fff}.mn-brand{font-weight:600;font-size:15px;letter-spacing:.04em}
 .mn-hi{margin-left:auto;font-size:13px;opacity:.8}.mn-x{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.45);background:rgba(255,255,255,.08);display:grid;place-items:center;color:#fff}
@@ -1210,7 +1211,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v15';
+const VERSAO='v15.1';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   blog:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 5h16v14H4zM8 9h8M8 13h8M8 17h5"/></svg>',
@@ -2558,6 +2559,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v15.1','Nov 2026',['Menu do ícone volta a usar a foto desfocada de fundo, com o crédito do fotógrafo e o botão "↻ outra foto"']],
   ['v15','Nov 2026',['Menu do ícone novo: fundo de bolinhas que dá para trocar, atalhos grandes numerados e sua conta ao lado','Admin › Páginas: todas as páginas do site com nome e link editáveis, quem vê e botão de ligar e desligar','Página desligada mostra o aviso "Estamos trabalhando nessa área" com a página desfocada por trás e a previsão de volta','Banners por página: principal (computador e celular), faixa e carrossel, com as medidas certas','Modelos de páginas para criar páginas novas (FAQ, preços, contato, em breve e outras)','Admin › Pop-ups: nome, ordem, ligar e desligar, onde, quando, quantas vezes e para quem aparecem']],
   ['v14','Nov 2026',['Nova aba Resultados em cada conta: conecte o Instagram e veja visualizações, contas alcançadas, interações, seguidores, melhores posts, formatos, dias e horários','Link para o cliente autorizar o Instagram no celular dele, sem passar senha','Downloads: três PDFs — Planejamento, Resultados e Completo (resultados do mês anterior + planejamento)','Os números atualizam sozinhos todo dia, e os stories a cada 4 horas']],
   ['v13.3','Nov 2026',['Planejamento em PDF só em preto, branco e cinza']],
@@ -3713,24 +3715,23 @@ async function vPaginaCustom(){
 }
 
 /* ---------- Menu do ícone (tela cheia) ---------- */
-let menuBg=null;
 function vMenu(){
-  if(menuBg==null)menuBg=rnd(TUT_IMG.length);
+  const ph=menuPhoto||randPhoto();menuPhoto=ph;
   const wc=weekCount();const nF=S.accounts.reduce((n,a)=>n+a.posts.reduce((m,p)=>m+p.slides.length,0),0);
   const items=[['contas',`${S.accounts.length} ${S.accounts.length===1?'cliente':'clientes'}`],['crono',wc?`${wc} esta semana`:'',!!wc],['down','grade e legendas'],['biblioteca',`${nF} ${nF===1?'foto':'fotos'}`],['lixeira','']];
   const nome=(S.profile.name||'').trim().split(' ')[0];
   const conta=[['perfil','Perfil'],['config','Configuração'],['seguranca','Segurança'],['ajuda','Ajuda']];
-  app.innerHTML=`<main class="menu mn2" aria-label="Menu"><div class="blur" style="background-image:url('${TUT_IMG[menuBg]}')"></div><div class="shade"></div>
+  app.innerHTML=`<main class="menu mn2" aria-label="Menu"><div class="blur" style="${bgi(ph,600,790)}"></div><div class="shade"></div>
     <div class="mn-in"><div class="mn-top">${LOGO()}<span class="mn-brand">FIG.FEED</span>${nome?`<span class="mn-hi">Olá, ${esc(nome)}</span>`:''}<button class="mn-x" id="mn-x" aria-label="Fechar menu">${XICON}</button></div>
       <div class="mn-body"><nav class="mn-main" aria-label="Menu principal">${items.map(([k,info,b],i)=>`<button class="mn-it" data-go="${esc(pgLink(k))}"><span class="n">${String(i+1).padStart(2,'0')}</span><span class="t">${esc(pgName(k))}</span>${info?`<span class="i ${b?'b':''}">${info}</span>`:''}</button>`).join('')}</nav>
         <div class="mn-side">${S.accounts.length?`<div class="mn-grp"><span class="mn-lbl">SUAS CONTAS</span>${S.accounts.slice(0,5).map(a=>`<button class="mn-acc" data-go="feed/${a.id}">${accAvHTML(a)}${esc(a.handle)}</button>`).join('')}</div>`:''}
           <nav class="mn-grp" aria-label="Sua conta"><span class="mn-lbl">SUA CONTA</span>${conta.map(([k,n])=>`<button class="mn-l" data-go="${esc(pgLink(k))}">${esc(pgName(k,n))}</button>`).join('')}
             ${isAdmin()?`<button class="mn-l" data-go="admin">Admin <span class="mn-gm">${isGM()?'GM':'ADMIN'}</span></button>`:''}<button class="mn-l mn-out" id="mn-sair">Sair</button></nav></div></div>
-      <div class="mn-foot"><button class="mn-bg" id="mn-bg">↻ outro fundo</button><button class="mn-ver" data-go="novidades">Fig.Feed ${VERSAO} · Novidades</button></div></div></main>`;
+      <div class="mn-foot"><span class="mn-cr">credit / ${esc(handleOf(ph.credit))}</span><button class="mn-bg" id="mn-bg" aria-label="Trocar a foto de fundo">↻ outra foto</button><button class="mn-ver" data-go="novidades">Fig.Feed ${VERSAO} · Novidades</button></div></div></main>`;
   app.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
   document.getElementById('mn-x').onclick=()=>go('home');
   document.getElementById('mn-sair').onclick=sair;
-  document.getElementById('mn-bg').onclick=()=>{menuBg=(menuBg+1)%TUT_IMG.length;vMenu();document.getElementById('mn-bg')?.focus()};
+  document.getElementById('mn-bg').onclick=()=>{menuPhoto=randPhoto();vMenu();document.getElementById('mn-bg')?.focus()};
   app.querySelector('.mn-it')?.focus({preventScroll:true});
 }
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&route[0]==='menu'&&!document.querySelector('.drop'))go('home')});

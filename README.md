@@ -104,3 +104,4 @@ Abra o `index.html` no navegador, crie uma conta e entre. As fotos de exemplo v�
 - **Admin › Pop-ups**: nome, ordem (↑ ↓; se dois puderem aparecer, só o de cima aparece), ligar/desligar, formato (central, canto ou barra no topo), imagem, título, texto, botão, páginas, momento (ao abrir, depois de X segundos, ao rolar, ao tentar sair), quantas vezes, para quem e período. Conta quantas vezes apareceu, os cliques e quantos fecharam.
 - Limites: "uma vez por pessoa" é contado por aparelho; "ao tentar sair" não existe no celular; o bloqueio de páginas é feito no navegador (serve para manutenção, não para esconder dados).
 - Banco: `supabase/v15.sql` (tabelas `site_pages` e `popups`, funções `popup_event` e `site_page_aviso`).
+- v15.1: o fundo do menu voltou a ser a foto desfocada de antes (com o crédito do fotógrafo e o botão "↻ outra foto"); as bolinhas ficaram só no layout.
