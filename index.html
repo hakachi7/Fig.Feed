@@ -214,6 +214,41 @@ kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;borde
 .pill.danger{color:var(--err);border-color:#f0b9b3}.pill.danger[disabled]{opacity:.5;cursor:default}
 .drop .ver{display:block;width:100%;text-align:left;color:#9a9a9a}.drop button.ver:hover{color:var(--fg)}
 
+
+/* ---------- V7: página pública, Planos, Lixeira e Biblioteca ---------- */
+.land-hero{height:calc(100vh - 140px);min-height:420px}
+.land-cta{text-align:center;padding:20px 16px 80px}
+.land-cta p{font-size:clamp(17px,1.6vw,21px);max-width:340px;margin:0 auto 22px;line-height:1.4}
+.land-cta .acts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.land-feat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;max-width:1080px;margin:0 auto;padding:20px max(16px,2.2vw) 90px}
+.land-feat h2{font-size:16px;font-weight:500;margin:16px 0 6px}.land-feat p{color:var(--muted);margin:0;line-height:1.5}
+.g6{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.g6 div{aspect-ratio:4/5;background:var(--tile) center/cover}
+@media (max-width:760px){.land-feat{grid-template-columns:1fr;gap:44px}.land-hero{height:62vh}}
+.pub-foot{border-top:1px solid var(--line);padding:22px max(16px,4vw);display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.pub-foot a{color:var(--muted);text-decoration:underline;cursor:pointer}
+.planos{max-width:1000px;text-align:center}
+.pl-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;text-align:left}
+@media (max-width:820px){.pl-grid{grid-template-columns:1fr;max-width:420px;margin:0 auto}}
+.pl{border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column}
+.pl.top{border:1.5px solid var(--fg)}
+.pl-h{display:flex;justify-content:space-between;align-items:center;gap:8px}.pl-h .tag{font-size:11px;background:var(--soft);border-radius:99px;padding:3px 9px}
+.pl-p{margin:18px 0 12px;display:flex;align-items:baseline;gap:6px}.pl-p b{font-size:34px;font-weight:400;letter-spacing:-.02em}.pl-p small{color:var(--muted)}
+.pl ul{padding-left:18px;margin:0 0 22px;line-height:1.85;flex:1}
+.pl .pill{justify-content:center;width:100%}
+.pg-top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:30px}
+.tr-list{border-top:1px solid var(--line)}
+.tr{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.tr .th{width:44px;height:55px;flex:none;background:var(--tile) center/cover}
+.tr .tx{flex:1;min-width:0}.tr .tx b{display:block;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tr .tx small,.tr .left{color:var(--muted);font-size:12px}
+@media (max-width:560px){.tr .left{display:none}}
+.lib{max-width:1100px}
+.bar-use{height:4px;background:var(--soft);border-radius:4px;margin:-14px 0 22px;overflow:hidden}.bar-use i{display:block;height:100%;background:var(--fg)}
+.lib-chips{margin-bottom:18px}
+.lib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+.lib-it{aspect-ratio:4/5;background:var(--tile) center/cover;position:relative;border-radius:2px}
+.lib-it .free{position:absolute;left:6px;bottom:6px;background:rgba(255,255,255,.92);font-size:10px;border-radius:99px;padding:2px 7px}
+
 /* ---------- Página não encontrada (404, v3) ---------- */
 .nf{min-height:calc(100vh - 66px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(28px,4vw,48px);padding:40px 16px 80px;text-align:center}
 .nf .num{display:flex;align-items:center;gap:clamp(12px,2.2vw,36px)}
@@ -550,8 +585,8 @@ async function signPaths(paths){
 async function loadAll(){
   const [prof,accs,posts,slides]=await Promise.all([
     db(sb.from('profiles').select('*').eq('id',USER.id).maybeSingle()),
-    db(sb.from('accounts').select('id,handle,position,avatar_path').order('position').order('created_at')),
-    db(sb.from('posts').select('id,account_id,title,caption,publish_date,status,position').order('position').order('created_at')),
+    db(sb.from('accounts').select('id,handle,position,avatar_path').is('deleted_at',null).order('position').order('created_at')),
+    db(sb.from('posts').select('id,account_id,title,caption,publish_date,status,position').is('deleted_at',null).order('position').order('created_at')),
     db(sb.from('slides').select('id,post_id,storage_path,credit,position').order('position').order('created_at'))]);
   S.profile=prof||{name:'',handle:'',dates_follow:true};
   const byPost={};slides.forEach(s=>(byPost[s.post_id]=byPost[s.post_id]||[]).push({id:s.id,path:s.storage_path,credit:s.credit}));
@@ -593,13 +628,15 @@ function render(){
   if(v==='confirmado')return vConfirmado();
   if(MANUT&&!isAdmin()&&!AUTH.includes(v))return vManutencao();
   if(recovery&&v!=='nova-senha')return go('nova-senha');
+  if(!USER&&v==='home')return vLanding();
   if(!USER&&!AUTH.includes(v)&&!PUBLIC.includes(v))return go('entrar');
   if(USER&&AUTH.includes(v)&&!(v==='nova-senha'&&recovery))return go('home');
   const map={entrar:()=>vAuth('entrar'),criar:()=>vAuth('criar'),senha:()=>vAuth('senha'),'nova-senha':()=>vAuth('nova-senha'),
     home:vHome,menu:vMenu,contas:vContas,feed:vFeed,car:vCar,edit:vEdit,crono:vCrono,down:vDown,perfil:vPerfil,config:vConfig,
     admin:vAdmin,'boas-vindas':vTutorial,
     termos:vTermos,privacidade:vPrivacidade,ajuda:vAjuda,novidades:vNovidades,seguranca:vSeguranca,excluir:vExcluir,
-    erro:()=>vErro(),'sem-internet':vOffline};
+    erro:()=>vErro(),'sem-internet':vOffline,
+    planos:vPlanos,lixeira:vLixeira,biblioteca:vBiblioteca};
   document.title='Fig.Feed';
   try{(map[v]||v404)()}catch(err){console.error(err);vErro('FF-501')}window.scrollTo(0,0);
 }
@@ -766,7 +803,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v6';
+const VERSAO='v7';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   home:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M3 11 12 4l9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>',
@@ -777,13 +814,15 @@ const IC={
   config:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></svg>',
   admin:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3 4 6v6c0 4.5 3.4 8.2 8 9 4.6-.8 8-4.5 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>',
   seguranca:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>',
+  biblioteca:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></svg>',
+  lixeira:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>',
   ajuda:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.7M12 17h.01"/></svg>',
   sair:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>'};
 function appMenuHTML(){
   const here=['feed','car'].includes(route[0])?'contas':route[0];const wc=weekCount();
   const item=(g,label,extra='')=>`<button class="it ${here===g?'cur':''}" data-g="${g}">${IC[g]}${label}${extra}</button>`;
   const accs=S.accounts.slice(0,5).map(a=>`<button class="it ${route[1]===a.id?'cur':''}" data-g="feed/${a.id}">${accAvHTML(a)}<span class="h">${esc(a.handle)}</span></button>`).join('');
-  return item('home','Início')+item('contas','Contas')+item('crono','Cronograma',wc?`<span class="n" title="Posts nos próximos 7 dias">${wc}</span>`:'')+item('down','Downloads')
+  return item('home','Início')+item('contas','Contas')+item('crono','Cronograma',wc?`<span class="n" title="Posts nos próximos 7 dias">${wc}</span>`:'')+item('down','Downloads')+item('biblioteca','Biblioteca')+item('lixeira','Lixeira')
     +(accs?`<hr><span class="lbl">Suas contas</span>${accs}${S.accounts.length>5?`<button class="it" data-g="contas" style="color:var(--muted)">Ver todas (${S.accounts.length})</button>`:''}`:'')
     +`<hr>${isAdmin()?item('admin','Admin'):''}${item('perfil','Perfil')}${item('seguranca','Segurança')}${item('config','Configuração')}${item('ajuda','Ajuda')}<button class="it danger" data-a="sair">${IC.sair}Sair</button>`
     +`<button class="ver" data-g="novidades">Fig.Feed ${VERSAO} · Novidades</button>`;
@@ -795,14 +834,14 @@ function dropdown(kind){
   const inAcc=route[0]==='feed'||route[0]==='car';
   if(kind==='app'){d.setAttribute('role','menu');d.setAttribute('aria-label','Menu principal');d.innerHTML=appMenuHTML();document.getElementById('appmenu')?.setAttribute('aria-expanded','true')}
   else if(kind==='me'){d.innerHTML=`<span class="lbl">${esc(S.profile.handle||USER.email)}</span>
-    <button data-a="perfil">Perfil</button><button data-a="seguranca">Segurança</button><button data-a="config">Configuração</button><button data-a="ajuda">Ajuda</button><hr><button data-a="sair">Sair</button>`}
+    <button data-a="perfil">Perfil</button><button data-a="seguranca">Segurança</button><button data-a="config">Configuração</button><button data-a="planos">Planos</button><button data-a="ajuda">Ajuda</button><hr><button data-a="sair">Sair</button>`}
   else{d.innerHTML=`<span class="lbl">Nova conta</span><form id="nf"><input id="nh" placeholder="@perfil.do.cliente" required><button class="pill" style="padding:6px 10px">Criar</button></form><hr>
     ${inAcc?`<button data-a="post">Novo post com fotos de exemplo</button><button data-a="up">Novo post com fotos suas</button>`:`<span class="lbl">Abra uma conta para criar posts</span>`}`}
   document.body.appendChild(d);
   d.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>{closeDrop();go(b.dataset.g)});
   if(kind==='app')d.querySelector('button')?.focus();
   d.querySelectorAll('[data-a]').forEach(b=>b.onclick=async()=>{const a=b.dataset.a;closeDrop();
-    if(a==='perfil')go('perfil');if(a==='config')go('config');if(a==='seguranca')go('seguranca');if(a==='ajuda')go('ajuda');if(a==='sair')sair();
+    if(a==='perfil')go('perfil');if(a==='config')go('config');if(a==='seguranca')go('seguranca');if(a==='ajuda')go('ajuda');if(a==='planos')go('planos');if(a==='sair')sair();
     if(a==='post')examplePost(accById(route[1]));
     if(a==='up')pickFiles({type:'newpost',acc:route[1]});});
   const f=d.querySelector('#nf');if(f){f.onsubmit=async e=>{e.preventDefault();let h=d.querySelector('#nh').value.trim().replace(/\s+/g,'');if(!h)return;if(h[0]!=='@')h='@'+h;
@@ -885,10 +924,9 @@ function accMenu(a,btn){
     await db(sb.from('accounts').update({handle:h}).eq('id',a.id));a.handle=h;d.remove();openDrop=null;toast('Conta renomeada');vFeed()};
   d.querySelector('[data-a="foto"]').onclick=()=>{d.remove();openDrop=null;pickFiles({type:'accavatar',acc:a.id})};
   const del=d.querySelector('[data-a="del"]');
-  del.onclick=async()=>{if(!del.dataset.ok){del.dataset.ok=1;del.textContent=`Clique de novo para apagar ${a.handle} e ${a.posts.length} post${a.posts.length===1?'':'s'}`;return}
-    const paths=a.posts.flatMap(p=>p.slides.map(s=>s.path)).filter(x=>!x.startsWith('picsum:'));if(a.avatar)paths.push(a.avatar);
-    await db(sb.from('accounts').delete().eq('id',a.id));if(paths.length)sb.storage.from('fotos').remove(paths);
-    S.accounts=S.accounts.filter(x=>x.id!==a.id);d.remove();openDrop=null;toast('Conta apagada');go('contas')};
+  del.onclick=async()=>{if(!del.dataset.ok){del.dataset.ok=1;del.textContent=`Clique de novo para mover ${a.handle} para a lixeira`;return}
+    await moveToTrash('conta',a.id);
+    S.accounts=S.accounts.filter(x=>x.id!==a.id);d.remove();openDrop=null;toast('Conta movida para a lixeira (fica lá por 30 dias)',3600);go('contas')};
 }
 
 /* ======================= Arrastar e reorganizar ======================= */
@@ -994,9 +1032,8 @@ function vCar(){
   document.getElementById('det').onclick=()=>openPanel(a.id,p.id,()=>{if(route[0]==='car')vCar()});
   const del=document.getElementById('delpost');
   del.onclick=async()=>{if(!del.dataset.ok){del.dataset.ok=1;del.textContent='Clique de novo para excluir';return}
-    const paths=p.slides.map(s=>s.path).filter(x=>!x.startsWith('picsum:'));
-    await db(sb.from('posts').delete().eq('id',p.id));if(paths.length)sb.storage.from('fotos').remove(paths);
-    a.posts=a.posts.filter(x=>x.id!==p.id);toast('Post excluído');go('feed/'+a.id)};
+    await moveToTrash('post',p.id);
+    a.posts=a.posts.filter(x=>x.id!==p.id);toast('Post movido para a lixeira (fica lá por 30 dias)',3600);go('feed/'+a.id)};
 }
 
 /* ======================= 6. Editar texto ======================= */
@@ -1091,9 +1128,8 @@ function openPanel(accId,postId,onChange){
   $('sp-car').onclick=()=>{closePanel();go(`car/${a.id}/${p.id}`)};
   const del=$('sp-del');
   del.onclick=async()=>{if(!del.dataset.ok){del.dataset.ok=1;del.textContent='Clique de novo para excluir';return}
-    const paths=p.slides.map(s=>s.path).filter(x=>!x.startsWith('picsum:'));
-    await db(sb.from('posts').delete().eq('id',p.id));if(paths.length)sb.storage.from('fotos').remove(paths);
-    a.posts=a.posts.filter(x=>x.id!==p.id);panelFlush=null;closePanel();toast('Post excluído');onChange&&onChange()};
+    await moveToTrash('post',p.id);
+    a.posts=a.posts.filter(x=>x.id!==p.id);panelFlush=null;closePanel();toast('Post movido para a lixeira (fica lá por 30 dias)',3600);onChange&&onChange()};
 }
 
 /* ======================= Arrastar cartões entre colunas ======================= */
@@ -1244,7 +1280,7 @@ function vConfig(){
       <b>Android:</b> abra no Chrome, toque nos três pontinhos e depois em "Instalar app" ou "Adicionar à tela inicial".
       ${installEvt?'<div style="margin-top:12px"><button class="pill dark" id="inst">Instalar agora</button></div>':''}</section>
     <h2 class="sec" style="margin-top:40px">Conta</h2><div class="chips"><button class="pill" data-go="seguranca">Segurança</button><button class="pill" data-go="excluir">Excluir minha conta</button></div>
-    <h2 class="sec" style="margin-top:28px">Sobre</h2><div class="chips"><button class="pill" data-go="ajuda">Ajuda</button><button class="pill" data-go="novidades">Novidades</button><button class="pill" data-go="termos">Termos de uso</button><button class="pill" data-go="privacidade">Privacidade</button></div>
+    <h2 class="sec" style="margin-top:28px">Sobre</h2><div class="chips"><button class="pill" data-go="ajuda">Ajuda</button><button class="pill" data-go="novidades">Novidades</button><button class="pill" data-go="planos">Planos</button><button class="pill" data-go="termos">Termos de uso</button><button class="pill" data-go="privacidade">Privacidade</button></div>
     ${S.profile.role==='gm'?`<section class="install"><b>Modo atualização (só GM)</b><br>Mostra "Estamos fazendo uma atualização" para todo mundo, menos GM e admins.
       <label class="chk" style="margin:12px 0 0"><input type="checkbox" id="mnt" ${MANUT?'checked':''}> Ligado</label></section>`:''}</main>`;
   bindHeader();
@@ -1425,6 +1461,11 @@ async function uploadSlides(p,files){
 document.getElementById('file').onchange=async e=>{
   const files=[...e.target.files];if(!files.length||!pickCtx)return;
   if(pickCtx.type==='profavatar'||pickCtx.type==='accavatar'){try{await setAvatar(pickCtx,files[0])}catch(err){}return}
+  if(pickCtx.type==='biblioteca'){toast(`Enviando ${files.length} ${files.length===1?'foto':'fotos'}…`,60000);let ok=0;
+    for(const f of files){const b=await shrink(f);if(!b)continue;
+      const {error}=await sb.storage.from('fotos').upload(`${USER.id}/biblioteca/${crypto.randomUUID()}.jpg`,b,{contentType:'image/jpeg'});
+      if(error){toast(traduz(error.message));continue}ok++}
+    toast(ok?`${ok} ${ok===1?'foto enviada':'fotos enviadas'}`:'Nenhuma foto foi enviada');libFilter='sem-uso';if(route[0]==='biblioteca')vBiblioteca();return}
   const a=accById(pickCtx.acc);if(!a)return;
   try{
     if(pickCtx.type==='newpost'){const p=await createPost(a);await uploadSlides(p,files);go(`car/${a.id}/${p.id}`)}
@@ -1470,7 +1511,7 @@ function vManutencao(){
 async function loadManut(){try{const {data}=await sb.from('app_settings').select('value').eq('key','manutencao').maybeSingle();MANUT=!!data?.value?.ativo}catch(e){MANUT=false}}
 
 /* ======================= V6: páginas públicas e da conta ======================= */
-const PUBLIC=['termos','privacidade','ajuda','novidades'];
+const PUBLIC=['termos','privacidade','ajuda','novidades','planos'];
 function pubHeader(){return `<header class="pub-hdr"><button class="brand" data-go="home" aria-label="Fig.Feed, início">${LOGO()}<span>Fig.Feed</span></button>
   <div class="r"><button class="pill" data-go="entrar">Entrar</button><button class="pill dark" data-go="criar">Criar conta grátis</button></div></header>`}
 const shell=cur=>USER?header(cur):pubHeader();
@@ -1520,6 +1561,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v7','Nov 2026',['Lixeira: posts e contas apagados ficam 30 dias e podem ser restaurados','Biblioteca com todas as suas fotos, espaço usado e filtro "Sem uso"','Página inicial para quem ainda não tem conta','Página de Planos']],
   ['v6','Nov 2026',['Páginas de Segurança: trocar e-mail e senha e ver os aparelhos conectados','Excluir minha conta','Ajuda, Novidades, Termos de uso e Política de privacidade','Telas novas de página não encontrada, sem internet, erro e atualização']],
   ['v5','Nov 2026',['Aba Admin para GM e administradores: usuários, funções e registro de atividades']],
   ['v4','Nov 2026',['Login revisado e tela de e-mail confirmado','Tutorial de boas-vindas na primeira vez','Tela "Montando seu feed…"']],
@@ -1602,6 +1644,145 @@ async function vExcluir(){
       USER=null;S={profile:{name:'',handle:'',dates_follow:true},accounts:[]};go('entrar');
     }catch(err){dm.className='msg-inline err';dm.textContent=err.message.startsWith('Você é o único')?err.message:traduz(err.message);
       del.textContent='Excluir minha conta para sempre';cf.disabled=false;del.disabled=false}};
+}
+
+/* ======================= V7: página pública (para quem não tem conta) ======================= */
+function pubFooter(){return `<footer class="pub-foot"><span>© ${new Date().getFullYear()} Fig.Feed</span><a data-go="termos">Termos</a><a data-go="privacidade">Privacidade</a><a data-go="ajuda">Ajuda</a><a data-go="planos">Planos</a></footer>`}
+function vLanding(){
+  document.title='Fig.Feed — monte e organize feeds de forma visual';
+  const g=(k)=>Array.from({length:6},(_,i)=>`<div style="background-image:url('${TUT_IMG[(i+k)%9]}')"></div>`).join('');
+  app.innerHTML=pubHeader()+`<main class="land">
+    <section class="home land-hero" aria-label="Fig.Feed"><div class="word">Fig.</div>
+      <div class="photo">${TUT_IMG.map((u,i)=>`<img src="${u}" alt="" class="${i?'':'on'}">`).join('')}</div><div class="word">Feed</div></section>
+    <section class="land-cta"><p>Monte, organize e acompanhe feeds de forma visual.</p>
+      <div class="acts"><button class="pill dark" data-go="criar">Começar grátis</button><button class="pill" id="como">Ver como funciona</button></div></section>
+    <section class="land-feat" id="feat">
+      <div><div class="g6" aria-hidden="true">${g(0)}</div><h2>Arraste e a grade se ajeita</h2><p>Mova um post e o feed se reorganiza sozinho. Sem planilha, sem print.</p></div>
+      <div><div class="g6" aria-hidden="true">${g(3)}</div><h2>Cronograma de todos os clientes</h2><p>Semana ou quadro de status. Mude data e status só arrastando.</p></div>
+      <div><div class="g6" aria-hidden="true">${g(6)}</div><h2>Relatório para o cliente</h2><p>Mande um link e o cliente vê o resumo do mês pelo celular, sem criar conta.</p></div>
+    </section></main>${pubFooter()}`;
+  bindGo();
+  document.getElementById('como').onclick=()=>document.getElementById('feat').scrollIntoView({behavior:'smooth'});
+  let i=0;const imgs=app.querySelectorAll('.land-hero img');
+  homeTimer=setInterval(()=>{imgs[i].classList.remove('on');i=(i+1)%imgs.length;imgs[i].classList.add('on')},2400);
+}
+
+/* ======================= V7: Planos (só a tela; a cobrança vem depois) ======================= */
+const PLANOS=[
+  {id:'gratis',n:'Grátis',p:'R$ 0',u:'para começar',it:['Até 2 contas de clientes','Feed, carrossel e cronograma','500 MB de fotos'],b:'Começar grátis'},
+  {id:'pro',n:'Pro',p:'R$ 29',u:'por mês',it:['Contas ilimitadas','Link do relatório para clientes','Relatório do mês','10 GB de fotos'],b:'Assinar o Pro',top:true},
+  {id:'agencia',n:'Agência',p:'R$ 79',u:'por mês',it:['Tudo do Pro','Até 5 pessoas na equipe','Marca da agência nos relatórios','50 GB de fotos'],b:'Falar com a gente'}];
+function vPlanos(){
+  app.innerHTML=shell('')+`<main class="page planos"><h1>Planos</h1><p class="sub">Valores de exemplo. Comece grátis e mude quando precisar.</p>
+    <div class="pl-grid">${PLANOS.map(x=>`<section class="pl ${x.top?'top':''}" aria-label="Plano ${x.n}"><div class="pl-h"><span>${x.n}</span>${x.top?'<span class="tag">Mais escolhido</span>':''}</div>
+      <div class="pl-p"><b>${x.p}</b><small>${x.u}</small></div><ul>${x.it.map(i=>`<li>${i}</li>`).join('')}</ul>
+      <button class="pill ${x.top?'dark':''}" data-plan="${x.id}">${x.b}</button></section>`).join('')}</div></main>${USER?'':pubFooter()}`;
+  bindShell();
+  app.querySelectorAll('[data-plan]').forEach(b=>b.onclick=()=>{const id=b.dataset.plan;
+    if(id==='gratis')return USER?toast('Você já está no plano Grátis'):go('criar');
+    if(id==='pro')return toast('A assinatura do Pro abre em breve. Avisaremos por e-mail.',4000);
+    location.href=`mailto:${CONTATO}?subject=${encodeURIComponent('Plano Agência do Fig.Feed')}`});
+}
+
+/* ======================= V7: Lixeira (30 dias) ======================= */
+const DAY=864e5;
+const daysAgo=ts=>Math.floor((Date.now()-new Date(ts))/DAY);
+const agoTxt=n=>n<=0?'hoje':n===1?'ontem':`há ${n} dias`;
+async function moveToTrash(kind,id){await db(sb.from(kind==='conta'?'accounts':'posts').update({deleted_at:new Date().toISOString()}).eq('id',id))}
+async function purgeTrash(onlyExpired){
+  const {data,error}=await sb.rpc('empty_my_trash',{only_expired:onlyExpired});if(error)throw error;
+  const paths=(data||[]).map(x=>typeof x==='string'?x:x?.empty_my_trash).filter(Boolean);
+  for(let i=0;i<paths.length;i+=100)await sb.storage.from('fotos').remove(paths.slice(i,i+100));
+  return paths.length;
+}
+async function vLixeira(){
+  app.innerHTML=header('')+`<main class="page" style="max-width:820px"><p class="sub">Carregando…</p></main>`;bindHeader();
+  let accs=[],posts=[],thumbs={},counts={};
+  try{
+    await purgeTrash(true).catch(()=>{}); // some sozinho o que passou de 30 dias
+    [accs,posts]=await Promise.all([
+      db(sb.from('accounts').select('id,handle,avatar_path,deleted_at').not('deleted_at','is',null)),
+      db(sb.from('posts').select('id,title,account_id,deleted_at').not('deleted_at','is',null))]);
+    const ids=posts.map(p=>p.id);
+    if(ids.length){const sl=await db(sb.from('slides').select('post_id,storage_path,position').in('post_id',ids).order('position'));
+      sl.forEach(s=>{if(!thumbs[s.post_id])thumbs[s.post_id]=s.storage_path})}
+    if(accs.length){const ps=await db(sb.from('posts').select('account_id').in('account_id',accs.map(a=>a.id)));ps.forEach(p=>counts[p.account_id]=(counts[p.account_id]||0)+1)}
+    const handles={};S.accounts.forEach(a=>handles[a.id]=a.handle);accs.forEach(a=>handles[a.id]=a.handle);
+    const need=[...Object.values(thumbs),...accs.map(a=>a.avatar_path)].filter(Boolean);
+    if(need.length){const {data}=await sb.from('accounts').select('id,handle').in('id',[...new Set(posts.map(p=>p.account_id))].filter(i=>!handles[i]));(data||[]).forEach(a=>handles[a.id]=a.handle)}
+    await signPaths(need);
+    var items=[...accs.map(a=>({kind:'conta',id:a.id,t:a.handle,sub:`conta inteira · ${counts[a.id]||0} post${counts[a.id]===1?'':'s'}`,th:a.avatar_path,at:a.deleted_at})),
+      ...posts.map(p=>({kind:'post',id:p.id,acc:p.account_id,t:p.title||'Sem título',sub:handles[p.account_id]||'',th:thumbs[p.id],at:p.deleted_at}))]
+      .sort((x,y)=>new Date(y.at)-new Date(x.at));
+  }catch(err){if(route[0]==='lixeira')vErro('FF-502');return}
+  if(route[0]!=='lixeira')return;
+  const thumb=p=>p?(p.startsWith('picsum:')?src({path:p},120,150):URLS[p]||''):'';
+  app.innerHTML=header('')+`<main class="page" style="max-width:820px"><div class="pg-top"><div><h1>Lixeira</h1>
+      <p class="sub" style="margin:0">Itens apagados ficam aqui por 30 dias. Depois disso, somem para sempre.</p></div>
+      ${items.length?'<button class="pill danger" id="esv">Esvaziar lixeira</button>':''}</div>
+    ${items.length?`<div class="tr-list">${items.map(it=>{const d=daysAgo(it.at),left=Math.max(0,30-d);return `<div class="tr" data-k="${it.kind}" data-id="${it.id}">
+      <span class="th" style="${thumb(it.th)?`background-image:url('${thumb(it.th)}')`:''}"></span>
+      <div class="tx"><b>${esc(it.t)}</b><small>${esc(it.sub)} · ${it.kind==='conta'?'apagada':'apagado'} ${agoTxt(d)}</small></div>
+      <small class="left">some em ${left} ${left===1?'dia':'dias'}</small><button class="pill" data-r>Restaurar</button></div>`}).join('')}</div>`
+    :`<div class="empty" style="margin:12vh auto 0"><h2>A lixeira está vazia</h2><p>Quando você apagar um post ou uma conta, eles ficam aqui por 30 dias antes de sumir.</p></div>`}</main>`;
+  bindHeader();
+  app.querySelectorAll('[data-r]').forEach(b=>b.onclick=async()=>{const row=b.closest('.tr');b.disabled=true;
+    const it=items.find(x=>x.id===row.dataset.id);
+    try{await db(sb.from(it.kind==='conta'?'accounts':'posts').update({deleted_at:null}).eq('id',it.id));
+      if(it.kind==='post'&&accs.some(a=>a.id===it.acc))await db(sb.from('accounts').update({deleted_at:null}).eq('id',it.acc));
+      await loadAll();toast(it.kind==='conta'?'Conta restaurada':'Post restaurado');vLixeira()}catch(e){b.disabled=false}});
+  const esv=document.getElementById('esv');
+  if(esv)esv.onclick=async()=>{if(!esv.dataset.ok){esv.dataset.ok=1;esv.textContent='Clique de novo para apagar para sempre';return}
+    esv.disabled=true;try{await purgeTrash(false);toast('Lixeira esvaziada');vLixeira()}catch(e){esv.disabled=false;toast(traduz(e.message))}};
+}
+
+/* ======================= V7: Biblioteca de fotos ======================= */
+const COTA=1024**3; // 1 GB (plano Grátis do desenho; ajuste quando os planos valerem de verdade)
+let libFilter='todas';
+const fmtMB=b=>b>=1024**3?(b/1024**3).toFixed(1).replace('.0','').replace('.',',')+' GB':Math.max(1,Math.round(b/1024**2))+' MB';
+async function vBiblioteca(){
+  app.innerHTML=header('')+`<main class="page lib"><p class="sub">Carregando…</p></main>`;bindHeader();
+  let files=[],used={};
+  try{const [{data,error},sl]=await Promise.all([sb.rpc('my_files'),db(sb.from('slides').select('storage_path,post_id'))]);if(error)throw error;
+    files=(data||[]).filter(f=>!f.name.endsWith('/.emptyFolderPlaceholder'));
+    const accOfPost={};S.accounts.forEach(a=>a.posts.forEach(p=>accOfPost[p.id]=a.id));
+    sl.forEach(s=>{used[s.storage_path]=accOfPost[s.post_id]||'lixeira'});
+    S.accounts.forEach(a=>{if(a.avatar)used[a.avatar]=used[a.avatar]||a.id});if(S.profile.avatar_path)used[S.profile.avatar_path]='perfil';
+    await signPaths(files.map(f=>f.name));
+  }catch(err){if(route[0]==='biblioteca')vErro('FF-503');return}
+  if(route[0]!=='biblioteca')return;
+  const total=files.reduce((n,f)=>n+Number(f.size||0),0);
+  const accsWith=S.accounts.filter(a=>files.some(f=>used[f.name]===a.id));
+  if(libFilter!=='todas'&&libFilter!=='sem-uso'&&!accsWith.some(a=>a.id===libFilter))libFilter='todas';
+  const shown=files.filter(f=>libFilter==='todas'||(libFilter==='sem-uso'?!used[f.name]:used[f.name]===libFilter));
+  app.innerHTML=header('')+`<main class="page lib"><div class="pg-top"><div><h1>Biblioteca</h1>
+      <p class="sub" style="margin:0">${files.length} ${files.length===1?'foto':'fotos'} · ${fmtMB(total)} de ${fmtMB(COTA)} usados</p></div>
+      <button class="pill dark" id="lib-up">Enviar fotos</button></div>
+    <div class="bar-use" role="img" aria-label="${Math.round(total/COTA*100)}% do espaço usado"><i style="width:${Math.min(100,total/COTA*100).toFixed(1)}%"></i></div>
+    <div class="chips lib-chips" role="group" aria-label="Filtrar fotos">${[['todas','Todas'],...accsWith.map(a=>[a.id,a.handle]),['sem-uso','Sem uso']].map(([k,l])=>
+      `<button class="pill ${libFilter===k?'dark':''}" data-f="${k}" aria-pressed="${libFilter===k}">${esc(l)}</button>`).join('')}</div>
+    ${shown.length?`<div class="lib-grid">${shown.map(f=>`<button class="lib-it" data-n="${esc(f.name)}" style="background-image:url('${URLS[f.name]||''}')" aria-label="${used[f.name]?'Foto em uso':'Foto sem uso'}">${used[f.name]?'':'<span class="free">sem uso</span>'}</button>`).join('')}</div>`
+      :`<div class="empty" style="margin:10vh auto 0"><h2>${files.length?'Nada neste filtro':'Nenhuma foto enviada ainda'}</h2><p>${files.length?'Escolha outro filtro acima.':'As fotos que você envia para posts e as que subir aqui aparecem nesta página.'}</p></div>`}</main>`;
+  bindHeader();
+  app.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{libFilter=b.dataset.f;vBiblioteca()});
+  document.getElementById('lib-up').onclick=()=>pickFiles({type:'biblioteca'});
+  app.querySelectorAll('.lib-it').forEach(b=>b.onclick=e=>{e.stopPropagation();libMenu(b.dataset.n,used[b.dataset.n],b)});
+}
+function libMenu(name,u,btn){
+  closeDrop();openDrop='lib';
+  const d=document.createElement('div');d.className='drop';d.onclick=e=>e.stopPropagation();
+  const r=btn.getBoundingClientRect();Object.assign(d.style,{position:'fixed',right:'auto',left:Math.max(8,Math.min(r.left,innerWidth-250))+'px',top:Math.min(r.bottom+8,innerHeight-260)+'px'});
+  const acc=accById(u);
+  d.innerHTML=u?(acc?`<span class="lbl">Em uso em ${esc(acc.handle)}</span><button data-a="abrir">Abrir a conta</button>`:`<span class="lbl">${u==='perfil'?'É a sua foto de perfil':'Em uso num item da lixeira'}</span>`)
+    :`<span class="lbl">Usar num post novo</span>${S.accounts.length?S.accounts.map(a=>`<button data-acc="${a.id}">${esc(a.handle)}</button>`).join(''):'<span class="lbl">Crie uma conta primeiro</span>'}<hr><button data-a="apagar" style="color:var(--err)">Apagar foto</button>`;
+  document.body.appendChild(d);
+  d.querySelector('[data-a="abrir"]')?.addEventListener('click',()=>{closeDrop();go('feed/'+u)});
+  d.querySelectorAll('[data-acc]').forEach(b=>b.onclick=async()=>{closeDrop();const a=accById(b.dataset.acc);
+    const p=await createPost(a);const row=await db(sb.from('slides').insert({post_id:p.id,storage_path:name,credit:(S.profile.handle||'').replace('@','')||null,position:0}).select('id,storage_path,credit').single());
+    p.slides=[{id:row.id,path:row.storage_path,credit:row.credit}];toast('Post criado com a foto');go(`car/${a.id}/${p.id}`)});
+  const del=d.querySelector('[data-a="apagar"]');
+  if(del)del.onclick=async()=>{if(!del.dataset.ok){del.dataset.ok=1;del.textContent='Clique de novo para apagar';return}
+    closeDrop();const {error}=await sb.storage.from('fotos').remove([name]);if(error)return toast(traduz(error.message));toast('Foto apagada');vBiblioteca()};
 }
 
 /* ======================= Início ======================= */

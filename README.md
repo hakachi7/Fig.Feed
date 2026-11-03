@@ -45,3 +45,11 @@ Abra o `index.html` no navegador, crie uma conta e entre. As fotos de exemplo v�
 - Páginas Ajuda, Novidades, Termos de uso e Política de privacidade (abrem também sem login).
 - Modo atualização: o GM liga em Configuração. Só GM e admins continuam entrando.
 - Banco: `supabase/v6.sql` (já aplicado no Fig-Free).
+
+## Novidades da v7
+
+- Lixeira: posts e contas apagados ficam 30 dias e podem ser restaurados (depois somem sozinhos).
+- Biblioteca: todas as fotos enviadas, espaço usado, filtro por conta e "Sem uso"; dá para usar uma foto num post novo.
+- Página inicial para quem ainda não tem conta, com rodapé (Termos, Privacidade, Ajuda, Planos).
+- Página de Planos (só a tela; a cobrança ainda não está ligada).
+- Banco: `supabase/v7.sql` (já aplicado no Fig-Free).
