@@ -285,6 +285,43 @@ img{display:block;max-width:100%}
 .sp .foot{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
 .saved{font-size:11px;color:var(--muted)}
 
+/* ---------- Admin: GM e administradores (v5) ---------- */
+.adm-tabs{display:flex;gap:20px;padding:0 max(16px,2.2vw);border-bottom:1px solid var(--line);font-size:13px;overflow-x:auto;scrollbar-width:none}
+.adm-tabs a,.adm-tabs span{padding:12px 0;color:var(--muted);text-decoration:none;white-space:nowrap;border-bottom:1px solid transparent;margin-bottom:-1px}
+.adm-tabs a{cursor:pointer}
+.adm-tabs a.cur{color:var(--fg);border-bottom-color:var(--fg)}
+.adm-tabs span{color:#b0b0b0}
+.adm-tabs span small{font-size:10px;margin-left:4px}
+.adm .badge-gm{font-size:11px;border:1px solid var(--fg);border-radius:99px;padding:3px 9px;vertical-align:middle;letter-spacing:0;font-weight:500}
+.adm-inv{display:flex;gap:8px;flex-wrap:wrap;align-items:center;background:var(--soft);border-radius:12px;padding:12px;margin:0 0 8px}
+.adm-inv input{flex:1 1 220px;min-width:0;border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:#fff;outline:none}
+.adm-inv input:focus{border-color:#bdbdbd}
+.adm-inv select{border:1px solid var(--line);border-radius:10px;padding:9px 10px;background:#fff}
+.adm-note{font-size:12px;color:var(--muted);margin:0 0 28px}
+.adm-list{border-top:1px solid var(--line)}
+.adm-row{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1.2fr) 110px;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
+.adm-row .who2{display:flex;align-items:center;gap:10px;min-width:0}
+.adm-row .who2 .avatar{width:30px;height:30px;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:600}
+.adm-row .nm{display:flex;flex-direction:column;min-width:0}
+.adm-row .nm b{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.adm-row .nm small,.adm-row .mut{color:var(--muted);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.adm-row .ed{justify-self:end;font-size:12px;text-decoration:underline;text-underline-offset:3px;padding:6px 0}
+.rd{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:6px;flex:none;vertical-align:middle}
+.chip .rd{margin:0}
+.chip.on .rd{box-shadow:0 0 0 1.5px #fff}
+.r-gm{background:var(--fg)}.r-admin{background:var(--badge)}.r-social_media{background:#14b85a}.r-cliente{background:#f2b01e}
+.adm-h2{font-size:13px;font-weight:600;margin:36px 0 10px}
+.adm-day{font-size:12px;color:var(--muted);margin:26px 0 4px;font-weight:500}
+.adm-log{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
+.adm-log .t{color:var(--muted);font-size:12px;flex:0 0 42px;font-variant-numeric:tabular-nums}
+.adm-log .x{flex:1;min-width:0}
+.adm-log .c{font-size:12px;color:var(--muted);white-space:nowrap;display:flex;align-items:center}
+.c-funcoes{background:var(--badge)}.c-usuarios{background:#0ea5e9}.c-conteudo{background:#14b85a}.c-pagamentos{background:#f2b01e}.c-seguranca{background:var(--err)}.c-ver_como_usuario{background:#a855f7}
+.role-help{font-size:12px;color:var(--muted);line-height:1.5;margin:0}
+.pill[disabled]{opacity:.45;cursor:default}
+@media (max-width:760px){.nav a[data-go="admin"]{display:none}}
+@media (max-width:640px){.adm-row{grid-template-columns:minmax(0,1fr) auto 96px}.adm-row .hide-sm{display:none}.adm-log .c{display:none}}
+
 /* ---------- Cronograma: semana e quadro ---------- */
 .cr{display:grid;grid-template-columns:230px minmax(0,1fr);gap:14px;padding:6px max(16px,2.2vw) 30px;min-height:calc(100vh - 66px)}
 .cr-side{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:20px;align-self:start;position:sticky;top:76px}
@@ -482,7 +519,7 @@ async function seedExamples(){
 }
 
 /* ======================= Rotas ======================= */
-// #entrar #criar #senha #nova-senha | #home #menu #contas #feed/ID #car/ID/POST #edit/ID/POST #crono #down #perfil #config
+// #entrar #criar #senha #nova-senha | #home #menu #contas #feed/ID #car/ID/POST #edit/ID/POST #crono #down #perfil #config #admin #admin/atividade
 const AUTH=['entrar','criar','senha','nova-senha'];
 const app=document.getElementById('app');
 let route=[],menuPhoto=null,q='',openDrop=null,homeTimer=null,recovery=false;
@@ -500,7 +537,7 @@ function render(){
   if(USER&&AUTH.includes(v)&&!(v==='nova-senha'&&recovery))return go('home');
   const map={entrar:()=>vAuth('entrar'),criar:()=>vAuth('criar'),senha:()=>vAuth('senha'),'nova-senha':()=>vAuth('nova-senha'),
     home:vHome,menu:vMenu,contas:vContas,feed:vFeed,car:vCar,edit:vEdit,crono:vCrono,down:vDown,perfil:vPerfil,config:vConfig,
-    'boas-vindas':vTutorial};
+    admin:vAdmin,'boas-vindas':vTutorial};
   document.title='Fig.Feed';
   (map[v]||v404)();window.scrollTo(0,0);
 }
@@ -662,7 +699,8 @@ function header(cur,crumb,before='',after=''){
       ${crumb?`<div class="crumb-row">${before}<div class="crumb">${crumb}</div>${after}</div>`:`<nav class="nav" style="display:flex;gap:22px">
         <a data-go="contas" class="${cur==='contas'?'cur':''}">Contas</a>
         <a data-go="crono" class="${cur==='crono'?'cur':''}">Cronograma${wc?`<span class="badge">${wc}</span>`:''}</a>
-        <a data-go="down" class="${cur==='down'?'cur':''}">Downloads</a></nav>`}</div>
+        <a data-go="down" class="${cur==='down'?'cur':''}">Downloads</a>${isAdmin()?`
+        <a data-go="admin" class="${cur==='admin'?'cur':''}">Admin</a>`:''}</nav>`}</div>
     <div class="mid"><label class="search"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#777" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
       <input id="q" placeholder="Buscar contas, posts ou legendas" value="${esc(q)}" autocomplete="off"></label></div>
     <div class="r"><button class="pill" id="criar"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg><span class="lab">Criar</span></button>
@@ -678,7 +716,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v4';
+const VERSAO='v5';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   home:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M3 11 12 4l9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>',
@@ -687,6 +725,7 @@ const IC={
   down:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></svg>',
   perfil:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>',
   config:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></svg>',
+  admin:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3 4 6v6c0 4.5 3.4 8.2 8 9 4.6-.8 8-4.5 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>',
   sair:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>'};
 function appMenuHTML(){
   const here=['feed','car'].includes(route[0])?'contas':route[0];const wc=weekCount();
@@ -694,7 +733,7 @@ function appMenuHTML(){
   const accs=S.accounts.slice(0,5).map(a=>`<button class="it ${route[1]===a.id?'cur':''}" data-g="feed/${a.id}">${accAvHTML(a)}<span class="h">${esc(a.handle)}</span></button>`).join('');
   return item('home','Início')+item('contas','Contas')+item('crono','Cronograma',wc?`<span class="n" title="Posts nos próximos 7 dias">${wc}</span>`:'')+item('down','Downloads')
     +(accs?`<hr><span class="lbl">Suas contas</span>${accs}${S.accounts.length>5?`<button class="it" data-g="contas" style="color:var(--muted)">Ver todas (${S.accounts.length})</button>`:''}`:'')
-    +`<hr>${item('perfil','Perfil')}${item('config','Configuração')}<button class="it danger" data-a="sair">${IC.sair}Sair</button>`
+    +`<hr>${isAdmin()?item('admin','Admin'):''}${item('perfil','Perfil')}${item('config','Configuração')}<button class="it danger" data-a="sair">${IC.sair}Sair</button>`
     +`<div class="ver">Fig.Feed ${VERSAO}</div>`;
 }
 function closeDrop(){document.querySelector('.drop')?.remove();openDrop=null;document.getElementById('appmenu')?.setAttribute('aria-expanded','false')}
@@ -1159,6 +1198,140 @@ function vConfig(){
   const ib=document.getElementById('inst');if(ib)ib.onclick=async()=>{installEvt.prompt();await installEvt.userChoice;installEvt=null;vConfig()};
 }
 
+/* ======================= Admin (GM e administradores) ======================= */
+// Quem é admin é decidido pelo banco (profiles.role). Esconder a aba aqui é só visual:
+// as regras do Supabase bloqueiam qualquer ação de quem não é admin.
+const ROLES=[['gm','GM'],['admin','Admin'],['social_media','Social media'],['cliente','Cliente']];
+const roleName=r=>(ROLES.find(x=>x[0]===r)||[0,r||'—'])[1];
+const ROLE_DESC={gm:'Dono do app. Pode tudo, inclusive criar e remover administradores.',
+  admin:'Ajuda a gerenciar usuários. Não mexe em outros administradores.',
+  social_media:'Cria e organiza feeds, cronogramas e downloads das próprias contas.',
+  cliente:'Acompanha o feed e aprova os posts.'};
+const CATS=[['funcoes','Funções'],['usuarios','Usuários'],['conteudo','Conteúdo'],['pagamentos','Pagamentos'],['seguranca','Segurança'],['ver_como_usuario','Ver como usuário']];
+const catName=c=>(CATS.find(x=>x[0]===c)||[0,c])[1];
+const isAdmin=()=>['gm','admin'].includes(S.profile?.role);
+const isGM=()=>S.profile?.role==='gm';
+const myRoleOpts=()=>ROLES.filter(([r])=>isGM()||!['gm','admin'].includes(r));
+let ADM={users:[],invites:[],log:[],filter:'todos',cat:'todos',loaded:false};
+const dBR=x=>new Date(x).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'});
+const hBR=x=>new Date(x).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+const initialColor=s=>ACC_COLORS[[...String(s)].reduce((n,c)=>n+c.charCodeAt(0),0)%ACC_COLORS.length];
+
+async function admLoad(){
+  const [users,invites,log]=await Promise.all([
+    db(sb.rpc('admin_list_users')),
+    db(sb.from('role_invites').select('email,role,created_at').order('created_at',{ascending:false})),
+    db(sb.from('activity_log').select('id,actor_id,category,action,target_user,details,created_at').order('created_at',{ascending:false}).limit(300))]);
+  ADM.users=users||[];ADM.invites=invites||[];ADM.log=log||[];ADM.loaded=true;
+}
+function admTabs(cur){
+  const soon=n=>`<span title="Em breve">${n}<small>em breve</small></span>`;
+  return `<nav class="adm-tabs" aria-label="Seções do Admin"><a data-go="admin" class="${cur==='usuarios'?'cur':''}">Usuários e funções</a>
+    <a data-go="admin/atividade" class="${cur==='atividade'?'cur':''}">Atividade</a>${soon('Templates')}${soon('Blog')}${soon('Suporte')}${soon('Assinaturas')}</nav>`;
+}
+function vAdmin(){
+  if(!isAdmin())return v404();
+  document.title='Admin · Fig.Feed';
+  const draw=()=>{if(route[0]!=='admin'||!isAdmin())return;(route[1]==='atividade'?admAtividade:admUsuarios)()};
+  if(ADM.loaded)draw();
+  else{app.innerHTML=header('admin')+admTabs(route[1]==='atividade'?'atividade':'usuarios')+`<main class="page adm"><p class="sub">Carregando…</p></main>`;bindHeader()}
+  const before=JSON.stringify([ADM.users,ADM.invites,ADM.log]),was=ADM.loaded;
+  admLoad().then(()=>{if(!was||JSON.stringify([ADM.users,ADM.invites,ADM.log])!==before)draw()}).catch(()=>{});
+}
+const userName=u=>u?(u.id===USER.id?'Você':(u.name||u.handle||u.email)):'';
+function admUsuarios(){
+  const f=ADM.filter,me=USER.id;
+  const match=u=>f==='todos'||(f==='admins'?['gm','admin'].includes(u.role):u.role===f);
+  const canEdit=u=>u.id!==me&&(isGM()||!['gm','admin'].includes(u.role));
+  const canCancel=i=>isGM()||!['gm','admin'].includes(i.role);
+  const av=u=>u.id===me?`<span class="avatar" style="${bgi(profAv(),60,60)}"></span>`
+    :`<span class="avatar" style="background:${initialColor(u.email)}" aria-hidden="true">${esc((u.name||u.email||'?').trim()[0]?.toUpperCase()||'?')}</span>`;
+  const state=u=>!u.confirmed?'E-mail não confirmado':u.last_sign_in_at?'Último acesso em '+dBR(u.last_sign_in_at):'Ainda não entrou';
+  const users=ADM.users.filter(match);
+  app.innerHTML=header('admin')+admTabs('usuarios')+`<main class="page adm" style="max-width:980px">
+    <h1>Usuários ${isGM()?'<span class="badge-gm">GM</span>':''}</h1><p class="sub">Quem usa o Fig.Feed e o que cada um pode fazer.</p>
+    <form class="adm-inv" id="inv" novalidate><input id="inv-email" type="email" placeholder="E-mail da pessoa" aria-label="E-mail da pessoa" autocomplete="off">
+      <select id="inv-role" aria-label="Função">${myRoleOpts().map(([r,n])=>`<option value="${r}" ${r==='social_media'?'selected':''}>${n}</option>`).join('')}</select>
+      <button class="pill dark" id="inv-go">Dar função</button></form>
+    <p class="adm-note">Se a pessoa já tem conta, a função muda na hora. Se ainda não tem, vale assim que ela criar a conta e confirmar o e-mail.</p>
+    <div class="chips" style="margin-bottom:14px" role="group" aria-label="Filtrar">${[['todos','Todos'],['admins','Admins'],['social_media','Social media'],['cliente','Clientes']]
+      .map(([k,n])=>`<button class="chip ${f===k?'on':''}" data-f="${k}" aria-pressed="${f===k}">${n}</button>`).join('')}</div>
+    <div class="adm-list">${users.map(u=>`<div class="adm-row">
+        <div class="who2">${av(u)}<div class="nm"><b>${esc(u.name||u.handle||u.email)}${u.id===me?' (você)':''}</b>${u.name||u.handle?`<small>${esc(u.email)}</small>`:''}</div></div>
+        <span><span class="rd r-${esc(u.role)}"></span>${roleName(u.role)}</span>
+        <span class="mut hide-sm">${state(u)}</span>
+        ${canEdit(u)?`<button class="ed" data-u="${u.id}">Mudar função</button>`:'<span></span>'}</div>`).join('')
+      ||'<p class="sub" style="margin:18px 0">Ninguém com essa função ainda.</p>'}</div>
+    ${ADM.invites.length?`<h2 class="adm-h2">Convites pendentes</h2><div class="adm-list">${ADM.invites.map(i=>`<div class="adm-row">
+        <div class="who2"><span class="avatar" style="background:var(--soft)"></span><div class="nm"><b>${esc(i.email)}</b><small>Convidado em ${dBR(i.created_at)}</small></div></div>
+        <span><span class="rd r-${esc(i.role)}"></span>${roleName(i.role)}</span><span class="mut hide-sm">Aguardando cadastro</span>
+        ${canCancel(i)?`<button class="ed" data-cancel="${esc(i.email)}">Cancelar</button>`:'<span></span>'}</div>`).join('')}</div>`:''}
+  </main>`;
+  bindHeader();
+  app.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{ADM.filter=b.dataset.f;admUsuarios()});
+  app.querySelectorAll('[data-u]').forEach(b=>b.onclick=()=>admPanel(ADM.users.find(u=>u.id===b.dataset.u)));
+  app.querySelectorAll('[data-cancel]').forEach(b=>b.onclick=async()=>{
+    if(!confirm(`Cancelar o convite de ${b.dataset.cancel}?`))return;b.disabled=true;
+    try{await db(sb.rpc('cancel_invite',{invite_email:b.dataset.cancel}));toast('Convite cancelado');await admLoad();admUsuarios()}catch(e){b.disabled=false}});
+  document.getElementById('inv').onsubmit=async e=>{e.preventDefault();
+    const email=document.getElementById('inv-email').value.trim().toLowerCase(),role=document.getElementById('inv-role').value;
+    if(!/^\S+@\S+\.\S+$/.test(email))return toast('Digite um e-mail válido.');
+    if(['gm','admin'].includes(role)&&!confirm(`Dar a função ${roleName(role)} para ${email}? ${role==='gm'?'Um GM tem acesso total, igual ao seu.':'Admins veem todos os usuários.'}`))return;
+    const btn=document.getElementById('inv-go');btn.disabled=true;
+    try{const r=await db(sb.rpc('invite_with_role',{invite_email:email,new_role:role}));
+      toast(r==='aplicado'?`${email} agora é ${roleName(role)}`:`Convite guardado: vale quando ${email} criar a conta`,3600);
+      await admLoad();admUsuarios()}catch(err){btn.disabled=false}};
+}
+function admPanel(u){
+  if(!u)return;closePanel();let sel=u.role;
+  const ov=document.createElement('div');ov.className='ov';ov.id='ov';ov.onclick=e=>{if(e.target===ov)closePanel()};
+  const draw=()=>{ov.innerHTML=`<aside class="sp" role="dialog" aria-modal="true" aria-labelledby="adm-pt">
+    <div class="bar"><span class="saved">Mudar função</span><button class="sp-close" id="ap-x" aria-label="Fechar">${XICON}</button></div>
+    <div class="body"><div><div class="ttl" id="adm-pt" style="font-size:22px">${esc(u.name||u.handle||u.email)}</div><span class="saved">${esc(u.email)}</span></div>
+      <h3>Função</h3><div class="chips" role="radiogroup" aria-label="Função">${myRoleOpts().map(([r,n])=>`<button class="chip ${sel===r?'on':''}" role="radio" aria-checked="${sel===r}" data-r="${r}"><span class="rd r-${r}"></span>${n}</button>`).join('')}</div>
+      <p class="role-help">${ROLE_DESC[sel]||''}</p>
+      ${sel==='gm'&&u.role!=='gm'?'<p class="role-help" style="color:var(--err)">Outro GM tem o mesmo poder que você, inclusive sobre a sua conta.</p>':''}
+      <div class="foot"><button class="pill dark" id="ap-save" ${sel===u.role?'disabled':''}>Salvar função</button><button class="pill" id="ap-cancel">Cancelar</button></div>
+      <p class="role-help">A mudança fica registrada em Atividade.</p></div></aside>`;
+    ov.querySelector('#ap-x').onclick=closePanel;ov.querySelector('#ap-cancel').onclick=closePanel;
+    ov.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{sel=b.dataset.r;draw();ov.querySelector(`[data-r="${sel}"]`)?.focus()});
+    ov.querySelector('#ap-save').onclick=async()=>{const s=ov.querySelector('#ap-save');s.disabled=true;
+      try{await db(sb.rpc('set_user_role',{target:u.id,new_role:sel}));closePanel();toast(`${u.name||u.email} agora é ${roleName(sel)}`);await admLoad();admUsuarios()}
+      catch(e){s.disabled=false}}};
+  draw();document.body.appendChild(ov);document.addEventListener('keydown',panelEsc);ov.querySelector('.chip.on')?.focus();
+}
+function admLogText(e){
+  const d=e.details||{};const u=id=>ADM.users.find(x=>x.id===id);
+  const actor=e.actor_id?`<b>${esc(userName(u(e.actor_id))||'Alguém')}</b> `:'';
+  const tgt=`<b>${esc(userName(u(e.target_user))||'um usuário removido')}</b>`;
+  switch(e.action){
+    case 'mudou a função':return `${actor}mudou ${tgt} de ${roleName(d.de)} para ${roleName(d.para)}`;
+    case 'convite aceito':return `${tgt} criou a conta e virou ${roleName(d.funcao)}`;
+    case 'convidou por e-mail':return `${actor}convidou ${esc(d.email)} como ${roleName(d.funcao)}`;
+    case 'cancelou convite':return `${actor}cancelou o convite de ${esc(d.email)}`;
+    default:return `${actor}${esc(e.action)}`}
+}
+function admAtividade(){
+  const c=ADM.cat;const rows=ADM.log.filter(e=>c==='todos'||e.category===c);
+  const today=iso(new Date()),yest=iso(addDays(new Date(),-1));
+  const dayName=ds=>ds===today?'Hoje':ds===yest?'Ontem':dBR(ds+'T12:00');
+  const groups=[];rows.forEach(e=>{const ds=iso(new Date(e.created_at));let g=groups[groups.length-1];if(!g||g.ds!==ds)groups.push(g={ds,items:[]});g.items.push(e)});
+  app.innerHTML=header('admin')+admTabs('atividade')+`<main class="page adm" style="max-width:900px">
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px"><div><h1>Atividade</h1><p class="sub" style="margin-bottom:0">Tudo que os administradores fizeram. Não pode ser editado nem apagado.</p></div>
+      <button class="pill" id="csv" style="margin-left:auto" ${rows.length?'':'disabled'}>Baixar (.csv)</button></div>
+    <div class="chips" style="margin:28px 0 4px" role="group" aria-label="Filtrar">${[['todos','Tudo'],...CATS].map(([k,n])=>`<button class="chip ${c===k?'on':''}" data-c="${k}" aria-pressed="${c===k}">${k==='todos'?'':`<span class="rd c-${k}"></span>`}${n}</button>`).join('')}</div>
+    ${groups.map(g=>`<h2 class="adm-day">${dayName(g.ds)}</h2>${g.items.map(e=>`<div class="adm-log"><span class="t">${hBR(e.created_at)}</span>
+      <span class="x">${admLogText(e)}</span><span class="c"><span class="rd c-${esc(e.category)}"></span>${catName(e.category)}</span></div>`).join('')}`).join('')
+      ||'<p class="sub" style="margin-top:28px">Nada registrado aqui ainda.</p>'}
+  </main>`;
+  bindHeader();
+  app.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{ADM.cat=b.dataset.c;admAtividade()});
+  document.getElementById('csv').onclick=()=>{
+    const cell=s=>`"${String(s??'').replace(/"/g,'""')}"`;const strip=h=>h.replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#39;/g,"'");
+    const lines=[['Data','Hora','Categoria','O que aconteceu'].map(cell).join(';'),...rows.map(e=>[dBR(e.created_at),hBR(e.created_at),catName(e.category),strip(admLogText(e))].map(cell).join(';'))];
+    saveFile(new Blob(['﻿'+lines.join('\n')],{type:'text/csv;charset=utf-8'}),`figfeed-atividade-${today}.csv`)};
+}
+
 /* ======================= Fotos de perfil e de conta ======================= */
 async function setAvatar(ctx,file){
   toast('Enviando foto…',15000);const b=await shrink(file);if(!b){toast('Não deu para ler essa imagem.');return}
@@ -1210,7 +1383,7 @@ sb.auth.onAuthStateChange((event,session)=>{
       try{await loadAll()}catch(e){}
       go(route[0]==='confirmado'?'confirmado':needsTutorial()?'boas-vindas':'home')}
     if(event==='USER_UPDATED'&&session?.user)USER=session.user;
-    if(event==='SIGNED_OUT'){USER=null;S={profile:{name:'',handle:'',dates_follow:true},accounts:[]};go('entrar')}
+    if(event==='SIGNED_OUT'){USER=null;S={profile:{name:'',handle:'',dates_follow:true},accounts:[]};ADM={users:[],invites:[],log:[],filter:'todos',cat:'todos',loaded:false};go('entrar')}
   },0);
 });
 /* ======================= Aviso de sem internet ======================= */
