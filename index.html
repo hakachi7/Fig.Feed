@@ -925,6 +925,12 @@ body.pg-lock .pub-hdr,body.pg-lock .hdr{position:relative;z-index:20}
 .pvp-bar{background:var(--fg);color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;padding:7px 24px 7px 10px;position:relative;flex-wrap:wrap}.pvp-bar span{opacity:.85}.pvp-bar .pvp-bt{background:#fff;color:var(--fg);opacity:1}.pvp-bar .pvp-x{background:none;color:#fff;top:50%;transform:translateY(-50%)}
 .bn-rand{margin-top:6px;width:100%;display:flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line);border-radius:8px;padding:7px;font-size:12px;background:#fff}.bn-rand:hover{border-color:var(--fg)}
 .bn-ci>.bn-drop{flex:1}
+.ld-hero{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:10px;margin-top:10px}
+.ld-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}
+.ld-t{display:flex;flex-direction:column;gap:5px}.ld-img{aspect-ratio:4/5;border-radius:6px;background:#eee center/cover;position:relative}.ld-hero .ld-img{aspect-ratio:364/478}
+.ld-act{display:flex;gap:3px}.ld-act button{flex:1;height:26px;border:1px solid var(--line);border-radius:6px;display:grid;place-items:center;font-size:12px;background:#fff}.ld-act button:hover{border-color:var(--fg)}.ld-act button:disabled{opacity:.3}
+.ld-add{aspect-ratio:364/478}.ld-t>.bn-rand{margin-top:0}
+.role-help svg{vertical-align:-3px}
 </style>
 </head>
 <body>
@@ -1230,7 +1236,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v15.4';
+const VERSAO='v15.5';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   blog:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 5h16v14H4zM8 9h8M8 13h8M8 17h5"/></svg>',
@@ -2578,6 +2584,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v15.5','Nov 2026',['Página inicial: em Admin › Páginas › Imagens da página dá para trocar a foto do meio e as 3 grades que já estão lá (sem banners por cima)']],
   ['v15.4','Nov 2026',['Prévia dos pop-ups refeita: mostra certinho os formatos Central, Canto e Barra, em qualquer tamanho de tela','Banners e imagem dos pop-ups: opção "Aleatório" que mostra um fundo de bolinhas diferente a cada visita']],
   ['v15.3','Nov 2026',['Admin › Páginas: a página inicial (landing page) agora aparece na lista, com nome, banners, aviso e botão de ligar e desligar']],
   ['v15.2','Nov 2026',['Toda conta nova já começa com uma foto de perfil de bolinhas (dá para trocar pela sua em Perfil)']],
@@ -2683,12 +2690,18 @@ async function vExcluir(){
 
 /* ======================= V7: página pública (para quem não tem conta) ======================= */
 function pubFooter(){return `<footer class="pub-foot"><span>© ${new Date().getFullYear()} Fig.Feed</span><a data-go="termos">Termos</a><a data-go="privacidade">Privacidade</a><a data-go="blog">Blog</a><a data-go="ajuda">Ajuda</a><a data-go="planos">Planos</a></footer>`}
+// Imagens da landing: foto do meio (vai trocando) e as 3 grades de 6. Sem nada salvo, usa as bolinhas de sempre.
+const LAND_HERO_DEF=()=>Array.from({length:9},(_,i)=>'bolinhas:'+(i+1));
+const LAND_GRID_DEF=()=>[0,3,6].map(k=>Array.from({length:6},(_,i)=>'bolinhas:'+((i+k)%9+1)));
+function landImgs(){const L=SITE.pages.landing?.banners?.land||{};const hero=(L.hero||[]).filter(Boolean);const gd=LAND_GRID_DEF();
+  return {hero:hero.length?hero:LAND_HERO_DEF(),grids:gd.map((d,k)=>d.map((x,i)=>L.grids?.[k]?.[i]||x))}}
 function vLanding(){
   document.title='Fig.Feed — monte e organize feeds de forma visual';
-  const g=(k)=>Array.from({length:6},(_,i)=>`<div style="background-image:url('${TUT_IMG[(i+k)%9]}')"></div>`).join('');
+  const LI=landImgs();
+  const g=(k)=>LI.grids[k/3].map(p=>`<div style="background-image:url('${anyImg(p)}')"></div>`).join('');
   app.innerHTML=pubHeader()+`<main class="land">
     <section class="home land-hero" aria-label="Fig.Feed"><div class="word">Fig.</div>
-      <div class="photo">${TUT_IMG.map((u,i)=>`<img src="${u}" alt="" class="${i?'':'on'}">`).join('')}</div><div class="word">Feed</div></section>
+      <div class="photo">${LI.hero.map((p,i)=>`<img src="${anyImg(p)}" alt="" class="${i?'':'on'}">`).join('')}</div><div class="word">Feed</div></section>
     <section class="land-cta"><p>Monte, organize e acompanhe feeds de forma visual.</p>
       <div class="acts"><button class="pill dark" data-go="criar">Começar grátis</button><button class="pill" id="como">Ver como funciona</button></div></section>
     <section class="land-feat" id="feat">
@@ -2699,7 +2712,7 @@ function vLanding(){
   bindGo();
   document.getElementById('como').onclick=()=>document.getElementById('feat').scrollIntoView({behavior:'smooth'});
   let i=0;const imgs=app.querySelectorAll('.land-hero img');
-  homeTimer=setInterval(()=>{imgs[i].classList.remove('on');i=(i+1)%imgs.length;imgs[i].classList.add('on')},2400);
+  if(imgs.length>1)homeTimer=setInterval(()=>{imgs[i].classList.remove('on');i=(i+1)%imgs.length;imgs[i].classList.add('on')},2400);
 }
 
 /* ======================= V7: Planos (só a tela; a cobrança vem depois) ======================= */
@@ -3683,7 +3696,7 @@ function pageExtras(g,v){
   else if(isAdmin()&&c&&!pgOn(c)){const b=document.createElement('div');b.id='pg-admbar';b.className='pg-admbar';b.setAttribute('role','status');
     b.innerHTML=`<span class="rd" style="background:var(--err)"></span>Esta página está desligada para os usuários <button data-go="admin/paginas">Editar</button>`;
     b.querySelector('button').onclick=()=>go('admin/paginas');document.body.appendChild(b)}
-  if(c&&c.banners&&!(v==='home'&&USER)&&v!=='menu'&&v!=='admin'){PG.ban=bannersHTML(c.banners);pgDecor()}
+  if(c&&c.banners&&k!=='landing'&&!(v==='home'&&USER)&&v!=='menu'&&v!=='admin'){PG.ban=bannersHTML(c.banners);pgDecor()}
   if(!lock)popupCheck(k);
 }
 function pgLock(c,kind,k){
@@ -3874,6 +3887,17 @@ function pgPanel(k){
     return `<div class="bn-slot"><span class="bn-l">${label}<code>${dim[0]} × ${dim[1]} px</code></span>${obj?.p?`<div class="bn-img" style="aspect-ratio:${ratio};background-image:url('${bnImg(obj)}')"><span class="bn-tag ${rnd_||ok?'ok':'warn'}">${rnd_?'Aleatório · bolinhas':`${obj.w?`${obj.w} × ${obj.h}`:''}${ok?' · certo':' · vai cortar'}`}</span></div>
       <div class="acts-row" style="margin-top:6px"><button class="pill sm" data-up="${key}">${rnd_?'Enviar imagem':'Trocar'}</button>${rnd_?'':`<button class="pill sm" data-rand="${key}">Aleatório</button>`}<button class="danger-link" data-rm="${key}">Tirar</button></div>`
       :`<button class="bn-drop" data-up="${key}" style="aspect-ratio:${ratio}">${UP_IC}<span>Clique para enviar</span></button><button class="bn-rand" data-rand="${key}">${RAND_IC}Usar aleatório (bolinhas)</button>`}</div>`};
+  // Landing: em vez de banners por cima, troca as imagens que já estão na página
+  const isLand=k==='landing';const LE=isLand?JSON.parse(JSON.stringify(landImgs())):null;
+  const ltile=(key,p,extra='')=>`<div class="ld-t"><div class="ld-img" style="background-image:url('${anyImg(p)}')">${p===RAND_IMG?'<span class="bn-tag ok">Aleatório</span>':''}</div>
+      <div class="ld-act"><button data-lup="${key}" aria-label="Trocar imagem">${UP_IC}</button><button data-lrand="${key}" aria-label="Usar aleatório (bolinhas)" title="Aleatório (bolinhas)">${RAND_IC}</button>${extra}</div></div>`;
+  const landBody=()=>`<p class="role-help">Troque as imagens que já aparecem na página inicial. Clique em ${UP_IC} para enviar a sua ou em ${RAND_IC} para usar um fundo de bolinhas sorteado a cada visita.</p>
+      <section class="bn-box"><b>Foto do meio</b> <span class="mut">entre "Fig." e "Feed" · vai trocando sozinha · <code>1080 × 1420 px</code></span>
+        <div class="ld-hero">${LE.hero.map((p,i)=>ltile('hero.'+i,p,`<button data-lmv="${i}:-1" aria-label="Mover para a esquerda" ${i?'':'disabled'}>←</button><button data-lmv="${i}:1" aria-label="Mover para a direita" ${i<LE.hero.length-1?'':'disabled'}>→</button><button class="err" data-lrm="${i}" aria-label="Tirar esta foto" ${LE.hero.length>1?'':'disabled'}>×</button>`)).join('')}
+          ${LE.hero.length<12?`<div class="ld-t"><button class="bn-drop ld-add" data-lup="hero.novo">${UP_IC}<span>Adicionar</span></button><button class="bn-rand" data-lrand="hero.novo">${RAND_IC}Aleatório</button></div>`:''}</div></section>
+      ${['Arraste e a grade se ajeita','Cronograma de todos os clientes','Relatório para o cliente'].map((n,g)=>`<section class="bn-box"><b>Grade ${g+1}</b> <span class="mut">${n} · 6 imagens · <code>1080 × 1350 px</code></span>
+        <div class="ld-grid">${LE.grids[g].map((p,i)=>ltile(`grid.${g}.${i}`,p)).join('')}</div></section>`).join('')}
+      <button class="danger-link" id="ld-reset">Voltar tudo para as bolinhas de antes</button>`;
   const draw=()=>{const B=E.banners;const P=B.principal||{};const F=B.faixa||{};const C=B.carrossel||[];
     const body={geral:`<label class="lbl-s" for="pp-n">Nome da página</label><input class="field" id="pp-n" data-e="nome" maxlength="60" value="${esc(E.nome)}" placeholder="${esc(nomeP)}">
         <p class="role-help">${custom?'É o título da página.':'É o nome que aparece no menu e no título da aba do navegador.'}</p>
@@ -3883,7 +3907,7 @@ function pgPanel(k){
         <span class="lbl-s">Quem vê</span><div class="chips">${quemOps.map(q=>`<button class="chip ${E.quem===q?'on':''}" data-q="${q}" aria-pressed="${E.quem===q}">${QUEM_NOME[q]}</button>`).join('')}</div>
         ${lock?`<p class="role-help" style="margin-top:14px">${LOCK_IC} Esta página fica sempre no ar.</p>`:`<div class="pp-on"><div><b>Página no ar</b><p class="role-help">Desligada, quem abrir vê o aviso. Admins continuam vendo a página.</p></div>${SWITCH(E.ativo,'Página no ar','id="pp-on"')}</div>`}
         ${custom?`<div class="acts-row"><a class="pill" href="#admin/pagina/${esc(k)}">Editar conteúdo</a><a class="pill" href="#p/${esc(k)}">Ver página</a></div>`:''}`,
-      banners:`<p class="role-help">Envie cada imagem no tamanho indicado. Se vier em outro tamanho, ela é cortada pelo centro. JPG, PNG ou WebP até 5 MB.</p>
+      banners:isLand?landBody():`<p class="role-help">Envie cada imagem no tamanho indicado. Se vier em outro tamanho, ela é cortada pelo centro. JPG, PNG ou WebP até 5 MB.</p>
         <section class="bn-box"><b>Banner principal</b> <span class="mut">o primeiro que aparece na página</span>
           <div class="bn-two">${slot('Computador',[1920,640],P.desk,'principal.desk','3 / 1')}${slot('Celular',[1080,1350],P.mob,'principal.mob','4 / 5')}</div>
           <div class="bn-two"><label class="lbl-s">Link ao clicar (opcional)<input class="field" data-bn="principal.link" value="${esc(P.link||'')}" placeholder="/#planos ou https://…"></label>
@@ -3904,7 +3928,7 @@ function pgPanel(k){
         ${def&&!def[3]?'':`<div class="acts-row"><a class="pill" href="#${custom?'p/'+esc(k):esc(pgLink(k))}" id="pp-ver">Ver a página</a></div>`}`}[tab];
     ov.innerHTML=`<aside class="sp pp" role="dialog" aria-modal="true" aria-labelledby="pp-t"><div class="bar"><span class="saved">Editar página</span><button class="sp-close" id="pp-x" aria-label="Fechar">${XICON}</button></div>
       <div class="body"><div class="pp-head"><h2 id="pp-t">${esc(E.nome||nomeP)}</h2>${lock?'':`<span class="${E.ativo?'':'err'}"><span class="rd" style="background:${E.ativo?'#14b85a':'var(--err)'}"></span>${E.ativo?'No ar':'Desligada'}</span>`}</div>
-        <div class="pg-sub" role="tablist">${[['geral','Geral'],['banners','Banners'],['aviso','Aviso quando desligada']].map(([t,n])=>`<button role="tab" aria-selected="${tab===t}" class="${tab===t?'cur':''}" data-tab="${t}">${n}</button>`).join('')}</div>
+        <div class="pg-sub" role="tablist">${[['geral','Geral'],['banners',isLand?'Imagens da página':'Banners'],['aviso','Aviso quando desligada']].map(([t,n])=>`<button role="tab" aria-selected="${tab===t}" class="${tab===t?'cur':''}" data-tab="${t}">${n}</button>`).join('')}</div>
         ${body}
         <div class="acts-row" style="margin-top:8px"><button class="pill dark" id="pp-save">Salvar</button><button class="pill" id="pp-c">Cancelar</button>${custom?'<button class="danger-link" id="pp-del" style="margin-left:auto">Apagar página</button>':''}</div>
         <p class="role-help">A mudança fica registrada em Atividade.</p></div></aside>`;
@@ -3918,6 +3942,13 @@ function pgPanel(k){
         if(key==='car.novo'){(B.carrossel=B.carrossel||[]).push({img,link:''})}
         else{const [a,f]=key.split('.');(B[a]=B[a]||{})[f]=img}
         toast(img.w?`Enviado (${img.w} × ${img.h})`:'Enviado');draw()}catch(err){toast(traduz(err.message))}});
+    const lset=(key,p)=>{const a=key.split('.');if(a[0]==='hero'){if(a[1]==='novo')LE.hero.push(p);else LE.hero[+a[1]]=p}else LE.grids[+a[1]][+a[2]]=p};
+    ov.querySelectorAll('[data-lup]').forEach(b=>b.onclick=async()=>{keep();const files=await pickBlogFiles('image/jpeg,image/png,image/webp');if(!files.length)return;toast('Enviando…',20000);
+      try{const img=await uploadBanner(files[0]);lset(b.dataset.lup,img.p);toast('Imagem enviada');draw()}catch(err){toast(traduz(err.message))}});
+    ov.querySelectorAll('[data-lrand]').forEach(b=>b.onclick=()=>{keep();lset(b.dataset.lrand,RAND_IMG);draw()});
+    ov.querySelectorAll('[data-lrm]').forEach(b=>b.onclick=()=>{keep();LE.hero.splice(+b.dataset.lrm,1);draw()});
+    ov.querySelectorAll('[data-lmv]').forEach(b=>b.onclick=()=>{keep();const [i,d]=b.dataset.lmv.split(':').map(Number);[LE.hero[i],LE.hero[i+d]]=[LE.hero[i+d],LE.hero[i]];draw()});
+    const lr=ov.querySelector('#ld-reset');if(lr)lr.onclick=()=>{keep();LE.hero=LAND_HERO_DEF();LE.grids=LAND_GRID_DEF();draw()};
     ov.querySelectorAll('[data-rand]').forEach(b=>b.onclick=()=>{keep();const key=b.dataset.rand;const img={p:RAND_IMG,w:0,h:0};
       if(key==='car.novo')(B.carrossel=B.carrossel||[]).push({img,link:''});else{const [a,f]=key.split('.');(B[a]=B[a]||{})[f]=img}draw()});
     ov.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{keep();const [a,f]=b.dataset.rm.split('.');if(B[a])delete B[a][f];draw()});
@@ -3931,7 +3962,7 @@ function pgPanel(k){
       if(slug&&slug!==k&&PG_RESERVED.has(slug))return toast('Esse link já é usado pelo Fig.Feed. Escolha outro.',3600);
       if(slug&&Object.values(SITE.pages).some(x=>x.key!==k&&(x.slug===slug||x.key===slug)))return toast('Esse link já é usado por outra página.',3600);
       const fields={nome:E.nome.trim(),quem:E.quem,aviso_titulo:E.aviso_titulo.trim(),aviso_texto:E.aviso_texto.trim(),aviso_volta:E.aviso_volta?new Date(E.aviso_volta+'T09:00:00').toISOString():null,
-        aviso_botao:E.aviso_botao,auto_ligar:!!E.auto_ligar,banners:cleanBanners(E.banners)};
+        aviso_botao:E.aviso_botao,auto_ligar:!!E.auto_ligar,banners:isLand?{land:{hero:LE.hero,grids:LE.grids}}:cleanBanners(E.banners)};
       if(!custom)fields.slug=slug&&slug!==k&&k!=='landing'&&k!=='home'?slug:null;
       if(!lock)fields.ativo=!!E.ativo;
       if(fields.auto_ligar&&!fields.aviso_volta)return toast('Escolha a data de volta para ligar sozinha.',3600);
