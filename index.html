@@ -875,8 +875,8 @@ body.pg-lock .pub-hdr,body.pg-lock .hdr{position:relative;z-index:20}
 .pe-frame{position:relative;aspect-ratio:4/3;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff;margin:6px 0 12px}
 .pe-fake{padding:14px;display:flex;flex-direction:column;gap:7px}.pe-fake i{display:block;height:8px;width:30%;background:#ddd;border-radius:3px}.pe-fake b{display:block;height:50px;background:var(--soft);border-radius:6px}
 .pe-fake span{display:block;height:6px;background:#eee;border-radius:3px}
-.pe-frame .pop-bg.pv{position:absolute;inset:0}.pe-frame .pop{transform:scale(.62);transform-origin:center}.pe-frame .pop-canto{position:absolute;right:10px;bottom:10px;transform-origin:bottom right}
-.pe-frame .pop-barra{position:absolute;top:0;left:0;right:0;transform:none;font-size:11px;padding:7px 30px 7px 10px}
+
+
 /* pop-ups no site */
 .pop-bg{position:fixed;inset:0;z-index:80;background:rgba(10,10,10,.42);display:grid;place-items:center;padding:16px}
 .pop{background:#fff;color:var(--fg);border-radius:14px;box-shadow:0 18px 60px rgba(0,0,0,.25);position:relative;overflow:hidden}
@@ -909,6 +909,22 @@ body.pg-lock .pub-hdr,body.pg-lock .hdr{position:relative;z-index:20}
 .mn-foot{display:flex;flex-wrap:wrap;align-items:center;gap:18px;font-size:12px}
 .mn-bg{color:#fff;border:1px solid rgba(255,255,255,.45);border-radius:99px;padding:6px 12px}.mn-ver{margin-left:auto;color:#fff;opacity:.8}
 @media (max-width:700px){.mn-in{padding:20px 20px 24px}.mn-body{padding:24px 0}.mn-it{gap:14px}.mn-it .i{display:none}.mn-l{font-size:16px}}
+/* v15.4: prévia do pop-up e banner aleatório */
+.pe-side{flex:0 1 440px}
+.pe-frame{width:100%;max-width:420px;aspect-ratio:16/11;position:relative;overflow:hidden;border:1px solid var(--line);border-radius:10px;background:#fff;margin:6px 0 12px;font-size:11px}
+.pvp-page{padding:14px;display:flex;flex-direction:column;gap:7px}.pvp-page i{display:block;height:7px;width:28%;background:#ddd;border-radius:3px}.pvp-page b{display:block;height:58px;background:var(--soft);border-radius:6px}.pvp-page span{display:block;height:6px;background:#eee;border-radius:3px}
+.pvp-dim{position:absolute;inset:0;background:rgba(10,10,10,.42);display:flex;align-items:center;justify-content:center;padding:12px}
+.pvp-card{background:#fff;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.22);overflow:hidden;position:relative;display:flex;flex-direction:column}
+.pvp-card.c{width:56%}.pvp-card.c .pvp-img{aspect-ratio:2/1}.pvp-card.k{position:absolute;right:10px;bottom:10px;width:44%}
+.pvp-img{display:block;width:100%;aspect-ratio:3/2;background:#eee center/cover;flex:none}
+.pvp-b{padding:9px 10px;display:flex;flex-direction:column;gap:5px;align-items:center;text-align:center;min-height:0}.pvp-card.k .pvp-b{align-items:flex-start;text-align:left}
+.pvp-b b{font-size:12px;font-weight:500;line-height:1.2}.pvp-tx{color:#555;font-size:10px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.pvp-bt{background:var(--fg);color:#fff;border-radius:99px;padding:3px 10px;font-size:10px;font-weight:500}
+.pvp-b u{font-size:9px;color:var(--muted)}
+.pvp-x{position:absolute;top:4px;right:6px;width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,.9);display:grid;place-items:center;font-size:11px;line-height:1;z-index:1}
+.pvp-bar{background:var(--fg);color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;padding:7px 24px 7px 10px;position:relative;flex-wrap:wrap}.pvp-bar span{opacity:.85}.pvp-bar .pvp-bt{background:#fff;color:var(--fg);opacity:1}.pvp-bar .pvp-x{background:none;color:#fff;top:50%;transform:translateY(-50%)}
+.bn-rand{margin-top:6px;width:100%;display:flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line);border-radius:8px;padding:7px;font-size:12px;background:#fff}.bn-rand:hover{border-color:var(--fg)}
+.bn-ci>.bn-drop{flex:1}
 </style>
 </head>
 <body>
@@ -939,7 +955,7 @@ const URLS={}; // caminho no Storage -> link temporário
 // Fotos que não estão no Storage: picsum (fotos de exemplo) e bolinhas (foto de perfil inicial de cada conta nova)
 const isStock=p=>/^(picsum|bolinhas):/.test(p||'');
 function src(s,w=600,h=750){if(!s)return'';const p=s.path||'';
-  if(p.startsWith('bolinhas:'))return new URL(`img/tutorial/bolinhas-${parseInt(p.slice(9),10)||1}.jpg`,location.href).href;
+  if(p.startsWith('bolinhas:'))return new URL(`img/tutorial/bolinhas-${p==='bolinhas:aleatorio'?1+rnd(9):parseInt(p.slice(9),10)||1}.jpg`,location.href).href;
   if(p.startsWith('picsum:'))return `https://picsum.photos/id/${p.slice(7)}/${w}/${h}`;return URLS[p]||''}
 const bgi=(s,w,h)=>{const u=src(s,w,h);return u?`background-image:url('${u}')`:''};
 const handleOf=c=>c?'@'+String(c).toLowerCase().replace(/[^a-z0-9._]+/g,''):'@voce';
@@ -1214,7 +1230,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v15.3';
+const VERSAO='v15.4';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   blog:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 5h16v14H4zM8 9h8M8 13h8M8 17h5"/></svg>',
@@ -2562,6 +2578,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v15.4','Nov 2026',['Prévia dos pop-ups refeita: mostra certinho os formatos Central, Canto e Barra, em qualquer tamanho de tela','Banners e imagem dos pop-ups: opção "Aleatório" que mostra um fundo de bolinhas diferente a cada visita']],
   ['v15.3','Nov 2026',['Admin › Páginas: a página inicial (landing page) agora aparece na lista, com nome, banners, aviso e botão de ligar e desligar']],
   ['v15.2','Nov 2026',['Toda conta nova já começa com uma foto de perfil de bolinhas (dá para trocar pela sua em Perfil)']],
   ['v15.1','Nov 2026',['Menu do ícone volta a usar a foto desfocada de fundo, com o crédito do fotógrafo e o botão "↻ outra foto"']],
@@ -3684,7 +3701,10 @@ function pgLock(c,kind,k){
   el.querySelectorAll('[data-to]').forEach(b=>b.onclick=()=>go(b.dataset.to));
   document.body.appendChild(el);pgDecor();el.querySelector('button')?.focus({preventScroll:true});
 }
-const bnImg=x=>x&&x.p?blogImg(x.p):'';
+// Imagem pública (pasta blog) ou de bolinhas; 'bolinhas:aleatorio' sorteia uma das 9 a cada vez que a página abre
+const RAND_IMG='bolinhas:aleatorio';
+const anyImg=p=>!p?'':isStock(p)?src({path:p}):blogImg(p);
+const bnImg=x=>x&&x.p?anyImg(x.p):'';
 const bnLink=u=>{u=String(u||'').trim();if(!u)return'';if(u.startsWith('/#'))return u.slice(1);if(u.startsWith('#'))return u;return safeUrl(u)};
 function bannersHTML(b){
   if(!b)return'';let h='';
@@ -3766,7 +3786,7 @@ function popupCheck(key){
   else POP.timer=setTimeout(show,700);
 }
 function popupHTML(p,preview){
-  const img=p.image_path?`<img class="pop-img" src="${blogImg(p.image_path)}" alt="">`:'';
+  const img=p.image_path?`<img class="pop-img" src="${anyImg(p.image_path)}" alt="">`:'';
   const btn=p.botao_texto?`<button class="pill ${p.formato==='barra'?'':'dark'}" data-pop="go">${esc(p.botao_texto)}</button>`:'';
   const x=`<button class="pop-x" data-pop="x" aria-label="Fechar">${XICON}</button>`;
   if(p.formato==='barra')return `<div class="pop pop-barra" role="region" aria-label="Aviso">${x}<div class="pop-bt"><b>${esc(p.titulo)}</b>${p.texto?` <span>${esc(p.texto)}</span>`:''}</div>${btn}</div>`;
@@ -3850,10 +3870,10 @@ function pgPanel(k){
   const ov=document.createElement('div');ov.className='ov';ov.id='ov';ov.onclick=e=>{if(e.target===ov)closePanel()};
   const keep=()=>{ov.querySelectorAll('[data-e]').forEach(i=>{const f=i.dataset.e;E[f]=i.type==='checkbox'?i.checked:i.value});
     ov.querySelectorAll('[data-bn]').forEach(i=>{const [a,b]=i.dataset.bn.split('.');if(a==='car'){E.banners.carrossel[+b].link=i.value}else{(E.banners[a]=E.banners[a]||{})[b]=i.value}})};
-  const slot=(label,dim,obj,key,ratio)=>{const ok=obj?.p&&obj.w&&Math.abs(obj.w/obj.h-dim[0]/dim[1])<.03;
-    return `<div class="bn-slot"><span class="bn-l">${label}<code>${dim[0]} × ${dim[1]} px</code></span>${obj?.p?`<div class="bn-img" style="aspect-ratio:${ratio};background-image:url('${bnImg(obj)}')"><span class="bn-tag ${ok?'ok':'warn'}">${obj.w?`${obj.w} × ${obj.h}`:''}${ok?' · certo':' · vai cortar'}</span></div>
-      <div class="acts-row" style="margin-top:6px"><button class="pill sm" data-up="${key}">Trocar</button><button class="danger-link" data-rm="${key}">Tirar</button></div>`
-      :`<button class="bn-drop" data-up="${key}" style="aspect-ratio:${ratio}">${UP_IC}<span>Clique para enviar</span></button>`}</div>`};
+  const slot=(label,dim,obj,key,ratio)=>{const rnd_=obj?.p===RAND_IMG;const ok=obj?.p&&obj.w&&Math.abs(obj.w/obj.h-dim[0]/dim[1])<.03;
+    return `<div class="bn-slot"><span class="bn-l">${label}<code>${dim[0]} × ${dim[1]} px</code></span>${obj?.p?`<div class="bn-img" style="aspect-ratio:${ratio};background-image:url('${bnImg(obj)}')"><span class="bn-tag ${rnd_||ok?'ok':'warn'}">${rnd_?'Aleatório · bolinhas':`${obj.w?`${obj.w} × ${obj.h}`:''}${ok?' · certo':' · vai cortar'}`}</span></div>
+      <div class="acts-row" style="margin-top:6px"><button class="pill sm" data-up="${key}">${rnd_?'Enviar imagem':'Trocar'}</button>${rnd_?'':`<button class="pill sm" data-rand="${key}">Aleatório</button>`}<button class="danger-link" data-rm="${key}">Tirar</button></div>`
+      :`<button class="bn-drop" data-up="${key}" style="aspect-ratio:${ratio}">${UP_IC}<span>Clique para enviar</span></button><button class="bn-rand" data-rand="${key}">${RAND_IC}Usar aleatório (bolinhas)</button>`}</div>`};
   const draw=()=>{const B=E.banners;const P=B.principal||{};const F=B.faixa||{};const C=B.carrossel||[];
     const body={geral:`<label class="lbl-s" for="pp-n">Nome da página</label><input class="field" id="pp-n" data-e="nome" maxlength="60" value="${esc(E.nome)}" placeholder="${esc(nomeP)}">
         <p class="role-help">${custom?'É o título da página.':'É o nome que aparece no menu e no título da aba do navegador.'}</p>
@@ -3871,10 +3891,10 @@ function pgPanel(k){
         <section class="bn-box"><b>Faixa de destaque</b> <span class="mut">tira fina logo abaixo</span>${slot('Faixa',[1440,160],F.img,'faixa.img','9 / 1')}
           <label class="lbl-s">Link ao clicar (opcional)<input class="field" data-bn="faixa.link" value="${esc(F.link||'')}"></label></section>
         <section class="bn-box"><b>Carrossel de banners</b> <span class="mut">passam sozinhos · até 5 · <code>1200 × 800 px</code></span>
-          <div class="bn-car">${C.map((x,i)=>`<div class="bn-ci"><div class="bn-img" style="aspect-ratio:3 / 2;background-image:url('${bnImg(x.img)}')"><span class="bn-n">${i+1}</span>${x.img?.w&&Math.abs(x.img.w/x.img.h-1.5)>=.03?'<span class="bn-tag warn">vai cortar</span>':''}</div>
+          <div class="bn-car">${C.map((x,i)=>`<div class="bn-ci"><div class="bn-img" style="aspect-ratio:3 / 2;background-image:url('${bnImg(x.img)}')"><span class="bn-n">${i+1}</span>${x.img?.p===RAND_IMG?'<span class="bn-tag ok">Aleatório</span>':x.img?.w&&Math.abs(x.img.w/x.img.h-1.5)>=.03?'<span class="bn-tag warn">vai cortar</span>':''}</div>
             <input class="field sm2" data-bn="car.${i}" value="${esc(x.link||'')}" placeholder="Link (opcional)" aria-label="Link do banner ${i+1}">
             <div class="bn-cact"><button data-cmv="${i}:-1" aria-label="Mover para a esquerda" ${i?'':'disabled'}>←</button><button data-cmv="${i}:1" aria-label="Mover para a direita" ${i<C.length-1?'':'disabled'}>→</button><button data-crm="${i}" aria-label="Tirar o banner ${i+1}" class="err">×</button></div></div>`).join('')}
-            ${C.length<5?`<button class="bn-drop" data-up="car.novo" style="aspect-ratio:3 / 2">${UP_IC}<span>Adicionar</span></button>`:''}</div></section>`,
+            ${C.length<5?`<div class="bn-ci"><button class="bn-drop" data-up="car.novo" style="aspect-ratio:3 / 2">${UP_IC}<span>Adicionar</span></button><button class="bn-rand" data-rand="car.novo">${RAND_IC}Aleatório</button></div>`:''}</div></section>`,
       aviso:`<p class="role-help">Aparece para quem abrir a página enquanto ela estiver desligada, com a página desfocada por trás.</p>
         <label class="lbl-s" for="pp-at">Título do aviso</label><input class="field" id="pp-at" data-e="aviso_titulo" maxlength="80" value="${esc(E.aviso_titulo)}" placeholder="Estamos trabalhando nessa área">
         <label class="lbl-s" for="pp-ax">Mensagem</label><textarea class="field ta" id="pp-ax" data-e="aviso_texto" rows="3" maxlength="300" placeholder="A página ${esc(E.nome||nomeP)} está passando por melhorias. Seus dados estão guardados e ela volta em breve.">${esc(E.aviso_texto)}</textarea>
@@ -3898,6 +3918,8 @@ function pgPanel(k){
         if(key==='car.novo'){(B.carrossel=B.carrossel||[]).push({img,link:''})}
         else{const [a,f]=key.split('.');(B[a]=B[a]||{})[f]=img}
         toast(img.w?`Enviado (${img.w} × ${img.h})`:'Enviado');draw()}catch(err){toast(traduz(err.message))}});
+    ov.querySelectorAll('[data-rand]').forEach(b=>b.onclick=()=>{keep();const key=b.dataset.rand;const img={p:RAND_IMG,w:0,h:0};
+      if(key==='car.novo')(B.carrossel=B.carrossel||[]).push({img,link:''});else{const [a,f]=key.split('.');(B[a]=B[a]||{})[f]=img}draw()});
     ov.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{keep();const [a,f]=b.dataset.rm.split('.');if(B[a])delete B[a][f];draw()});
     ov.querySelectorAll('[data-crm]').forEach(b=>b.onclick=()=>{keep();B.carrossel.splice(+b.dataset.crm,1);draw()});
     ov.querySelectorAll('[data-cmv]').forEach(b=>b.onclick=()=>{keep();const [i,d]=b.dataset.cmv.split(':').map(Number);const C2=B.carrossel;[C2[i],C2[i+d]]=[C2[i+d],C2[i]];draw()});
@@ -4009,6 +4031,16 @@ async function savePagina(){
 }
 
 /* ---------- Admin: Pop-ups ---------- */
+const RAND_IC='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>';
+// Prévia do pop-up numa tela pequena de mentira (classes próprias: não depende do pop-up de verdade)
+function popPreviewHTML(p){
+  const img=p.formato!=='barra'&&p.image_path?`<i class="pvp-img" style="background-image:url('${anyImg(p.image_path)}')"></i>`:'';
+  const t=esc(p.titulo||'Título do pop-up'),x=p.texto?`<span class="pvp-tx">${esc(p.texto)}</span>`:'',bt=p.botao_texto?`<span class="pvp-bt">${esc(p.botao_texto)}</span>`:'';
+  const page=`<div class="pvp-page"><i></i><b></b><span></span><span></span><span></span></div>`;
+  if(p.formato==='barra')return `<div class="pvp-bar"><b>${t}</b>${p.texto?` <span>${esc(p.texto)}</span>`:''}${bt}<span class="pvp-x">×</span></div>${page}`;
+  const card=`<div class="pvp-card ${p.formato==='canto'?'k':'c'}"><span class="pvp-x">×</span>${img}<div class="pvp-b"><b>${t}</b>${x}${bt}${p.formato==='canto'?'':'<u>Agora não</u>'}</div></div>`;
+  return page+(p.formato==='canto'?card:`<div class="pvp-dim">${card}</div>`);
+}
 let PPA={list:[],filter:'todos'},PE=null;
 const popSt=p=>{const n=new Date();if(!p.ativo)return['off','Desativado','#9a9a9a'];if(p.inicio&&new Date(p.inicio)>n)return['ag','Agendado · '+dBR(p.inicio).slice(0,5),'#2f45ff'];if(p.fim&&new Date(p.fim)<=n)return['fim','Encerrado','#9a9a9a'];return['on','Ativado','#14b85a']};
 const popOnde=p=>(p.paginas||[]).length?p.paginas.map(k=>pgName(k)).join(', '):'Todas as páginas';
@@ -4022,7 +4054,7 @@ async function admPopups(){
 function drawPopups(){
   const L=PPA.list;const f=PPA.filter;const st=p=>popSt(p)[0];
   const xs=L.filter(p=>f==='todos'||(f==='on'?st(p)==='on':f==='ag'?st(p)==='ag':st(p)==='off'||st(p)==='fim'));
-  const th=p=>`<span class="pp-th ${p.formato}" aria-hidden="true">${p.formato==='barra'?'<i></i>':p.image_path?`<i style="background-image:url('${blogImg(p.image_path)}')"></i>`:'<i></i>'}</span>`;
+  const th=p=>`<span class="pp-th ${p.formato}" aria-hidden="true">${p.formato==='barra'?'<i></i>':p.image_path?`<i style="background-image:url('${anyImg(p.image_path)}')"></i>`:'<i></i>'}</span>`;
   admShell('popups',`<div class="adm-head"><div><h1>Pop-ups</h1><p class="sub">Avisos que aparecem por cima das páginas. Escolha onde, quando e para quem cada um aparece.</p></div>
     <button class="pill dark" data-go="admin/popup/novo">+ Novo pop-up</button></div>
     ${chipsHTML([['todos',`Todos · ${L.length}`],['on',`Ativados · ${L.filter(p=>st(p)==='on').length}`],['ag',`Agendados · ${L.filter(p=>st(p)==='ag').length}`],['off',`Desativados · ${L.filter(p=>['off','fim'].includes(st(p))).length}`]],f,'data-f')}
@@ -4065,7 +4097,7 @@ function drawPopupEditor(){
       <h2 class="pe-h2">Conteúdo</h2><span class="lbl-s">Formato</span>
       <div class="fmt-g">${fmtCard('central','Central','<i></i>')}${fmtCard('canto','Canto da tela','<i></i>')}${fmtCard('barra','Barra no topo','<i></i>')}</div>
       ${p.formato==='barra'?'':`<span class="lbl-s">Imagem (opcional) · 1080 × 720 px</span>
-        <div class="pe-img">${p.image_path?`<i style="background-image:url('${blogImg(p.image_path)}')"></i>`:'<i class="empty"></i>'}<button type="button" class="pill sm" id="pe-up">${p.image_path?'Trocar':'Enviar imagem'}</button>${p.image_path?'<button type="button" class="danger-link" id="pe-rmimg">Tirar</button>':''}</div>`}
+        <div class="pe-img">${p.image_path?`<i style="background-image:url('${anyImg(p.image_path)}')"></i>`:'<i class="empty"></i>'}<button type="button" class="pill sm" id="pe-up">${p.image_path&&p.image_path!==RAND_IMG?'Trocar':'Enviar imagem'}</button>${p.image_path===RAND_IMG?'<span class="mut" style="font-size:12px">Aleatório · bolinhas</span>':'<button type="button" class="pill sm" id="pe-rand">Aleatório (bolinhas)</button>'}${p.image_path?'<button type="button" class="danger-link" id="pe-rmimg">Tirar</button>':''}</div>`}
       <label class="lbl-s">Título<input class="field" data-p="titulo" maxlength="100" value="${esc(p.titulo)}" placeholder="Ex.: 1º mês do Pro por nossa conta"></label>
       <label class="lbl-s">Texto<textarea class="field ta" rows="2" data-p="texto" maxlength="300">${esc(p.texto)}</textarea></label>
       <div class="pe-two"><label class="lbl-s">Texto do botão (opcional)<input class="field" data-p="botao_texto" maxlength="40" value="${esc(p.botao_texto)}" placeholder="Ex.: Usar cupom"></label>
@@ -4089,7 +4121,7 @@ function drawPopupEditor(){
       ${p.id?`<div class="adm-stats sm"><div><b>${p.vistos||0}</b><span>vezes que apareceu</span></div><div><b>${p.cliques||0}</b><span>cliques no botão</span></div><div><b>${p.fechados||0}</b><span>fecharam</span></div></div>`:''}
     </aside></div>`;
   bindHeader();window.scrollTo(0,sc);
-  const prev=()=>{document.getElementById('pe-prev').innerHTML=`<div class="pe-fake"><i></i><b></b><span></span><span></span></div>${popupHTML({...p,titulo:p.titulo||'Título do pop-up'},true)}`;
+  const prev=()=>{document.getElementById('pe-prev').innerHTML=popPreviewHTML(p);
     document.getElementById('pe-resumo').innerHTML=`Aparece em <b>${esc(popOnde(p))}</b>, ${popQuando(p).replace(' · ',', ')}, para <b>${esc(popPara(p))}</b>. É o ${(p.ordem||0)+1}º da fila.`};
   prev();
   const root=app.querySelector('.pe');
@@ -4108,6 +4140,7 @@ function drawPopupEditor(){
   const up=document.getElementById('pe-up');
   if(up)up.onclick=async()=>{const files=await pickBlogFiles('image/jpeg,image/png,image/webp');if(!files.length)return;toast('Enviando…',20000);
     try{p.image_path=await uploadBlog(files[0]);toast('Imagem enviada');drawPopupEditor()}catch(err){toast(traduz(err.message))}};
+  const rnb=document.getElementById('pe-rand');if(rnb)rnb.onclick=()=>{p.image_path=RAND_IMG;drawPopupEditor()};
   const rmi=document.getElementById('pe-rmimg');if(rmi)rmi.onclick=()=>{p.image_path=null;drawPopupEditor()};
   bindGo();
   const del=document.getElementById('pe-del');
