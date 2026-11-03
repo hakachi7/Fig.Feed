@@ -3015,11 +3015,11 @@ function planHTML(a,month,objetivo,stories){
      <div class="sign"><div>Nome</div><div>Data</div><div>Assinatura</div></div></div></div></div>`);
   // V13: mood feed (3ª página) — cartões no visual do Instagram com as fotos da conta
   const moodSrc=[...ps,...a.posts.filter(p=>!ps.includes(p))].filter(p=>p.slides[0]);
-  const card=(p,k)=>`<div class="ig"><div class="ig-h"><span class="av">${av}</span><b>${esc(a.handle.replace(/^@/,''))}</b><span class="dots">···</span></div><div class="ig-i">${p?pic(p.slides[0],400,500):'<span class="ph"></span>'}${p&&fmtOf(p)==='carrossel'?'<i class="mc"></i>':''}${p&&fmtOf(p)==='reels'?'<i class="mr"></i>':''}</div></div>`;
-  const OFF=[-26,4,-40,-8,-30];let mi=0;
-  const moodCols=OFF.map((o,c)=>`<div class="mcol" style="margin-top:${o}mm">${[0,1,2].map(r=>{
-    if(c===1&&r===1)return `<div class="ig txt"><div class="ig-h"><span class="av">${av}</span><b>${esc(a.handle.replace(/^@/,''))}</b><span class="dots">···</span></div><div class="ig-t"><span>${String(m).padStart(2,'0')}</span><b>${MESES_RP[m-1]}</b><small>${ps.length} ${ps.length===1?'post':'posts'} · ${stories.length} stories</small></div></div>`;
-    const p=moodSrc.length?moodSrc[mi++%moodSrc.length]:null;return card(p)}).join('')}</div>`).join('');
+  // cada post aparece uma vez; se faltar post, completa com os fundos de bolinhas do Fig.Feed
+  const bol=i=>`<img src="${new URL(TUT_IMG[i%TUT_IMG.length],location.href).href}" alt="">`;
+  const card=(p,k)=>`<div class="ig"><div class="ig-h"><span class="av">${av}</span><b>${esc(a.handle.replace(/^@/,''))}</b><span class="dots">···</span></div><div class="ig-i">${p?pic(p.slides[0],400,500):bol(k)}${p&&fmtOf(p)==='carrossel'?'<i class="mc"></i>':''}${p&&fmtOf(p)==='reels'?'<i class="mr"></i>':''}</div></div>`;
+  const OFF=[-26,4,-40,-8,-30];let mi=0,bi=0;
+  const moodCols=OFF.map((o,c)=>`<div class="mcol" style="margin-top:${o}mm">${[0,1,2].map(()=>mi<moodSrc.length?card(moodSrc[mi++]):card(null,bi++)).join('')}</div>`).join('');
   out+=page('Mood do feed',`<div class="side">${esc(a.handle)} · Mood do feed · ${label}</div><div class="mood">${moodCols}</div>`,'dk');
   // calendário
   const first=new Date(y,m-1,1),lead=(first.getDay()+6)%7,lastD=new Date(y,m,0).getDate();const rows=Math.ceil((lead+lastD)/7);
@@ -3037,7 +3037,7 @@ function planHTML(a,month,objetivo,stories){
   // V13: mood stories — celulares com os stories do mês (ou fotos dos posts, se ainda não houver stories)
   const stSrc=stories.length?stories.slice(0,3).map(s=>({u:pic({path:s.storage_path},540,960),d:s.story_date}))
     :moodSrc.slice(0,3).map(p=>({u:pic(p.slides[0],540,960),d:p.date}));
-  while(stSrc.length<3)stSrc.push({u:'<span class="ph"></span>',d:''});
+  while(stSrc.length<3)stSrc.push({u:bol(stSrc.length+3),d:''});
   out+=page('Mood dos stories',`<div class="side">${esc(a.handle)} · Mood dos stories · ${label}</div><div class="phones">${stSrc.map((x,i)=>`<div class="fone"><div class="tela">${x.u}
     <div class="sbar">${stSrc.map((_,k)=>`<i class="${k<=i?'on':''}"></i>`).join('')}</div>
     <div class="shd"><span class="av">${av}</span><b>${esc(a.handle.replace(/^@/,''))}</b>${x.d?`<span>${dd(x.d)}</span>`:''}</div>
