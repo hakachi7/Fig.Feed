@@ -33,7 +33,40 @@ button{cursor:pointer;background:none;border:0;padding:0}
 :focus-visible{outline:2px solid var(--fg);outline-offset:3px}
 img{display:block;max-width:100%}
 .view{min-height:100%}
-.loading{height:100vh;display:grid;place-items:center;color:var(--muted);font-size:13px}
+/* ---------- Carregando: "Montando seu feed…" (V4) ---------- */
+.loading{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;color:var(--muted);font-size:13px}
+.ld-grid{display:grid;grid-template-columns:repeat(3,36px);gap:6px}
+.ld-grid i{height:46px;background:linear-gradient(90deg,#efefef 0%,#fbfbfb 50%,#efefef 100%);background-size:200% 100%;animation:shim 1.4s ease-in-out infinite}
+@keyframes shim{from{background-position:100% 0}to{background-position:-100% 0}}
+@media (prefers-reduced-motion:reduce){.ld-grid i{animation:none}}
+
+/* ---------- E-mail confirmado (V4) ---------- */
+.auth-ok{width:52px;height:52px;border-radius:50%;background:#eaf6ee;color:#1e6b3a;display:grid;place-items:center;margin:0 auto 10px}
+
+/* ---------- Tutorial de primeiro acesso (V4) ---------- */
+.tut{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:28px 16px 40px;text-align:center}
+.tut .top{height:40px}
+.tut .body{margin:auto 0;display:flex;flex-direction:column;align-items:center;width:min(440px,100%)}
+.tut .vis{min-height:372px;display:grid;place-items:center;margin-bottom:30px}
+.tut h1{font-size:clamp(26px,3vw,32px);font-weight:400;letter-spacing:-.02em;margin:0 0 12px}
+.tut h1:focus{outline:none}
+.tut p{color:var(--muted);margin:0;line-height:1.5;max-width:340px}
+.tut .dots{display:flex;gap:6px;margin:24px 0 22px}
+.tut .dots i{width:22px;height:3px;border-radius:2px;background:#e5e5e5;transition:background .2s}
+.tut .dots i.on{background:var(--fg)}
+.tut .acts{display:flex;gap:10px}
+.tut-grid{display:grid;grid-template-columns:repeat(3,min(96px,26vw));gap:6px}
+.tut-grid div{aspect-ratio:4/5;background:var(--tile) center/cover}
+.tut-grid div.lift{outline:2px solid var(--accent);outline-offset:2px;transform:translateY(-6px) rotate(-2deg);box-shadow:0 12px 24px rgba(0,0,0,.18)}
+.tut-week{display:grid;grid-template-columns:repeat(5,min(64px,16vw));gap:6px;text-align:left}
+.tut-week .c{background:var(--soft);border-radius:8px;padding:6px;display:flex;flex-direction:column;gap:6px;min-height:250px}
+.tut-week .d{font-size:11px;color:var(--muted)}
+.tut-week .k{background:#fff;border-radius:6px;padding:4px;display:flex;flex-direction:column;gap:4px}
+.tut-week .k i{display:block;aspect-ratio:4/5;background:var(--tile) center/cover;border-radius:3px}
+.tut-week .k b{width:7px;height:7px;border-radius:50%;display:block}
+.tut-prof{display:flex;flex-direction:column;align-items:center;gap:12px}
+.tut-prof .avatar{width:64px;height:64px}
+.tut-prof .tut-grid{grid-template-columns:repeat(3,min(72px,22vw))}
 
 /* ---------- Entrar / criar conta (estilo Cosmos) ---------- */
 .auth{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
@@ -354,7 +387,7 @@ img{display:block;max-width:100%}
 </style>
 </head>
 <body>
-<div id="app"><div class="loading">Carregando…</div></div>
+<div id="app"><div class="loading" role="status"><div class="ld-grid" aria-hidden="true"><i style="animation-delay:0.00s"></i><i style="animation-delay:0.12s"></i><i style="animation-delay:0.24s"></i><i style="animation-delay:0.12s"></i><i style="animation-delay:0.24s"></i><i style="animation-delay:0.36s"></i><i style="animation-delay:0.24s"></i><i style="animation-delay:0.36s"></i><i style="animation-delay:0.48s"></i></div>Montando seu feed…</div></div>
 <input type="file" id="file" accept="image/jpeg,image/png,image/webp" multiple hidden>
 <div class="toast" id="toast" hidden></div>
 
@@ -363,6 +396,10 @@ img{display:block;max-width:100%}
 // Chave pública (anon): pode ficar no código. A segurança vem das regras do banco.
 const SB_URL='https://ftffxxugvzijkcfprgiv.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0ZmZ4eHVndnppamtjZnByZ2l2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM2MzkzMDIsImV4cCI6MjEwOTIxNTMwMn0.kjafUQL_XW_fK7egXM6J3HavKM2tzwvNUpFOd8zOWI0';
+// Guarda o que veio no link do e-mail ANTES do Supabase limpar o endereço.
+// Ex.: confirmação de cadastro chega como #access_token=...&type=signup
+const LINK=(()=>{const h=new URLSearchParams(location.hash.slice(1));const q=new URLSearchParams(location.search);
+  return {type:h.get('type')||q.get('type'),err:h.get('error_code')||h.get('error')||q.get('error_code')}})();
 const sb=window.supabase.createClient(SB_URL,SB_KEY);
 let USER=null;
 
@@ -454,12 +491,16 @@ window.addEventListener('hashchange',render);
 
 function render(){
   clearInterval(homeTimer);openDrop=null;closePanel();hideTip();document.querySelector('.drop')?.remove();dragCleanup&&dragCleanup();window.onresize=null;
+  // Restos de link de e-mail (#access_token=...) nunca são uma página: volta ao início
+  if(location.hash.includes('=')){history.replaceState(null,'',location.pathname+location.search+'#home')}
   route=(location.hash.slice(1)||'home').split('/');const v=route[0];
+  if(v==='confirmado')return vConfirmado();
   if(recovery&&v!=='nova-senha')return go('nova-senha');
   if(!USER&&!AUTH.includes(v))return go('entrar');
   if(USER&&AUTH.includes(v)&&!(v==='nova-senha'&&recovery))return go('home');
   const map={entrar:()=>vAuth('entrar'),criar:()=>vAuth('criar'),senha:()=>vAuth('senha'),'nova-senha':()=>vAuth('nova-senha'),
-    home:vHome,menu:vMenu,contas:vContas,feed:vFeed,car:vCar,edit:vEdit,crono:vCrono,down:vDown,perfil:vPerfil,config:vConfig};
+    home:vHome,menu:vMenu,contas:vContas,feed:vFeed,car:vCar,edit:vEdit,crono:vCrono,down:vDown,perfil:vPerfil,config:vConfig,
+    'boas-vindas':vTutorial};
   document.title='Fig.Feed';
   (map[v]||v404)();window.scrollTo(0,0);
 }
@@ -487,20 +528,26 @@ function authPanel(){
   return `<aside class="auth-r" aria-hidden="true"><div class="col">${imgs}${imgs}</div>
     <div class="cap">Feeds organizados, não improvisados.<br>Fotos via Unsplash</div></aside>`;
 }
+let authNote=null; // aviso para mostrar na próxima tela de login (ex.: link expirado)
+const BASE_URL=()=>location.protocol.startsWith('http')?location.href.split('#')[0].split('?')[0]:undefined;
 function vAuth(mode){
+  document.getElementById('toast').hidden=true; // nenhum aviso de dentro do app aparece no login
   const T={entrar:['Bem-vindo de volta',`Digite suas credenciais ou <a data-go="criar">crie uma conta</a>`,'Próximo'],
     criar:['Crie sua conta',`Já tem conta? <a data-go="entrar">Entre aqui</a>`,'Criar conta'],
     senha:['Recuperar senha',`Enviamos um link para você criar uma nova senha. <a data-go="entrar">Voltar</a>`,'Enviar link'],
-    'nova-senha':['Nova senha','Escolha uma senha nova para sua conta.','Salvar senha']}[mode];
+    'nova-senha':['Crie uma nova senha','Use pelo menos 6 caracteres. Uma frase curta é mais fácil de lembrar.','Salvar senha']}[mode];
+  const ph={entrar:'Senha',criar:'Senha (mínimo 6 caracteres)','nova-senha':'Nova senha'}[mode];
   app.innerHTML=`<main class="auth"><section class="auth-l"><div class="top">${LOGO(true)}</div>
     <form class="auth-f" id="af" novalidate>
       <h1>${T[0]}</h1><p class="sub">${T[1]}</p>
-      ${mode==='criar'?'<input id="a-name" placeholder="Seu nome" autocomplete="name" required>':''}
-      ${mode!=='nova-senha'?'<input id="a-email" type="email" placeholder="seu@email.com" autocomplete="email" required>':''}
-      ${mode!=='senha'?`<div class="pw"><input id="a-pass" type="password" placeholder="${mode==='entrar'?'Senha':'Senha (mínimo 6 caracteres)'}" autocomplete="${mode==='entrar'?'current-password':'new-password'}" required><button type="button" id="eye" aria-label="Mostrar senha">${EYE_OFF}</button></div>`:''}
+      ${mode==='criar'?'<input id="a-name" placeholder="Seu nome" autocomplete="name" aria-label="Seu nome" required>':''}
+      ${mode!=='nova-senha'?'<input id="a-email" type="email" placeholder="seu@email.com" autocomplete="email" aria-label="E-mail" required>':''}
+      ${mode!=='senha'?`<div class="pw"><input id="a-pass" type="password" placeholder="${ph}" aria-label="${ph}" autocomplete="${mode==='entrar'?'current-password':'new-password'}" required><button type="button" id="eye" aria-label="Mostrar senha">${EYE_OFF}</button></div>`:''}
+      ${mode==='nova-senha'?'<input id="a-pass2" type="password" placeholder="Repita a nova senha" aria-label="Repita a nova senha" autocomplete="new-password" required>':''}
       <button class="auth-btn" id="a-go">${T[2]}</button>
       ${mode==='entrar'?'<a class="forgot" data-go="senha">Esqueceu sua senha?</a>':''}
       <div class="msg" id="a-msg" hidden></div>
+      <button type="button" class="forgot" id="resend" hidden>Não chegou? Reenviar o e-mail</button>
     </form>
     <div class="auth-word">Fig.Feed</div></section>${authPanel()}</main>`;
   app.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
@@ -508,23 +555,99 @@ function vAuth(mode){
   if(eye)eye.onclick=()=>{const i=document.getElementById('a-pass');const show=i.type==='password';i.type=show?'text':'password';eye.innerHTML=show?EYE:EYE_OFF;eye.setAttribute('aria-label',show?'Esconder senha':'Mostrar senha')};
   const msg=(t,ok)=>{const m=document.getElementById('a-msg');m.textContent=t;m.className='msg '+(ok?'ok':'err');m.hidden=false};
   (document.getElementById('a-email')||document.getElementById('a-pass')).focus();
+  if(authNote&&mode==='entrar'){msg(authNote);authNote=null}
+  const resend=document.getElementById('resend');
+  resend.onclick=async()=>{const email=document.getElementById('a-email')?.value.trim();if(!email)return;resend.disabled=true;
+    try{const {error}=await sb.auth.resend({type:'signup',email,options:{emailRedirectTo:BASE_URL()}});if(error)throw error;
+      msg(`Enviamos de novo para ${email}. Olhe também a caixa de spam.`,true)}catch(err){msg(traduz(err.message))}
+    setTimeout(()=>resend.disabled=false,30000)};
   document.getElementById('af').onsubmit=async e=>{
     e.preventDefault();const btn=document.getElementById('a-go');
     const email=document.getElementById('a-email')?.value.trim();const pass=document.getElementById('a-pass')?.value;
+    if(mode==='criar'&&!document.getElementById('a-name').value.trim())return msg('Digite seu nome.');
     if(mode!=='nova-senha'&&!/^\S+@\S+\.\S+$/.test(email||''))return msg('Digite um e-mail válido.');
     if(mode!=='senha'&&(!pass||pass.length<6))return msg('A senha precisa ter pelo menos 6 caracteres.');
+    if(mode==='nova-senha'&&pass!==document.getElementById('a-pass2').value)return msg('As duas senhas não são iguais. Digite de novo.');
     btn.disabled=true;const old=btn.textContent;btn.textContent='Aguarde…';
     try{
-      if(mode==='entrar'){const {error}=await sb.auth.signInWithPassword({email,password:pass});if(error)throw error}
+      if(mode==='entrar'){const {error}=await sb.auth.signInWithPassword({email,password:pass});
+        if(error){if(error.message.toLowerCase().includes('email not confirmed'))resend.hidden=false;throw error}}
       if(mode==='criar'){const name=document.getElementById('a-name').value.trim();
-        const {data,error}=await sb.auth.signUp({email,password:pass,options:{data:{name},emailRedirectTo:location.protocol.startsWith('http')?location.href.split('#')[0]:undefined}});
+        const {data,error}=await sb.auth.signUp({email,password:pass,options:{data:{name},emailRedirectTo:BASE_URL()}});
         if(error)throw error;
-        if(!data.session){msg(`Conta criada! Enviamos um link de confirmação para ${email}. Clique nele e depois volte aqui para entrar.`,true);btn.textContent=old;btn.disabled=false;return}}
-      if(mode==='senha'){const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:location.protocol.startsWith('http')?location.href.split('#')[0]:undefined});if(error)throw error;
+        if(!data.session){msg(`Conta criada! Enviamos um link de confirmação para ${email}. Clique nele para ativar sua conta.`,true);resend.hidden=false;btn.textContent=old;btn.disabled=false;return}}
+      if(mode==='senha'){const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:BASE_URL()});if(error)throw error;
         msg(`Se existir uma conta com ${email}, você vai receber um link para criar uma nova senha.`,true);btn.textContent=old;btn.disabled=false;return}
       if(mode==='nova-senha'){const {error}=await sb.auth.updateUser({password:pass});if(error)throw error;recovery=false;toast('Senha alterada');go('home')}
     }catch(err){msg(traduz(err.message));btn.textContent=old;btn.disabled=false}
   };
+}
+
+/* ======================= E-mail confirmado ======================= */
+function vConfirmado(){
+  document.getElementById('toast').hidden=true;
+  app.innerHTML=`<main class="auth"><section class="auth-l"><div class="top">${LOGO(true)}</div>
+    <div class="auth-f" role="status">
+      <div class="auth-ok" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></div>
+      <h1>E-mail confirmado</h1>
+      <p class="sub">${USER?'Tudo certo. Sua conta está pronta para montar o primeiro feed.':'Tudo certo. Agora é só entrar com seu e-mail e senha.'}</p>
+      <button class="auth-btn" id="c-go">${USER?'Entrar no Fig.Feed':'Ir para o login'}</button>
+    </div>
+    <div class="auth-word">Fig.Feed</div></section>${authPanel()}</main>`;
+  const b=document.getElementById('c-go');b.focus();
+  b.onclick=()=>go(!USER?'entrar':needsTutorial()?'boas-vindas':'home');
+}
+
+/* ======================= Tutorial de primeiro acesso ======================= */
+// Aparece uma vez para quem acabou de criar a conta. Fica marcado na própria conta (Supabase)
+// e também neste aparelho, para não repetir.
+const tutKey=()=>'figfeed-tutorial-'+(USER?.id||'');
+function needsTutorial(){
+  if(!USER)return false;
+  if(USER.user_metadata?.onboarded)return false;
+  try{if(localStorage.getItem(tutKey()))return false}catch(e){}
+  return S.accounts.length===0; // quem já usa o app não é interrompido
+}
+function finishTutorial(){
+  try{localStorage.setItem(tutKey(),'1')}catch(e){}
+  if(USER){USER.user_metadata={...(USER.user_metadata||{}),onboarded:true};sb.auth.updateUser({data:{onboarded:true}}).catch(()=>{})}
+}
+let tutStep=0;
+function vTutorial(){
+  const pics=Array.from({length:9},randPhoto);
+  const COLS=['#ff5a36','#2f45ff','#14b85a'];
+  const steps=[
+    {t:'Arraste e solte',p:'Monte o feed arrastando os posts. A grade se reorganiza sozinha, como o auto layout do Figma.',
+     v:`<div class="tut-grid">${pics.map((p,i)=>`<div class="${i===4?'lift':''}" style="${bgi(p,200,250)}"></div>`).join('')}</div>`},
+    {t:'Uma agenda para todos',p:'No cronograma você vê os posts de todas as contas por semana ou por status, e muda a data arrastando.',
+     v:`<div class="tut-week">${['seg','ter','qua','qui','sex'].map((d,i)=>`<div class="c"><span class="d">${d}</span>${
+       Array.from({length:i%2?1:2},(_,j)=>`<div class="k"><i style="${bgi(pics[(i*2+j)%9],120,150)}"></i><b style="background:${COLS[(i+j)%3]}"></b></div>`).join('')}</div>`).join('')}</div>`},
+    {t:'Pronto para começar',p:'Crie a conta do seu primeiro cliente, ou use contas de exemplo para testar sem enviar fotos.',
+     v:`<div class="tut-prof"><span class="avatar" style="${bgi(pics[0],120,120)}"></span><b>@seu.cliente</b>
+       <div class="tut-grid">${pics.slice(1,7).map(p=>`<div style="${bgi(p,150,190)}"></div>`).join('')}</div></div>`}];
+  const s=steps[tutStep],last=tutStep===steps.length-1;
+  app.innerHTML=`<main class="tut" aria-label="Boas-vindas ao Fig.Feed"><div class="top">${LOGO(true)}</div>
+    <section class="body"><div class="vis" aria-hidden="true">${s.v}</div>
+      <h1 tabindex="-1" id="tt">${s.t}</h1><p>${s.p}</p>
+      <div class="dots" aria-label="Passo ${tutStep+1} de ${steps.length}">${steps.map((_,i)=>`<i class="${i===tutStep?'on':''}"></i>`).join('')}</div>
+      <div class="acts">${last
+        ?`<button class="pill" id="t-ex">Usar exemplos</button><button class="pill dark" id="t-go">Criar primeira conta</button>`
+        :`<button class="pill" id="t-skip">Pular</button><button class="pill dark" id="t-next">Próximo</button>`}</div>
+    </section></main>`;
+  document.getElementById('tt').focus();
+  const next=()=>{tutStep++;vTutorial()};
+  const done=to=>{finishTutorial();tutStep=0;document.removeEventListener('keydown',tutKeys);go(to)};
+  document.getElementById('t-next')?.addEventListener('click',next);
+  document.getElementById('t-skip')?.addEventListener('click',()=>done('home'));
+  document.getElementById('t-go')?.addEventListener('click',()=>{done('contas');setTimeout(()=>dropdown('criar'),60)});
+  const ex=document.getElementById('t-ex');
+  if(ex)ex.onclick=async()=>{ex.disabled=true;try{await seedExamples();done('contas')}catch(e){ex.disabled=false}};
+  document.removeEventListener('keydown',tutKeys);document.addEventListener('keydown',tutKeys);
+}
+function tutKeys(e){
+  if(route[0]!=='boas-vindas'){document.removeEventListener('keydown',tutKeys);return}
+  if(e.key==='ArrowRight'&&tutStep<2){tutStep++;vTutorial()}
+  if(e.key==='ArrowLeft'&&tutStep>0){tutStep--;vTutorial()}
 }
 
 /* ======================= Cabeçalho ======================= */
@@ -553,7 +676,8 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v3';
+const VERSAO='v4';
+const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   home:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M3 11 12 4l9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>',
   contas:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>',
@@ -1021,7 +1145,7 @@ window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installEvt=
 function vConfig(){
   app.innerHTML=header('')+`<main class="page"><h1>Configuração</h1><p class="sub">Preferências da sua conta.</p>
     <label class="chk"><input type="checkbox" id="df" ${S.profile.dates_follow?'checked':''}> Ao arrastar um post no feed, as datas acompanham a nova ordem</label>
-    <button class="pill" id="seed">Criar mais contas de exemplo</button>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="pill" id="seed">Criar mais contas de exemplo</button><button class="pill" id="tut">Ver o tutorial de novo</button></div>
     <section class="install"><b>Instalar o Fig.Feed no celular</b><br>
       <b>iPhone:</b> abra o site no Safari, toque em Compartilhar e depois em "Adicionar à Tela de Início".<br>
       <b>Android:</b> abra no Chrome, toque nos três pontinhos e depois em "Instalar app" ou "Adicionar à tela inicial".
@@ -1029,6 +1153,7 @@ function vConfig(){
   bindHeader();
   document.getElementById('df').onchange=async e=>{const v=e.target.checked;await db(sb.from('profiles').update({dates_follow:v}).eq('id',USER.id));S.profile.dates_follow=v;toast('Preferência salva')};
   const sd=document.getElementById('seed');sd.onclick=async()=>{sd.disabled=true;try{await seedExamples();go('contas')}catch(e){sd.disabled=false}};
+  document.getElementById('tut').onclick=()=>{tutStep=0;go('boas-vindas')};
   const ib=document.getElementById('inst');if(ib)ib.onclick=async()=>{installEvt.prompt();await installEvt.userChoice;installEvt=null;vConfig()};
 }
 
@@ -1079,8 +1204,10 @@ sb.auth.onAuthStateChange((event,session)=>{
   setTimeout(async()=>{
     if(event==='PASSWORD_RECOVERY'){recovery=true;USER=session?.user||null;go('nova-senha');return}
     if(!booted)return;
-    if(event==='SIGNED_IN'&&(!USER||USER.id!==session.user.id)){USER=session.user;app.innerHTML='<div class="loading">Carregando…</div>';
-      try{await loadAll()}catch(e){}go('home')}
+    if(event==='SIGNED_IN'&&(!USER||USER.id!==session.user.id)){USER=session.user;app.innerHTML=LOADING;
+      try{await loadAll()}catch(e){}
+      go(route[0]==='confirmado'?'confirmado':needsTutorial()?'boas-vindas':'home')}
+    if(event==='USER_UPDATED'&&session?.user)USER=session.user;
     if(event==='SIGNED_OUT'){USER=null;S={profile:{name:'',handle:'',dates_follow:true},accounts:[]};go('entrar')}
   },0);
 });
@@ -1095,6 +1222,13 @@ window.addEventListener('online',netState);window.addEventListener('offline',net
   try{const r=await fetch(`https://picsum.photos/v2/list?page=${1+rnd(8)}&limit=80`);const j=await r.json();if(j.length>20)POOL=j.map(x=>[x.id,x.author])}catch(e){}
   const {data:{session}}=await sb.auth.getSession();USER=session?.user||null;
   if(USER){try{await loadAll()}catch(e){}}
+  // Chegou pelo link do e-mail?
+  const to=h=>history.replaceState(null,'',location.pathname+'#'+h);
+  if(LINK.err){authNote='Esse link expirou ou já foi usado. Entre com seu e-mail e senha. Se a conta ainda não foi confirmada, você pode pedir um novo link.';to(USER?'home':'entrar')}
+  else if(LINK.type==='signup')to('confirmado');
+  else if(LINK.type==='email_change'){to('config');setTimeout(()=>toast('E-mail atualizado'),400)}
+  else if(LINK.type!=='recovery'&&USER&&['','#home'].includes(location.hash)&&needsTutorial())to('boas-vindas');
+  if(location.search)history.replaceState(null,'',location.pathname+location.hash);
   booted=true;render();netState();
   if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js').catch(()=>{});
 })();
