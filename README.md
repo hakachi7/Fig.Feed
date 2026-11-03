@@ -94,3 +94,13 @@ Abra o `index.html` no navegador, crie uma conta e entre. As fotos de exemplo v�
 - **Destaques** em círculos, até 8: o círculo **+ Novo** cria um destaque; tocar num destaque abre o painel para trocar o nome (até 15 letras) e a capa — enviando uma foto ou escolhendo uma foto dos posts —, mover para os lados ou remover. As fotos enviadas ficam em `fotos/<usuário>/destaques/` e contam como "em uso" na Biblioteca.
 - **Baixar PNG**: a prévia inteira em imagem de 1080 px de largura.
 
+## Novidades da v15 — Páginas e pop-ups
+
+- **Menu do ícone** refeito: fundo de bolinhas (botão "↻ outro fundo"), atalhos grandes numerados (Contas, Cronograma, Downloads, Biblioteca, Lixeira) com informações ao lado, suas contas e os links da conta. Esc fecha.
+- **Admin › Páginas**: lista de todas as páginas. Em cada uma dá para trocar o nome (aparece no menu e no topo), o link (o antigo continua funcionando), quem vê (todo mundo, quem tem conta, Pro/Agência, só admins) e ligar/desligar. Entrar, Termos, Privacidade, Perfil, Configuração e Segurança ficam sempre no ar.
+- **Página desligada**: quem abrir vê "Estamos trabalhando nessa área" com a página desfocada por trás, a previsão de volta e um botão. Dá para mudar o texto, a data, o botão e ligar sozinha na data. Admins continuam vendo a página, com uma barra avisando que está desligada.
+- **Banners** por página: principal (1920 × 640 no computador e 1080 × 1350 no celular), faixa (1440 × 160) e carrossel com até 5 (1200 × 800). Avisa quando a imagem vai cortar. Ficam na pasta pública `blog/banners/`.
+- **Modelos de páginas**: Página inicial, Sobre nós, Tabela de preços, Contato, Estamos trabalhando, Lançamento em breve, Perguntas frequentes e Em branco. A página nasce desligada no endereço `/#p/<link>` e é editada com o mesmo editor de blocos do Blog (com o bloco novo "Pergunta").
+- **Admin › Pop-ups**: nome, ordem (↑ ↓; se dois puderem aparecer, só o de cima aparece), ligar/desligar, formato (central, canto ou barra no topo), imagem, título, texto, botão, páginas, momento (ao abrir, depois de X segundos, ao rolar, ao tentar sair), quantas vezes, para quem e período. Conta quantas vezes apareceu, os cliques e quantos fecharam.
+- Limites: "uma vez por pessoa" é contado por aparelho; "ao tentar sair" não existe no celular; o bloqueio de páginas é feito no navegador (serve para manutenção, não para esconder dados).
+- Banco: `supabase/v15.sql` (tabelas `site_pages` e `popups`, funções `popup_event` e `site_page_aviso`).
