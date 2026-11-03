@@ -65,3 +65,10 @@ Abra o `index.html` no navegador, crie uma conta e entre. As fotos de exemplo v�
 - Prévia estilo Instagram, com nome, bio, seguidores, seguindo e destaques (editáveis só para a prévia).
 - Relatório do mês: números, gráfico por semana, feed do mês, Baixar PDF e Copiar link (o cliente abre sem login por 30 dias).
 - Banco: `supabase/v8.sql` (já aplicado no Fig-Free).
+
+## Novidades da v9
+
+- Planejamento do mês em PDF (Downloads → Baixar planejamento): visão do mês com objetivo e pilares, calendário, posts e legendas com chamada, stories e espaço para a aprovação do cliente.
+- No painel do post: formato (foto, carrossel ou Reels), horário, pilar e chamada para ação.
+- Tipo de cada story: imagem, vídeo, enquete, caixinha, link ou contagem regressiva.
+- Banco: `supabase/v9.sql` (já aplicado no Fig-Free).

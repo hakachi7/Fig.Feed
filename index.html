@@ -298,6 +298,18 @@ kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;borde
 .rp-feed div{aspect-ratio:4/5;background:var(--tile) center/cover}
 @media print{.hdr,.adm-tabs,.no-print,.toast,.net{display:none!important}.page{padding-top:10px}body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 
+
+/* ---------- V9: planejamento ---------- */
+.sp select,.sp input[type=time],.sp #sp-cta{border:1px solid var(--line);border-radius:8px;padding:6px 8px;background:#fff;font-size:13px;max-width:100%}
+.sp #sp-cta{width:100%}
+.plan-box{margin-top:44px;border-top:1px solid var(--line);padding-top:26px;max-width:520px}
+.plan-box h2{font-size:18px;font-weight:500;margin:0 0 4px}
+.plan-box textarea.field{height:auto;padding:10px 12px;resize:vertical;font:inherit;font-size:14px;line-height:1.45}
+.plan-box .lbl-s small{color:var(--muted)}
+.pl-row{display:grid;grid-template-columns:1fr 92px 40px;gap:8px;margin-bottom:8px}.pl-row .pill{padding:0;justify-content:center;height:44px}
+.st-acts{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+@media (max-width:700px){.dl{grid-template-columns:1fr}.dl .mini{display:none}}
+
 /* ---------- Página não encontrada (404, v3) ---------- */
 .nf{min-height:calc(100vh - 66px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(28px,4vw,48px);padding:40px 16px 80px;text-align:center}
 .nf .num{display:flex;align-items:center;gap:clamp(12px,2.2vw,36px)}
@@ -369,13 +381,13 @@ kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;borde
 .edit .count{font-size:11px;color:var(--muted);margin-top:18px}
 
 /* ---------- 7. Download ---------- */
-.dl{min-height:calc(100vh - 66px);display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:0 max(16px,4.7vw);position:relative}
+.dl{min-height:calc(100vh - 66px);display:grid;grid-template-columns:1fr 1fr;align-items:start;padding-top:56px!important;padding-bottom:80px!important;padding:0 max(16px,4.7vw);position:relative}
 .dl h1{font-size:clamp(44px,6.7vw,128px);font-weight:400;letter-spacing:-.025em;margin:0;line-height:1}
 .dl .opts{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
 .dl .pick{display:flex;gap:14px;flex-wrap:wrap;margin-top:22px;font-size:12px}
 .dl .pick button{color:var(--muted)}
 .dl .pick button.cur{color:var(--fg);text-decoration:underline;text-underline-offset:3px}
-.dl .mini{justify-self:center;display:grid;grid-template-columns:repeat(3,1fr);gap:3px;width:clamp(120px,14vw,190px)}
+.dl .mini{justify-self:center;position:sticky;top:120px;display:grid;grid-template-columns:repeat(3,1fr);gap:3px;width:clamp(120px,14vw,190px)}
 .dl .mini div{aspect-ratio:30/40;background:var(--tile) center/cover}
 .dl .tks{position:absolute;left:max(16px,4.7vw);bottom:30px;font-size:11px;line-height:1.3}
 @media (max-width:700px){.dl{grid-template-columns:1fr;gap:40px;padding-block:60px 100px}}
@@ -634,13 +646,13 @@ async function signPaths(paths){
 async function loadAll(){
   const [prof,accs,posts,slides]=await Promise.all([
     db(sb.from('profiles').select('*').eq('id',USER.id).maybeSingle()),
-    db(sb.from('accounts').select('id,handle,position,avatar_path,display_name,bio,followers,following,highlights').is('deleted_at',null).order('position').order('created_at')),
-    db(sb.from('posts').select('id,account_id,title,caption,publish_date,status,position').is('deleted_at',null).order('position').order('created_at')),
+    db(sb.from('accounts').select('id,handle,position,avatar_path,display_name,bio,followers,following,highlights,pilares').is('deleted_at',null).order('position').order('created_at')),
+    db(sb.from('posts').select('id,account_id,title,caption,publish_date,status,position,pilar,formato,hora,cta').is('deleted_at',null).order('position').order('created_at')),
     db(sb.from('slides').select('id,post_id,storage_path,credit,position').order('position').order('created_at'))]);
   S.profile=prof||{name:'',handle:'',dates_follow:true};
   const byPost={};slides.forEach(s=>(byPost[s.post_id]=byPost[s.post_id]||[]).push({id:s.id,path:s.storage_path,credit:s.credit}));
-  const byAcc={};posts.forEach(p=>(byAcc[p.account_id]=byAcc[p.account_id]||[]).push({id:p.id,title:p.title,caption:p.caption,date:p.publish_date,status:p.status,slides:byPost[p.id]||[]}));
-  S.accounts=accs.map(a=>({id:a.id,handle:a.handle,avatar:a.avatar_path,display_name:a.display_name||'',bio:a.bio||'',followers:a.followers,following:a.following,highlights:a.highlights||[],posts:byAcc[a.id]||[]}));
+  const byAcc={};posts.forEach(p=>(byAcc[p.account_id]=byAcc[p.account_id]||[]).push({id:p.id,title:p.title,caption:p.caption,date:p.publish_date,status:p.status,pilar:p.pilar||'',formato:p.formato||null,hora:p.hora||null,cta:p.cta||'',slides:byPost[p.id]||[]}));
+  S.accounts=accs.map(a=>({id:a.id,handle:a.handle,avatar:a.avatar_path,display_name:a.display_name||'',bio:a.bio||'',followers:a.followers,following:a.following,highlights:a.highlights||[],pilares:a.pilares||[],posts:byAcc[a.id]||[]}));
   await signPaths([...slides.map(s=>s.storage_path),...accs.map(a=>a.avatar_path),S.profile.avatar_path]);
 }
 
@@ -853,7 +865,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v8';
+const VERSAO='v9';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   home:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M3 11 12 4l9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>',
@@ -1105,14 +1117,15 @@ function vEdit(){
 /* ======================= 7. Download ======================= */
 let dlAcc=null;
 function vDown(){
-  if(!accById(dlAcc))dlAcc=S.accounts[0]?.id;const a=accById(dlAcc);
+  if(!accById(dlAcc))dlAcc=S.accounts[0]?.id;const a=accById(dlAcc);if(!dlMonth)dlMonth=iso(new Date()).slice(0,7);
   app.innerHTML=header('down')+`<main class="dl"><div><h1>Download</h1>
     ${a?`<div class="pick">${S.accounts.map(x=>`<button data-acc="${x.id}" class="${x.id===a.id?'cur':''}">${esc(x.handle)}</button>`).join('')}</div>
-    <div class="opts"><button class="pill" id="png">Baixar grade (.png)</button><button class="pill" id="txt">Baixar legendas e datas (.txt)</button></div>`:'<p style="color:var(--muted)">Crie uma conta para baixar um modelo.</p>'}
+    <div class="opts"><button class="pill" id="png">Baixar grade (.png)</button><button class="pill" id="txt">Baixar legendas e datas (.txt)</button></div>${planSection(a)}`:'<p style="color:var(--muted)">Crie uma conta para baixar um modelo.</p>'}
     </div><div class="mini">${a?a.posts.slice(0,12).map(p=>`<div style="${bgi(p.slides[0],120,160)}"></div>`).join(''):''}</div>
     <div class="tks">tks<br>Fig.Feed</div></main>`;
   bindHeader();if(!a)return;
   app.querySelectorAll('[data-acc]').forEach(b=>b.onclick=()=>{dlAcc=b.dataset.acc;vDown()});
+  bindPlanSection(a);
   document.getElementById('png').onclick=()=>exportPNG(a);
   document.getElementById('txt').onclick=()=>{
     const lines=[...a.posts].reverse().map((p,i)=>`${i+1}. ${fmt(p.date)} — ${p.title} (${p.slides.length} foto${p.slides.length>1?'s':''})\n${p.caption||'(sem legenda)'}\n`);
@@ -1150,6 +1163,7 @@ function openPanel(accId,postId,onChange){
         <dt>Conta</dt><dd><span class="tag"><i style="background:${accColor(a)}"></i>${esc(a.handle)}</span></dd>
         <dt>Status</dt><dd class="chips" id="sp-st">${chips()}</dd>
         <dt>Data</dt><dd><input type="date" id="sp-d" value="${p.date||''}" aria-label="Data de publicação"></dd>
+        ${panelExtras(a,p)}
         <dt>Na grade</dt><dd>${a.posts.indexOf(p)+1}º post, de cima para baixo</dd>
       </dl>
       <h3>Fotos (${p.slides.length})</h3>
@@ -1172,6 +1186,7 @@ function openPanel(accId,postId,onChange){
   $('sp-t').onchange=e=>{const v=e.target.value.trim()||'Sem título';p.title=v;upd({title:v})};
   $('sp-t').onkeydown=e=>{if(e.key==='Enter')e.target.blur()};
   $('sp-d').onchange=e=>{p.date=e.target.value||null;upd({publish_date:p.date})};
+  bindPanelExtras(a,p,upd);
   let timer=null;const flush=()=>{if(timer){clearTimeout(timer);timer=null;const v=$('sp-c')?.value??p.caption;if(v!==p.caption){p.caption=v;upd({caption:v})}}};
   panelFlush=flush;
   $('sp-c').oninput=()=>{clearTimeout(timer);timer=setTimeout(()=>{timer=1;flush()},700)};
@@ -1599,6 +1614,7 @@ const FAQ=[
   ['Quantas fotos cabem num carrossel?','Até 10 fotos por post. A primeira é a capa que aparece no feed.'],
   ['O Fig.Feed publica no Instagram por mim?','Ainda não. Ele serve para planejar e organizar. Na hora de postar, baixe a grade e as legendas em Downloads.'],
   ['Meus clientes conseguem ver meu trabalho?','Sim, pelo relatório do mês. Abra a conta, vá em Relatório e clique em "Copiar link". O cliente abre pelo celular, sem criar conta, e o link vale por 30 dias.'],
+  ['Como mando o planejamento para o cliente aprovar?','Em Downloads, escolha a conta e o mês, escreva o objetivo e clique em "Baixar planejamento (PDF)". Na janela que abrir, escolha "Salvar como PDF".'],
   ['Como planejo os stories?','Abra a conta e vá na aba Stories. Escolha o dia, envie as artes e arraste para mudar a ordem.'],
   ['Como instalo o Fig.Feed no celular?','Em Configuração tem o passo a passo para iPhone e Android.'],
   ['Esqueci minha senha. E agora?','Na tela de entrar, clique em "Esqueceu sua senha?" e siga o link que chegar no seu e-mail.']];
@@ -1618,6 +1634,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v9','Nov 2026',['Planejamento do mês em PDF para o cliente aprovar (Downloads)','Objetivo do mês e pilares de conteúdo de cada conta','No post: formato (foto, carrossel ou Reels), horário, pilar e chamada para ação','Tipo de cada story: imagem, vídeo, enquete, caixinha, link ou contagem']],
   ['v8','Nov 2026',['Stories: planeje os stories de cada dia e arraste para ordenar','Prévia estilo Instagram com nome, bio, seguidores e destaques','Relatório do mês com gráfico, PDF e link para o cliente (vale 30 dias)','Abas Feed, Stories, Prévia e Relatório dentro de cada conta']],
   ['v7','Nov 2026',['Lixeira: posts e contas apagados ficam 30 dias e podem ser restaurados','Biblioteca com todas as suas fotos, espaço usado e filtro "Sem uso"','Página inicial para quem ainda não tem conta','Página de Planos']],
   ['v6','Nov 2026',['Páginas de Segurança: trocar e-mail e senha e ver os aparelhos conectados','Excluir minha conta','Ajuda, Novidades, Termos de uso e Política de privacidade','Telas novas de página não encontrada, sem internet, erro e atualização']],
@@ -1858,7 +1875,7 @@ async function vStories(){
   const day=/^\d{4}-\d{2}-\d{2}$/.test(route[2]||'')?route[2]:iso(new Date());
   app.innerHTML=accHeader(a,'stories')+`<main class="stp"><p class="sub">Carregando…</p></main>`;bindHeader();
   let list=[];
-  try{list=await db(sb.from('stories').select('id,storage_path,credit,position').eq('account_id',a.id).eq('story_date',day).order('position').order('created_at'));
+  try{list=await db(sb.from('stories').select('id,storage_path,credit,position,tipo').eq('account_id',a.id).eq('story_date',day).order('position').order('created_at'));
     await signPaths(list.map(s=>s.storage_path))}catch(e){if(route[0]==='stories')vErro('FF-504');return}
   if(route[0]!=='stories'||route[1]!==a.id)return;
   if(!list.some(s=>s.id===stSel))stSel=list[0]?.id||null;
@@ -1870,9 +1887,10 @@ async function vStories(){
         <label class="st-day"><span class="sr">Dia</span><input type="date" id="st-d" value="${day}" class="field"></label>
         <button class="pill dark" id="st-add">+ Adicionar stories</button></div>
       ${n?`<div class="st-row" id="st-row">${list.map((s,i)=>`<div class="item st-it ${s.id===stSel?'sel':''}" tabindex="0" data-id="${s.id}" role="button"
-          aria-label="Story ${i+1} de ${n}${s.id===stSel?', destacado':''}" aria-pressed="${s.id===stSel}" style="background-image:url('${src({path:s.storage_path},360,640)}')"><span>${i+1}/${n}</span></div>`).join('')}</div>
+          aria-label="Story ${i+1} de ${n}${s.id===stSel?', destacado':''}" aria-pressed="${s.id===stSel}" style="background-image:url('${src({path:s.storage_path},360,640)}')"><span>${i+1}/${n}${s.tipo&&s.tipo!=='imagem'?' · '+STORY_TIPOS[s.tipo]:''}</span></div>`).join('')}</div>
         <p class="hint-s">Clique num story para destacar. Arraste para mudar a ordem (no celular, segure antes de arrastar).</p>
-        <button class="pill danger" id="st-del" ${stSel?'':'disabled'}>Remover o story destacado</button>`
+        <div class="st-acts">${stSel?`<label class="lbl-s" for="st-tp" style="margin:0">Tipo do story destacado</label><select id="st-tp" class="field" style="width:auto;height:38px">${Object.entries(STORY_TIPOS).map(([k,v])=>`<option value="${k}" ${(list.find(x=>x.id===stSel)?.tipo||'imagem')===k?'selected':''}>${v}</option>`).join('')}</select>`:''}
+        <button class="pill danger" id="st-del" ${stSel?'':'disabled'}>Remover o story destacado</button></div>`
       :`<div class="empty" style="margin:10vh auto 0"><h2>Nenhum story para ${fmtDia(day)}</h2><p>Envie as artes do dia ou comece com fotos de exemplo.</p>
         <div class="row2"><button class="pill dark" id="st-up">Enviar fotos</button><button class="pill" id="st-ex">Usar fotos de exemplo</button></div></div>`}</main>`;
     bindHeader();
@@ -1891,6 +1909,8 @@ async function vStories(){
     if(row)sortable(row,{onClick:id=>{stSel=id;draw();document.querySelector(`.st-it[data-id="${id}"]`)?.focus()},
       onDrop:async(ids,kb)=>{list=ids.map(id=>list.find(s=>s.id===id));const f=kb&&document.activeElement?.dataset.id;draw();if(f)document.querySelector(`.st-it[data-id="${f}"]`)?.focus();
         try{await Promise.all(ids.map((id,i)=>sb.from('stories').update({position:i}).eq('id',id)))}catch(e){toast('Não foi possível salvar a ordem')}}});
+    const tp=document.getElementById('st-tp');
+    if(tp)tp.onchange=async()=>{const s=list.find(x=>x.id===stSel);s.tipo=tp.value;await db(sb.from('stories').update({tipo:tp.value}).eq('id',s.id));toast('Tipo salvo');draw()};
     const del=document.getElementById('st-del');
     if(del)del.onclick=async()=>{const s=list.find(x=>x.id===stSel);if(!s)return;
       if(!del.dataset.ok){del.dataset.ok=1;del.textContent='Clique de novo para remover';return}
@@ -2008,6 +2028,201 @@ async function vRelPublico(){
     <main class="page rp">${reportHTML(r,false)}</main><footer class="pub-foot no-print"><span>Feito com Fig.Feed</span></footer>`;
   document.getElementById('rp-pdf').onclick=()=>print();
 }
+
+/* ======================= V9: planejamento do mês ======================= */
+const FORMATOS={foto:'Foto única',carrossel:'Carrossel',reels:'Reels'};
+const fmtOf=p=>p.formato||(p.slides.length>1?'carrossel':'foto');
+const fmtLabel=p=>{const f=fmtOf(p);return f==='carrossel'?`Carrossel · ${p.slides.length} fotos`:FORMATOS[f]};
+const STORY_TIPOS={imagem:'Imagem',video:'Vídeo',enquete:'Enquete',caixinha:'Caixinha',link:'Link',contagem:'Contagem regressiva'};
+const CTAS=['Chama no direct','Link na bio','Salva esse post','Marca um amigo','Comenta aqui','Compartilha nos stories','Garanta o seu'];
+const hhmm=h=>h?String(h).slice(0,5):'';
+const PLANS={};
+async function getPlan(accId,month){const k=accId+'|'+month;if(PLANS[k])return PLANS[k];
+  const {data}=await sb.from('plans').select('objetivo').eq('account_id',accId).eq('month',month).maybeSingle();
+  return PLANS[k]={objetivo:data?.objetivo||''}}
+async function savePlan(accId,month,objetivo){PLANS[accId+'|'+month]={objetivo};
+  await db(sb.from('plans').upsert({account_id:accId,month,objetivo,updated_at:new Date().toISOString()}))}
+
+/* Campos novos no painel do post: formato, horário, pilar e chamada para ação */
+function panelExtras(a,p){
+  const pil=(a.pilares||[]).map(x=>x.name);
+  return `<dt>Formato</dt><dd class="chips" id="sp-fm">${Object.entries(FORMATOS).map(([k,n])=>`<button class="chip ${fmtOf(p)===k?'on':''}" data-f="${k}" aria-pressed="${fmtOf(p)===k}">${n}</button>`).join('')}</dd>
+    <dt>Horário</dt><dd><input type="time" id="sp-h" value="${hhmm(p.hora)}" aria-label="Horário de publicação"></dd>
+    <dt>Pilar</dt><dd><select id="sp-p" aria-label="Pilar de conteúdo"><option value="">Sem pilar</option>${[...new Set([...pil,...(p.pilar&&!pil.includes(p.pilar)?[p.pilar]:[])])].map(n=>`<option ${n===p.pilar?'selected':''}>${esc(n)}</option>`).join('')}<option value="__novo">+ Novo pilar…</option></select></dd>
+    <dt>Chamada</dt><dd><input id="sp-cta" list="sp-ctas" value="${esc(p.cta||'')}" maxlength="120" placeholder="Ex.: Link na bio" aria-label="Chamada para ação"><datalist id="sp-ctas">${CTAS.map(c=>`<option value="${c}">`).join('')}</datalist></dd>`;
+}
+function bindPanelExtras(a,p,upd){
+  const $=id=>document.getElementById(id);
+  $('sp-fm').onclick=e=>{const b=e.target.closest('[data-f]');if(!b)return;p.formato=b.dataset.f;
+    $('sp-fm').querySelectorAll('[data-f]').forEach(x=>{const on=x.dataset.f===p.formato;x.classList.toggle('on',on);x.setAttribute('aria-pressed',on)});upd({formato:p.formato})};
+  $('sp-h').onchange=e=>{p.hora=e.target.value||null;upd({hora:p.hora})};
+  $('sp-p').onchange=async e=>{let v=e.target.value;
+    if(v==='__novo'){v=(prompt('Nome do novo pilar (ex.: Bastidores):')||'').trim().slice(0,40);
+      if(!v){e.target.value=p.pilar||'';return}
+      if(!(a.pilares||[]).some(x=>x.name===v)){a.pilares=[...(a.pilares||[]),{name:v,meta:null}];await db(sb.from('accounts').update({pilares:a.pilares}).eq('id',a.id))}
+      const o=document.createElement('option');o.textContent=v;e.target.insertBefore(o,e.target.lastElementChild);e.target.value=v}
+    p.pilar=v;upd({pilar:v})};
+  $('sp-cta').onchange=e=>{p.cta=e.target.value.trim().slice(0,120);upd({cta:p.cta})};
+}
+
+/* Downloads: planejamento do mês */
+let dlMonth=null;
+function planSection(a){
+  const pil=a.pilares||[];
+  return `<section class="plan-box" aria-labelledby="pl-t"><h2 id="pl-t">Planejamento do mês</h2>
+    <label class="lbl-s" for="pl-m">Mês</label><input type="month" id="pl-m" class="field" value="${dlMonth}" style="max-width:220px">
+    <label class="lbl-s" for="pl-o">Objetivo do mês <small id="pl-oc"></small></label>
+    <textarea id="pl-o" class="field" maxlength="400" rows="3" placeholder="Ex.: lançar o cardápio de verão e aumentar os pedidos pelo direct"></textarea>
+    <div class="lbl-s" style="margin-top:18px">Pilares de conteúdo <small>(da conta, valem para todos os meses)</small></div>
+    <div id="pl-list">${pil.map((x,i)=>`<div class="pl-row"><input class="field" data-i="${i}" data-k="name" value="${esc(x.name)}" maxlength="40" aria-label="Nome do pilar ${i+1}">
+      <input class="field" data-i="${i}" data-k="meta" type="number" min="0" max="100" value="${x.meta??''}" placeholder="meta %" aria-label="Meta do pilar ${i+1} em porcentagem">
+      <button class="pill" data-rm="${i}" aria-label="Remover pilar ${esc(x.name)}">${XICON}</button></div>`).join('')||'<p class="muted" style="font-size:13px;margin:6px 0">Nenhum pilar ainda. Exemplos: Produto, Bastidores, Prova social, Dica, Promoção.</p>'}</div>
+    <button class="pill" id="pl-add" style="margin-top:8px">+ Adicionar pilar</button>
+    <div class="opts"><button class="pill dark" id="pl-pdf">Baixar planejamento (PDF)</button></div></section>`;
+}
+async function bindPlanSection(a){
+  const o=document.getElementById('pl-o'),oc=document.getElementById('pl-oc');
+  const cnt=()=>oc.textContent=`(${o.value.length}/400)`;
+  o.value=(await getPlan(a.id,dlMonth)).objetivo;cnt();o.oninput=cnt;
+  o.onchange=()=>savePlan(a.id,dlMonth,o.value.trim()).then(()=>toast('Objetivo salvo'));
+  document.getElementById('pl-m').onchange=e=>{if(e.target.value){dlMonth=e.target.value;vDown()}};
+  const savePil=async()=>{await db(sb.from('accounts').update({pilares:a.pilares}).eq('id',a.id));toast('Pilares salvos')};
+  document.getElementById('pl-list').onchange=e=>{const t=e.target;if(t.dataset.i==null)return;const x=a.pilares[+t.dataset.i];
+    if(t.dataset.k==='name'){const v=t.value.trim();if(!v){t.value=x.name;return}x.name=v}else{const v=t.value===''?null:Math.max(0,Math.min(100,parseInt(t.value,10)||0));x.meta=v}
+    savePil()};
+  document.getElementById('pl-list').onclick=e=>{const b=e.target.closest('[data-rm]');if(!b)return;a.pilares.splice(+b.dataset.rm,1);savePil().then(vDown)};
+  document.getElementById('pl-add').onclick=()=>{const v=(prompt('Nome do pilar (ex.: Bastidores):')||'').trim().slice(0,40);if(!v)return;
+    a.pilares=[...(a.pilares||[]),{name:v,meta:null}];savePil().then(vDown)};
+  const b=document.getElementById('pl-pdf');
+  b.onclick=async()=>{b.disabled=true;const t=b.textContent;b.textContent='Montando o PDF…';
+    if(o.value.trim()!==(PLANS[a.id+'|'+dlMonth]?.objetivo||''))await savePlan(a.id,dlMonth,o.value.trim());
+    try{await baixarPlanejamento(a,dlMonth)}catch(e){toast('Não foi possível montar o PDF agora')}
+    b.disabled=false;b.textContent=t};
+}
+
+/* O PDF: monta a página de impressão (A4 deitado) e abre "Salvar como PDF" */
+async function baixarPlanejamento(a,month){
+  const [y,m]=month.split('-').map(Number),last=new Date(y,m,0).getDate();
+  const st=await db(sb.from('stories').select('storage_path,story_date,position,tipo').eq('account_id',a.id)
+    .gte('story_date',month+'-01').lte('story_date',`${month}-${String(last).padStart(2,'0')}`).order('story_date').order('position'));
+  await signPaths(st.map(s=>s.storage_path));
+  const plan=await getPlan(a.id,month);
+  const html=planHTML(a,month,plan.objetivo,st);
+  document.getElementById('plan-print')?.remove();
+  const f=document.createElement('iframe');f.id='plan-print';f.title='Planejamento para imprimir';
+  Object.assign(f.style,{position:'fixed',right:'0',bottom:'0',width:'0',height:'0',border:'0'});document.body.appendChild(f);
+  const d=f.contentDocument;d.open();d.write(html);d.close();
+  await Promise.race([Promise.all([...d.images].map(i=>i.complete?1:new Promise(r=>{i.onload=i.onerror=r}))),new Promise(r=>setTimeout(r,8000))]);
+  if(d.fonts?.ready)await Promise.race([d.fonts.ready,new Promise(r=>setTimeout(r,2000))]);
+  toast('Na janela que abrir, escolha "Salvar como PDF"',3500);
+  setTimeout(()=>{f.contentWindow.focus();f.contentWindow.print()},300);
+}
+function planHTML(a,month,objetivo,stories){
+  const [y,m]=month.split('-').map(Number);const label=`${MESES_RP[m-1]} ${y}`;
+  const ps=a.posts.filter(p=>p.date&&p.date.startsWith(month)).sort((x,z)=>(x.date+(hhmm(x.hora)||'99'))<(z.date+(hhmm(z.hora)||'99'))?-1:1);
+  const pic=(s,w,h)=>{const u=s?src(s,w,h):'';return u?`<img src="${u}" alt="">`:'<span class="ph"></span>'};
+  const av=pic(accAv(a),80,80),hoje=new Date().toLocaleDateString('pt-BR');
+  const ST_={rascunho:['Rascunho','#7a7a7a','#f4f4f4'],pronto:['Pronto','#0a0a0a','#e7e7e7'],agendado:['Agendado','#2f45ff','#eceefe'],publicado:['Publicado','#1e6b3a','#eaf6ee']};
+  const chip=s=>{const[t,c,b]=ST_[s]||ST_.rascunho;return `<span class="chip" style="color:${c};background:${b}">${t}</span>`};
+  const DS=['dom','seg','ter','qua','qui','sex','sáb'];const wd=d=>DS[new Date(d+'T12:00').getDay()];
+  const dd=d=>`${d.slice(8,10)}/${d.slice(5,7)}`;
+  const mk=`<svg width="20" height="24" viewBox="0 0 20 24">${[0,1,2].map(r=>[0,1,2].map(c=>`<rect x="${c*7.2}" y="${r*8.6}" width="5.4" height="6.75" fill="#0a0a0a"/>`).join('')).join('')}</svg>`;
+  // páginas: 1 visão, 2 calendário, posts em grupos de 12, stories em grupos de 8 dias
+  const postPages=[];for(let i=0;i<Math.max(1,ps.length);i+=12)postPages.push(ps.slice(i,i+12));
+  const byDay={};stories.forEach(s=>(byDay[s.story_date]=byDay[s.story_date]||[]).push(s));
+  const days=Object.keys(byDay).sort();const stPages=[];for(let i=0;i<Math.max(1,days.length);i+=8)stPages.push(days.slice(i,i+8));
+  const TOTAL=2+postPages.length+stPages.length;let n=0;
+  const page=(title,body)=>{n++;return `<section class="pg"><header><div class="l">${mk}<b>Fig.Feed</b><span class="sep">·</span><span>Planejamento</span></div>
+    <div class="r"><span class="av">${av}</span><b>${esc(a.handle)}</b><span class="sep">·</span><b>${label}</b></div></header><h1>${title}</h1>${body}
+    <footer><span>Gerado no Fig.Feed em ${hoje}</span><span>${n} / ${TOTAL}</span></footer></section>`};
+  // números
+  const cnt={rascunho:0,pronto:0,agendado:0,publicado:0};ps.forEach(p=>cnt[p.status]=(cnt[p.status]||0)+1);
+  const nW=Math.ceil(new Date(y,m,0).getDate()/7),weeks=Array(nW).fill(0);ps.forEach(p=>weeks[Math.min(nW-1,Math.floor((+p.date.slice(8)-1)/7))]++);
+  const fmtCnt={foto:0,carrossel:0,reels:0};ps.forEach(p=>fmtCnt[fmtOf(p)]++);
+  const pil=(a.pilares||[]).map(x=>({...x,n:ps.filter(p=>p.pilar===x.name).length}));const semPil=ps.filter(p=>!p.pilar||!pil.some(x=>x.name===p.pilar)).length;
+  const pct=k=>ps.length?Math.round(k/ps.length*100):0;
+  const pilHTML=pil.length?pil.map(x=>`<div class="pil"><span class="pn">${esc(x.name)}</span><span class="pb"><i style="width:${pct(x.n)}%"></i>${x.meta!=null?`<em style="left:${x.meta}%"></em>`:''}</span><span class="pv">${pct(x.n)}%${x.meta!=null?` <small>meta ${x.meta}%</small>`:''}</span></div>`).join('')+(semPil?`<div class="pil muted"><span class="pn">Sem pilar</span><span class="pb"><i style="width:${pct(semPil)}%;background:#bdbdbd"></i></span><span class="pv">${pct(semPil)}%</span></div>`:'')
+    :'<p class="muted" style="font-size:8pt;margin:0">Nenhum pilar definido para esta conta.</p>';
+  const grid=[...a.posts].slice(0,12).map(p=>`<div>${pic(p.slides[0],200,250)}${fmtOf(p)!=='foto'?`<i class="${fmtOf(p)}"></i>`:''}</div>`).join('');
+  let out=page('Visão do mês',`<div class="g1">
+   <div class="phone"><div class="ph-top"><span class="av big">${av}</span><div class="nums"><div><b>${a.posts.length}</b><span>posts</span></div><div><b>${a.followers!=null?Number(a.followers).toLocaleString('pt-BR'):'—'}</b><span>seguidores</span></div><div><b>${a.following!=null?Number(a.following).toLocaleString('pt-BR'):'—'}</b><span>seguindo</span></div></div></div>
+    <div class="bio"><b>${esc(a.display_name||a.handle.replace(/^@/,''))}</b>${a.bio?`<br><span class="muted">${esc(a.bio)}</span>`:''}</div>
+    <div class="grid3">${grid}</div><div class="cap">Como o feed vai ficar, do post mais novo (em cima) ao mais antigo.</div></div>
+   <div><div class="obj"><div class="lab">Objetivo do mês</div><p>${objetivo?esc(objetivo):'<span class="muted">Objetivo ainda não definido.</span>'}</p></div>
+    <div class="stats"><div><b>${ps.length}</b><span>posts no mês</span></div><div><b>${fmtCnt.reels}</b><span>Reels</span></div><div><b>${fmtCnt.carrossel}</b><span>carrosséis</span></div><div><b>${stories.length}</b><span>stories</span></div></div>
+    <div class="two"><div><div class="lab">Pilares de conteúdo</div>${pilHTML}</div>
+     <div><div class="lab">Situação dos posts</div><div class="bar">${['publicado','agendado','pronto','rascunho'].filter(k=>cnt[k]).map(k=>`<i style="flex:${cnt[k]};background:${k==='rascunho'?'#cfcfcf':ST_[k][1]}"></i>`).join('')}</div>
+      <div class="legend">${['publicado','agendado','pronto','rascunho'].map(k=>`<span>${chip(k)} ${cnt[k]}</span>`).join('')}</div>
+      <div class="lab" style="margin-top:5mm">Posts por semana</div><div class="wk">${weeks.map((w,i)=>`<div><span class="v">${w}</span><i style="height:${w/Math.max(1,...weeks)*100}%"></i><small>Sem ${i+1}</small></div>`).join('')}</div></div></div>
+    <div class="approve"><div class="lab">Aprovação do planejamento</div><div class="ap"><span><i class="box"></i>Aprovado como está</span><span><i class="box"></i>Aprovado com ajustes (anotados nas próximas páginas)</span></div>
+     <div class="sign"><div>Nome</div><div>Data</div><div>Assinatura</div></div></div></div></div>`);
+  // calendário
+  const first=new Date(y,m-1,1),lead=(first.getDay()+6)%7,lastD=new Date(y,m,0).getDate();const rows=Math.ceil((lead+lastD)/7);
+  const byPostDay={};ps.forEach(p=>(byPostDay[+p.date.slice(8)]=byPostDay[+p.date.slice(8)]||[]).push(p));
+  let cells='';for(let i=0;i<rows*7;i++){const d=i-lead+1;if(d<1||d>lastD){cells+='<div class="day off"></div>';continue}
+    const ds=`${month}-${String(d).padStart(2,'0')}`,sn=(byDay[ds]||[]).length,list=byPostDay[d]||[];
+    cells+=`<div class="day"><div class="dn"><b>${d}</b>${sn?`<span class="st">${sn} ${sn===1?'story':'stories'}</span>`:''}</div>${list.slice(0,2).map(p=>`<div class="pc"><span class="th">${pic(p.slides[0],90,112)}</span><span class="pt"><b>${hhmm(p.hora)||''}</b>${fmtOf(p)==='reels'?' <em>Reels</em>':''}<br>${esc(p.title)}</span></div>`).join('')}${list.length>2?`<small class="more">+${list.length-2}</small>`:''}</div>`}
+  out+=page('Calendário',`<div class="cal-h">${['seg','ter','qua','qui','sex','sáb','dom'].map(x=>`<div>${x}</div>`).join('')}</div><div class="cal" style="grid-template-rows:repeat(${rows},1fr)">${cells}</div>`);
+  // posts e legendas
+  postPages.forEach((grp,gi)=>{out+=page(gi?'Posts e legendas (continuação)':'Posts e legendas',grp.length?`<table class="posts"><thead><tr><th style="width:10mm"></th><th style="width:17mm">Data</th><th style="width:56mm">Post</th><th>Legenda e chamada</th><th style="width:19mm">Situação</th><th style="width:24mm;white-space:nowrap">OK · Ajustar</th></tr></thead><tbody>${
+    grp.map(p=>`<tr><td><span class="th2">${pic(p.slides[0],80,100)}</span></td><td><b>${dd(p.date)}</b><br><span class="muted">${wd(p.date)}${p.hora?' · '+hhmm(p.hora):''}</span></td>
+      <td><b class="t">${esc(p.title)}</b><br><span class="muted">${fmtLabel(p)}${p.pilar?' · '+esc(p.pilar):''}</span></td>
+      <td class="lg">${p.caption?esc(p.caption.length>320?p.caption.slice(0,317)+'…':p.caption):'<span class="muted">Sem legenda ainda.</span>'}${p.cta?`<div class="cta">Chamada: <b>${esc(p.cta)}</b></div>`:''}</td>
+      <td>${chip(p.status)}</td><td class="ok"><i class="box"></i><i class="box"></i></td></tr>`).join('')}</tbody></table>`:'<p class="muted">Nenhum post com data neste mês.</p>')});
+  // stories e anotações
+  stPages.forEach((grp,gi)=>{out+=page(gi?'Stories (continuação)':'Stories e anotações',`<div class="g4"><div class="stories">${grp.length?grp.map(d=>`<div><div class="lab">${wd(d)} · ${dd(d)}</div><div class="srow">${byDay[d].map((s,k)=>`<div class="sx"><span class="si">${pic({path:s.storage_path},90,160)}<em>${k+1}/${byDay[d].length}</em></span><small>${STORY_TIPOS[s.tipo]||'Imagem'}</small></div>`).join('')}</div></div>`).join(''):'<p class="muted" style="font-size:9pt">Nenhum story planejado neste mês.</p>'}</div>
+    <div><div class="lab">Anotações e pedidos de ajuste</div><div class="notes">${'<i></i>'.repeat(15)}</div></div></div>`)});
+  return `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Planejamento ${esc(a.handle)} ${label}</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"><style>${PLAN_CSS}</style></head><body>${out}</body></html>`;
+}
+const PLAN_CSS=`@page{size:A4 landscape;margin:0}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,"Helvetica Neue",Arial,sans-serif;color:#0a0a0a;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+img{display:block;width:100%;height:100%;object-fit:cover}.ph{display:block;width:100%;height:100%;background:#d9d9d9}
+.pg{width:297mm;height:210mm;padding:12mm 14mm 11mm;position:relative;page-break-after:always;break-after:page;overflow:hidden}
+header{display:flex;justify-content:space-between;align-items:center;font-size:9pt;color:#7a7a7a}header .l,header .r{display:flex;align-items:center;gap:6px}header b{color:#0a0a0a;font-weight:600}.sep{color:#bdbdbd}
+.av{display:inline-block;width:14px;height:14px;border-radius:50%;overflow:hidden;flex:none}.av.big{width:15mm;height:15mm}
+h1{font-size:24pt;font-weight:400;letter-spacing:-.025em;margin:6mm 0 4.5mm;line-height:1}
+footer{position:absolute;left:14mm;right:14mm;bottom:7mm;display:flex;justify-content:space-between;font-size:7.5pt;color:#7a7a7a;border-top:1px solid #e7e7e7;padding-top:2.5mm}
+.chip{font-size:6.5pt;font-weight:500;border-radius:99px;padding:1.2px 6px;white-space:nowrap}
+.lab{font-size:7pt;color:#7a7a7a;text-transform:uppercase;letter-spacing:.08em;font-weight:500;margin-bottom:2.2mm}.muted{color:#7a7a7a}
+.g1{display:grid;grid-template-columns:80mm 1fr;gap:10mm}
+.phone{border:1px solid #e7e7e7;border-radius:4mm;padding:4mm}.ph-top{display:flex;align-items:center;gap:5mm}
+.nums{display:flex;gap:4mm;flex:1;justify-content:center;text-align:center;font-size:7pt}.nums b{display:block;font-size:10pt}
+.bio{font-size:7.5pt;margin:2.5mm 0 3mm;line-height:1.35}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;width:60mm;margin:0 auto}.grid3 div{aspect-ratio:4/5;position:relative;overflow:hidden}
+.grid3 i{position:absolute;right:3px;top:3px;width:6px;height:6px;border:1.2px solid #fff;border-radius:1px}.grid3 i.reels{border-radius:50%;width:7px;height:7px}
+.cap{font-size:6.5pt;color:#7a7a7a;margin-top:2.5mm}
+.obj{border-left:2px solid #0a0a0a;padding:.5mm 0 .5mm 4mm;margin-bottom:5mm}.obj p{margin:0;font-size:11pt;line-height:1.35;max-width:150mm}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm}.stats div{background:#f4f4f4;border-radius:2.5mm;padding:2.5mm 3.5mm}
+.stats b{display:block;font-size:16pt;font-weight:500;letter-spacing:-.02em}.stats span{font-size:7pt;color:#7a7a7a}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:9mm;margin-top:6mm}
+.pil{display:grid;grid-template-columns:24mm 1fr 20mm;gap:2.5mm;align-items:center;font-size:7.5pt;margin-bottom:2mm}
+.pb{position:relative;height:2.6mm;background:#f4f4f4;border-radius:99px}.pb i{position:absolute;left:0;top:0;bottom:0;background:#0a0a0a;border-radius:99px}
+.pb em{position:absolute;top:-1mm;bottom:-1mm;width:1.2px;background:#ff1f1f}.pv small{color:#7a7a7a;font-size:6.5pt}
+.bar{display:flex;height:2.6mm;border-radius:99px;overflow:hidden;gap:1px}.bar i{display:block}
+.legend{display:flex;gap:3.5mm;margin-top:2.2mm;font-size:7.5pt;align-items:center;flex-wrap:wrap}
+.wk{display:flex;align-items:flex-end;gap:3mm;height:17mm;border-bottom:1px solid #e7e7e7;padding-top:3mm;margin-bottom:5mm}
+.wk div{flex:1;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:.8mm;position:relative}
+.wk i{display:block;width:55%;background:#0a0a0a;min-height:1px}.wk .v{font-size:6.5pt}.wk small{position:absolute;bottom:-4mm;font-size:6pt;color:#7a7a7a}
+.approve{border:1px solid #e7e7e7;border-radius:3mm;padding:3.5mm 4mm;margin-top:5mm}.ap{display:flex;gap:8mm;font-size:8pt}.ap span{display:flex;align-items:center;gap:2mm}
+.box{display:inline-block;width:3.4mm;height:3.4mm;border:1px solid #0a0a0a;border-radius:.8mm;flex:none}
+.sign{display:grid;grid-template-columns:1.3fr .7fr 1.3fr;gap:5mm;margin-top:6mm}.sign div{border-top:1px solid #0a0a0a;padding-top:1.2mm;font-size:7pt;color:#7a7a7a}
+.cal-h{display:grid;grid-template-columns:repeat(7,1fr);gap:1.5mm;font-size:7pt;color:#7a7a7a;text-transform:uppercase;letter-spacing:.08em;margin-bottom:1.5mm}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:1.5mm;height:136mm}
+.day{border:1px solid #e7e7e7;border-radius:2mm;padding:1.6mm;display:flex;flex-direction:column;gap:1.2mm;overflow:hidden;min-height:0}.day.off{border:none;background:#fafafa}
+.dn{display:flex;justify-content:space-between;align-items:center;font-size:8pt}.st{font-size:6pt;color:#2f45ff}
+.pc{display:flex;gap:1.5mm;align-items:flex-start;min-height:0}.th{width:7mm;height:8.75mm;flex:none;overflow:hidden;border-radius:.8mm}
+.pt{font-size:6.2pt;line-height:1.25;overflow:hidden;max-height:3.75em}.pt em{font-style:normal;color:#ff1f1f;font-weight:600}.more{font-size:6pt;color:#7a7a7a}
+.posts{width:100%;border-collapse:collapse;font-size:7.2pt}
+.posts th{text-align:left;font-size:6.5pt;color:#7a7a7a;text-transform:uppercase;letter-spacing:.06em;font-weight:500;padding:0 2mm 1.5mm 0;border-bottom:1px solid #e7e7e7}
+.posts td{padding:1mm 2mm 1mm 0;border-bottom:1px solid #e7e7e7;vertical-align:middle;line-height:1.3}
+.th2{display:block;width:7.6mm;height:9.5mm;overflow:hidden}.posts .t{font-weight:500}.lg{color:#3a3a3a}.cta{margin-top:.8mm;color:#0a0a0a}
+.ok{white-space:nowrap}.ok .box{margin-right:3mm}
+.g4{display:grid;grid-template-columns:1fr 90mm;gap:12mm}
+.stories{display:grid;grid-template-columns:1fr 1fr;gap:5mm 8mm;align-content:start}
+.srow{display:flex;gap:1.6mm;flex-wrap:wrap}.sx{width:13mm}.si{display:block;width:13mm;aspect-ratio:9/16;border-radius:1.2mm;overflow:hidden;position:relative}
+.si em{position:absolute;left:1.2mm;bottom:1mm;font-size:5.5pt;color:#fff;font-style:normal;text-shadow:0 0 2px rgba(0,0,0,.6)}.sx small{display:block;font-size:5.6pt;color:#7a7a7a;margin-top:.6mm;line-height:1.2}
+.notes{display:flex;flex-direction:column;gap:7.5mm;margin-top:2mm}.notes i{display:block;border-bottom:1px solid #d9d9d9}`;
 
 /* ======================= Início ======================= */
 let booted=false;
