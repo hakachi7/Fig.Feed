@@ -6,6 +6,7 @@ Cada versão também tem uma branch própria, com o código exatamente como esta
 
 | Versão | Nome | O que trouxe | Branch | Commit |
 | --- | --- | --- | --- | --- |
+| v14 | Resultados do Instagram | Aba Resultados com os números do Instagram (API da Meta), link para o cliente conectar, coleta automática diária e PDFs Resultados e Completo | [versao-14-resultados-instagram](https://github.com/hakachi7/Fig.Feed/tree/versao-14-resultados-instagram) | (veja a branch) |
 | v13 | Apagar e planejamento novo | Apagar vários posts no modo Selecionar, tutorial com Selecionar e Planejamento, PDF do planejamento com capa, Mood do feed e Mood dos stories | [versao-13-apagar-e-planejamento](https://github.com/hakachi7/Fig.Feed/tree/versao-13-apagar-e-planejamento) | (veja a branch) |
 | v12 | Prévia do perfil | Trocar a foto de perfil na prévia, destaques em círculos com “+ Novo” (nome e capa fáceis de trocar) e baixar a prévia em PNG | [versao-12-previa-do-perfil](https://github.com/hakachi7/Fig.Feed/tree/versao-12-previa-do-perfil) | (veja a branch) |
 | v11 | Selecionar e exportar | No feed da conta: botão Selecionar, marcar posts com ✓ e exportar só eles em fotos (.zip), grade (PNG) ou legendas (.txt) | [versao-11-selecionar-e-exportar](https://github.com/hakachi7/Fig.Feed/tree/versao-11-selecionar-e-exportar) | (veja a branch) |

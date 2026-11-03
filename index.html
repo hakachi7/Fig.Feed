@@ -739,6 +739,35 @@ body:has(.sel-bar) .toast{bottom:150px}
 .hl-pick{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;max-height:190px;overflow:auto;padding:2px}
 .hl-pick button{aspect-ratio:1;border-radius:50%;background:var(--tile) center/cover}
 .hl-pick button.on{outline:2px solid var(--fg);outline-offset:2px}
+.igr{max-width:980px}
+.ig-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}.ig-top .avatar{width:48px;height:48px}.ig-top b{display:block;font-weight:500}.ig-top small{color:var(--muted);font-size:12.5px}.ig-acts{margin-left:auto;display:flex;gap:8px}
+.ig-ban{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;background:var(--soft);border-radius:14px;padding:14px;margin-bottom:14px}.ig-ban b{font-weight:500}.ig-ban span{color:var(--muted);font-size:13px;flex:1;min-width:200px}
+.ig-mes{display:flex;align-items:center;gap:10px;margin:6px 0 12px}.ig-mes b{font-weight:500;min-width:130px;text-align:center}.ig-mes .pill{padding:6px 12px}
+.ig-kc{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-bottom:14px}.ig-kc .kc{background:var(--soft);border:1.5px solid transparent;border-radius:14px;padding:12px;text-align:left;cursor:pointer;font:inherit;color:inherit}
+.ig-kc .kc.on{border-color:var(--fg);background:#fff}.ig-kc .kc:disabled{cursor:default}.ig-kc span{display:block;font-size:12px;color:var(--muted)}.ig-kc b{display:block;font-size:22px;font-weight:600;margin-top:4px;letter-spacing:-.01em}
+.ig-box{border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}.ig-h{font-weight:600;font-size:15px;padding-bottom:10px;margin-bottom:12px;border-bottom:1px solid var(--line)}
+.ig-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.ig-2 .ig-box{margin-bottom:14px}.sm{font-size:12.5px}.ig-empty{padding:30px;text-align:center;color:var(--muted);font-size:13px}
+.igr .hb{margin-bottom:12px}.igr .hl{font-size:14px;margin-bottom:5px}.igr .hl small{color:var(--muted);font-size:12px;margin-left:6px}.igr .hr{display:flex;align-items:center;gap:12px}.igr .hr b{min-width:64px;text-align:right;font-weight:600;font-size:14px}
+.igr .ibar{flex:1;height:8px;background:#ececec;border-radius:99px;display:flex;gap:2px;overflow:hidden}.igr .ibar i{display:block;height:100%;border-radius:99px}
+.igr .lg2{display:flex;gap:14px;font-size:12px;color:var(--muted);margin-bottom:10px;flex-wrap:wrap}.igr .lg2 i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
+.ig-tops{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.ig-tp{color:inherit;text-decoration:none;font-size:13px}.ig-tp span{display:block;aspect-ratio:4/5;background:var(--tile) center/cover;border-radius:10px;margin-bottom:6px}.ig-tp b{display:block;font-weight:500}.ig-tp small{color:var(--muted)}
+.ig-ins{margin:0;padding-left:20px;line-height:1.5;font-size:14px;color:#3a3a3a}.ig-ins li{margin-bottom:8px}.ig-ins b{color:var(--fg);font-weight:600}
+.ig-tbl{overflow-x:auto}.ig-tbl table{width:100%;border-collapse:collapse;font-size:13px;white-space:nowrap}.ig-tbl th{text-align:right;font-weight:500;color:var(--muted);font-size:12px;padding:0 8px 8px}.ig-tbl th:nth-child(-n+3){text-align:left}
+.ig-tbl td{padding:6px 8px;border-top:1px solid var(--line);text-align:right}.ig-tbl td:nth-child(-n+3){text-align:left}.ig-tbl .th{display:block;width:30px;height:38px;border-radius:4px;background:var(--tile) center/cover}
+.ig-foot{display:flex;justify-content:flex-end;margin:4px 0 30px}
+.ig-conn{max-width:460px;margin:6vh auto;background:var(--soft);border-radius:20px;padding:26px;display:flex;flex-direction:column;gap:12px}.ig-conn .ic{width:44px;height:44px;border-radius:12px;background:var(--fg);color:#fff;display:grid;place-items:center}
+.ig-conn h2{font-size:24px;font-weight:400;margin:4px 0 0;letter-spacing:-.02em}.ig-conn p{margin:0;line-height:1.5}.ig-conn ul{margin:0;padding-left:18px;line-height:1.8;font-size:14px}.ig-conn .pill{justify-content:center}
+.ig-sheet-o{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:60;display:flex;align-items:flex-end;justify-content:center}
+.ig-sheet{position:relative;background:#fff;width:min(460px,100%);border-radius:22px 22px 0 0;padding:26px 20px 30px;display:flex;flex-direction:column;gap:12px;box-shadow:0 -10px 40px rgba(0,0,0,.15)}
+@media (min-width:600px){.ig-sheet-o{align-items:center}.ig-sheet{border-radius:22px}}
+.ig-sheet h2{font-size:22px;font-weight:400;margin:0 30px 4px 0}.ig-sheet .x{position:absolute;right:14px;top:14px;color:var(--muted)}.pill.wide{width:100%;justify-content:center;text-decoration:none}
+.ig-link{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:8px 8px 8px 12px;font-size:13px}.ig-link span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ig-msg{background:var(--soft);border-radius:12px;padding:12px;font-size:13px;line-height:1.45;color:#3a3a3a;word-break:break-word}
+.ig-pub{max-width:440px;margin:0 auto;min-height:100vh;padding:28px 20px;display:flex;flex-direction:column;gap:16px}.ig-pub .brand{display:flex;align-items:center;gap:8px;font-weight:500;margin-bottom:14px}
+.ig-pub h1{font-size:28px;font-weight:400;letter-spacing:-.02em;margin:0;line-height:1.2}.ig-pub h1 b{font-weight:500}.ig-pub p{margin:0;line-height:1.5}
+.ig-perm{background:var(--soft);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:8px;font-size:14px}.ig-perm small{color:var(--muted);margin-top:4px}.ig-perm .no{color:#5a5a5a}
+.ig-pub .ok{width:72px;height:72px;border-radius:50%;background:var(--fg);color:#fff;display:grid;place-items:center;font-size:32px;margin:8vh auto 0}.ig-pub:has(.ok){text-align:center}
+@media (max-width:760px){.ig-kc{grid-template-columns:repeat(2,1fr)}.ig-2{grid-template-columns:1fr}.ig-tops{grid-template-columns:repeat(3,1fr)}.ig-kc b{font-size:19px}}
 </style>
 </head>
 <body>
@@ -850,7 +879,7 @@ function render(){
   if(location.hash.includes('=')){history.replaceState(null,'',location.pathname+location.search+'#home')}
   route=(location.hash.slice(1)||'home').split('/');const v=route[0];
   if(v==='confirmado')return vConfirmado();
-  if(MANUT&&!isAdmin()&&!AUTH.includes(v)&&v!=='r')return vManutencao();
+  if(MANUT&&!isAdmin()&&!AUTH.includes(v)&&!['r','conectar','conectado','conectar-erro'].includes(v))return vManutencao();
   if(recovery&&v!=='nova-senha')return go('nova-senha');
   if(!USER&&v==='home')return vLanding();
   if(!USER&&!AUTH.includes(v)&&!PUBLIC.includes(v))return go('entrar');
@@ -861,7 +890,8 @@ function render(){
     termos:vTermos,privacidade:vPrivacidade,ajuda:vAjuda,novidades:vNovidades,seguranca:vSeguranca,excluir:vExcluir,
     erro:()=>vErro(),'sem-internet':vOffline,
     planos:vPlanos,lixeira:vLixeira,biblioteca:vBiblioteca,blog:vBlog,suporte:vSuporte,
-    stories:vStories,previa:vPrevia,relatorio:vRelatorio,r:vRelPublico};
+    stories:vStories,previa:vPrevia,relatorio:vRelatorio,r:vRelPublico,
+    resultados:vResultados,conectar:vConectar,conectado:vConectado,'conectar-erro':vConectarErro};
   document.title='Fig.Feed';
   try{(map[v]||v404)()}catch(err){console.error(err);vErro('FF-501')}window.scrollTo(0,0);
 }
@@ -1035,7 +1065,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v13.3';
+const VERSAO='v14';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   blog:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 5h16v14H4zM8 9h8M8 13h8M8 17h5"/></svg>',
@@ -2339,7 +2369,7 @@ function vManutencao(){
 async function loadManut(){try{const {data}=await sb.from('app_settings').select('value').eq('key','manutencao').maybeSingle();MANUT=!!data?.value?.ativo}catch(e){MANUT=false}}
 
 /* ======================= V6: páginas públicas e da conta ======================= */
-const PUBLIC=['termos','privacidade','ajuda','novidades','planos','r','blog'];
+const PUBLIC=['termos','privacidade','ajuda','novidades','planos','r','blog','conectar','conectado','conectar-erro'];
 function pubHeader(){return `<header class="pub-hdr"><button class="brand" data-go="home" aria-label="Fig.Feed, início">${LOGO()}<span>Fig.Feed</span></button>
   <div class="r"><button class="pill" data-go="entrar">Entrar</button><button class="pill dark" data-go="criar">Criar conta grátis</button></div></header>`}
 const shell=cur=>USER?header(cur):pubHeader();
@@ -2371,6 +2401,7 @@ const FAQ=[
   ['Quantas fotos cabem num carrossel?','Até 10 fotos por post. A primeira é a capa que aparece no feed.'],
   ['O Fig.Feed publica no Instagram por mim?','Ainda não. Ele serve para planejar e organizar. Na hora de postar, baixe a grade e as legendas em Downloads.'],
   ['Meus clientes conseguem ver meu trabalho?','Sim, pelo relatório do mês. Abra a conta, vá em Relatório e clique em "Copiar link". O cliente abre pelo celular, sem criar conta, e o link vale por 30 dias.'],
+  ['Como conecto o Instagram do cliente?','Abra a conta, toque na aba Resultados e em "Conectar Instagram". Se você tem o login, entre na hora; se não, envie o link para o cliente pelo WhatsApp. O Instagram precisa ser conta profissional (Comercial ou Criador de conteúdo).'],
   ['Como mando o planejamento para o cliente aprovar?','Em Downloads, escolha a conta e o mês, escreva o objetivo e clique em "Baixar planejamento (PDF)". Na janela que abrir, escolha "Salvar como PDF".'],
   ['Como planejo os stories?','Abra a conta e vá na aba Stories. Escolha o dia, envie as artes e arraste para mudar a ordem.'],
   ['Como instalo o Fig.Feed no celular?','Em Configuração tem o passo a passo para iPhone e Android.'],
@@ -2391,6 +2422,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v14','Nov 2026',['Nova aba Resultados em cada conta: conecte o Instagram e veja visualizações, contas alcançadas, interações, seguidores, melhores posts, formatos, dias e horários','Link para o cliente autorizar o Instagram no celular dele, sem passar senha','Downloads: três PDFs — Planejamento, Resultados e Completo (resultados do mês anterior + planejamento)','Os números atualizam sozinhos todo dia, e os stories a cada 4 horas']],
   ['v13.3','Nov 2026',['Planejamento em PDF só em preto, branco e cinza']],
   ['v13.2','Nov 2026',['Planejamento em PDF: contracapa no final com a grade do feed','Detalhes do PDF em azul no lugar do vermelho']],
   ['v13.1','Nov 2026',['Mood do feed: cada post aparece uma vez e, se faltar post, entram os fundos de bolinhas','O app agora sempre busca a versão mais nova ao abrir']],
@@ -2597,7 +2629,7 @@ async function vBiblioteca(){
   app.innerHTML=header('')+`<main class="page lib"><p class="sub">Carregando…</p></main>`;bindHeader();
   let files=[],used={};
   try{const [{data,error},sl]=await Promise.all([sb.rpc('my_files'),db(sb.from('slides').select('storage_path,post_id'))]);if(error)throw error;
-    files=(data||[]).filter(f=>!f.name.endsWith('/.emptyFolderPlaceholder'));
+    files=(data||[]).filter(f=>!f.name.endsWith('/.emptyFolderPlaceholder')&&!f.name.includes('/instagram/'));
     const accOfPost={};S.accounts.forEach(a=>a.posts.forEach(p=>accOfPost[p.id]=a.id));
     sl.forEach(s=>{used[s.storage_path]=accOfPost[s.post_id]||'lixeira'});
     S.accounts.forEach(a=>{if(a.avatar)used[a.avatar]=used[a.avatar]||a.id;(a.highlights||[]).forEach(h=>{if(h&&h.path)used[h.path]=used[h.path]||a.id})});if(S.profile.avatar_path)used[S.profile.avatar_path]='perfil';
@@ -2641,7 +2673,7 @@ function libMenu(name,u,btn){
 /* ======================= V8: abas da conta (Feed, Stories, Prévia, Relatório) ======================= */
 function accTabs(a,cur){
   const t=(k,l,h)=>`<a data-go="${h}" class="${cur===k?'cur':''}" ${cur===k?'aria-current="page"':''}>${l}</a>`;
-  return `<nav class="adm-tabs acc-tabs" aria-label="Seções da conta">${t('feed','Feed','feed/'+a.id)}${t('stories','Stories','stories/'+a.id)}${t('previa','Prévia','previa/'+a.id)}${t('relatorio','Relatório','relatorio/'+a.id)}</nav>`;
+  return `<nav class="adm-tabs acc-tabs" aria-label="Seções da conta">${t('feed','Feed','feed/'+a.id)}${t('stories','Stories','stories/'+a.id)}${t('previa','Prévia','previa/'+a.id)}${t('relatorio','Relatório','relatorio/'+a.id)}${t('resultados','Resultados','resultados/'+a.id)}</nav>`;
 }
 const accHeader=(a,cur)=>header('contas',`<span>Contas /</span> ${esc(a.handle)}`,accAvHTML(a))+accTabs(a,cur);
 const fmtDia=d=>{const t=iso(new Date());if(d===t)return'hoje';const[y,m,dd]=d.split('-');return `${dd}/${m}`};
@@ -2934,7 +2966,8 @@ function planSection(a){
       <input class="field" data-i="${i}" data-k="meta" type="number" min="0" max="100" value="${x.meta??''}" placeholder="meta %" aria-label="Meta do pilar ${i+1} em porcentagem">
       <button class="pill" data-rm="${i}" aria-label="Remover pilar ${esc(x.name)}">${XICON}</button></div>`).join('')||'<p class="muted" style="font-size:13px;margin:6px 0">Nenhum pilar ainda. Exemplos: Produto, Bastidores, Prova social, Dica, Promoção.</p>'}</div>
     <button class="pill" id="pl-add" style="margin-top:8px">+ Adicionar pilar</button>
-    <div class="opts"><button class="pill dark" id="pl-pdf">Baixar planejamento (PDF)</button></div></section>`;
+    <div class="opts"><button class="pill dark" id="pl-pdf">Planejamento (PDF)</button><button class="pill" id="pl-res">Resultados (PDF)</button><button class="pill" id="pl-all">Completo (PDF)</button></div>
+    <p class="muted" style="font-size:12.5px;margin:8px 0 0;line-height:1.45"><b>Planejamento:</b> o mês escolhido, para o cliente aprovar. <b>Resultados:</b> os números do Instagram no mês escolhido. <b>Completo:</b> resultados do mês anterior + planejamento do mês escolhido.</p></section>`;
 }
 async function bindPlanSection(a){
   const o=document.getElementById('pl-o'),oc=document.getElementById('pl-oc');
@@ -2954,6 +2987,13 @@ async function bindPlanSection(a){
     if(o.value.trim()!==(PLANS[a.id+'|'+dlMonth]?.objetivo||''))await savePlan(a.id,dlMonth,o.value.trim());
     try{await baixarPlanejamento(a,dlMonth)}catch(e){toast('Não foi possível montar o PDF agora')}
     b.disabled=false;b.textContent=t};
+  const igBtn=(id,fn)=>{const x=document.getElementById(id);x.onclick=async()=>{
+    const c=await igConn(a.id,true).catch(()=>null);
+    if(!c){if(confirm(`Para os Resultados, conecte o Instagram de ${a.handle}. Abrir a aba Resultados da conta?`))go('resultados/'+a.id);return}
+    x.disabled=true;const t=x.textContent;x.textContent='Montando o PDF…';
+    if(o.value.trim()!==(PLANS[a.id+'|'+dlMonth]?.objetivo||''))await savePlan(a.id,dlMonth,o.value.trim());
+    try{await fn()}catch(e){console.error(e);toast('Não foi possível montar o PDF agora')}x.disabled=false;x.textContent=t}};
+  igBtn('pl-res',()=>baixarResultados(a,dlMonth));igBtn('pl-all',()=>baixarCompleto(a,dlMonth));
 }
 
 /* O PDF: monta a página de impressão (A4 deitado) e abre "Salvar como PDF" */
@@ -2963,17 +3003,10 @@ async function baixarPlanejamento(a,month){
     .gte('story_date',month+'-01').lte('story_date',`${month}-${String(last).padStart(2,'0')}`).order('story_date').order('position'));
   await signPaths(st.map(s=>s.storage_path));
   const plan=await getPlan(a.id,month);
-  const html=planHTML(a,month,plan.objetivo,st);
-  document.getElementById('plan-print')?.remove();
-  const f=document.createElement('iframe');f.id='plan-print';f.title='Planejamento para imprimir';
-  Object.assign(f.style,{position:'fixed',right:'0',bottom:'0',width:'0',height:'0',border:'0'});document.body.appendChild(f);
-  const d=f.contentDocument;d.open();d.write(html);d.close();
-  await Promise.race([Promise.all([...d.images].map(i=>i.complete?1:new Promise(r=>{i.onload=i.onerror=r}))),new Promise(r=>setTimeout(r,8000))]);
-  if(d.fonts?.ready)await Promise.race([d.fonts.ready,new Promise(r=>setTimeout(r,2000))]);
-  toast('Na janela que abrir, escolha "Salvar como PDF"',3500);
-  setTimeout(()=>{f.contentWindow.focus();f.contentWindow.print()},300);
+  const [yy,mm]=month.split('-').map(Number);
+  await printDoc(`Planejamento ${a.handle} ${MESES_RP[mm-1]} ${yy}`,planHTML(a,month,plan.objetivo,st,{bodyOnly:true}));
 }
-function planHTML(a,month,objetivo,stories){
+function planHTML(a,month,objetivo,stories,opts={}){
   const [y,m]=month.split('-').map(Number);const label=`${MESES_RP[m-1]} ${y}`;
   const ps=a.posts.filter(p=>p.date&&p.date.startsWith(month)).sort((x,z)=>(x.date+(hhmm(x.hora)||'99'))<(z.date+(hhmm(z.hora)||'99'))?-1:1);
   const pic=(s,w,h)=>{const u=s?src(s,w,h):'';return u?`<img src="${u}" alt="">`:'<span class="ph"></span>'};
@@ -2987,7 +3020,7 @@ function planHTML(a,month,objetivo,stories){
   const postPages=[];for(let i=0;i<Math.max(1,ps.length);i+=12)postPages.push(ps.slice(i,i+12));
   const byDay={};stories.forEach(s=>(byDay[s.story_date]=byDay[s.story_date]||[]).push(s));
   const days=Object.keys(byDay).sort();const stPages=[];for(let i=0;i<Math.max(1,days.length);i+=8)stPages.push(days.slice(i,i+8));
-  const TOTAL=6+postPages.length+stPages.length;let n=0;
+  const TOTAL=(opts.noCover?5:6)+postPages.length+stPages.length;let n=0;
   const page=(title,body,cls='')=>{n++;return `<section class="pg ${cls}"><header><div class="l">${mk}<b>Fig.Feed</b><span class="sep">·</span><span>Planejamento</span></div>
     <div class="r"><span class="av">${av}</span><b>${esc(a.handle)}</b><span class="sep">·</span><b>${label}</b></div></header><h1>${title}</h1>${body}
     <footer><span>Gerado no Fig.Feed em ${hoje}</span><span>${n} / ${TOTAL}</span></footer></section>`};
@@ -3002,8 +3035,9 @@ function planHTML(a,month,objetivo,stories){
   const grid=[...a.posts].slice(0,12).map(p=>`<div>${pic(p.slides[0],200,250)}${fmtOf(p)!=='foto'?`<i class="${fmtOf(p)}"></i>`:''}</div>`).join('');
   // V13: capa no estilo da página inicial (Fig. · foto · Feed)
   const capaP=ps.find(p=>p.slides[0])||a.posts.find(p=>p.slides[0]);
-  n++;let out=`<section class="pg capa"><div class="cv"><div class="w">Fig.</div><div class="im">${pic(capaP?.slides[0],728,956)}</div><div class="w">Feed</div></div>
-    <div class="cv-f"><span class="who"><span class="av">${av}</span><b>${esc(a.handle)}</b><span class="sep">·</span>Planejamento de ${label}</span><span>Gerado no Fig.Feed em ${hoje} · ${n} / ${TOTAL}</span></div></section>`;
+  let out='';if(!opts.noCover){n++;out=`<section class="pg capa"><div class="cv"><div class="w">Fig.</div><div class="im">${pic(capaP?.slides[0],728,956)}</div><div class="w">Feed</div></div>
+    <div class="cv-f"><span class="who"><span class="av">${av}</span><b>${esc(a.handle)}</b><span class="sep">·</span>Planejamento de ${label}</span><span>Gerado no Fig.Feed em ${hoje} · ${n} / ${TOTAL}</span></div></section>`}
+  if(opts.onlyCover)return out;
   out+=page('Visão do mês',`<div class="g1">
    <div class="phone"><div class="ph-top"><span class="av big">${av}</span><div class="nums"><div><b>${a.posts.length}</b><span>posts</span></div><div><b>${a.followers!=null?Number(a.followers).toLocaleString('pt-BR'):'—'}</b><span>seguidores</span></div><div><b>${a.following!=null?Number(a.following).toLocaleString('pt-BR'):'—'}</b><span>seguindo</span></div></div></div>
     <div class="bio"><b>${esc(a.display_name||a.handle.replace(/^@/,''))}</b>${a.bio?`<br><span class="muted">${esc(a.bio)}</span>`:''}</div>
@@ -3050,7 +3084,8 @@ function planHTML(a,month,objetivo,stories){
     <div><div class="lab">Anotações e pedidos de ajuste</div><div class="notes">${'<i></i>'.repeat(15)}</div></div></div>`)});
   // V13.2: contracapa — "tks Fig.Feed" e a grade do feed (12 posts; bolinhas se faltar)
   const gr=[...a.posts].filter(p=>p.slides[0]).slice(0,12);
-  out+=`<section class="pg fim"><div class="tks">tks<br>Fig.Feed</div><div class="fg">${Array.from({length:12},(_,i)=>`<div>${gr[i]?pic(gr[i].slides[0],200,250):bol(i+5)}</div>`).join('')}</div></section>`;
+  if(!opts.noBack)out+=`<section class="pg fim"><div class="tks">tks<br>Fig.Feed</div><div class="fg">${Array.from({length:12},(_,i)=>`<div>${gr[i]?pic(gr[i].slides[0],200,250):bol(i+5)}</div>`).join('')}</div></section>`;
+  if(opts.bodyOnly)return out;
   return `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Planejamento ${esc(a.handle)} ${label}</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"><style>${PLAN_CSS}</style></head><body>${out}</body></html>`;
 }
@@ -3126,6 +3161,295 @@ footer{position:absolute;left:14mm;right:14mm;bottom:7mm;display:flex;justify-co
 .mood-n{text-align:center;font-size:7pt;color:#8a8a8a;margin:2mm 0 0}
 .fim{padding:0}.tks{position:absolute;left:13.5mm;top:50%;transform:translateY(-50%);font-size:9pt;line-height:1.25}
 .fg{position:absolute;left:202mm;top:50%;transform:translateY(-50%);width:43mm;display:grid;grid-template-columns:repeat(3,1fr);gap:.8mm}.fg div{aspect-ratio:4/5;overflow:hidden;background:#d9d9d9}`;
+
+/* ======================= V14: Resultados do Instagram ======================= */
+const IG_FN=SB_URL+'/functions/v1/instagram';
+const KIND_N={reels:'Reels',carrossel:'Carrossel',foto:'Foto',story:'Story'};
+const KIND_COR={carrossel:'#0a0a0a',reels:'#7a7a7a',foto:'#d0d0d0'};
+const nBR=v=>v==null?'—':Number(Math.round(v)).toLocaleString('pt-BR');
+const pcBR=v=>v==null||!isFinite(v)?'—':v.toFixed(1).replace('.',',')+'%';
+const milBR=v=>v==null?'—':v>=1000?(Math.round(v/100)/10).toString().replace('.',',').replace(/,0$/,'')+' mil':nBR(v);
+const DSEM=['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+async function igCall(body){
+  const {data:{session}}=await sb.auth.getSession();
+  const r=await fetch(IG_FN,{method:'POST',headers:{'Content-Type':'application/json',apikey:SB_KEY,Authorization:'Bearer '+(session?.access_token||'')},body:JSON.stringify(body)});
+  return r.json().catch(()=>({ok:false}));
+}
+async function igNewLink(a){return (await db(sb.from('ig_connect_links').insert({account_id:a.id}).select('token').single())).token}
+const igLinkURL=t=>(BASE_URL()||location.href.split('#')[0])+'#conectar/'+t;
+const IGC={};// conexões já carregadas
+async function igConn(accId,force){if(!force&&accId in IGC)return IGC[accId];
+  const {data}=await sb.from('ig_connections').select('*').eq('account_id',accId).maybeSingle();return IGC[accId]=data||null}
+
+/* Junta os dados do mês e calcula tudo o que a tela e o PDF mostram */
+async function igLoad(a,month){
+  const [y,m]=month.split('-').map(Number);const ini=`${month}-01`,fim=`${month}-${String(new Date(y,m,0).getDate()).padStart(2,'0')}`;
+  const tIni=new Date(y,m-1,1).toISOString(),tFim=new Date(y,m,1).toISOString();
+  const [conn,daily,monthly,media,aud]=await Promise.all([igConn(a.id,true),
+    db(sb.from('ig_daily').select('*').eq('account_id',a.id).gte('day',ini).lte('day',fim).order('day')),
+    sb.from('ig_monthly').select('*').eq('account_id',a.id).eq('month',month).maybeSingle().then(r=>r.data),
+    db(sb.from('ig_media').select('*').eq('account_id',a.id).gte('ts',tIni).lt('ts',tFim).order('ts')),
+    db(sb.from('ig_audience').select('*').eq('account_id',a.id))]);
+  await signPaths(media.map(x=>x.thumb_url).filter(Boolean));
+  const posts=media.filter(x=>x.kind!=='story').map(x=>({...x,dt:new Date(x.ts),eng:x.reach?((x.total_interactions??((x.likes||0)+(x.comments||0)+(x.saved||0)+(x.shares||0)))/x.reach*100):null}));
+  const stories=media.filter(x=>x.kind==='story').map(x=>({...x,dt:new Date(x.ts)}));
+  const sum=k=>daily.reduce((s,d)=>s+(d[k]||0),0),has=k=>daily.some(d=>d[k]!=null);
+  const pSum=k=>posts.reduce((s,p)=>s+(p[k]||0),0);
+  const fol=sum('follows'),unf=sum('unfollows');
+  const k={views:monthly?.views??(has('views')?sum('views'):pSum('views')),reach:monthly?.reach??null,
+    interactions:monthly?.total_interactions??(has('total_interactions')?sum('total_interactions'):pSum('total_interactions')),
+    net:has('follows')?fol-unf:null,followers:conn?.followers??null,posts:posts.length,stories:stories.length,
+    eng:(()=>{const e=posts.filter(p=>p.eng!=null);return e.length?e.reduce((s,p)=>s+p.eng,0)/e.length:null})(),
+    taps:has('profile_links_taps')?sum('profile_links_taps'):null};
+  const fmt={};['reels','carrossel','foto'].forEach(t=>{const ps=posts.filter(p=>p.kind===t);if(!ps.length)return;
+    const e=ps.filter(p=>p.eng!=null);fmt[t]={q:ps.length,reach:ps.reduce((s,p)=>s+(p.reach||0),0)/ps.length,views:ps.reduce((s,p)=>s+(p.views||0),0),
+      reachSum:ps.reduce((s,p)=>s+(p.reach||0),0),eng:e.length?e.reduce((s,p)=>s+p.eng,0)/e.length:null}});
+  const wd=Array.from({length:7},()=>[]);posts.forEach(p=>p.reach!=null&&wd[p.dt.getDay()].push(p.reach));
+  const per={manha:[],tarde:[],noite:[]};posts.forEach(p=>{if(p.reach==null)return;const h=p.dt.getHours();per[h<12?'manha':h<18?'tarde':'noite'].push(p)});
+  const audience={};aud.forEach(r=>audience[r.kind]=r.data);
+  const d={a,month,conn,daily,monthly,posts,stories,k,fmt,audience,
+    wd:wd.map(v=>v.length?v.reduce((s,x)=>s+x,0)/v.length:null),
+    per:Object.fromEntries(Object.entries(per).filter(([,v])=>v.length).map(([kk,v])=>[kk,{q:v.length,reach:v.reduce((s,p)=>s+p.reach,0)/v.length,eng:(e=>e.length?e.reduce((s,p)=>s+p.eng,0)/e.length:null)(v.filter(p=>p.eng!=null))}])),
+    top:[...posts].filter(p=>p.reach!=null).sort((x,z)=>z.reach-x.reach).slice(0,3)};
+  d.best=[['Mais salvo','saved','salvamentos'],['Mais compartilhado','shares','compartilhamentos'],['Mais comentado','comments','comentários'],['Mais seguidores','follows','novos seguidores']]
+    .map(([t,c,u])=>{const p=[...posts].filter(x=>x[c]>0).sort((x,z)=>z[c]-x[c])[0];return p&&{t,u,p,v:p[c]}}).filter(Boolean);
+  d.leituras=igLeituras(d);
+  return d;
+}
+function igLeituras(d){
+  const L=[],f=d.fmt,dd=x=>x.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});
+  const ts=Object.entries(f).filter(([,v])=>v.q>=2);
+  if(ts.length>=2){const [b,bv]=[...ts].sort((x,z)=>z[1].reach-x[1].reach)[0];const [w,wv]=[...ts].sort((x,z)=>x[1].reach-z[1].reach)[0];
+    if(bv.reach>wv.reach*1.1)L.push(`<b>${KIND_N[b]} alcançaram ${Math.round((bv.reach/wv.reach-1)*100)}% mais</b> pessoas que ${KIND_N[w].toLowerCase()}${w==='foto'?'s':''}, em média (${nBR(bv.reach)} contra ${nBR(wv.reach)}).`);
+    const eg=ts.filter(([,v])=>v.eng!=null).sort((x,z)=>z[1].eng-x[1].eng);
+    if(eg.length>=2)L.push(`<b>Melhor engajamento: ${KIND_N[eg[0][0]]}</b> (${pcBR(eg[0][1].eng)}). O mais baixo foi ${KIND_N[eg.at(-1)[0]]} (${pcBR(eg.at(-1)[1].eng)}).`)}
+  if(d.top[0])L.push(`<b>Maior alcance do mês:</b> “${esc((d.top[0].caption||'Sem legenda').split('\n')[0].slice(0,60))}” (${dd(d.top[0].dt)}), com ${nBR(d.top[0].reach)} contas alcançadas.`);
+  const wd=d.wd.map((v,i)=>[v,i]).filter(x=>x[0]!=null);
+  if(wd.length>=3){const b=[...wd].sort((x,z)=>z[0]-x[0])[0];L.push(`<b>${DSEM[b[1]]} foi o melhor dia</b> para publicar: alcance médio de ${nBR(b[0])}.`)}
+  const pr=Object.entries(d.per);if(pr.length>=2){const NM={manha:'manhã',tarde:'tarde',noite:'noite'};const b=[...pr].sort((x,z)=>z[1].reach-x[1].reach)[0];
+    const most=[...pr].sort((x,z)=>z[1].q-x[1].q)[0];L.push(`<b>Posts da ${NM[b[0]]} alcançaram mais</b> (${nBR(b[1].reach)} em média)${most[0]!==b[0]?`, mas a maioria saiu de ${NM[most[0]]}. Vale testar mais horários da ${NM[b[0]]}`:''}.`)}
+  const fb=d.best.find(x=>x.t==='Mais seguidores');if(d.k.net!=null)L.push(`<b>${d.k.net>=0?'+':''}${nBR(d.k.net)} seguidores</b> no mês${fb?`. O post que mais trouxe seguidores saiu em ${dd(fb.p.dt)}`:''}.`);
+  return L.slice(0,6);
+}
+
+/* ---------- Aba "Resultados" da conta ---------- */
+let igMetric='views';
+async function vResultados(){
+  const a=accById(route[1]);if(!a)return v404('conta');
+  const month=/^\d{4}-\d{2}$/.test(route[2]||'')?route[2]:iso(new Date()).slice(0,7);
+  app.innerHTML=accHeader(a,'resultados')+`<main class="page igr"><p class="sub">Carregando…</p></main>`;bindHeader();
+  let conn;try{conn=await igConn(a.id,true)}catch(e){conn=null}
+  if(route[0]!=='resultados'||route[1]!==a.id)return;
+  const main=app.querySelector('main');
+  if(!conn){main.innerHTML=igConnectCard(a);bindIgConnect(a);return}
+  let d;try{d=await igLoad(a,month)}catch(e){main.innerHTML='<p class="sub">Não deu para carregar os resultados agora.</p>';return}
+  if(route[0]!=='resultados'||route[1]!==a.id)return;
+  const k=d.k,days=new Date(+month.slice(0,4),+month.slice(5),0).getDate();
+  const MET=[['views','Visualizações',k.views],['reach','Contas alcançadas',k.reach],['interactions','Interações',k.interactions],['net','Seguidores líquidos',k.net==null?null:(k.net>=0?'+':'')+nBR(k.net)],['eng','Engajamento médio',pcBR(k.eng)],['posts','Posts publicados',k.posts]];
+  const chartKey={views:'views',reach:'reach',interactions:'total_interactions',net:'follows'}[igMetric]||'views';
+  const ser=Array.from({length:days},(_,i)=>{const r=d.daily.find(x=>+x.day.slice(8)===i+1);return r?(chartKey==='follows'?(r.follows??null)-(r.unfollows||0):r[chartKey]):null});
+  const err=conn.status==='erro';
+  main.innerHTML=`<div class="ig-top"><span class="avatar" style="${conn.profile_picture_url?`background-image:url('${esc(conn.profile_picture_url)}')`:bgi(accAv(a),60,60)}"></span>
+      <div><b>@${esc(conn.username||'')}</b><small>${conn.followers!=null?nBR(conn.followers)+' seguidores · ':''}${conn.last_sync?'atualizado '+new Date(conn.last_sync).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):esc(conn.status_msg||'Buscando os dados…')}</small></div>
+      <div class="ig-acts"><button class="pill" id="ig-sync">Atualizar agora</button><button class="pill" id="ig-more" aria-label="Mais opções">${DOTS}</button></div></div>
+    ${err?`<div class="ig-ban"><b>A conexão caiu</b><span>${esc(conn.status_msg||'O cliente trocou a senha ou tirou a permissão.')}</span><button class="pill dark" id="ig-reconn">Reenviar link para o cliente</button></div>`:''}
+    <div class="ig-mes"><button class="pill" id="ig-prev" aria-label="Mês anterior">‹</button><b>${MESES_RP[+month.slice(5)-1]} ${month.slice(0,4)}</b><button class="pill" id="ig-next" aria-label="Próximo mês">›</button></div>
+    <div class="ig-kc">${MET.map(([key,l,v])=>`<button class="kc ${key===igMetric?'on':''}" data-m="${key}" ${['eng','posts'].includes(key)?'disabled':''}><span>${l}</span><b>${typeof v==='number'?nBR(v):v??'—'}</b></button>`).join('')}</div>
+    <section class="ig-box"><div class="ig-h">${MET.find(x=>x[0]===igMetric)?.[1]||'Visualizações'} por dia</div>${igLine(ser,month,Math.max(300,Math.min(940,(main.clientWidth||640)-34)),innerWidth<600?220:190)}
+      <p class="muted sm">${d.daily.length?'A Meta pode levar até 2 dias para fechar os números de cada dia.':'Os números por dia aparecem depois da primeira coleta.'}</p></section>
+    <div class="ig-2">${igFmtBox(d)}${igBestBox(d)}</div>
+    ${d.top.length?`<section class="ig-box"><div class="ig-h">Melhores posts do mês</div><div class="ig-tops">${d.top.map((p,i)=>`<a class="ig-tp" href="${esc(p.permalink||'#')}" target="_blank" rel="noopener"><span style="${p.thumb_url?bgi({path:p.thumb_url},300,375):''}"></span><b>${i+1}º · ${nBR(p.reach)}</b><small>contas alcançadas · ${KIND_N[p.kind]}</small></a>`).join('')}</div></section>`:''}
+    ${d.leituras.length?`<section class="ig-box"><div class="ig-h">Leituras do mês</div><ol class="ig-ins">${d.leituras.map(x=>`<li>${x}</li>`).join('')}</ol></section>`:''}
+    <section class="ig-box"><div class="ig-h">Todos os posts (${d.posts.length})</div>${d.posts.length?`<div class="ig-tbl"><table><thead><tr><th></th><th>Data</th><th>Formato</th><th>Visualiz.</th><th>Alcance</th><th>Curtidas</th><th>Coment.</th><th>Compart.</th><th>Salvam.</th><th>Engaj.</th></tr></thead><tbody>${[...d.posts].reverse().map(p=>`<tr><td><span class="th" style="${p.thumb_url?bgi({path:p.thumb_url},80,100):''}"></span></td><td>${p.dt.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})}</td><td>${KIND_N[p.kind]}</td><td>${nBR(p.views)}</td><td><b>${nBR(p.reach)}</b></td><td>${nBR(p.likes)}</td><td>${nBR(p.comments)}</td><td>${nBR(p.shares)}</td><td>${nBR(p.saved)}</td><td>${pcBR(p.eng)}</td></tr>`).join('')}</tbody></table></div>`:'<p class="muted sm">Nenhum post neste mês.</p>'}</section>
+    <div class="ig-foot"><button class="pill dark" id="ig-pdf">Baixar Resultados (PDF)</button></div>`;
+  const b=id=>document.getElementById(id);
+  main.querySelectorAll('[data-m]').forEach(x=>x.onclick=()=>{igMetric=x.dataset.m;vResultados()});
+  b('ig-prev').onclick=()=>go(`resultados/${a.id}/${mesShift(month,-1)}`);b('ig-next').onclick=()=>go(`resultados/${a.id}/${mesShift(month,1)}`);
+  b('ig-sync').onclick=async e=>{const t=e.currentTarget;t.disabled=true;t.textContent='Atualizando…';const r=await igCall({action:'sync',account_id:a.id});
+    toast(r.ok?'Números atualizados':r.motivo==='reconectar'?'A conexão caiu. Reenvie o link para o cliente.':'Não deu para atualizar agora. Tente de novo em instantes.',3500);vResultados()};
+  b('ig-pdf').onclick=async e=>{const t=e.currentTarget;t.disabled=true;t.textContent='Montando o PDF…';try{await baixarResultados(a,month,d)}catch(err){toast('Não foi possível montar o PDF agora')}t.disabled=false;t.textContent='Baixar Resultados (PDF)'};
+  if(b('ig-reconn'))b('ig-reconn').onclick=()=>igLinkSheet(a);
+  b('ig-more').onclick=ev=>{ev.stopPropagation();const r=ev.currentTarget.getBoundingClientRect();
+    document.querySelector('.drop')?.remove();const m=document.createElement('div');m.className='drop';m.style.cssText=`position:fixed;top:${r.bottom+6}px;right:${Math.max(12,innerWidth-r.right)}px`;
+    m.innerHTML=`<button id="ig-rl">Enviar novo link para o cliente</button><button id="ig-dc" class="danger-link">Desconectar o Instagram</button>`;document.body.appendChild(m);
+    m.querySelector('#ig-rl').onclick=()=>{m.remove();igLinkSheet(a)};
+    m.querySelector('#ig-dc').onclick=async()=>{m.remove();if(!confirm(`Desconectar o Instagram de ${a.handle}? Os números já guardados continuam aqui.`))return;
+      await igCall({action:'disconnect',account_id:a.id});delete IGC[a.id];toast('Instagram desconectado');vResultados()};
+    setTimeout(()=>document.addEventListener('click',()=>m.remove(),{once:true}),0)};
+}
+function igLine(ser,month,W=640,H=190){
+  const vals=ser.filter(v=>v!=null);if(!vals.length)return '<div class="ig-empty">Sem números por dia ainda.</div>';
+  const mx=Math.max(1,...vals),mn=Math.min(0,...vals);const top=mx<=10?10:Math.ceil(mx/(10**Math.floor(Math.log10(mx))/2))*(10**Math.floor(Math.log10(mx))/2);
+  const X=i=>44+i/(ser.length-1)*(W-80),Y=v=>10+(1-(v-mn)/(top-mn))*(H-36);
+  let path='',pen=false;ser.forEach((v,i)=>{if(v==null){pen=false;return}path+=(pen?'L':'M')+X(i).toFixed(1)+','+Y(v).toFixed(1);pen=true});
+  const mes=MESES_RP[+month.slice(5)-1].slice(0,3).toLowerCase()+'.';
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Gráfico por dia">${[top,(top+mn)/2,mn].map(v=>`<line x1="40" x2="${W-10}" y1="${Y(v)}" y2="${Y(v)}" stroke="#e7e7e7"/><text x="0" y="${Y(v)+4}" font-size="11" fill="#7a7a7a">${milBR(v)}</text>`).join('')}
+    <path d="${path}" fill="none" stroke="#0a0a0a" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+    ${[1,Math.ceil(ser.length/2),ser.length].map(dd=>`<text x="${X(dd-1)}" y="${H-4}" font-size="11" fill="#7a7a7a" text-anchor="middle">${mes} ${dd}</text>`).join('')}</svg>`;
+}
+const igBar=(l,sub,parts,max,val)=>`<div class="hb"><div class="hl">${l}${sub?`<small>${sub}</small>`:''}</div><div class="hr"><span class="ibar">${parts.map(([v,c])=>`<i style="width:${max?Math.max(0,v)/max*100:0}%;background:${c}"></i>`).join('')}</span><b>${val}</b></div></div>`;
+function igFmtBox(d){const f=Object.entries(d.fmt);if(!f.length)return '';const vmx=Math.max(...f.map(([,v])=>v.views)),emx=Math.max(...f.map(([,v])=>v.eng||0));
+  return `<section class="ig-box"><div class="ig-h">Visualizações por formato</div>
+    <div class="lg2"><span><i style="background:#0a0a0a"></i>Contas alcançadas</span><span><i style="background:#bdbdbd"></i>Visualizações repetidas</span></div>
+    ${f.map(([t,v])=>igBar(KIND_N[t],`${v.q} posts`,[[v.reachSum,'#0a0a0a'],[v.views-v.reachSum,'#bdbdbd']],vmx,milBR(v.views))).join('')}
+    <div class="ig-h" style="margin-top:18px">Engajamento por formato</div>${f.map(([t,v])=>igBar(KIND_N[t],'',[[v.eng||0,'#0a0a0a']],emx,pcBR(v.eng))).join('')}</section>`}
+function igBestBox(d){const w=d.wd.map((v,i)=>[v,i]);const order=[1,2,3,4,5,6,0];const mx=Math.max(0,...d.wd.filter(v=>v!=null));
+  return `<section class="ig-box"><div class="ig-h">Alcance médio por dia da semana</div>${order.map(i=>igBar(DSEM[i],'',[[w[i][0]||0,w[i][0]===mx?'#0a0a0a':'#9a9a9a']],mx,w[i][0]==null?'—':milBR(w[i][0]))).join('')}</section>`}
+
+/* Cartão para conectar */
+function igConnectCard(a){
+  return `<section class="ig-conn"><div class="ic">↗</div><h2>Resultados do Instagram</h2>
+    <p class="muted">Conecte o Instagram de ${esc(a.handle)} para ver alcance, visualizações, melhores posts e público, e levar tudo para o PDF do mês.</p>
+    <ul><li>Só leitura: o Fig.Feed não publica nada</li><li>Ninguém precisa passar senha</li><li>Atualiza sozinho todo dia</li></ul>
+    <button class="pill dark" id="ig-go">Conectar Instagram</button><p class="muted sm">Precisa ser conta profissional (Comercial ou Criador de conteúdo).</p></section>`;
+}
+function bindIgConnect(a){document.getElementById('ig-go').onclick=()=>{
+  sheet(`<h2>Quem vai conectar?</h2><button class="pill dark wide" id="ig-me">Eu tenho o login da conta</button><button class="pill wide" id="ig-cl">Enviar link para o cliente</button>
+    <p class="muted sm">Com o link, o próprio cliente autoriza no celular dele, em 3 toques.</p>`,m=>{
+    m.querySelector('#ig-me').onclick=async e=>{e.currentTarget.disabled=true;try{const t=await igNewLink(a);location.href=IG_FN+'?go='+t}catch(err){e.currentTarget.disabled=false}};
+    m.querySelector('#ig-cl').onclick=()=>{closeSheet();igLinkSheet(a)}})}}
+async function igLinkSheet(a){
+  let t;try{t=await igNewLink(a)}catch(e){return}
+  const url=igLinkURL(t);const txt=`Oi! Para eu acompanhar os resultados do Instagram e montar o relatório do mês, toca neste link e autoriza: ${url} (leva 1 minuto)`;
+  sheet(`<h2>Link para o cliente</h2><div class="ig-link"><span>${esc(url)}</span><button class="pill" id="ig-cp">Copiar</button></div>
+    <div class="ig-msg">${esc(txt)}</div><a class="pill dark wide" href="https://wa.me/?text=${encodeURIComponent(txt)}" target="_blank" rel="noopener">Enviar pelo WhatsApp</a>
+    <p class="muted sm">O link vale por 7 dias e serve só para esta conta.</p>`,m=>{
+    m.querySelector('#ig-cp').onclick=async()=>{try{await navigator.clipboard.writeText(url);toast('Link copiado')}catch(e){prompt('Copie o link:',url)}}})
+}
+function sheet(html,bind){closeSheet();const o=document.createElement('div');o.className='ig-sheet-o';o.id='ig-sheet';
+  o.innerHTML=`<div class="ig-sheet" role="dialog" aria-modal="true"><button class="x" aria-label="Fechar">${XICON}</button>${html}</div>`;document.body.appendChild(o);
+  o.onclick=e=>{if(e.target===o||e.target.closest('.x'))closeSheet()};bind&&bind(o);o.querySelector('button:not(.x),a')?.focus()}
+function closeSheet(){document.getElementById('ig-sheet')?.remove()}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet()});
+
+/* ---------- Páginas públicas: cliente autoriza ---------- */
+function igPage(inner){document.title='Conectar Instagram · Fig.Feed';
+  app.innerHTML=`<main class="ig-pub"><div class="brand">${LOGO()}<span>Fig.Feed</span></div>${inner}</main>`}
+async function vConectar(){
+  igPage('<p class="muted">Carregando…</p>');
+  let i=null;try{const {data}=await sb.rpc('ig_link_info',{p_token:route[1]||''});i=data}catch(e){}
+  if(route[0]!=='conectar')return;
+  if(!i||!i.valido)return igPage(`<h1>Esse link expirou</h1><p class="muted">Peça um link novo para quem te enviou. Cada link vale por 7 dias e só pode ser usado uma vez.</p>`);
+  igPage(`<h1><b>${esc(i.quem)}</b> quer ver os resultados de <b>${esc(i.handle)}</b></h1>
+    <div class="ig-perm"><small>Vai poder ver</small><p>✓ Seguidores, alcance e visualizações</p><p>✓ Números de cada post, Reels e story</p>
+      <small>Não vai poder</small><p class="no">✕ Publicar, apagar ou ler mensagens</p><p class="no">✕ Ver sua senha</p></div>
+    <a class="pill dark wide" href="${IG_FN}?go=${encodeURIComponent(route[1])}">Continuar com Instagram</a>
+    <p class="muted sm">Precisa ser conta profissional (Comercial ou Criador de conteúdo). Você pode desconectar quando quiser no Instagram, em Configurações → Apps e sites.</p>`);
+}
+function vConectado(){
+  const u=decodeURIComponent(route[1]||'');
+  igPage(`<div class="ok">✓</div><h1>${u?'@'+esc(u)+' conectado':'Instagram conectado'}</h1>
+    <p class="muted">Pronto! Os resultados já começam a aparecer no Fig.Feed. ${USER?'':'Pode fechar esta página.'}</p>
+    ${USER?'<button class="pill dark wide" data-go="contas">Voltar para as contas</button>':''}`);bindGo();
+  Object.keys(IGC).forEach(k=>delete IGC[k]);
+}
+function vConectarErro(){
+  const mot=route[1]||'',tk=route[2]||'';
+  const T={negado:['Conexão cancelada','A permissão não foi dada. Se foi sem querer, é só tentar de novo.'],
+    pessoal:['Essa conta é pessoal','A Meta só libera os números de contas profissionais. No Instagram: Configurações e atividade → Tipo de conta e ferramentas → Mudar para conta profissional (é grátis). Depois tente de novo.'],
+    link:['Esse link expirou','Peça um link novo para quem te enviou. Cada link vale por 7 dias e só pode ser usado uma vez.'],
+    config:['Ainda não está pronto','A conexão com o Instagram ainda está sendo configurada no Fig.Feed. Tente de novo mais tarde.'],
+    falhou:['Não deu certo desta vez','A Meta não respondeu como esperado. Tente de novo em alguns minutos.']}[mot]||['Algo deu errado','Tente de novo em alguns minutos.'];
+  igPage(`<h1>${T[0]}</h1><p class="muted">${T[1]}</p>${tk&&mot!=='link'?`<a class="pill dark wide" href="${IG_FN}?go=${encodeURIComponent(tk)}">Tentar de novo</a>`:''}`);
+}
+
+/* ---------- PDF de Resultados ---------- */
+function resultadosPages(d,opts={}){
+  const a=d.a,[y,m]=d.month.split('-').map(Number),label=`${MESES_RP[m-1]} ${y}`,k=d.k;
+  const hoje=new Date().toLocaleDateString('pt-BR');
+  const pic=(p,w,h)=>{const u=p&&p.thumb_url?src({path:p.thumb_url},w,h):'';return u?`<img src="${u}" alt="">`:'<span class="ph"></span>'};
+  const avU=d.conn?.profile_picture_url||src(accAv(a),80,80);const av=avU?`<img src="${esc(avU)}" alt="">`:'<span class="ph"></span>';
+  const mk=`<svg width="20" height="24" viewBox="0 0 20 24">${[0,1,2].map(r=>[0,1,2].map(c=>`<rect x="${c*7.2}" y="${r*8.6}" width="5.4" height="6.75" fill="#0a0a0a"/>`).join('')).join('')}</svg>`;
+  const dd=x=>x.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}),WDc=['dom','seg','ter','qua','qui','sex','sáb'];
+  const user=d.conn?.username?'@'+d.conn.username:a.handle;
+  const rows=[...d.posts];const tPages=[];for(let i=0;i<rows.length;i+=20)tPages.push(rows.slice(i,i+20));
+  const aud=['city','age','gender'].filter(x=>(d.audience[x]||[]).length);
+  const TOTAL=(opts.noCover?0:1)+3+tPages.length+(d.stories.length?1:0)+(aud.length?1:0);let n=0;
+  const page=(title,body,cls='')=>{n++;return `<section class="pg ${cls}"><header><div class="l">${mk}<b>Fig.Feed</b><span class="sep">·</span><span>Resultados</span></div>
+    <div class="r"><span class="av">${av}</span><b>${esc(user)}</b><span class="sep">·</span><b>${label}</b></div></header><h1>${title}</h1>${body}
+    <footer><span>Gerado no Fig.Feed em ${hoje} · dados do Instagram (Meta)</span><span>${n} / ${TOTAL}</span></footer></section>`};
+  let out='';
+  if(!opts.noCover){n++;const cp=d.top[0]||d.posts.find(p=>p.thumb_url);
+    out+=`<section class="pg capa"><div class="cv"><div class="w">Fig.</div><div class="im">${cp?pic(cp,728,956):bolI(2)}</div><div class="w">Feed</div></div>
+    <div class="cv-f"><span class="who"><span class="av">${av}</span><b>${esc(user)}</b><span class="sep">·</span>Resultados de ${label}</span><span>Gerado no Fig.Feed em ${hoje} · ${n} / ${TOTAL}</span></div></section>`}
+  // resumo
+  const kpi=[['Visualizações',nBR(k.views)],['Contas alcançadas',nBR(k.reach)],['Interações',nBR(k.interactions)],['Engajamento médio',pcBR(k.eng)],['Seguidores líquidos',k.net==null?'—':(k.net>=0?'+':'')+nBR(k.net)],['Posts publicados',String(k.posts)]];
+  const days=new Date(y,m,0).getDate();const ser=Array.from({length:days},(_,i)=>{const r=d.daily.find(x=>+x.day.slice(8)===i+1);return r?r.views:null});
+  const f=Object.entries(d.fmt),vmx=Math.max(1,...f.map(([,v])=>v.views)),emx=Math.max(0.01,...f.map(([,v])=>v.eng||0));
+  const bar=(l,sub,parts,max,val)=>`<div class="hb"><div class="hl">${l}${sub?`<small>${sub}</small>`:''}</div><div class="hr"><span class="ibar">${parts.map(([v,c])=>`<i style="width:${Math.max(0,v)/max*100}%;background:${c}"></i>`).join('')}</span><b>${val}</b></div></div>`;
+  out+=page('Resumo do mês',`<div class="sec"><b>Todos os conteúdos</b><span>${label}</span></div><div class="kcs">${kpi.map(([t,v],i)=>`<div class="kc${i?'':' on'}"><span>${t}</span><b>${v}</b></div>`).join('')}</div>
+    <div class="rg"><div><div class="lab">Visualizações por dia</div>${igLine(ser,d.month).replace('width="100%"','width="100%" style="height:68mm"')}</div>
+    <div><div class="sec2"><b>Visualizações por formato</b></div><div class="lg2"><span><i style="background:#0a0a0a"></i>Contas alcançadas</span><span><i style="background:#bdbdbd"></i>Visualizações repetidas</span></div>
+    ${f.map(([t,v])=>bar(KIND_N[t],`${v.q} posts`,[[v.reachSum,'#0a0a0a'],[v.views-v.reachSum,'#bdbdbd']],vmx,milBR(v.views))).join('')||'<p class="muted" style="font-size:8pt">Nenhum post no mês.</p>'}
+    <div class="sec2" style="margin-top:6mm"><b>Engajamento por formato</b></div>${f.map(([t,v])=>bar(KIND_N[t],'',[[v.eng||0,'#0a0a0a']],emx,pcBR(v.eng))).join('')}</div></div>`);
+  // destaques
+  const card=(p,i)=>`<div class="tp"><div class="ig"><div class="ig-h"><span class="av">${av}</span><b>${esc(user.replace(/^@/,''))}</b><span class="dots">···</span></div><div class="ig-i">${pic(p,400,500)}${p.kind==='reels'?'<i class="mr"></i>':p.kind==='carrossel'?'<i class="mc"></i>':''}</div></div>
+    <div class="tm"><div class="rk">${i+1}º</div><div class="tt">${esc((p.caption||'Sem legenda').split('\n')[0].slice(0,60))}</div><div class="muted">${WDc[p.dt.getDay()]} · ${dd(p.dt)} · ${p.dt.toTimeString().slice(0,5)} · ${KIND_N[p.kind]}</div>
+    <div class="mt"><span><b>${nBR(p.reach)}</b>alcance</span><span><b>${nBR(p.views)}</b>visualiz.</span><span><b>${pcBR(p.eng)}</b>engaj.</span></div></div></div>`;
+  out+=page('Destaques',`<div class="side">${esc(user)} · Destaques · ${label}</div><div class="dg"><div class="tops">${d.top.map(card).join('')||'<p class="muted">Sem posts no mês.</p>'}</div>
+    <div class="cls">${d.best.map(x=>`<div class="cl"><span class="th3">${pic(x.p,120,150)}</span><div><div class="lab" style="margin:0">${x.t}</div><b>${nBR(x.v)} ${x.u}</b><div class="muted">${dd(x.p.dt)} · ${esc((x.p.caption||'').split('\n')[0].slice(0,40))}</div></div></div>`).join('')}</div></div>`,'dk');
+  // quando funcionou
+  const order=[1,2,3,4,5,6,0],wmx=Math.max(1,...d.wd.filter(v=>v!=null));const NM={manha:'Manhã (até 12h)',tarde:'Tarde (12h–18h)',noite:'Noite (depois das 18h)'};const pmx=Math.max(1,...Object.values(d.per).map(v=>v.reach));
+  out+=page('Quando e o que funcionou',`<div class="rg"><div><div class="sec2"><b>Alcance médio por dia da semana</b></div>${order.map(i=>bar(DSEM[i],'',[[d.wd[i]||0,d.wd[i]===wmx?'#0a0a0a':'#9a9a9a']],wmx,d.wd[i]==null?'—':milBR(d.wd[i]))).join('')}
+    <div class="sec2" style="margin-top:6mm"><b>Alcance médio por horário</b></div>${Object.entries(d.per).map(([kk,v])=>bar(NM[kk],`${v.q} posts · engaj. ${pcBR(v.eng)}`,[[v.reach,'#0a0a0a']],pmx,milBR(v.reach))).join('')}</div>
+    <div><div class="lab">Leituras do mês</div><ol class="ins">${d.leituras.map(x=>`<li>${x}</li>`).join('')||'<li>Ainda há poucos dados neste mês.</li>'}</ol>
+    <div class="obs"><div class="lab">Próximo mês</div><div class="nl"><i></i><i></i><i></i></div></div></div></div>`);
+  // tabela
+  tPages.forEach((g,gi)=>{out+=page(gi?'Todos os posts (continuação)':'Todos os posts',`<table class="posts rs"><thead><tr><th style="width:8mm"></th><th style="width:24mm">Data</th><th>Post</th>${['Visualiz.','Alcance','Curtidas','Coment.','Compart.','Salvam.','Seguid.','Engaj.'].map(x=>`<th class="nm">${x}</th>`).join('')}</tr></thead><tbody>${
+    g.map(p=>`<tr><td><span class="th2">${pic(p,60,75)}</span></td><td><b>${dd(p.dt)}</b> <span class="muted">${WDc[p.dt.getDay()]} ${p.dt.toTimeString().slice(0,5)}</span></td><td><b class="t">${esc((p.caption||'Sem legenda').split('\n')[0].slice(0,44))}</b> <span class="muted">· ${KIND_N[p.kind]}</span></td>
+    ${[p.views,p.reach,p.likes,p.comments,p.shares,p.saved,p.follows].map((v,j)=>`<td class="nm">${j===1?`<b>${nBR(v)}</b>`:nBR(v)}</td>`).join('')}<td class="nm"><span class="eg" style="background:rgba(0,0,0,${Math.min(.2,(p.eng||0)/5*.2).toFixed(2)})">${pcBR(p.eng)}</span></td></tr>`).join('')}</tbody></table>`)});
+  // stories
+  if(d.stories.length){const ss=d.stories.slice(0,14);
+    out+=page('Stories do mês',`<div class="stq">${ss.map(s=>`<div><span class="si2">${pic(s,180,320)}</span><b>${nBR(s.views)}</b><small>visualiz. · ${nBR(s.reach)} alcance</small><small>${dd(s.dt)}${s.replies?` · ${s.replies} respostas`:''}</small></div>`).join('')}</div>
+    <p class="nt">${d.stories.length} stories no mês${d.stories.length>14?' (mostrando os 14 primeiros)':''}. A Meta só mostra os números de cada story por 24 horas; o Fig.Feed guarda a cada 4 horas.</p>`)}
+  // público
+  if(aud.length){const AN={city:'Cidades',age:'Idade',gender:'Gênero'},GN={F:'Mulheres',M:'Homens',U:'Não informado'};
+    out+=page('Quem segue a conta',`<div class="aud">${aud.map(x=>{const rs=[...d.audience[x]].sort((p,q)=>x==='age'?String(p.k).localeCompare(String(q.k)):q.v-p.v).slice(0,x==='city'?8:7);const tot=d.audience[x].reduce((s,r)=>s+r.v,0)||1,mx=Math.max(...rs.map(r=>r.v));
+      return `<div><div class="sec2"><b>${AN[x]}</b></div>${rs.map(r=>bar(esc(x==='gender'?GN[r.k]||r.k:String(r.k).split(',')[0]),'',[[r.v,'#0a0a0a']],mx,pcBR(r.v/tot*100))).join('')}</div>`}).join('')}</div>`)}
+  if(!opts.noBack){const g=d.posts.slice(-12).reverse();out+=`<section class="pg fim"><div class="tks">tks<br>Fig.Feed</div><div class="fg">${Array.from({length:12},(_,i)=>`<div>${g[i]?pic(g[i],200,250):bolI(i+5)}</div>`).join('')}</div></section>`}
+  return out;
+}
+const bolI=i=>`<img src="${new URL(TUT_IMG[i%TUT_IMG.length],location.href).href}" alt="">`;
+const IG_PDF_CSS=`.sec{display:flex;justify-content:space-between;align-items:baseline;margin:-1mm 0 3mm}.sec b{font-size:12pt;font-weight:600}.sec span{font-size:9pt;color:#3a3a3a}
+.kcs{display:grid;grid-template-columns:repeat(6,1fr);gap:3mm}.kc{background:#f2f2f2;border-radius:3mm;padding:3mm 3.5mm;border:1.4px solid transparent}.kc.on{border-color:#0a0a0a;background:#fff}.kc span{display:block;font-size:7pt;color:#5a5a5a}.kc b{display:block;font-size:15pt;font-weight:600;letter-spacing:-.01em;margin-top:1.2mm}
+.rg{display:grid;grid-template-columns:1.45fr 1fr;gap:12mm;margin-top:7mm}.nt{font-size:7pt;color:#7a7a7a;margin:1.5mm 0 0}.sec2{border-bottom:1px solid #e7e7e7;padding-bottom:2mm;margin-bottom:2.5mm}.sec2 b{font-size:10pt;font-weight:600}
+.hb{margin-bottom:2.6mm}.hl{font-size:8.5pt;margin-bottom:1.2mm}.hl small{color:#7a7a7a;font-size:6.8pt;margin-left:2mm}.hr{display:flex;align-items:center;gap:4mm}.hr b{width:16mm;text-align:right;font-size:9pt;font-weight:600}
+.ibar{flex:1;height:2.2mm;background:#ececec;border-radius:99px;display:flex;gap:.5mm;overflow:hidden}.ibar i{display:block;height:100%;border-radius:99px}
+.lg2{display:flex;gap:5mm;font-size:7pt;color:#5a5a5a;margin:0 0 3mm}.lg2 i{display:inline-block;width:2.2mm;height:2.2mm;border-radius:50%;margin-right:1.4mm;vertical-align:-.2mm}
+.dg{display:grid;grid-template-columns:1fr 70mm;gap:9mm;margin-right:6mm}.tops{display:grid;grid-template-columns:repeat(3,1fr);gap:5mm}.tp .ig-i{aspect-ratio:4/5}
+.tm{margin-top:2.5mm;font-size:7pt;line-height:1.35}.rk{font-size:15pt;font-weight:500;color:#fff;line-height:1}.tt{font-size:8pt;margin:1mm 0 .6mm}.pg.dk .muted{color:#9a9a9a}
+.mt{display:flex;gap:4mm;margin-top:2mm}.mt b{display:block;font-size:10pt;font-weight:500}.mt span{color:#9a9a9a;font-size:6.5pt}
+.cls{display:flex;flex-direction:column;gap:3.5mm}.cl{display:flex;gap:3mm;align-items:center;background:#1f1f1f;border-radius:2.5mm;padding:2.5mm;font-size:7pt}.cl b{display:block;font-size:10pt;font-weight:500;margin:.6mm 0}.th3{width:12mm;height:15mm;overflow:hidden;border-radius:1mm;flex:none}
+.ins{margin:0;padding-left:5mm;font-size:8pt;line-height:1.45;color:#3a3a3a}.ins li{margin-bottom:2.4mm}.ins b{color:#0a0a0a;font-weight:600}
+.obs{border:1px solid #e7e7e7;border-radius:3mm;padding:3mm 4mm;margin-top:3mm}.nl{display:flex;flex-direction:column;gap:6.5mm;margin-top:4mm}.nl i{display:block;border-bottom:1px solid #d9d9d9}
+.posts.rs{font-size:6.6pt}.posts.rs td{padding:.55mm 2mm .55mm 0}.posts.rs .th2{width:4.4mm;height:5.5mm}.nm{text-align:right}.eg{border-radius:99px;padding:.5px 5px;font-weight:500}
+.stq{display:grid;grid-template-columns:repeat(7,1fr);gap:4mm 3mm}.stq div{font-size:7pt}.stq b{display:block;font-size:10pt;font-weight:600;margin-top:1.5mm}.stq small{display:block;color:#7a7a7a;font-size:6.3pt}
+.si2{display:block;aspect-ratio:9/16;border-radius:1.5mm;overflow:hidden;background:#d9d9d9}.aud{display:grid;grid-template-columns:repeat(3,1fr);gap:10mm}`;
+async function printDoc(title,body){
+  const html=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>${esc(title)}</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"><style>${PLAN_CSS}\n${IG_PDF_CSS}</style></head><body>${body}</body></html>`;
+  document.getElementById('plan-print')?.remove();
+  const f=document.createElement('iframe');f.id='plan-print';f.title='Documento para imprimir';
+  Object.assign(f.style,{position:'fixed',right:'0',bottom:'0',width:'0',height:'0',border:'0'});document.body.appendChild(f);
+  const d=f.contentDocument;d.open();d.write(html);d.close();
+  await Promise.race([Promise.all([...d.images].map(i=>i.complete?1:new Promise(r=>{i.onload=i.onerror=r}))),new Promise(r=>setTimeout(r,8000))]);
+  if(d.fonts?.ready)await Promise.race([d.fonts.ready,new Promise(r=>setTimeout(r,2000))]);
+  toast('Na janela que abrir, escolha "Salvar como PDF"',3500);
+  setTimeout(()=>{f.contentWindow.focus();f.contentWindow.print()},300);
+}
+async function baixarResultados(a,month,d){d=d||await igLoad(a,month);
+  const [y,m]=month.split('-').map(Number);await printDoc(`Resultados ${a.handle} ${MESES_RP[m-1]} ${y}`,resultadosPages(d))}
+async function baixarCompleto(a,month){
+  // resultados do mês anterior + planejamento do mês escolhido, numa capa só
+  const prev=mesShift(month,-1);const d=await igLoad(a,prev);
+  const [y,m]=month.split('-').map(Number),last=new Date(y,m,0).getDate();
+  const st=await db(sb.from('stories').select('storage_path,story_date,position,tipo').eq('account_id',a.id).gte('story_date',month+'-01').lte('story_date',`${month}-${String(last).padStart(2,'0')}`).order('story_date').order('position'));
+  await signPaths(st.map(s=>s.storage_path));const plan=await getPlan(a.id,month);
+  const cover=planHTML(a,month,plan.objetivo,st,{bodyOnly:true,onlyCover:true});
+  const res=resultadosPages(d,{noCover:true,noBack:true});
+  const pl=planHTML(a,month,plan.objetivo,st,{bodyOnly:true,noCover:true});
+  await printDoc(`Completo ${a.handle} ${MESES_RP[m-1]} ${y}`,cover+res+pl);
+}
 
 /* ======================= Início ======================= */
 let booted=false;
