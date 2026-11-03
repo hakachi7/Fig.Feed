@@ -766,6 +766,7 @@ body:has(.sel-bar) .toast{bottom:150px}
 .ig-pub{max-width:440px;margin:0 auto;min-height:100vh;padding:28px 20px;display:flex;flex-direction:column;gap:16px}.ig-pub .brand{display:flex;align-items:center;gap:8px;font-weight:500;margin-bottom:14px}
 .ig-pub h1{font-size:28px;font-weight:400;letter-spacing:-.02em;margin:0;line-height:1.2}.ig-pub h1 b{font-weight:500}.ig-pub p{margin:0;line-height:1.5}
 .ig-perm{background:var(--soft);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:8px;font-size:14px}.ig-perm small{color:var(--muted);margin-top:4px}.ig-perm .no{color:#5a5a5a}
+.ig-chips{display:flex;flex-wrap:wrap;gap:6px}.ig-chips button{border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:13px;background:#fff;color:var(--fg)}.ig-chips button[aria-selected=true]{background:var(--fg);color:#fff;border-color:var(--fg)}.ig-sheet .ig-msg{white-space:pre-wrap;max-height:38vh;overflow:auto}.ig-sheet .ig-acts{display:flex;flex-direction:column;align-items:stretch;gap:8px;margin:0;width:100%}.ig-sheet .ig-acts .pill{margin:0;width:100%;max-width:none;align-self:stretch;box-sizing:border-box}.ig-sheet{max-height:92vh;overflow:auto}.ig-steps{display:flex;flex-direction:column;gap:6px;font-size:14px}.ig-steps small{color:var(--muted)}.ig-steps ol{margin:0;padding-left:20px;line-height:1.55;display:flex;flex-direction:column;gap:6px}.ig-faq{border-top:1px solid var(--line)}.ig-faq details{border-bottom:1px solid var(--line);padding:12px 0;font-size:14px}.ig-faq summary{cursor:pointer;font-weight:500;list-style:none;display:flex;justify-content:space-between;gap:10px}.ig-faq summary::-webkit-details-marker{display:none}.ig-faq summary::after{content:'+';color:var(--muted)}.ig-faq details[open] summary::after{content:'−'}.ig-faq details p{margin:8px 0 0;color:#4a4a4a}.ig-chk{margin:0;padding-left:20px;line-height:1.55;font-size:14px;display:flex;flex-direction:column;gap:8px;text-align:left}
 .ig-pub .ok{width:72px;height:72px;border-radius:50%;background:var(--fg);color:#fff;display:grid;place-items:center;font-size:32px;margin:8vh auto 0}.ig-pub:has(.ok){text-align:center}
 @media (max-width:760px){.ig-kc{grid-template-columns:repeat(2,1fr)}.ig-2{grid-template-columns:1fr}.ig-tops{grid-template-columns:repeat(3,1fr)}.ig-kc b{font-size:19px}}
 /* ===== v15: páginas, banners, aviso com spoiler, pop-ups, menu ===== */
@@ -1303,7 +1304,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v17';
+const VERSAO='v17.1';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -2649,7 +2650,8 @@ const FAQ=[
   ['Quantas fotos cabem num carrossel?','Até 10 fotos por post. A primeira é a capa que aparece no feed.'],
   ['O Fig.Feed publica no Instagram por mim?','Ainda não. Ele serve para planejar e organizar. Na hora de postar, baixe a grade e as legendas em Downloads.'],
   ['Meus clientes conseguem ver meu trabalho?','Sim, pelo relatório do mês. Abra a conta, vá em Relatório e clique em "Copiar link". O cliente abre pelo celular, sem criar conta, e o link vale por 30 dias.'],
-  ['Como conecto o Instagram do cliente?','Abra a conta, toque na aba Resultados e em "Conectar Instagram". Se você tem o login, entre na hora; se não, envie o link para o cliente pelo WhatsApp. O Instagram precisa ser conta profissional (Comercial ou Criador de conteúdo).'],
+  ['Como conecto o Instagram do cliente?','Abra a conta, toque na aba Resultados e em "Conectar Instagram". Se você tem o login, entre na hora; se não, toque em "Enviar link para o cliente": aparecem mensagens prontas (WhatsApp curto, com passo a passo, e-mail e lembrete) para copiar ou enviar. O cliente entra com o Instagram ou o Facebook, escolhe a empresa e o perfil e autoriza. Precisa ser conta profissional (Comercial ou Criador de conteúdo), mas não precisa de Página no Facebook.'],
+  ['O cliente não consegue conectar o Instagram. E agora?','Confira três coisas: o perfil é profissional; na tela "Selecione os ativos" o perfil certo estava escolhido; e a empresa (portfólio) escolhida é a que tem esse perfil. Se o link tiver passado de 7 dias ou já tiver sido usado, gere um novo em Resultados.'],
   ['Como mando o planejamento para o cliente aprovar?','Em Downloads, escolha a conta e o mês, escreva o objetivo e clique em "Baixar planejamento (PDF)". Na janela que abrir, escolha "Salvar como PDF".'],
   ['Como planejo os stories?','Abra a conta e vá na aba Stories. Escolha o dia, envie as artes e arraste para mudar a ordem.'],
   ['Como instalo o Fig.Feed no celular?','Em Configuração tem o passo a passo para iPhone e Android.'],
@@ -2670,6 +2672,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v17.1','Nov 2026',['Conectar Instagram: mensagens prontas para mandar ao cliente (WhatsApp curto, com passo a passo, e-mail, lembrete e reconectar)','Página do cliente com o passo a passo e as dúvidas mais comuns; telas de sucesso e de erro mais claras','O cliente agora entra com o Instagram ou com o Facebook, e a conexão não vence']],
   ['v17','Nov 2026',['Sininho de avisos no alto do app','Admin: Visão geral com os números do Fig.Feed, Planos editáveis (preço, itens e limites), ações sobre usuários (trocar senha, suspender, excluir), Textos do site (página inicial, Ajuda, Termos e Privacidade), Avisos, Configurações, Saúde do sistema e planilha de usuários']],
   ['v16','Nov 2026',['Cronograma: toque no quadradinho da conta ou na bolinha do status para trocar a cor das etiquetas','Admin › Menus: escolher a ordem e quais botões aparecem na barra do topo, no menu do ícone de grade e no menu de tela cheia (páginas, páginas criadas ou links)']],
   ['v15.5','Nov 2026',['Página inicial: em Admin › Páginas › Imagens da página dá para trocar a foto do meio e as 3 grades que já estão lá (sem banners por cima)']],
@@ -3515,7 +3518,7 @@ async function vResultados(){
   main.innerHTML=`<div class="ig-top"><span class="avatar" style="${conn.profile_picture_url?`background-image:url('${esc(conn.profile_picture_url)}')`:bgi(accAv(a),60,60)}"></span>
       <div><b>@${esc(conn.username||'')}</b><small>${conn.followers!=null?nBR(conn.followers)+' seguidores · ':''}${conn.last_sync?'atualizado '+new Date(conn.last_sync).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):esc(conn.status_msg||'Buscando os dados…')}</small></div>
       <div class="ig-acts"><button class="pill" id="ig-sync">Atualizar agora</button><button class="pill" id="ig-more" aria-label="Mais opções">${DOTS}</button></div></div>
-    ${err?`<div class="ig-ban"><b>A conexão caiu</b><span>${esc(conn.status_msg||'O cliente trocou a senha ou tirou a permissão.')}</span><button class="pill dark" id="ig-reconn">Reenviar link para o cliente</button></div>`:''}
+    ${err?`<div class="ig-ban"><b>A conexão caiu</b><span>${esc(conn.status_msg||'O cliente tirou o acesso do Fig.Feed ou mudou o perfil de empresa.')}</span><button class="pill dark" id="ig-reconn">Reenviar link para o cliente</button></div>`:''}
     <div class="ig-mes"><button class="pill" id="ig-prev" aria-label="Mês anterior">‹</button><b>${MESES_RP[+month.slice(5)-1]} ${month.slice(0,4)}</b><button class="pill" id="ig-next" aria-label="Próximo mês">›</button></div>
     <div class="ig-kc">${MET.map(([key,l,v])=>`<button class="kc ${key===igMetric?'on':''}" data-m="${key}" ${['eng','posts'].includes(key)?'disabled':''}><span>${l}</span><b>${typeof v==='number'?nBR(v):v??'—'}</b></button>`).join('')}</div>
     <section class="ig-box"><div class="ig-h">${MET.find(x=>x[0]===igMetric)?.[1]||'Visualizações'} por dia</div>${igLine(ser,month,Math.max(300,Math.min(940,(main.clientWidth||640)-34)),innerWidth<600?220:190)}
@@ -3531,7 +3534,7 @@ async function vResultados(){
   b('ig-sync').onclick=async e=>{const t=e.currentTarget;t.disabled=true;t.textContent='Atualizando…';const r=await igCall({action:'sync',account_id:a.id});
     toast(r.ok?'Números atualizados':r.motivo==='reconectar'?'A conexão caiu. Reenvie o link para o cliente.':'Não deu para atualizar agora. Tente de novo em instantes.',3500);vResultados()};
   b('ig-pdf').onclick=async e=>{const t=e.currentTarget;t.disabled=true;t.textContent='Montando o PDF…';try{await baixarResultados(a,month,d)}catch(err){toast('Não foi possível montar o PDF agora')}t.disabled=false;t.textContent='Baixar Resultados (PDF)'};
-  if(b('ig-reconn'))b('ig-reconn').onclick=()=>igLinkSheet(a);
+  if(b('ig-reconn'))b('ig-reconn').onclick=()=>igLinkSheet(a,'reconectar');
   b('ig-more').onclick=ev=>{ev.stopPropagation();const r=ev.currentTarget.getBoundingClientRect();
     document.querySelector('.drop')?.remove();const m=document.createElement('div');m.className='drop';m.style.cssText=`position:fixed;top:${r.bottom+6}px;right:${Math.max(12,innerWidth-r.right)}px`;
     m.innerHTML=`<button id="ig-rl">Enviar novo link para o cliente</button><button id="ig-dc" class="danger-link">Desconectar o Instagram</button>`;document.body.appendChild(m);
@@ -3563,21 +3566,43 @@ function igBestBox(d){const w=d.wd.map((v,i)=>[v,i]);const order=[1,2,3,4,5,6,0]
 function igConnectCard(a){
   return `<section class="ig-conn"><div class="ic">↗</div><h2>Resultados do Instagram</h2>
     <p class="muted">Conecte o Instagram de ${esc(a.handle)} para ver alcance, visualizações, melhores posts e público, e levar tudo para o PDF do mês.</p>
-    <ul><li>Só leitura: o Fig.Feed não publica nada</li><li>Ninguém precisa passar senha</li><li>Atualiza sozinho todo dia</li></ul>
-    <button class="pill dark" id="ig-go">Conectar Instagram</button><p class="muted sm">Precisa ser conta profissional (Comercial ou Criador de conteúdo).</p></section>`;
+    <ul><li>Só leitura: o Fig.Feed não publica nada</li><li>Entra com Instagram ou Facebook, sem passar senha</li><li>A conexão não vence e atualiza sozinha todo dia</li></ul>
+    <button class="pill dark" id="ig-go">Conectar Instagram</button><p class="muted sm">Precisa ser conta profissional (Comercial ou Criador de conteúdo). Não precisa de Página no Facebook.</p></section>`;
 }
 function bindIgConnect(a){document.getElementById('ig-go').onclick=()=>{
   sheet(`<h2>Quem vai conectar?</h2><button class="pill dark wide" id="ig-me">Eu tenho o login da conta</button><button class="pill wide" id="ig-cl">Enviar link para o cliente</button>
-    <p class="muted sm">Com o link, o próprio cliente autoriza no celular dele, em 3 toques.</p>`,m=>{
+    <p class="muted sm">Com o link, o próprio cliente autoriza no celular dele em 1 minuto. Você recebe mensagens prontas para mandar pelo WhatsApp ou por e-mail.</p>`,m=>{
     m.querySelector('#ig-me').onclick=async e=>{e.currentTarget.disabled=true;try{const t=await igNewLink(a);location.href=IG_FN+'?go='+t}catch(err){e.currentTarget.disabled=false}};
     m.querySelector('#ig-cl').onclick=()=>{closeSheet();igLinkSheet(a)}})}}
-async function igLinkSheet(a){
+
+/* Mensagens prontas para mandar junto com o link */
+function igMsgs(a,url){
+  const nome=(S.profile?.name||'').trim().split(/\s+/)[0];const h=a.handle||'o perfil';
+  const oi=nome?`Oi! Aqui é ${nome}.`:'Oi!';
+  const passos=`1. Abra este link: ${url}\n2. Toque em "Continuar"\n3. Escolha "Entrar com o Instagram" (ou com o Facebook) e entre na conta ${h}\n4. Selecione a empresa e o perfil ${h} e toque em "Continuar"\n5. Autorize, e pronto!`;
+  return {
+    curta:{nome:'WhatsApp curto',canal:'wa',txt:`${oi} Para eu acompanhar os resultados do Instagram ${h} e montar o relatório do mês, toca neste link e autoriza o Fig.Feed: ${url}\n\nLeva 1 minuto, você não precisa me passar senha e o Fig.Feed só lê os números (não publica nada).`},
+    passo:{nome:'Com passo a passo',canal:'wa',txt:`${oi} Vou acompanhar os números do ${h} pelo Fig.Feed para montar o relatório de cada mês. Para liberar, é rapidinho:\n\n${passos}\n\nO Fig.Feed só lê os números: não publica, não apaga e não vê mensagens nem a sua senha. O link vale por 7 dias. Qualquer dúvida, me chama!`},
+    email:{nome:'E-mail',canal:'mail',assunto:`Autorização para acompanhar os resultados do Instagram ${h}`,txt:`Olá!\n\nPara acompanhar os resultados do Instagram ${h} e montar o relatório mensal, uso o Fig.Feed, que se conecta direto com a Meta (a empresa do Instagram).\n\nPara liberar o acesso, leva cerca de 1 minuto:\n${passos}\n\nO que o Fig.Feed pode ver: seguidores, alcance, visualizações e os números de cada post, Reels e story.\nO que ele não pode: publicar, apagar, ler mensagens ou ver a sua senha.\n\nO perfil precisa ser profissional (Comercial ou Criador de conteúdo), mas não precisa de Página no Facebook. O link vale por 7 dias e você pode desconectar quando quiser.\n\nQualquer dúvida, é só responder este e-mail.${nome?`\n\n${nome}`:''}`},
+    lembrete:{nome:'Lembrete',canal:'wa',txt:`${oi} Passando para lembrar do link para liberar os números do Instagram ${h} no Fig.Feed: ${url}\n\nLeva 1 minutinho. Se travar em alguma tela, me manda um print que eu te ajudo!`},
+    reconectar:{nome:'Reconectar',canal:'wa',txt:`${oi} A conexão do Instagram ${h} com o Fig.Feed caiu. Isso acontece quando o acesso é removido ou o perfil muda de empresa. Para voltar a receber os números, toca neste link e autoriza de novo: ${url}\n\nÉ o mesmo passo a passo de antes e leva 1 minuto.`}};
+}
+async function igLinkSheet(a,modo){
   let t;try{t=await igNewLink(a)}catch(e){return}
-  const url=igLinkURL(t);const txt=`Oi! Para eu acompanhar os resultados do Instagram e montar o relatório do mês, toca neste link e autoriza: ${url} (leva 1 minuto)`;
-  sheet(`<h2>Link para o cliente</h2><div class="ig-link"><span>${esc(url)}</span><button class="pill" id="ig-cp">Copiar</button></div>
-    <div class="ig-msg">${esc(txt)}</div><a class="pill dark wide" href="https://wa.me/?text=${encodeURIComponent(txt)}" target="_blank" rel="noopener">Enviar pelo WhatsApp</a>
-    <p class="muted sm">O link vale por 7 dias e serve só para esta conta.</p>`,m=>{
-    m.querySelector('#ig-cp').onclick=async()=>{try{await navigator.clipboard.writeText(url);toast('Link copiado')}catch(e){prompt('Copie o link:',url)}}})
+  const url=igLinkURL(t),M=igMsgs(a,url);
+  const ordem=modo==='reconectar'?['reconectar','passo','email','lembrete']:['curta','passo','email','lembrete'];let cur=ordem[0];
+  sheet(`<h2>${modo==='reconectar'?'Reconectar o Instagram':'Link para o cliente'}</h2><div class="ig-link"><span>${esc(url)}</span><button class="pill" id="ig-cp">Copiar</button></div>
+    <small class="muted">Mensagem pronta</small><div class="ig-chips" role="tablist">${ordem.map(k=>`<button role="tab" data-k="${k}">${M[k].nome}</button>`).join('')}</div>
+    <div class="ig-msg" id="ig-mt"></div><div class="ig-acts"><a class="pill dark wide" id="ig-send" target="_blank" rel="noopener"></a><button class="pill wide" id="ig-cm">Copiar mensagem</button></div>
+    <p class="muted sm">O link vale por 7 dias, serve só para esta conta e pode ser usado uma vez. Se o cliente não usar a tempo, gere um link novo.</p>`,m=>{
+    const draw=()=>{const x=M[cur];m.querySelectorAll('.ig-chips button').forEach(b=>b.setAttribute('aria-selected',b.dataset.k===cur));
+      m.querySelector('#ig-mt').innerHTML=(x.assunto?`<b>Assunto:</b> ${esc(x.assunto)}\n\n`:'')+esc(x.txt);
+      const s=m.querySelector('#ig-send');if(x.canal==='mail'){s.textContent='Abrir no e-mail';s.href=`mailto:?subject=${encodeURIComponent(x.assunto)}&body=${encodeURIComponent(x.txt)}`}
+      else{s.textContent='Enviar pelo WhatsApp';s.href=`https://wa.me/?text=${encodeURIComponent(x.txt)}`}};
+    m.querySelectorAll('.ig-chips button').forEach(b=>b.onclick=()=>{cur=b.dataset.k;draw()});draw();
+    const cp=async(v,ok)=>{try{await navigator.clipboard.writeText(v);toast(ok)}catch(e){prompt('Copie:',v)}};
+    m.querySelector('#ig-cp').onclick=()=>cp(url,'Link copiado');
+    m.querySelector('#ig-cm').onclick=()=>{const x=M[cur];cp(x.assunto?`${x.assunto}\n\n${x.txt}`:x.txt,'Mensagem copiada')}})
 }
 function sheet(html,bind){closeSheet();const o=document.createElement('div');o.className='ig-sheet-o';o.id='ig-sheet';
   o.innerHTML=`<div class="ig-sheet" role="dialog" aria-modal="true"><button class="x" aria-label="Fechar">${XICON}</button>${html}</div>`;document.body.appendChild(o);
@@ -3588,32 +3613,50 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet()});
 /* ---------- Páginas públicas: cliente autoriza ---------- */
 function igPage(inner){document.title='Conectar Instagram · Fig.Feed';
   app.innerHTML=`<main class="ig-pub"><div class="brand">${LOGO()}<span>Fig.Feed</span></div>${inner}</main>`}
+const IG_DESCONECTAR='No Instagram: Configurações → Permissões do site → Apps e sites. Ou nas configurações da sua empresa na Meta, em Integrações empresariais. Também dá para pedir para quem te enviou o link.';
+function igFaq(itens){return `<div class="ig-faq">${itens.map(([p,r])=>`<details><summary>${p}</summary><p>${r}</p></details>`).join('')}</div>`}
 async function vConectar(){
   igPage('<p class="muted">Carregando…</p>');
   let i=null;try{const {data}=await sb.rpc('ig_link_info',{p_token:route[1]||''});i=data}catch(e){}
   if(route[0]!=='conectar')return;
   if(!i||!i.valido)return igPage(`<h1>Esse link expirou</h1><p class="muted">Peça um link novo para quem te enviou. Cada link vale por 7 dias e só pode ser usado uma vez.</p>`);
-  igPage(`<h1><b>${esc(i.quem)}</b> quer ver os resultados de <b>${esc(i.handle)}</b></h1>
+  const h=esc(i.handle);
+  igPage(`<h1><b>${esc(i.quem)}</b> quer ver os resultados de <b>${h}</b></h1>
+    <p class="muted">Leva cerca de 1 minuto e você não precisa passar a senha para ninguém.</p>
     <div class="ig-perm"><small>Vai poder ver</small><p>✓ Seguidores, alcance e visualizações</p><p>✓ Números de cada post, Reels e story</p>
       <small>Não vai poder</small><p class="no">✕ Publicar, apagar ou ler mensagens</p><p class="no">✕ Ver sua senha</p></div>
-    <a class="pill dark wide" href="${IG_FN}?go=${encodeURIComponent(route[1])}">Continuar com Instagram</a>
-    <p class="muted sm">Precisa ser conta profissional (Comercial ou Criador de conteúdo). Você pode desconectar quando quiser no Instagram, em Configurações → Apps e sites.</p>`);
+    <div class="ig-steps"><small>Como funciona</small><ol>
+      <li>Toque em <b>Continuar</b>, logo abaixo.</li>
+      <li>Na tela da Meta, escolha <b>Entrar com o Instagram</b> (ou com o Facebook) e entre na conta ${h}.</li>
+      <li>Escolha a <b>empresa</b> e o perfil <b>${h}</b>. Se aparecer "Contas de anúncios", pode deixar em branco.</li>
+      <li>Toque em <b>Continuar</b> e autorize. Você volta para cá com a confirmação.</li></ol></div>
+    <a class="pill dark wide" href="${IG_FN}?go=${encodeURIComponent(route[1])}">Continuar</a>
+    ${igFaq([['Meu perfil não aparece na lista','Confira se ele é profissional (Comercial ou Criador de conteúdo) e se você escolheu a empresa (portfólio) em que o perfil está. Se tiver mais de uma empresa, troque no primeiro campo da tela.'],
+      ['A Meta pediu para escolher ou criar uma empresa','É normal: a Meta guarda a autorização numa "empresa" (portfólio empresarial). Escolha a que tem o seu perfil. Se não tiver nenhuma, pode criar ali mesmo: é grátis e leva segundos.'],
+      ['Preciso ter Página no Facebook?','Não. Basta o perfil do Instagram ser profissional.'],
+      ['Como desconecto depois?',IG_DESCONECTAR]])}
+    <p class="muted sm">Precisa ser conta profissional (Comercial ou Criador de conteúdo). Para mudar: no Instagram, Configurações e atividade → Tipo de conta e ferramentas → Mudar para conta profissional (é grátis).</p>`);
 }
 function vConectado(){
   const u=decodeURIComponent(route[1]||'');
   igPage(`<div class="ok">✓</div><h1>${u?'@'+esc(u)+' conectado':'Instagram conectado'}</h1>
-    <p class="muted">Pronto! Os resultados já começam a aparecer no Fig.Feed. ${USER?'':'Pode fechar esta página.'}</p>
-    ${USER?'<button class="pill dark wide" data-go="contas">Voltar para as contas</button>':''}`);bindGo();
+    <p class="muted">Pronto! Os números dos últimos 30 dias e os posts dos últimos 60 dias chegam em alguns minutos. Depois, o Fig.Feed atualiza sozinho todo dia.</p>
+    ${USER?'<button class="pill dark wide" data-go="contas">Voltar para as contas</button>':`<p class="muted">Pode fechar esta página, não precisa fazer mais nada.</p><p class="muted sm">Quer desconectar depois? ${IG_DESCONECTAR}</p>`}`);bindGo();
   Object.keys(IGC).forEach(k=>delete IGC[k]);
 }
 function vConectarErro(){
   const mot=route[1]||'',tk=route[2]||'';
-  const T={negado:['Conexão cancelada','A permissão não foi dada. Se foi sem querer, é só tentar de novo.'],
-    pessoal:['Essa conta é pessoal','A Meta só libera os números de contas profissionais. No Instagram: Configurações e atividade → Tipo de conta e ferramentas → Mudar para conta profissional (é grátis). Depois tente de novo.'],
+  const T={negado:['Conexão cancelada','A autorização não foi concluída. Se foi sem querer, é só tentar de novo: leva 1 minuto.'],
+    pessoal:['Não encontramos o perfil','A Meta não liberou nenhum Instagram para o Fig.Feed. Confira estas três coisas e tente de novo:',
+      ['O perfil é <b>profissional</b> (Comercial ou Criador de conteúdo). Para mudar: no Instagram, Configurações e atividade → Tipo de conta e ferramentas → Mudar para conta profissional (é grátis).',
+       'Na tela "Selecione os ativos", o <b>perfil certo</b> estava escolhido em "Contas do Instagram".',
+       'A <b>empresa</b> escolhida no primeiro campo é a que tem esse perfil.']],
     link:['Esse link expirou','Peça um link novo para quem te enviou. Cada link vale por 7 dias e só pode ser usado uma vez.'],
-    config:['Ainda não está pronto','A conexão com o Instagram ainda está sendo configurada no Fig.Feed. Tente de novo mais tarde.'],
+    config:['Ainda não está pronto','A conexão com o Instagram está sendo ajustada no Fig.Feed. Tente de novo mais tarde ou avise quem te enviou o link.'],
     falhou:['Não deu certo desta vez','A Meta não respondeu como esperado. Tente de novo em alguns minutos.']}[mot]||['Algo deu errado','Tente de novo em alguns minutos.'];
-  igPage(`<h1>${T[0]}</h1><p class="muted">${T[1]}</p>${tk&&mot!=='link'?`<a class="pill dark wide" href="${IG_FN}?go=${encodeURIComponent(tk)}">Tentar de novo</a>`:''}`);
+  igPage(`<h1>${T[0]}</h1><p class="muted">${T[1]}</p>${T[2]?`<ul class="ig-chk">${T[2].map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+    ${tk&&mot!=='link'?`<a class="pill dark wide" href="${IG_FN}?go=${encodeURIComponent(tk)}">Tentar de novo</a>`:''}
+    ${mot!=='negado'?'<p class="muted sm">Se continuar, mande um print desta tela para quem te enviou o link.</p>':''}`);
 }
 
 /* ---------- PDF de Resultados ---------- */
@@ -4644,7 +4687,7 @@ async function admSaude(){
   admShell('saude',`<div class="adm-head"><div><h1>Saúde do sistema</h1><p class="sub">Erros que as pessoas encontraram e o estado das conexões com o Instagram.</p></div></div>
     <h2 class="adm-day" style="margin-top:6px">Instagram (${ig.length})</h2>
     <div class="pg-list">${ig.map(c=>{const s=igSt(c);return `<div class="sd-row"><div><b>${esc(c.handle)}</b><small class="mut">${c.username?'@'+esc(c.username)+' · ':''}de ${esc(c.dono||'—')}${c.last_sync?' · atualizado em '+dBR(c.last_sync):''}</small>${c.status_msg?`<small class="err">${esc(c.status_msg)}</small>`:''}</div><span class="sd-st ${s[0]}">${s[1]}</span></div>`}).join('')||'<p class="sub">Nenhum Instagram conectado ainda.</p>'}</div>
-    <p class="adm-note">A chave do Instagram é renovada sozinha quando faltam menos de 20 dias. Se aparecer "Com erro" ou "Desconectado", a pessoa precisa conectar de novo na aba Resultados da conta.</p>
+    <p class="adm-note">A conexão do Instagram não vence (login unificado da Meta). Se aparecer "Com erro" ou "Desconectado", o cliente tirou o acesso do Fig.Feed ou mudou o perfil de empresa: é só mandar um link novo pela aba Resultados da conta (mensagem "Reconectar").</p>
     <div class="adm-head" style="margin-top:30px"><h2 class="adm-day" style="margin:0">Erros (${errs.length}${errs.length>=300?'+':''})</h2>${errs.length?'<button class="pill sm" id="er-clear">Limpar erros</button>':''}</div>
     <div class="pg-list">${gs.map(g=>`<div class="sd-row"><div><b><code>${esc(g.codigo)}</code> ${esc(g.mensagem||'(sem mensagem)')}</b><small class="mut">última vez em ${dBR(g.ultimo)} ${hBR?hBR(g.ultimo):''} · em ${esc(g.rota||'#')} · ${g.pessoas.size} ${g.pessoas.size===1?'pessoa':'pessoas'}${g.versao?' · '+esc(g.versao):''}</small></div><span class="sd-n">${g.n}×</span></div>`).join('')||'<p class="sub">Nenhum erro registrado. 🎉</p>'}</div>
     <p class="adm-note">Erros iguais aparecem juntos. Copie o texto e me mande se algum se repetir.</p>`,980);
