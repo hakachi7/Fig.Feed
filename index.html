@@ -613,18 +613,20 @@ function finishTutorial(){
   if(USER){USER.user_metadata={...(USER.user_metadata||{}),onboarded:true};sb.auth.updateUser({data:{onboarded:true}}).catch(()=>{})}
 }
 let tutStep=0;
+// Fundos de bolinhas do próprio Fig.Feed (pasta img/tutorial)
+const TUT_IMG=Array.from({length:9},(_,i)=>`img/tutorial/bolinhas-${i+1}.jpg`);
 function vTutorial(){
-  const pics=Array.from({length:9},randPhoto);
+  const pics=TUT_IMG;const bg=u=>`background-image:url('${u}')`;
   const COLS=['#ff5a36','#2f45ff','#14b85a'];
   const steps=[
     {t:'Arraste e solte',p:'Monte o feed arrastando os posts. A grade se reorganiza sozinha, como o auto layout do Figma.',
-     v:`<div class="tut-grid">${pics.map((p,i)=>`<div class="${i===4?'lift':''}" style="${bgi(p,200,250)}"></div>`).join('')}</div>`},
+     v:`<div class="tut-grid">${pics.map((p,i)=>`<div class="${i===4?'lift':''}" style="${bg(p)}"></div>`).join('')}</div>`},
     {t:'Uma agenda para todos',p:'No cronograma você vê os posts de todas as contas por semana ou por status, e muda a data arrastando.',
      v:`<div class="tut-week">${['seg','ter','qua','qui','sex'].map((d,i)=>`<div class="c"><span class="d">${d}</span>${
-       Array.from({length:i%2?1:2},(_,j)=>`<div class="k"><i style="${bgi(pics[(i*2+j)%9],120,150)}"></i><b style="background:${COLS[(i+j)%3]}"></b></div>`).join('')}</div>`).join('')}</div>`},
+       Array.from({length:i%2?1:2},(_,j)=>`<div class="k"><i style="${bg(pics[(i*2+j)%9])}"></i><b style="background:${COLS[(i+j)%3]}"></b></div>`).join('')}</div>`).join('')}</div>`},
     {t:'Pronto para começar',p:'Crie a conta do seu primeiro cliente, ou use contas de exemplo para testar sem enviar fotos.',
-     v:`<div class="tut-prof"><span class="avatar" style="${bgi(pics[0],120,120)}"></span><b>@seu.cliente</b>
-       <div class="tut-grid">${pics.slice(1,7).map(p=>`<div style="${bgi(p,150,190)}"></div>`).join('')}</div></div>`}];
+     v:`<div class="tut-prof"><span class="avatar" style="${bg(pics[0])}"></span><b>@seu.cliente</b>
+       <div class="tut-grid">${pics.slice(1,7).map(p=>`<div style="${bg(p)}"></div>`).join('')}</div></div>`}];
   const s=steps[tutStep],last=tutStep===steps.length-1;
   app.innerHTML=`<main class="tut" aria-label="Boas-vindas ao Fig.Feed"><div class="top">${LOGO(true)}</div>
     <section class="body"><div class="vis" aria-hidden="true">${s.v}</div>
