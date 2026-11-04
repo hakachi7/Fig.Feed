@@ -6,6 +6,7 @@ Cada versão também tem uma branch própria, com o código exatamente como esta
 
 | Versão | Nome | O que trouxe | Branch | Commit |
 | --- | --- | --- | --- | --- |
+| v18.2 | Servidor na Visão geral | Admin › Visão geral mostra o uso do Supabase (fotos, banco, pessoas ativas, quantos usuários do Grátis cabem, fotos para otimizar) e avisa quando um plano promete mais espaço do que existe | [versao-18-cadastro-espaco-indicacoes](https://github.com/hakachi7/Fig.Feed/tree/versao-18-cadastro-espaco-indicacoes) | (veja a branch) |
 | v18.1 | Fotos menores e limites | Fotos reduzidas no envio (1080 px, ~300 KB), Otimizar fotos já enviadas, plano Grátis com 3 contas e 15 MB e limites ligados (também no servidor), barra de espaço em Admin › Usuários | [versao-18-cadastro-espaco-indicacoes](https://github.com/hakachi7/Fig.Feed/tree/versao-18-cadastro-espaco-indicacoes) | (veja a branch) |
 | v18 | Cadastro, espaço e indicações | Cadastro em 2 passos com mais dados, círculo de espaço e Liberar espaço, plano Grátis com 3 contas, grade com datas e tipo, indique amigos, formulário da beta | [versao-18-cadastro-espaco-indicacoes](https://github.com/hakachi7/Fig.Feed/tree/versao-18-cadastro-espaco-indicacoes) | (veja a branch) |
 | v17.2 | Feed de uma vez | “+ Criar → Adicionar posts” importa várias fotos e cada uma vira um post; conta nova com “Monte seu primeiro feed” e feed de exemplo; botão Salvar na página do post | (main) | (veja a main) |

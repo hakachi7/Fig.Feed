@@ -1013,6 +1013,8 @@ mark.ph{background:#fff1b8;color:inherit;border-radius:3px;padding:0 2px}
 @media (max-width:560px){.beta-f{grid-template-columns:1fr}.cad-row3{grid-template-columns:.8fr 1fr 1fr}.esp{min-width:0}.ind-top{flex-direction:column}}
 .u-esp{display:flex;flex-direction:column;gap:4px;min-width:0}.u-bar{height:6px;background:#ececec;border-radius:99px;overflow:hidden}.u-bar i{display:block;height:100%;border-radius:99px}
 .u-esp small{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.u-esp.big{max-width:260px;display:flex!important}.u-esp.big .u-bar{height:8px}.u-esp.big small{font-size:12.5px}
+.kpi.infra b{font-size:22px}.kpi.infra b small{font-size:13px;font-weight:400;color:var(--muted)}.kpi.infra .u-bar{margin:6px 0 2px;background:#e3e3e3}
+.infra-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}.infra-top select{font:inherit;font-size:13px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:#fff}.infra-top a{text-decoration:none;font-size:13px;padding:6px 12px}
 </style>
 </head>
 <body>
@@ -1340,7 +1342,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v18.1';
+const VERSAO='v18.2';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -2798,6 +2800,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v18.2','Nov 2026',['Admin › Visão geral: quanto o Fig.Feed usa do servidor (fotos, banco, pessoas ativas), quantas pessoas do Grátis ainda cabem e avisos quando um plano promete mais espaço do que existe']],
   ['v18.1','Nov 2026',['Fotos menores no envio: até 1080 px e cerca de 300 KB cada, sem perder qualidade no Instagram','Liberar espaço › Otimizar fotos já enviadas: deixa as fotos antigas com o mesmo tamanho das novas','Admin › Usuários: barra de uso do espaço de cada pessoa','Plano Grátis: 3 contas de clientes e 15 MB de fotos (cerca de 50 posts), com os limites valendo']],
   ['v18','Nov 2026',['Cadastro novo em 2 passos: nome e sobrenome, nascimento, gênero, o que você faz e onde mora (quem já tem conta completa o perfil uma vez)','Espaço: círculo que muda de cor conforme o uso (cinza, verde, amarelo, laranja e vermelho) no menu do perfil, no Perfil e na Biblioteca','Liberar espaço: limpar a lixeira ou excluir feeds (para a lixeira ou para sempre)','Plano Grátis: até 3 contas de clientes e 500 MB de fotos','Downloads e Selecionar: grade com a data, o horário e o tipo de cada post (Foto, Carrossel ou Reels)','Perfil: indique amigos com o seu link e veja quem entrou','Resultados: formulário para participar da beta do Instagram']],
   ['v17.2','Nov 2026',['"+ Criar → Adicionar posts": escolha várias fotos de uma vez e cada uma vira um post no feed','Botão Salvar na página do post: salva e volta para o feed','Conta nova: "Monte seu primeiro feed" com várias fotos ou com um feed de exemplo de 9 posts']],
@@ -4969,10 +4972,47 @@ async function admPainel(){
     <div class="kpis">${tile(nBR(d.contas),'contas de clientes')}${tile(nBR(d.posts),'posts',`${nBR(d.posts_7)} criados em 7 dias`)}${tile(nBR(d.stories),'stories')}${tile(MB(d.espaco_fotos+d.espaco_blog),'de espaço usado',`fotos ${MB(d.espaco_fotos)} · site ${MB(d.espaco_blog)}`)}</div>
     <h2 class="adm-day">Atenção</h2>
     <div class="kpis">${tile(nBR(d.suporte_abertos),'pedidos de suporte abertos','','admin/suporte',d.suporte_abertos>0)}${tile(nBR(d.ig_atencao),'Instagram com problema ou para vencer',`${nBR(d.ig_ok)} conectados`,'admin/saude',d.ig_atencao>0)}${tile(nBR(d.erros_7),'erros nos últimos 7 dias','','admin/saude',d.erros_7>0)}</div>
+    <h2 class="adm-day">Servidor (Supabase)</h2><div id="pn-infra"><p class="sub">Carregando…</p></div>
     <h2 class="adm-day">Cadastros por dia · últimos 30 dias</h2>
     <div class="bars" role="img" aria-label="Cadastros por dia nos últimos 30 dias: ${dias.reduce((s,x)=>s+x.n,0)} no total">${dias.map(x=>`<span title="${dBR(x.d)}: ${x.n}" style="height:${Math.max(2,Math.round(x.n/mx*100))}%"${x.n?'':' class="z"'}></span>`).join('')}</div>
     <div class="bars-x"><span>${dias[0]?dBR(dias[0].d):''}</span><span>hoje</span></div>`,1080);
   bindGo();document.getElementById('pn-up').onclick=admPainel;
+  admInfra();
+}
+
+/* V18.2: quanto o Fig.Feed usa do Supabase (limites do plano escolhido) */
+const SUPA_PLANOS={free:{n:'Free',storage:1024**3,db:500*1048576,mau:50000,egress:5*1024**3,pausa:true},
+  pro:{n:'Pro',storage:100*1024**3,db:8*1024**3,mau:100000,egress:250*1024**3,pausa:false}};
+const SUPA_USO='https://supabase.com/dashboard/org/efxdsderxadxavscfsua/usage';
+async function admInfra(){
+  const box=document.getElementById('pn-infra');if(!box)return;
+  let d;try{const r=await sb.rpc('admin_infra');if(r.error)throw r.error;d=r.data}catch(e){box.innerHTML='<p class="sub">Não deu para ler o uso do servidor agora.</p>';return}
+  if(!document.body.contains(box))return;
+  const pk=SITE.config?.supabase_plano==='pro'?'pro':'free',L=SUPA_PLANOS[pk];
+  const bar=(usado,lim)=>{const pct=lim?usado/lim*100:0;return `<span class="u-bar"><i style="width:${Math.min(100,pct).toFixed(1)}%;background:${espCor(pct,usado)}"></i></span>`};
+  const pct=(u,l)=>l?Math.round(u/l*100)+'%':'';
+  const livre=Math.max(0,L.storage-d.storage_bytes);
+  const pf=PLANOS.find(x=>x.id==='gratis'),mbG=pf&&pf.mb?+pf.mb:15,cabem=Math.floor(livre/(mbG*1048576));
+  const ganho=Math.max(0,d.fotos_grandes_bytes-d.fotos_grandes*FOTO_KB*1024*.8);
+  const grandes=PLANOS.filter(x=>x.id!=='gratis'&&x.mb!==''&&x.mb!=null&&+x.mb*1048576>livre);
+  const dias=d.ultimo_acesso?Math.floor((Date.now()-new Date(d.ultimo_acesso))/864e5):null;
+  const card=(t,v,sub,b,warn)=>`<div class="kpi infra ${warn?'warn':''}"><span>${t}</span><b>${v}</b>${b||''}${sub?`<small>${sub}</small>`:''}</div>`;
+  box.innerHTML=`<div class="infra-top"><span class="mut">Plano do Supabase:</span>
+      <select id="pn-sp" aria-label="Plano do Supabase">${Object.entries(SUPA_PLANOS).map(([k,x])=>`<option value="${k}" ${k===pk?'selected':''}>${x.n}</option>`).join('')}</select>
+      <a class="pill" href="${SUPA_USO}" target="_blank" rel="noopener">Abrir o uso no Supabase</a></div>
+    <div class="kpis">
+      ${card('Fotos e arquivos',`${espMB(d.storage_bytes)} <small>de ${espMB(L.storage)}</small>`,`${pct(d.storage_bytes,L.storage)} · ${nBR(d.storage_arquivos)} arquivos · livre ${espMB(livre)}`,bar(d.storage_bytes,L.storage),d.storage_bytes/L.storage>=.7)}
+      ${card('Cabem mais',`~${nBR(cabem)} <small>${cabem===1?'pessoa':'pessoas'}</small>`,`do plano Grátis com os ${mbG} MB cheios. Na prática cabe mais gente: quase ninguém enche tudo.`,'',cabem<20)}
+      ${card('Banco de dados',`${espMB(d.db_bytes)} <small>de ${espMB(L.db)}</small>`,pct(d.db_bytes,L.db),bar(d.db_bytes,L.db),d.db_bytes/L.db>=.7)}
+      ${card('Pessoas ativas no mês',`${nBR(d.mau)} <small>de ${nBR(L.mau)}</small>`,'quem entrou desde o dia 1º',bar(d.mau,L.mau),d.mau/L.mau>=.7)}
+      ${card('Tráfego do mês',`até ${espMB(L.egress)}`,'Cada foto vista conta. O número exato só aparece no Supabase (botão acima, linha "Egress").','',false)}
+      ${ganho>5*1048576?card('Fotos para otimizar',`${nBR(d.fotos_grandes)} <small>${d.fotos_grandes===1?'foto':'fotos'}</small>`,`acima de 350 KB · liberam ~${espMB(ganho)} se cada pessoa usar "Otimizar fotos já enviadas"`,'',true):''}
+    </div>
+    ${grandes.length?`<div class="warn-s" style="margin-top:10px"><b>Atenção:</b> ${grandes.map(x=>`o plano ${esc(x.n)} promete ${espMB(+x.mb*1048576)}`).join(' e ')}, mais do que o espaço livre do servidor (${espMB(livre)}). Um assinante sozinho pode lotar tudo. Baixe esses limites em <a href="#admin/planos">Planos</a> ou passe o Supabase para o plano Pro.</div>`:''}
+    ${L.pausa?`<p class="adm-note" style="margin-top:10px">No plano Free, o Supabase <b>pausa o projeto depois de 7 dias sem uso</b> e o site para até alguém reativar pelo painel. ${dias!=null?`Último acesso de alguém: ${dias<=0?'hoje':dias===1?'ontem':`há ${dias} dias`}.`:''}</p>`:''}`;
+  const sel=document.getElementById('pn-sp');
+  sel.onchange=async()=>{if(!isGM()){toast('Só o GM pode mudar');sel.value=pk;return}
+    try{await saveSetting('config',{...(SITE.config||{}),supabase_plano:sel.value});toast('Plano do Supabase salvo');admInfra()}catch(e){sel.value=pk}};
 }
 
 /* ---------- Admin: Planos ---------- */
