@@ -6,6 +6,7 @@ Cada versão também tem uma branch própria, com o código exatamente como esta
 
 | Versão | Nome | O que trouxe | Branch | Commit |
 | --- | --- | --- | --- | --- |
+| v21 | Fotos no R2 | Fotos do app e miniaturas do Instagram passam a ficar no Cloudflare R2 (10 GB grátis, tráfego grátis); envio e exclusão pela Edge Function `fotos` (supabase/functions/fotos), espaço medido pela tabela fotos_r2 (supabase/v21.sql); Admin › Visão geral mostra o R2 | [versao-21-fotos-r2](https://github.com/hakachi7/Fig.Feed/tree/versao-21-fotos-r2) |
 | v20.1 | Quadro verde | Quadro de constância do Perfil em tons de verde (estilo GitHub); agendados com contorno verde | [versao-20-1-quadro-verde](https://github.com/hakachi7/Fig.Feed/tree/versao-20-1-quadro-verde) |
 | v20 | Créditos e dados demográficos | Página #creditos (rodapé do menu: "Fig.Feed v20 · Créditos", sem a palavra Novidades); Admin › Usuários › Abrir mostra nascimento/idade, gênero, profissão, país, cidade/estado e indicações (função admin_user_demo, supabase/v20.sql) | [versao-20-creditos](https://github.com/hakachi7/Fig.Feed/tree/versao-20-creditos) |
 | v19.3 | Chave do Feed On | Feed On busca sempre com o Instagram do Fig.Feed (nunca com a conexão de um usuário); botão "Conectar o Instagram do Fig.Feed" em Admin › Beta; a 1ª conexão de um admin vira a chave sozinha | [versao-19-3-chave-feed-on](https://github.com/hakachi7/Fig.Feed/tree/versao-19-3-chave-feed-on) |

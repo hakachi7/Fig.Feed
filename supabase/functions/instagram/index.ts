@@ -11,6 +11,7 @@
 // Segredos: IG_APP_ID (= ID do app da Meta), IG_APP_SECRET (= chave secreta do app da Meta), IG_CONFIG_ID (opcional)
 // A configuração de login precisa de instagram_basic, instagram_manage_insights e business_management.
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import { AwsClient } from "npm:aws4fetch@1.0.20";
 
 const APP_ID = Deno.env.get("IG_APP_ID") ?? "";
 const APP_SECRET = Deno.env.get("IG_APP_SECRET") ?? "";
@@ -52,12 +53,19 @@ const ins = (data: any[]) => {
 const PROFILE_FIELDS = "id,username,name,profile_picture_url,followers_count,media_count";
 
 // ---------- Coleta ----------
+// v21: miniaturas vão para o Cloudflare R2 (mesmo lugar das fotos do app)
+const R2E = (k: string) => (Deno.env.get(k) ?? "").trim();
+const r2 = new AwsClient({ accessKeyId: R2E("R2_ACCESS_KEY_ID"), secretAccessKey: R2E("R2_SECRET_ACCESS_KEY"), service: "s3", region: "auto" });
+const r2Url = (k: string) => `https://${R2E("R2_ACCOUNT_ID")}.r2.cloudflarestorage.com/${R2E("R2_BUCKET") || "figfeed-fotos"}/${k.split("/").map(encodeURIComponent).join("/")}`;
 async function saveThumb(owner: string, mediaId: string, url?: string) {
   if (!url) return null;
   const path = `${owner}/instagram/${mediaId}.jpg`;
   try {
     const r = await fetch(url); if (!r.ok) return null;
-    const { error } = await db.storage.from("fotos").upload(path, await r.blob(), { contentType: r.headers.get("content-type") ?? "image/jpeg", upsert: true });
+    const blob = await r.blob();
+    const p = await r2.fetch(r2Url(path), { method: "PUT", body: blob, headers: { "Content-Type": r.headers.get("content-type") ?? "image/jpeg", "Cache-Control": "public, max-age=31536000" } });
+    if (!p.ok) { console.error(`[thumb] R2 ${p.status}`); return null; }
+    const { error } = await db.from("fotos_r2").upsert({ name: path, owner_id: owner, size: blob.size });
     return error ? null : path;
   } catch { return null; }
 }

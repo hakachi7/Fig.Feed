@@ -40,9 +40,11 @@ Deno.serve(async (req) => {
     const { data: files, error: e2 } = await svc.rpc("admin_user_files", { target });
     if (e2) return json({ error: "Não deu para listar as fotos: " + e2.message }, 500);
     const names: string[] = (files ?? []).map((x: any) => typeof x === "string" ? x : x.admin_user_files);
+    // v21: as fotos ficam no Cloudflare R2 — quem apaga é a função "fotos" (com a chave do admin)
     for (let i = 0; i < names.length; i += 100) {
-      const { error } = await svc.storage.from("fotos").remove(names.slice(i, i + 100));
-      if (error) return json({ error: "Não deu para apagar as fotos: " + error.message }, 500);
+      const r = await fetch(`${SB_URL}/functions/v1/fotos`, { method: "POST", headers: { "Content-Type": "application/json", Authorization: auth, apikey: ANON }, body: JSON.stringify({ action: "remove", paths: names.slice(i, i + 100) }) });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || j.error) return json({ error: "Não deu para apagar as fotos: " + (j.error ?? r.status) }, 500);
     }
     // 2) registro (antes, para guardar o e-mail) e 3) conta
     await svc.from("activity_log").insert({ actor_id: u.user.id, category: "usuarios", action: "excluiu a conta", target_user: null, details: { email, fotos: names.length } });
