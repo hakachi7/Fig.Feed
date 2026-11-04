@@ -6,6 +6,7 @@ Cada versão também tem uma branch própria, com o código exatamente como esta
 
 | Versão | Nome | O que trouxe | Branch | Commit |
 | --- | --- | --- | --- | --- |
+| v19.3 | Chave do Feed On | Feed On busca sempre com o Instagram do Fig.Feed (nunca com a conexão de um usuário); botão "Conectar o Instagram do Fig.Feed" em Admin › Beta; a 1ª conexão de um admin vira a chave sozinha | [versao-19-3-chave-feed-on](https://github.com/hakachi7/Fig.Feed/tree/versao-19-3-chave-feed-on) |
 | v19.2 | Feed On só com o link | Quem não tem Instagram conectado usa a conta do Fig.Feed (Admin › Beta); a mensagem não pede mais para conectar | [versao-19-2-feed-on-link](https://github.com/hakachi7/Fig.Feed/tree/versao-19-2-feed-on-link) |
 | v19.1 | Ordem de publicação | Na grade com datas e tipo, o número em cada foto passa a ser a ordem de publicação (1 = o primeiro a postar) | [versao-19-1-ordem-publicacao](https://github.com/hakachi7/Fig.Feed/tree/versao-19-1-ordem-publicacao) |
 | v19 | Feed On | Na Prévia, o feed que está no ar no Instagram (pelo link ou @ de um perfil profissional), travado; Com planejamento; Antes × depois no computador; Baixar PNG | [versao-19-feed-on](https://github.com/hakachi7/Fig.Feed/tree/versao-19-feed-on) | (veja a branch) |

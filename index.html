@@ -1356,7 +1356,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v19.2';
+const VERSAO='v19.3';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -2815,6 +2815,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v19.3','Nov 2026',['Feed On para todo mundo: cole o link de qualquer perfil profissional e veja o feed, sem conectar o seu Instagram']],
   ['v19.2','Nov 2026',['Feed On: basta o link ou o @ do perfil, sem precisar conectar o seu Instagram']],
   ['v19.1','Nov 2026',['Grade com datas e tipo: o número em cada foto agora é a ordem de publicação (1 = o primeiro a postar)']],
   ['v19','Nov 2026',['Feed On na Prévia: cole o link ou o @ de um perfil profissional e veja o feed que está no ar, travado','Com planejamento: os posts planejados aparecem por cima do feed real, marcados como PLANEJADO','No computador, Antes × depois lado a lado; Baixar PNG em todos os modos para mandar ao cliente']],
@@ -4286,9 +4287,9 @@ async function foSheet(a){
 }
 const FO_ERRO={link:'Não reconheci esse link. Use o link do perfil (instagram.com/perfil) ou o @.',
   perfil:'Não achamos esse perfil. Confira o @: ele precisa ser profissional (Comercial ou Criador de conteúdo) e público.',
-  sem_conta:'O Feed On ainda está sendo liberado para todo mundo. Tente de novo mais tarde.',
+  sem_conta:'O Feed On ainda está sendo ligado pelo Fig.Feed. Tente de novo mais tarde.',
   limite:'O Instagram pediu uma pausa. Tente de novo em alguns minutos.',
-  conexao:'A conexão com o Instagram caiu. Reconecte na aba Resultados.'};
+  conexao:'O Feed On está fora do ar agora. Tente de novo mais tarde.'};
 async function foFetch(a,username){
   let r;try{r=await igCall({action:'feedon',account_id:a.id,username})}catch(e){r={ok:false}}
   if(r&&r.ok){FO[a.id]={username:r.data.username,data:r.data,fetched_at:r.fetched_at||new Date().toISOString()};return {ok:true}}
@@ -4346,10 +4347,19 @@ async function foViewerBox(){
   const box=document.getElementById('fo-viewer');if(!box)return;
   let i=null;try{const {data}=await sb.rpc('feedon_viewer_info');i=data}catch(e){}
   if(!i){box.innerHTML='';return}
-  box.innerHTML=`<section class="pg-site"><div><b>Feed On para todo mundo</b><p>Quem não tem Instagram conectado usa esta conta para buscar perfis no Feed On (só dados públicos de perfis profissionais). ${i.atual?`Hoje: <b>@${esc(i.atual)}</b>.`:'Hoje: nenhuma — só quem tem Instagram conectado consegue usar.'}</p></div>
-    ${i.minhas.length?`<select id="fo-vs" aria-label="Conta do Fig.Feed"><option value="">Escolher…</option>${i.minhas.map(c=>`<option value="${c.account_id}">@${esc(c.username)}</option>`).join('')}</select>`:'<span class="mut">Conecte um Instagram seu (aba Resultados de uma conta sua) para escolher.</span>'}</section>`;
+  const chave=i.atual||i.minhas[0]?.username;
+  box.innerHTML=`<section class="pg-site"><div><b>${chave?'<span class="dot"></span> ':''}Feed On para todo mundo</b><p>Qualquer pessoa cola o link de um perfil profissional e vê o feed, sem conectar nada. Para buscar, o Fig.Feed usa <b>um Instagram do Fig.Feed</b> como chave (nunca a conexão de um usuário). ${chave?`Chave: <b>@${esc(chave)}</b>.`:'<b>Ainda sem chave</b>: o Feed On não funciona para ninguém.'}</p></div>
+    ${i.minhas.length>1?`<select id="fo-vs" aria-label="Chave do Feed On"><option value="">Trocar a chave…</option>${i.minhas.map(c=>`<option value="${c.account_id}">@${esc(c.username)}</option>`).join('')}</select>`:''}
+    ${i.minhas.length?'':'<button class="pill dark" id="fo-con">Conectar o Instagram do Fig.Feed</button>'}</section>`;
   const s=document.getElementById('fo-vs');if(s)s.onchange=async()=>{if(!s.value)return;s.disabled=true;
-    const r=await igCall({action:'feedon_viewer',account_id:s.value});toast(r.ok?'Conta do Feed On salva':'Não deu para salvar');foViewerBox()};
+    const r=await igCall({action:'feedon_viewer',account_id:s.value});toast(r.ok?'Chave do Feed On salva':'Não deu para salvar');foViewerBox()};
+  const b=document.getElementById('fo-con');if(b)b.onclick=()=>sheet(`<h2>Instagram do Fig.Feed</h2>
+    <p class="muted">Vai abrir o login da Meta. Entre com um Instagram <b>seu</b>, profissional (Comercial ou Criador de conteúdo). Ele só serve de chave para as buscas do Feed On: não aparece para ninguém e nada é publicado.</p>
+    <p class="muted sm">Enquanto o app da Meta estiver em teste, esse Instagram precisa ser Testador do app. Uma conta "Feed On (chave)" é criada na sua lista para guardar a conexão.</p>
+    <button class="pill dark wide" id="fo-go">Continuar</button>`,m=>{m.querySelector('#fo-go').onclick=async e=>{const bt=e.currentTarget;bt.disabled=true;
+      try{let a=S.accounts.find(x=>x.handle==='Feed On (chave)');
+        if(!a){const row=await db(sb.from('accounts').insert({handle:'Feed On (chave)',position:S.accounts.length}).select('id').single());a={id:row.id}}
+        const t=await igNewLink(a);location.href=IG_FN+'?go='+t}catch(err){bt.disabled=false;toast('Não deu para começar a conexão')}}});
 }
 
 /* ======================= Início ======================= */

@@ -7,7 +7,7 @@
 //   POST {action:'disconnect', account_id} → desconectar (usuário logado, dono da conta)
 //   POST {action:'cron_sync'|'cron_stories', account_id, full?} + header x-cron-secret → agendamento
 //   POST {action:'feedon', account_id, username} → Feed On: feed público de um perfil profissional (Business Discovery)
-//   POST {action:'feedon_viewer', account_id} → admin escolhe a conta do Fig.Feed que busca perfis para quem não tem Instagram conectado
+//   POST {action:'feedon_viewer', account_id} → admin escolhe a conta do Fig.Feed (a chave que busca perfis para todo mundo)
 // Segredos: IG_APP_ID (= ID do app da Meta), IG_APP_SECRET (= chave secreta do app da Meta), IG_CONFIG_ID (opcional)
 // A configuração de login precisa de instagram_basic, instagram_manage_insights e business_management.
 import { createClient } from "jsr:@supabase/supabase-js@2";
@@ -220,14 +220,20 @@ async function findIgAccount(token: string): Promise<{ id: string; username?: st
 // ---------- Feed On ----------
 const FO_FIELDS = "username,name,biography,website,profile_picture_url,followers_count,follows_count,media_count," +
   "media.limit(30){id,media_type,media_product_type,media_url,thumbnail_url,permalink,timestamp,like_count,comments_count}";
-// Quem faz o pedido à Meta: 1) o Instagram desta conta; 2) outro Instagram da mesma pessoa; 3) a conta do Fig.Feed (escolhida no Admin)
-async function feedonViewer(userId: string, accountId: string) {
+// Feed On: TODO mundo busca com a "chave do Fig.Feed" (um Instagram conectado por um admin), nunca com a conexão de um usuário
+async function feedonViewer(_userId: string, _accountId: string) {
   const sel = "account_id,ig_user_id";
-  let { data: c } = await db.from("ig_connections").select(sel).eq("account_id", accountId).eq("status", "ok").maybeSingle();
-  if (!c) ({ data: c } = await db.from("ig_connections").select(sel).eq("owner_id", userId).eq("status", "ok").limit(1).maybeSingle());
+  let c: { account_id: string; ig_user_id: string } | null = null;
+  const { data: s } = await db.from("ig_settings").select("value").eq("key", "feedon_viewer").maybeSingle();
+  if (s?.value) ({ data: c } = await db.from("ig_connections").select(sel).eq("account_id", s.value).eq("status", "ok").maybeSingle());
   if (!c) {
-    const { data: s } = await db.from("ig_settings").select("value").eq("key", "feedon_viewer").maybeSingle();
-    if (s?.value) ({ data: c } = await db.from("ig_connections").select(sel).eq("account_id", s.value).eq("status", "ok").maybeSingle());
+    // sem escolha salva: a primeira conexão de um admin/GM vira a chave sozinha
+    const { data: adm } = await db.from("profiles").select("id").in("role", ["gm", "admin"]);
+    const ids = (adm ?? []).map((x: { id: string }) => x.id);
+    if (ids.length) {
+      ({ data: c } = await db.from("ig_connections").select(sel).in("owner_id", ids).eq("status", "ok").order("connected_at").limit(1).maybeSingle());
+      if (c) await db.from("ig_settings").upsert({ key: "feedon_viewer", value: c.account_id });
+    }
   }
   if (!c) return null;
   const { data: t } = await db.from("ig_tokens").select("access_token").eq("account_id", c.account_id).maybeSingle();
