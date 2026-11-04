@@ -979,6 +979,38 @@ mark.ph{background:#fff1b8;color:inherit;border-radius:3px;padding:0 2px}
 .u-info{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13px;margin:14px 0 4px}.u-info dt{color:var(--muted)}.u-info dd{margin:0}
 .u-acts{display:flex;flex-direction:column;align-items:flex-start;gap:8px}.sus-tag{font-size:11px;background:#fdecea;color:var(--err);border-radius:99px;padding:2px 8px;font-weight:500}
 .pub-foot a[target=_blank]{text-decoration:underline}
+/* V18: cadastro, espaço, indicações, beta */
+.auth-f.cad{max-width:440px}.cad-row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.cad-row3{display:grid;grid-template-columns:.8fr 1fr 1fr;gap:8px}
+.cad-fs{border:0;padding:0;margin:4px 0 0;display:flex;flex-direction:column;gap:8px;min-width:0}.cad-fs legend{font-size:12.5px;color:var(--muted);margin-bottom:6px;padding:0}
+.cad select,.cad .cad-in,.cad-row2 input{width:100%;font:inherit;font-size:14px;padding:12px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--fg);min-width:0}
+.cad-chips{display:flex;flex-wrap:wrap;gap:6px}.cad-chip{position:relative;cursor:pointer}.cad-chip input{position:absolute;opacity:0;pointer-events:none}
+.cad-chip span{display:block;border:1px solid var(--line);border-radius:99px;padding:8px 13px;font-size:13.5px;background:#fff}.cad-chip input:checked+span{background:var(--fg);color:#fff;border-color:var(--fg)}
+.cad-chip input:focus-visible+span{outline:2px solid var(--fg);outline-offset:2px}
+.auth-f.cad{text-align:left}.auth-f.cad h1,.auth-f.cad>.sub,.auth-f.cad .cad-steps{text-align:center}.auth-f.cad .cad-terms input{width:18px;height:18px;padding:0;margin:2px 0 0;flex:none;border-radius:4px}
+.cad-terms{display:flex;gap:9px;align-items:flex-start;font-size:13px;line-height:1.45;color:#3a3a3a;margin-top:4px}.cad-terms input{margin-top:3px}.cad-terms a{text-decoration:underline}
+.cad-steps{font-size:12px;color:var(--muted);text-align:center;margin:2px 0 0}.cad-ref{font-size:13px;background:var(--soft);border-radius:10px;padding:9px 12px;margin:0}
+.cp-f{display:flex;flex-direction:column;gap:12px}.pf-cad{display:flex;flex-direction:column;gap:12px;max-width:520px}.pf-cad .cad-fs{margin-top:6px}
+.esp{display:flex;align-items:center;gap:12px;padding:10px 12px;min-width:260px}.esp-ring{flex:none;color:var(--fg)}.esp-t{flex:1;min-width:0}.esp-t b{display:block;font-weight:500;font-size:14px}.esp-t small{display:block;color:var(--muted);font-size:12px;line-height:1.35}
+.esp .esp-lib{font-size:12.5px;padding:6px 11px;white-space:nowrap}.esp.big{border:1px solid var(--line);border-radius:16px;padding:16px;gap:16px;max-width:520px}.esp.big .esp-t b{font-size:17px}
+.drop .esp{padding:8px 6px}.lib-esp{margin:-6px 0 20px}
+.esp-op{display:block;width:100%;text-align:left;border:1px solid var(--line);border-radius:14px;padding:14px;background:#fff;cursor:pointer;font:inherit;color:inherit}.esp-op:hover{background:var(--soft)}
+.esp-op b{display:block;font-weight:500;margin-bottom:3px}.esp-op span{display:block;font-size:13px;color:var(--muted);line-height:1.4}.esp-op.danger b{color:var(--err)}.esp-op:disabled{opacity:.6}
+.ef-list{display:flex;flex-direction:column;gap:4px;max-height:46vh;overflow:auto}.ef-it{display:flex;align-items:center;gap:10px;padding:8px;border-radius:10px;cursor:pointer}.ef-it:hover{background:var(--soft)}
+.ef-it .avatar{width:34px;height:34px}.ef-it b{display:block;font-weight:500;font-size:14px}.ef-it small{color:var(--muted);font-size:12px}
+.indic{border:1px solid var(--line);border-radius:16px;padding:18px;margin:26px 0;display:flex;flex-direction:column;gap:12px;max-width:640px}
+.ind-top{display:flex;gap:16px;align-items:flex-start}.ind-top>div:first-child{flex:1}.ind-n{text-align:center}.ind-n b{display:block;font-size:28px;font-weight:600;line-height:1}.ind-n span{font-size:12px;color:var(--muted)}
+.ind-acts{display:flex;gap:8px;flex-wrap:wrap}.ind-acts a{text-decoration:none}.ind-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.ind-list li{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:14px;flex-wrap:wrap}.ind-list b{font-weight:500}.ind-list small{color:var(--muted);font-size:12px}
+.ind-av{width:30px;height:30px;border-radius:50%;background:var(--soft);display:grid;place-items:center;font-size:13px;font-weight:600}
+.ind-st{margin-left:auto;font-size:12px;color:var(--muted);background:var(--soft);border-radius:99px;padding:3px 9px}.ind-st.ok{background:#eaf6ee;color:#1e6b3a}
+.beta{border:1px solid var(--line);border-radius:20px;padding:22px;max-width:640px;margin:2vh auto 0;display:flex;flex-direction:column;gap:10px}.beta p{margin:0;line-height:1.5}
+.beta-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.beta-h h2{font-size:21px;font-weight:400;letter-spacing:-.02em;margin:0}.beta-tag{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;background:var(--fg);color:#fff;border-radius:99px;padding:3px 9px}
+.beta-f{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}.beta-f label{display:flex;flex-direction:column;gap:5px;font-size:12.5px;color:var(--muted)}
+.beta-f input{font:inherit;font-size:14px;color:var(--fg);padding:11px 12px;border:1px solid var(--line);border-radius:10px}.beta-ok{background:var(--soft);border-color:var(--soft)}.beta-ok b{font-weight:500}
+.beta+.ig-conn{margin-top:18px}
+.bt-list{display:flex;flex-direction:column;margin-top:18px}.bt-it{display:grid;grid-template-columns:1fr auto;gap:8px 16px;padding:14px 0;border-top:1px solid var(--line);align-items:center}
+.bt-it b{font-weight:500}.bt-it small{display:block;color:var(--muted);font-size:12.5px}.bt-st{font-size:13px;font-weight:500}.bt-acts{grid-column:1/-1;display:flex;gap:6px;flex-wrap:wrap}.bt-acts .pill{font-size:12.5px;padding:6px 11px}
+@media (max-width:560px){.beta-f{grid-template-columns:1fr}.cad-row3{grid-template-columns:.8fr 1fr 1fr}.esp{min-width:0}.ind-top{flex-direction:column}}
 </style>
 </head>
 <body>
@@ -1130,9 +1162,10 @@ function render(){
     erro:()=>vErro(),'sem-internet':vOffline,
     planos:vPlanos,lixeira:vLixeira,biblioteca:vBiblioteca,blog:vBlog,suporte:vSuporte,
     stories:vStories,previa:vPrevia,relatorio:vRelatorio,r:vRelPublico,
-    resultados:vResultados,conectar:vConectar,conectado:vConectado,'conectar-erro':vConectarErro,p:vPaginaCustom,landing:vLanding};
+    resultados:vResultados,indicacao:vIndicacao,conectar:vConectar,conectado:vConectado,'conectar-erro':vConectarErro,p:vPaginaCustom,landing:vLanding};
   document.title=PG_DEF[gate.k]&&SITE.pages[gate.k]?.nome?`${SITE.pages[gate.k].nome} · Fig.Feed`:'Fig.Feed';
   try{(map[v]||v404)()}catch(err){console.error(err);vErro('FF-501')}window.scrollTo(0,0);
+  if(USER&&typeof pedirPerfil==='function')setTimeout(pedirPerfil,1400);
   if(map[v]&&v!=='p')pageExtras(gate,v);else if(v==='p'&&gate.c&&!gate.lock&&gate.c.banners){PG.ban=bannersHTML(gate.c.banners);pgDecor();popupCheck(gate.k)}
 }
 
@@ -1150,6 +1183,7 @@ function authPanel(){
 let authNote=null; // aviso para mostrar na próxima tela de login (ex.: link expirado)
 const BASE_URL=()=>location.protocol.startsWith('http')?location.href.split('#')[0].split('?')[0]:undefined;
 function vAuth(mode){
+  if(mode==='criar')return vCadastro();
   document.getElementById('toast').hidden=true; // nenhum aviso de dentro do app aparece no login
   const T={entrar:['Bem-vindo de volta',`Digite suas credenciais ou <a data-go="criar">crie uma conta</a>`,'Próximo'],
     criar:['Crie sua conta',`Já tem conta? <a data-go="entrar">Entre aqui</a>`,'Criar conta'],
@@ -1304,7 +1338,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v17.2';
+const VERSAO='v18';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -1341,11 +1375,12 @@ function dropdown(kind){
   if(kind==='app'){d.setAttribute('role','menu');d.setAttribute('aria-label','Menu principal');d.innerHTML=appMenuHTML();document.getElementById('appmenu')?.setAttribute('aria-expanded','true')}
   else if(kind==='avisos'){d.classList.add('av-drop');d.setAttribute('role','dialog');d.setAttribute('aria-label','Avisos');d.innerHTML=avisosDropHTML();
     d.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>closeDrop()));setTimeout(marcarAvisosLidos,600)}
-  else if(kind==='me'){d.innerHTML=`<span class="lbl">${esc(S.profile.handle||USER.email)}</span>
+  else if(kind==='me'){d.innerHTML=`<span class="lbl">${esc(S.profile.handle||USER.email)}</span><div id="me-esp">${ESP?espBloco(ESP):''}</div><hr>
     <button data-a="perfil">Perfil</button><button data-a="seguranca">Segurança</button><button data-a="config">Configuração</button><button data-a="planos">Planos</button><button data-a="ajuda">Ajuda</button><hr><button data-a="sair">Sair</button>`}
   else{d.innerHTML=`<span class="lbl">Nova conta</span><form id="nf"><input id="nh" placeholder="@perfil.do.cliente" required><button class="pill" style="padding:6px 10px">Criar</button></form><hr>
     ${inAcc?`<button data-a="feed"><b>Adicionar posts</b><small class="mut" style="display:block;font-size:12px;font-weight:400">Várias fotos de uma vez: cada foto vira um post</small></button><hr><button data-a="up">Novo post com fotos suas</button><button data-a="post">Novo post com fotos de exemplo</button><button data-a="tpl">Usar um template</button>`:`<span class="lbl">Abra uma conta para criar posts</span>`}`}
   document.body.appendChild(d);
+  if(kind==='me'){bindEspaco(d);loadEspaco().then(e=>{const x=d.querySelector('#me-esp');if(e&&x&&document.body.contains(d)){x.innerHTML=espBloco(e);bindEspaco(x)}})}
   d.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>{closeDrop();go(b.dataset.g)});
   if(kind==='app')d.querySelector('button')?.focus();
   d.querySelectorAll('[data-a]').forEach(b=>b.onclick=async()=>{const a=b.dataset.a;closeDrop();
@@ -1532,7 +1567,7 @@ function vFeed(){
       <div class="row2"><button class="pill dark" id="e-up">Enviar fotos</button><button class="pill" id="e-ex">Usar feed de exemplo</button></div></div>`}</main>
     ${a.posts.length&&!on?'<div class="hint">Arraste para reorganizar (no celular, segure) · toque para abrir</div>':''}
     ${on&&n?`<div class="sel-bar" role="region" aria-label="Ações dos selecionados"><b>${n} ${n===1?'post':'posts'}</b>
-      <button class="pill dark" id="ex-zip">Fotos (.zip)</button><button class="pill" id="ex-png">Grade (PNG)</button><button class="pill" id="ex-txt">Legendas (.txt)</button><button class="pill danger" id="sel-del">${TRASH_I}Apagar</button></div>`:''}`;
+      <button class="pill dark" id="ex-zip">Fotos (.zip)</button><button class="pill" id="ex-png">Grade (PNG)</button><button class="pill" id="ex-png2">Grade com datas</button><button class="pill" id="ex-txt">Legendas (.txt)</button><button class="pill danger" id="sel-del">${TRASH_I}Apagar</button></div>`:''}`;
   bindHeader();applySearch();
   document.getElementById('accmore').onclick=e=>{e.stopPropagation();accMenu(a,e.currentTarget)};
   const g=document.getElementById('grid');
@@ -1547,6 +1582,7 @@ function vFeed(){
   if(b('sel-all'))b('sel-all').onclick=()=>{SEL.ids=all?new Set():new Set(a.posts.map(p=>p.id));vFeed()};
   const chosen=()=>a.posts.filter(p=>SEL.ids.has(p.id));
   if(b('ex-png'))b('ex-png').onclick=()=>exportPNG(a,chosen(),'selecionados');
+  if(b('ex-png2'))b('ex-png2').onclick=()=>exportPNG(a,chosen(),'selecionados-com-datas',true);
   if(b('ex-txt'))b('ex-txt').onclick=()=>{saveFile(new Blob([legendasTxt(a,chosen())],{type:'text/plain;charset=utf-8'}),`${a.handle.replace('@','')}-legendas-selecionados.txt`);toast('Legendas baixadas')};
   if(b('ex-zip'))b('ex-zip').onclick=e=>exportZip(a,chosen(),e.currentTarget);
   // V13: apagar os selecionados (vão para a Lixeira por 30 dias)
@@ -1652,28 +1688,47 @@ function vDown(){
   if(!accById(dlAcc))dlAcc=S.accounts[0]?.id;const a=accById(dlAcc);if(!dlMonth)dlMonth=iso(new Date()).slice(0,7);
   app.innerHTML=header('down')+`<main class="dl"><div><h1>Download</h1>
     ${a?`<div class="pick">${S.accounts.map(x=>`<button data-acc="${x.id}" class="${x.id===a.id?'cur':''}">${esc(x.handle)}</button>`).join('')}</div>
-    <div class="opts"><button class="pill" id="png">Baixar grade (.png)</button><button class="pill" id="txt">Baixar legendas e datas (.txt)</button></div>${planSection(a)}`:'<p style="color:var(--muted)">Crie uma conta para baixar um modelo.</p>'}
+    <div class="opts"><button class="pill" id="png">Baixar grade (.png)</button><button class="pill" id="png2">Grade com datas e tipo (.png)</button><button class="pill" id="txt">Baixar legendas e datas (.txt)</button></div>${planSection(a)}`:'<p style="color:var(--muted)">Crie uma conta para baixar um modelo.</p>'}
     </div><div class="mini">${a?a.posts.slice(0,12).map(p=>`<div style="${bgi(p.slides[0],120,160)}"></div>`).join(''):''}</div>
     <div class="tks">tks<br>Fig.Feed</div></main>`;
   bindHeader();if(!a)return;
   app.querySelectorAll('[data-acc]').forEach(b=>b.onclick=()=>{dlAcc=b.dataset.acc;vDown()});
   bindPlanSection(a);
   document.getElementById('png').onclick=()=>exportPNG(a);
+  document.getElementById('png2').onclick=()=>exportPNG(a,a.posts,'grade-com-datas',true);
   document.getElementById('txt').onclick=()=>{
     const lines=[...a.posts].reverse().map((p,i)=>`${i+1}. ${fmt(p.date)} — ${p.title} (${p.slides.length} foto${p.slides.length>1?'s':''})\n${p.caption||'(sem legenda)'}\n`);
     saveFile(new Blob([`Cronograma ${a.handle}\nOrdem de publicação\n\n`+lines.join('\n')],{type:'text/plain'}),`${a.handle.replace('@','')}-legendas.txt`)};
 }
 function saveFile(blob,name){const u=URL.createObjectURL(blob);const l=document.createElement('a');l.href=u;l.download=name;document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),2000)}
 function loadImg(u){return new Promise(r=>{if(!u)return r(null);const i=new Image();i.crossOrigin='anonymous';i.onload=()=>r(i);i.onerror=()=>r(null);i.src=u})}
-async function exportPNG(a,posts=a.posts,sufixo='grade'){
+async function exportPNG(a,posts=a.posts,sufixo='grade',info=false){
   toast('Montando a imagem…');
-  const W=360,H=450,G=6,cols=3,rows=Math.max(1,Math.ceil(posts.length/cols));
-  const c=document.createElement('canvas');c.width=cols*W+(cols+1)*G;c.height=rows*H+(rows+1)*G+70;
+  const W=360,H=450,G=info?14:6,cols=3,rows=Math.max(1,Math.ceil(posts.length/cols)),IH=info?74:0,TOP=info?96:70;
+  const c=document.createElement('canvas');c.width=cols*W+(cols+1)*G;c.height=rows*(H+IH)+(rows+1)*G+TOP;
   const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);
   x.fillStyle='#0a0a0a';x.font='500 22px Inter, Arial';x.fillText(a.handle,G+4,42);
+  if(info){x.font='400 15px Inter, Arial';x.fillStyle='#7a7a7a';
+    x.fillText(`${posts.length} ${posts.length===1?'post':'posts'} · na ordem do feed: da esquerda para a direita, de cima para baixo`,G+4,70)}
   const imgs=await Promise.all(posts.map(p=>loadImg(src(p.slides[0],W,H))));
-  imgs.forEach((im,i)=>{const cx=G+(i%cols)*(W+G),cy=70+G+Math.floor(i/cols)*(H+G);x.fillStyle='#d9d9d9';x.fillRect(cx,cy,W,H);
-    if(im){const r=Math.max(W/im.width,H/im.height);const w=im.width*r,h=im.height*r;x.save();x.beginPath();x.rect(cx,cy,W,H);x.clip();x.drawImage(im,cx+(W-w)/2,cy+(H-h)/2,w,h);x.restore()}});
+  const DS=['dom','seg','ter','qua','qui','sex','sáb'];
+  const TAG={foto:'Foto',carrossel:'Carrossel',reels:'Reels'};
+  const pill=(t,px,py,dark)=>{x.font='600 14px Inter, Arial';const w=x.measureText(t).width+22;
+    x.fillStyle=dark?'#0a0a0a':'#efefef';x.beginPath();x.roundRect?x.roundRect(px-w,py,w,26,13):x.rect(px-w,py,w,26);x.fill();
+    x.fillStyle=dark?'#fff':'#0a0a0a';x.fillText(t,px-w+11,py+18);return w};
+  imgs.forEach((im,i)=>{const p=posts[i],cx=G+(i%cols)*(W+G),cy=TOP+G+Math.floor(i/cols)*(H+IH+G);x.fillStyle='#d9d9d9';x.fillRect(cx,cy,W,H);
+    if(im){const r=Math.max(W/im.width,H/im.height);const w=im.width*r,h=im.height*r;x.save();x.beginPath();x.rect(cx,cy,W,H);x.clip();x.drawImage(im,cx+(W-w)/2,cy+(H-h)/2,w,h);x.restore()}
+    if(!info)return;
+    const f=fmtOf(p),tag=f==='carrossel'?`Carrossel · ${p.slides.length}`:TAG[f]||'Foto';
+    // número da ordem no canto da foto
+    x.fillStyle='rgba(10,10,10,.78)';x.beginPath();x.arc(cx+22,cy+22,15,0,Math.PI*2);x.fill();
+    x.fillStyle='#fff';x.font='600 14px Inter, Arial';x.textAlign='center';x.fillText(String(i+1),cx+22,cy+27);x.textAlign='left';
+    const d=p.date?new Date(p.date+'T12:00'):null;
+    x.fillStyle='#0a0a0a';x.font='600 17px Inter, Arial';
+    x.fillText(d?`${DS[d.getDay()]} · ${p.date.slice(8,10)}/${p.date.slice(5,7)}${p.hora?' · '+String(p.hora).slice(0,5):''}`:'Sem data',cx,cy+H+28);
+    pill(tag,cx+W,cy+H+10,f==='reels');
+    x.fillStyle='#7a7a7a';x.font='400 14px Inter, Arial';let t=p.title||'';while(t&&x.measureText(t).width>W-4)t=t.slice(0,-2);
+    if(t!==(p.title||''))t=t.slice(0,-1)+'…';x.fillText(t,cx,cy+H+56)});
   try{c.toBlob(b=>{saveFile(b,`${a.handle.replace('@','')}-${sufixo}.png`);toast('Grade baixada')},'image/png')}catch(e){toast('Não deu para gerar a imagem neste navegador')}
 }
 
@@ -1852,9 +1907,12 @@ function vPerfil(){
     <div class="stats"><div><b>${streak}</b><span>${streak===1?'semana seguida':'semanas seguidas'} com post</span></div>
       <div><b>${avg}</b><span>posts por semana (últimos 3 meses)</span></div>
       <div><b style="text-transform:capitalize">${best}</b><span>dia da semana em que mais publica</span></div></div>
+    <h2 class="sec">Espaço</h2><div id="pf-esp">${espBloco(ESP,true)}</div>
+    <section id="indic" class="indic"><p class="sub">Carregando…</p></section>
     <h2 class="sec">Seus dados</h2>
-    <form id="pf"><div class="field"><label for="pn">Nome</label><input id="pn" value="${esc(S.profile.name)}"></div>
+    <form id="pf" class="cad pf-cad"><div class="field"><label for="pn">Nome</label><input id="pn" value="${esc(S.profile.name)}"></div>
       <div class="field"><label for="ph">Seu @</label><input id="ph" value="${esc(S.profile.handle)}" placeholder="@seu.perfil"></div>
+      ${sobreCampos(S.profile)}<div class="msg" id="pf-msg" hidden role="alert"></div>
       <button class="pill dark">Salvar</button></form></main>`;
   bindHeader();
   const hs=document.getElementById('hs');hs.scrollLeft=hs.scrollWidth;
@@ -1866,9 +1924,13 @@ function vPerfil(){
   heat.onclick=e=>{const c=e.target.closest('[data-d]');if(!c)return;hideTip();crWeek=monday(new Date(c.dataset.d+'T12:00'));crView='semana';go('crono')};
   document.getElementById('hacc').onchange=e=>{heatAcc=e.target.value;vPerfil()};
   document.getElementById('pav').onclick=()=>pickFiles({type:'profavatar'});
-  document.getElementById('pf').onsubmit=async e=>{e.preventDefault();let h=document.getElementById('ph').value.trim();if(h&&h[0]!=='@')h='@'+h;
-    const name=document.getElementById('pn').value.trim();await db(sb.from('profiles').update({name,handle:h}).eq('id',USER.id));
-    S.profile.name=name;S.profile.handle=h;toast('Perfil salvo');vPerfil()};
+  const pf=document.getElementById('pf');bindSobre(pf);
+  bindEspaco(document.getElementById('pf-esp'));loadEspaco().then(e=>{const x=document.getElementById('pf-esp');if(e&&x){x.innerHTML=espBloco(e,true);bindEspaco(x)}});
+  indicSection();
+  pf.onsubmit=async e=>{e.preventDefault();let h=document.getElementById('ph').value.trim();if(h&&h[0]!=='@')h='@'+h;
+    const so=lerSobre(pf);const pm=document.getElementById('pf-msg');if(so.erro){pm.textContent=so.erro;pm.className='msg err';pm.hidden=false;return}pm.hidden=true;
+    const name=document.getElementById('pn').value.trim();await db(sb.from('profiles').update({name,handle:h,...so}).eq('id',USER.id));
+    Object.assign(S.profile,{name,handle:h},so);toast('Perfil salvo');vPerfil()};
 }
 
 /* ======================= Configuração ======================= */
@@ -1926,14 +1988,14 @@ async function admLoad(){
 function admTabs(cur){
   const t=(g,id,n,extra='')=>`<a data-go="${g}" class="${cur===id?'cur':''}">${n}${extra}</a>`;
   const open=ADM.openTickets?`<span class="adm-n" title="Pedidos abertos">${ADM.openTickets}</span>`:'';
-  return `<nav class="adm-tabs" aria-label="Seções do Admin">${t('admin','painel','Visão geral')}${t('admin/usuarios','usuarios','Usuários')}${t('admin/assinaturas','assinaturas','Assinaturas')}${t('admin/planos','planos','Planos')}${t('admin/suporte','suporte','Suporte',open)}${t('admin/avisos','avisos','Avisos')}${t('admin/paginas','paginas','Páginas')}${t('admin/textos','textos','Textos')}${t('admin/menus','menus','Menus')}${t('admin/popups','popups','Pop-ups')}${t('admin/blog','blog','Blog')}${t('admin/templates','templates','Templates')}${t('admin/atividade','atividade','Atividade')}${t('admin/saude','saude','Saúde')}${t('admin/config','config','Configurações')}</nav>`;
+  return `<nav class="adm-tabs" aria-label="Seções do Admin">${t('admin','painel','Visão geral')}${t('admin/usuarios','usuarios','Usuários')}${t('admin/assinaturas','assinaturas','Assinaturas')}${t('admin/planos','planos','Planos')}${t('admin/suporte','suporte','Suporte',open)}${t('admin/beta','beta','Beta')}${t('admin/avisos','avisos','Avisos')}${t('admin/paginas','paginas','Páginas')}${t('admin/textos','textos','Textos')}${t('admin/menus','menus','Menus')}${t('admin/popups','popups','Pop-ups')}${t('admin/blog','blog','Blog')}${t('admin/templates','templates','Templates')}${t('admin/atividade','atividade','Atividade')}${t('admin/saude','saude','Saúde')}${t('admin/config','config','Configurações')}</nav>`;
 }
 function vAdmin(){
   if(!isAdmin())return v404();
   document.title='Admin · Fig.Feed';
-  const own={undefined:admPainel,planos:admPlanos,textos:admTextos,avisos:admAvisos,saude:admSaude,config:admConfig,menus:admMenus,paginas:()=>route[2]==='modelos'?admModelos():admPaginas(),pagina:admPaginaEditor,popups:admPopups,popup:admPopupEditor,templates:admTemplates,template:admTemplateEditor,blog:()=>route[2]?admBlogEditor():admBlog(),suporte:admSuporte,assinaturas:admAssinaturas}[route[1]];
+  const own={undefined:admPainel,planos:admPlanos,textos:admTextos,avisos:admAvisos,saude:admSaude,config:admConfig,menus:admMenus,paginas:()=>route[2]==='modelos'?admModelos():admPaginas(),pagina:admPaginaEditor,popups:admPopups,popup:admPopupEditor,templates:admTemplates,template:admTemplateEditor,blog:()=>route[2]?admBlogEditor():admBlog(),suporte:admSuporte,assinaturas:admAssinaturas,beta:admBeta}[route[1]];
   if(route[1]!=='textos')TXE=null;if(route[1]!=='planos')PLE=null;
-  if(own){if(!ADM.loaded&&!['suporte','assinaturas'].includes(route[1]))admLoad().catch(()=>{});return own()}
+  if(own){if(!ADM.loaded&&!['suporte','assinaturas','beta'].includes(route[1]))admLoad().catch(()=>{});return own()}
   const draw=()=>{if(route[0]!=='admin'||!isAdmin())return;(route[1]==='atividade'?admAtividade:admUsuarios)()};
   if(ADM.loaded)draw();
   else{app.innerHTML=header('admin')+admTabs(route[1]==='atividade'?'atividade':'usuarios')+`<main class="page adm"><p class="sub">Carregando…</p></main>`;bindHeader()}
@@ -2671,7 +2733,7 @@ function vManutencao(){
 async function loadManut(){try{const {data}=await sb.from('app_settings').select('value').eq('key','manutencao').maybeSingle();MANUT=!!data?.value?.ativo}catch(e){MANUT=false}}
 
 /* ======================= V6: páginas públicas e da conta ======================= */
-const PUBLIC=['termos','privacidade','ajuda','novidades','planos','r','blog','conectar','conectado','conectar-erro','p','landing'];
+const PUBLIC=['termos','privacidade','ajuda','novidades','planos','r','blog','conectar','conectado','conectar-erro','indicacao','p','landing'];
 function pubHeader(){return `<header class="pub-hdr"><button class="brand" data-go="home" aria-label="Fig.Feed, início">${LOGO()}<span>Fig.Feed</span></button>
   <div class="r"><button class="pill" data-go="entrar">Entrar</button><button class="pill dark" data-go="criar">Criar conta grátis</button></div></header>`}
 const shell=cur=>USER?header(cur):pubHeader();
@@ -2687,6 +2749,8 @@ const FAQ=[
   ['Meus clientes conseguem ver meu trabalho?','Sim, pelo relatório do mês. Abra a conta, vá em Relatório e clique em "Copiar link". O cliente abre pelo celular, sem criar conta, e o link vale por 30 dias.'],
   ['Como conecto o Instagram do cliente?','Abra a conta, toque na aba Resultados e em "Conectar Instagram". Se você tem o login, entre na hora; se não, toque em "Enviar link para o cliente": aparecem mensagens prontas (WhatsApp curto, com passo a passo, e-mail e lembrete) para copiar ou enviar. O cliente entra com o Instagram ou o Facebook, escolhe a empresa e o perfil e autoriza. Precisa ser conta profissional (Comercial ou Criador de conteúdo), mas não precisa de Página no Facebook.'],
   ['O cliente não consegue conectar o Instagram. E agora?','Confira três coisas: o perfil é profissional; na tela "Selecione os ativos" o perfil certo estava escolhido; e a empresa (portfólio) escolhida é a que tem esse perfil. Se o link tiver passado de 7 dias ou já tiver sido usado, gere um novo em Resultados.'],
+  ['Meu espaço está acabando. O que faço?','Toque na sua foto (no alto, à direita) e em "Liberar espaço". Você pode limpar a lixeira ou excluir feeds que não usa mais, para a lixeira (dá para recuperar por 30 dias) ou para sempre (libera o espaço na hora).'],
+  ['Como indico um amigo?','No seu Perfil, em "Indique amigos", copie o seu link ou envie pelo WhatsApp. Quem criar a conta por ele aparece na lista.'],
   ['Como mando o planejamento para o cliente aprovar?','Em Downloads, escolha a conta e o mês, escreva o objetivo e clique em "Baixar planejamento (PDF)". Na janela que abrir, escolha "Salvar como PDF".'],
   ['Como coloco várias fotos de uma vez no feed?','Dentro da conta, toque em "+ Criar" → "Adicionar posts" e escolha todas as fotos. Cada foto vira um post, na ordem do nome dos arquivos: a primeira fica no canto de cima, à esquerda. Depois é só arrastar para reorganizar. Para um carrossel (várias fotos no mesmo post), use "Novo post com fotos suas".'],
   ['Como planejo os stories?','Abra a conta e vá na aba Stories. Escolha o dia, envie as artes e arraste para mudar a ordem.'],
@@ -2708,6 +2772,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v18','Nov 2026',['Cadastro novo em 2 passos: nome e sobrenome, nascimento, gênero, o que você faz e onde mora (quem já tem conta completa o perfil uma vez)','Espaço: círculo que muda de cor conforme o uso (cinza, verde, amarelo, laranja e vermelho) no menu do perfil, no Perfil e na Biblioteca','Liberar espaço: limpar a lixeira ou excluir feeds (para a lixeira ou para sempre)','Plano Grátis: até 3 contas de clientes e 500 MB de fotos','Downloads e Selecionar: grade com a data, o horário e o tipo de cada post (Foto, Carrossel ou Reels)','Perfil: indique amigos com o seu link e veja quem entrou','Resultados: formulário para participar da beta do Instagram']],
   ['v17.2','Nov 2026',['"+ Criar → Adicionar posts": escolha várias fotos de uma vez e cada uma vira um post no feed','Botão Salvar na página do post: salva e volta para o feed','Conta nova: "Monte seu primeiro feed" com várias fotos ou com um feed de exemplo de 9 posts']],
   ['v17.1','Nov 2026',['Conectar Instagram: mensagens prontas para mandar ao cliente (WhatsApp curto, com passo a passo, e-mail, lembrete e reconectar)','Página do cliente com o passo a passo e as dúvidas mais comuns; telas de sucesso e de erro mais claras','O cliente agora entra com o Instagram ou com o Facebook, e a conexão não vence']],
   ['v17','Nov 2026',['Sininho de avisos no alto do app','Admin: Visão geral com os números do Fig.Feed, Planos editáveis (preço, itens e limites), ações sobre usuários (trocar senha, suspender, excluir), Textos do site (página inicial, Ajuda, Termos e Privacidade), Avisos, Configurações, Saúde do sistema e planilha de usuários']],
@@ -2845,7 +2910,7 @@ function vLanding(){
 
 /* ======================= V7: Planos (só a tela; a cobrança vem depois) ======================= */
 const PLANOS_DEF=[
-  {id:'gratis',n:'Grátis',p:'R$ 0',u:'para começar',it:['Até 2 contas de clientes','Feed, carrossel e cronograma','500 MB de fotos'],b:'Começar grátis'},
+  {id:'gratis',n:'Grátis',p:'R$ 0',u:'para começar',it:['Até 3 contas de clientes','Feed, carrossel e cronograma','500 MB de fotos'],b:'Começar grátis',contas:3,mb:500},
   {id:'pro',n:'Pro',p:'R$ 29',u:'por mês',it:['Contas ilimitadas','Link do relatório para clientes','Relatório do mês','10 GB de fotos'],b:'Assinar o Pro',top:true},
   {id:'agencia',n:'Agência',p:'R$ 79',u:'por mês',it:['Tudo do Pro','Até 5 pessoas na equipe','Marca da agência nos relatórios','50 GB de fotos'],b:'Falar com a gente'}];
 let PLANOS=PLANOS_DEF;
@@ -2944,9 +3009,9 @@ async function vBiblioteca(){
   if(libFilter!=='todas'&&libFilter!=='sem-uso'&&!accsWith.some(a=>a.id===libFilter))libFilter='todas';
   const shown=files.filter(f=>libFilter==='todas'||(libFilter==='sem-uso'?!used[f.name]:used[f.name]===libFilter));
   app.innerHTML=header('')+`<main class="page lib"><div class="pg-top"><div><h1>Biblioteca</h1>
-      <p class="sub" style="margin:0">${files.length} ${files.length===1?'foto':'fotos'} · ${fmtMB(total)} de ${fmtMB(COTA)} usados</p></div>
+      <p class="sub" style="margin:0">${files.length} ${files.length===1?'foto':'fotos'} · ${fmtMB(total)} usados</p></div>
       <button class="pill dark" id="lib-up">Enviar fotos</button></div>
-    <div class="bar-use" role="img" aria-label="${Math.round(total/COTA*100)}% do espaço usado"><i style="width:${Math.min(100,total/COTA*100).toFixed(1)}%"></i></div>
+    <div id="lib-esp" class="lib-esp">${ESP?espBloco(ESP):''}</div>
     <div class="chips lib-chips" role="group" aria-label="Filtrar fotos">${[['todas','Todas'],...accsWith.map(a=>[a.id,a.handle]),['sem-uso','Sem uso']].map(([k,l])=>
       `<button class="pill ${libFilter===k?'dark':''}" data-f="${k}" aria-pressed="${libFilter===k}">${esc(l)}</button>`).join('')}</div>
     ${shown.length?`<div class="lib-grid">${shown.map(f=>`<button class="lib-it" data-n="${esc(f.name)}" style="background-image:url('${URLS[f.name]||''}')" aria-label="${used[f.name]?'Foto em uso':'Foto sem uso'}">${used[f.name]?'':'<span class="free">sem uso</span>'}</button>`).join('')}</div>`
@@ -2954,6 +3019,7 @@ async function vBiblioteca(){
   bindHeader();
   app.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{libFilter=b.dataset.f;vBiblioteca()});
   document.getElementById('lib-up').onclick=()=>pickFiles({type:'biblioteca'});
+  {const le=document.getElementById('lib-esp');bindEspaco(le);loadEspaco().then(e=>{if(e&&route[0]==='biblioteca'&&document.body.contains(le)){le.innerHTML=espBloco(e,true);bindEspaco(le)}})}
   app.querySelectorAll('.lib-it').forEach(b=>b.onclick=e=>{e.stopPropagation();libMenu(b.dataset.n,used[b.dataset.n],b)});
 }
 function libMenu(name,u,btn){
@@ -3544,7 +3610,7 @@ async function vResultados(){
   let conn;try{conn=await igConn(a.id,true)}catch(e){conn=null}
   if(route[0]!=='resultados'||route[1]!==a.id)return;
   const main=app.querySelector('main');
-  if(!conn){main.innerHTML=igConnectCard(a);bindIgConnect(a);return}
+  if(!conn){const bb=await betaBox(a);if(route[0]!=='resultados'||route[1]!==a.id)return;main.innerHTML=bb+igConnectCard(a);bindBeta(a);bindIgConnect(a);return}
   let d;try{d=await igLoad(a,month)}catch(e){main.innerHTML='<p class="sub">Não deu para carregar os resultados agora.</p>';return}
   if(route[0]!=='resultados'||route[1]!==a.id)return;
   const k=d.k,days=new Date(+month.slice(0,4),+month.slice(5),0).getDate();
@@ -3792,6 +3858,273 @@ async function baixarCompleto(a,month){
   const res=resultadosPages(d,{noCover:true,noBack:true});
   const pl=planHTML(a,month,plan.objetivo,st,{bodyOnly:true,noCover:true});
   await printDoc(`Completo ${a.handle} ${MESES_RP[m-1]} ${y}`,cover+res+pl);
+}
+
+/* ======================= V18: cadastro completo ======================= */
+const PROFISSOES=['Social media','Designer','Criador(a) de conteúdo','Fotógrafo(a)','Agência','Dono(a) de negócio','Estudante','Outro'];
+const GENEROS=['Feminino','Masculino','Não binário','Prefiro não dizer'];
+const UFS=[['AC','Acre'],['AL','Alagoas'],['AP','Amapá'],['AM','Amazonas'],['BA','Bahia'],['CE','Ceará'],['DF','Distrito Federal'],['ES','Espírito Santo'],['GO','Goiás'],['MA','Maranhão'],['MT','Mato Grosso'],['MS','Mato Grosso do Sul'],['MG','Minas Gerais'],['PA','Pará'],['PB','Paraíba'],['PR','Paraná'],['PE','Pernambuco'],['PI','Piauí'],['RJ','Rio de Janeiro'],['RN','Rio Grande do Norte'],['RS','Rio Grande do Sul'],['RO','Rondônia'],['RR','Roraima'],['SC','Santa Catarina'],['SP','São Paulo'],['SE','Sergipe'],['TO','Tocantins']];
+const PAISES_COD='AD AE AF AG AL AM AO AR AT AU AZ BA BB BD BE BF BG BH BI BJ BN BO BR BS BT BW BY BZ CA CD CF CG CH CI CL CM CN CO CR CU CV CY CZ DE DJ DK DM DO DZ EC EE EG ER ES ET FI FJ FR GA GB GD GE GH GM GN GQ GR GT GW GY HK HN HR HT HU ID IE IL IN IQ IR IS IT JM JO JP KE KG KH KM KN KR KW KZ LA LB LC LI LK LR LS LT LU LV LY MA MC MD ME MG MK ML MM MN MO MR MT MU MV MW MX MY MZ NA NE NG NI NL NO NP NZ OM PA PE PG PH PK PL PR PS PT PY QA RO RS RU RW SA SB SC SD SE SG SI SK SL SM SN SO SR SS ST SV SY SZ TD TG TH TJ TL TM TN TO TR TT TW TZ UA UG US UY UZ VC VE VN VU WS YE ZA ZM ZW'.split(' ');
+let PAISES=null;
+function paises(){if(PAISES)return PAISES;let dn=null;try{dn=new Intl.DisplayNames(['pt-BR'],{type:'region'})}catch(e){}
+  PAISES=PAISES_COD.map(c=>[c,dn?dn.of(c):c]).sort((a,b)=>a[1].localeCompare(b[1],'pt-BR'));return PAISES}
+const MESES_CURTOS=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+const idadeDe=d=>{if(!d)return null;const b=new Date(d+'T12:00'),n=new Date();let a=n.getFullYear()-b.getFullYear();if(n.getMonth()<b.getMonth()||(n.getMonth()===b.getMonth()&&n.getDate()<b.getDate()))a--;return a};
+const IDADE_MIN=18;
+/* Campos de "sobre você" — usados no cadastro, no Perfil e no "Complete seu perfil" */
+function sobreCampos(v={},opt={}){
+  const [by,bm,bd]=(v.birth_date||'--').split('-');const ano=new Date().getFullYear();
+  const prof=PROFISSOES.includes(v.profession)||!v.profession?v.profession:'Outro';
+  const pais=v.country||'BR';
+  return `${opt.semNascimento?'':`<fieldset class="cad-fs"><legend>Data de nascimento</legend><div class="cad-row3">
+      <select id="cd-d" aria-label="Dia"><option value="">Dia</option>${Array.from({length:31},(_,i)=>`<option ${+bd===i+1?'selected':''}>${i+1}</option>`).join('')}</select>
+      <select id="cd-m" aria-label="Mês"><option value="">Mês</option>${MESES_CURTOS.map((m,i)=>`<option value="${i+1}" ${+bm===i+1?'selected':''}>${m}</option>`).join('')}</select>
+      <select id="cd-y" aria-label="Ano"><option value="">Ano</option>${Array.from({length:100},(_,i)=>ano-13-i).map(y=>`<option ${+by===y?'selected':''}>${y}</option>`).join('')}</select></div></fieldset>
+    <fieldset class="cad-fs"><legend>Gênero</legend><div class="cad-chips" role="radiogroup" aria-label="Gênero">${GENEROS.map(g=>`<label class="cad-chip"><input type="radio" name="cd-g" value="${g}" ${v.gender===g?'checked':''}><span>${g}</span></label>`).join('')}</div></fieldset>`}
+    ${opt.semProfissao?'':`<fieldset class="cad-fs"><legend>O que você faz?</legend><div class="cad-chips" role="radiogroup" aria-label="Profissão">${PROFISSOES.map(p=>`<label class="cad-chip"><input type="radio" name="cd-p" value="${p}" ${prof===p?'checked':''}><span>${p}</span></label>`).join('')}</div>
+      <input id="cd-po" class="cad-in" placeholder="Qual? Ex.: redatora, videomaker" maxlength="60" value="${prof==='Outro'&&v.profession!=='Outro'?esc(v.profession||''):''}" ${prof==='Outro'?'':'hidden'} aria-label="Qual a sua profissão"></fieldset>`}
+    ${opt.semLocal?'':`<fieldset class="cad-fs"><legend>Onde você mora</legend>
+      <select id="cd-c" class="cad-in" aria-label="País">${paises().map(([c,n])=>`<option value="${c}" ${pais===c?'selected':''}>${esc(n)}</option>`).join('')}</select>
+      <div class="cad-row2" id="cd-br" ${pais==='BR'?'':'hidden'}><select id="cd-s" aria-label="Estado"><option value="">Estado</option>${UFS.map(([s,n])=>`<option value="${s}" ${v.state===s?'selected':''}>${n}</option>`).join('')}</select>
+        <input id="cd-ci" list="cd-cis" placeholder="Cidade" maxlength="80" value="${esc(v.city||'')}" aria-label="Cidade" autocomplete="address-level2"><datalist id="cd-cis"></datalist></div>
+      <input id="cd-ci2" class="cad-in" placeholder="Cidade" maxlength="80" value="${pais!=='BR'?esc(v.city||''):''}" aria-label="Cidade" ${pais==='BR'?'hidden':''}></fieldset>`}`;
+}
+const IBGE={};
+async function cidadesDe(uf){if(!uf)return [];if(IBGE[uf])return IBGE[uf];
+  try{const r=await fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios`);const j=await r.json();IBGE[uf]=j.map(x=>x.nome);return IBGE[uf]}catch(e){return []}}
+function bindSobre(root){
+  const $=s=>root.querySelector(s);
+  root.querySelectorAll('input[name="cd-p"]').forEach(r=>r.onchange=()=>{const o=$('#cd-po');if(o){o.hidden=r.value!=='Outro'||!r.checked;if(!o.hidden)o.focus()}});
+  const fill=async()=>{const uf=$('#cd-s')?.value;const dl=$('#cd-cis');if(!dl)return;dl.innerHTML='';const cs=await cidadesDe(uf);dl.innerHTML=cs.map(c=>`<option value="${esc(c)}">`).join('')};
+  if($('#cd-s')){$('#cd-s').onchange=()=>{$('#cd-ci').value='';fill()};fill()}
+  if($('#cd-c'))$('#cd-c').onchange=e=>{const br=e.target.value==='BR';$('#cd-br').hidden=!br;$('#cd-ci2').hidden=br};
+}
+function lerSobre(root,opt={}){
+  const $=s=>root.querySelector(s);const out={};
+  if(!opt.semNascimento){const d=$('#cd-d').value,m=$('#cd-m').value,y=$('#cd-y').value;
+    if(!d||!m||!y)return {erro:'Escolha sua data de nascimento.'};
+    const dt=new Date(+y,+m-1,+d);if(dt.getMonth()!==+m-1)return {erro:'Essa data não existe. Confira o dia e o mês.'};
+    out.birth_date=`${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    if(idadeDe(out.birth_date)<IDADE_MIN)return {erro:`O Fig.Feed é para maiores de ${IDADE_MIN} anos.`};
+    out.gender=root.querySelector('input[name="cd-g"]:checked')?.value||'';if(!out.gender)return {erro:'Escolha uma opção de gênero (pode ser "Prefiro não dizer").'}}
+  if(!opt.semProfissao){let p=root.querySelector('input[name="cd-p"]:checked')?.value||'';if(!p)return {erro:'Conte o que você faz.'};
+    if(p==='Outro'){const o=$('#cd-po').value.trim();if(o)p=o.slice(0,60)}out.profession=p}
+  if(opt.semLocal)return out;
+  out.country=$('#cd-c').value;
+  if(out.country==='BR'){out.state=$('#cd-s').value;out.city=$('#cd-ci').value.trim().slice(0,80);if(!out.state)return {erro:'Escolha o seu estado.'};if(!out.city)return {erro:'Digite a sua cidade.'}}
+  else{out.state='';out.city=$('#cd-ci2').value.trim().slice(0,80)}
+  return out;
+}
+const refGet=()=>{try{return localStorage.getItem('figfeed-ref')||''}catch(e){return ''}};
+function vIndicacao(){const c=(route[1]||'').toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,12);
+  try{if(c)localStorage.setItem('figfeed-ref',c)}catch(e){}
+  if(USER){toast('Você já tem conta no Fig.Feed');return go('home')}go('criar')}
+let cadStep=1,cadData={};
+function vCadastro(){
+  document.getElementById('toast').hidden=true;
+  const ref=refGet();
+  const step1=`<h1>Crie sua conta</h1><p class="sub">Já tem conta? <a data-go="entrar">Entre aqui</a></p>
+      ${ref?'<p class="cad-ref">Você chegou por indicação de um amigo.</p>':''}
+      <div class="cad-row2"><input id="a-name" placeholder="Nome" autocomplete="given-name" aria-label="Nome" value="${esc(cadData.first||'')}" required>
+        <input id="a-last" placeholder="Sobrenome" autocomplete="family-name" aria-label="Sobrenome" value="${esc(cadData.last||'')}"></div>
+      <input id="a-email" type="email" placeholder="seu@email.com" autocomplete="email" aria-label="E-mail" value="${esc(cadData.email||'')}" required>
+      <div class="pw"><input id="a-pass" type="password" placeholder="Senha (mínimo 6 caracteres)" aria-label="Senha" autocomplete="new-password" required><button type="button" id="eye" aria-label="Mostrar senha">${EYE_OFF}</button></div>
+      ${sobreCampos(cadData,{semProfissao:true,semLocal:true})}
+      <button class="auth-btn" id="a-go">Continuar</button>
+      <p class="cad-steps">Passo 1 de 2</p>`;
+  const step2=`<h1>Sobre o seu trabalho</h1><p class="sub">Isso ajuda a deixar o Fig.Feed com a sua cara. <a id="cad-back" href="javascript:void 0">Voltar</a></p>
+      ${sobreCampos(cadData,{semNascimento:true})}
+      <label class="cad-terms"><input type="checkbox" id="cd-t" ${cadData.terms?'checked':''}> <span>Li e aceito os <a href="#termos" target="_blank">Termos de uso</a> e a <a href="#privacidade" target="_blank">Política de privacidade</a>.</span></label>
+      <button class="auth-btn" id="a-go">Criar conta</button>
+      <p class="cad-steps">Passo 2 de 2</p>`;
+  app.innerHTML=`<main class="auth"><section class="auth-l"><div class="top">${LOGO(true)}</div>
+    <form class="auth-f cad" id="af" novalidate>${cadStep===1?step1:step2}
+      <div class="msg" id="a-msg" hidden role="alert"></div>
+      <button type="button" class="forgot" id="resend" hidden>Não chegou? Reenviar o e-mail</button></form>
+    <div class="auth-word">Fig.Feed</div></section>${authPanel()}</main>`;
+  app.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+  const f=document.getElementById('af');bindSobre(f);
+  const msg=(t,ok)=>{const m=document.getElementById('a-msg');m.textContent=t;m.className='msg '+(ok?'ok':'err');m.hidden=false};
+  const eye=document.getElementById('eye');
+  if(eye)eye.onclick=()=>{const i=document.getElementById('a-pass');const show=i.type==='password';i.type=show?'text':'password';eye.innerHTML=show?EYE:EYE_OFF;eye.setAttribute('aria-label',show?'Esconder senha':'Mostrar senha')};
+  const back=document.getElementById('cad-back');if(back)back.onclick=()=>{cadData.terms=document.getElementById('cd-t').checked;Object.assign(cadData,lerSobreParcial(f));cadStep=1;vCadastro()};
+  (document.getElementById(cadStep===1?'a-name':'cd-c')||f).focus();
+  const resend=document.getElementById('resend');
+  resend.onclick=async()=>{resend.disabled=true;try{const {error}=await sb.auth.resend({type:'signup',email:cadData.email,options:{emailRedirectTo:BASE_URL()}});if(error)throw error;
+    msg(`Enviamos de novo para ${cadData.email}. Olhe também a caixa de spam.`,true)}catch(err){msg(traduz(err.message))}setTimeout(()=>resend.disabled=false,30000)};
+  f.onsubmit=async e=>{e.preventDefault();const btn=document.getElementById('a-go');
+    if(cadStep===1){
+      const first=document.getElementById('a-name').value.trim(),last=document.getElementById('a-last').value.trim();
+      const email=document.getElementById('a-email').value.trim(),pass=document.getElementById('a-pass').value;
+      if(!first)return msg('Digite seu nome.');
+      if(!/^\S+@\S+\.\S+$/.test(email))return msg('Digite um e-mail válido.');
+      if(!pass||pass.length<6)return msg('A senha precisa ter pelo menos 6 caracteres.');
+      const s=lerSobre(f,{semProfissao:true,semLocal:true});if(s.erro)return msg(s.erro);
+      Object.assign(cadData,{first,last,email,pass,birth_date:s.birth_date,gender:s.gender});cadStep=2;return vCadastro()}
+    const s=lerSobre(f,{semNascimento:true});if(s.erro)return msg(s.erro);
+    if(!document.getElementById('cd-t').checked)return msg('Para criar a conta, aceite os Termos e a Política de privacidade.');
+    btn.disabled=true;btn.textContent='Aguarde…';
+    const meta={name:[cadData.first,cadData.last].filter(Boolean).join(' ').slice(0,120),birth_date:cadData.birth_date,gender:cadData.gender,
+      profession:s.profession,country:s.country,state:s.state,city:s.city,ref:refGet(),termos_aceitos:new Date().toISOString()};
+    try{const {data,error}=await sb.auth.signUp({email:cadData.email,password:cadData.pass,options:{data:meta,emailRedirectTo:BASE_URL()}});
+      if(error)throw error;try{localStorage.removeItem('figfeed-ref')}catch(e){}
+      const em=cadData.email;cadData={pass:''};cadStep=1;
+      if(!data.session){f.querySelectorAll('fieldset,.cad-terms,#a-go,.cad-steps').forEach(x=>x.hidden=true);
+        f.querySelector('h1').textContent='Confira seu e-mail';f.querySelector('.sub').textContent='';cadData.email=em;
+        msg(`Conta criada! Enviamos um link de confirmação para ${em}. Clique nele para ativar sua conta.`,true);resend.hidden=false}
+    }catch(err){msg(traduz(err.message));btn.disabled=false;btn.textContent='Criar conta'}};
+}
+function lerSobreParcial(root){const o={};const g=k=>root.querySelector(k);
+  const p=root.querySelector('input[name="cd-p"]:checked')?.value;if(p)o.profession=p==='Outro'?(g('#cd-po').value.trim()||'Outro'):p;
+  if(g('#cd-c'))o.country=g('#cd-c').value;if(g('#cd-s'))o.state=g('#cd-s').value;o.city=(o.country==='BR'?g('#cd-ci')?.value:g('#cd-ci2')?.value)||'';return o}
+/* Quem já tinha conta completa o perfil uma vez */
+let perfilPedido=false;
+function pedirPerfil(){
+  if(perfilPedido||!USER||!S.profile)return;
+  const p=S.profile;if(p.profession&&p.birth_date&&p.country)return;
+  try{if(sessionStorage.getItem('figfeed-perfil-depois'))return}catch(e){}
+  if(!['home','contas','feed','crono','down'].includes(route[0]))return;
+  perfilPedido=true;
+  sheet(`<h2>Complete seu perfil</h2><p class="muted sm" style="margin:-4px 0 4px">Leva 30 segundos e nos ajuda a melhorar o Fig.Feed para quem trabalha como você.</p>
+    <form id="cp-f" class="cad cp-f" novalidate>${sobreCampos(p)}<div class="msg" id="cp-msg" hidden role="alert"></div>
+    <button class="pill dark wide" id="cp-ok">Salvar</button><button type="button" class="pill wide" id="cp-later">Agora não</button></form>`,m=>{
+    const f=m.querySelector('#cp-f');bindSobre(f);
+    m.querySelector('#cp-later').onclick=()=>{try{sessionStorage.setItem('figfeed-perfil-depois','1')}catch(e){}closeSheet()};
+    f.onsubmit=async e=>{e.preventDefault();const s=lerSobre(f);const mm=m.querySelector('#cp-msg');
+      if(s.erro){mm.textContent=s.erro;mm.className='msg err';mm.hidden=false;return}
+      const b=m.querySelector('#cp-ok');b.disabled=true;
+      try{await db(sb.from('profiles').update(s).eq('id',USER.id));Object.assign(S.profile,s);closeSheet();toast('Perfil completo. Obrigado!')}catch(err){b.disabled=false}}});
+}
+
+/* ======================= V18: espaço do plano ======================= */
+let ESP=null;
+async function loadEspaco(){try{const {data,error}=await sb.rpc('my_storage');if(error)throw error;ESP=data}catch(e){ESP=ESP||null}return ESP}
+function espLimite(e){if(!e)return null;if(e.limite_mb)return e.limite_mb*1048576;const p=PLANOS.find(x=>x.id===(e.plano||'gratis'));const mb=p&&p.mb!==''&&p.mb!=null?+p.mb:(e.plano||'gratis')==='gratis'?500:null;return mb?mb*1048576:null}
+function espCor(pct,usado){return !usado?'#c9c9c9':pct>=100?'#e0281c':pct>=90?'#f2602e':pct>=70?'#f2b01e':'#1fae5b'}
+const espMB=b=>b>=1024**3?(b/1024**3).toFixed(1).replace('.0','').replace('.',',')+' GB':b<1048576&&b>0?'menos de 1 MB':Math.round(b/1048576)+' MB';
+function espRing(e,size=44){
+  const usado=e?.usado||0,lim=espLimite(e),pct=lim?Math.min(100,usado/lim*100):usado?8:0;const r=(size-6)/2,c=2*Math.PI*r,cor=espCor(lim?usado/lim*100:usado?1:0,usado);
+  return `<svg class="esp-ring" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" role="img" aria-label="${lim?Math.round(usado/lim*100)+'% do espaço usado':espMB(usado)+' usados'}">
+    <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="#ececec" stroke-width="5"/>
+    <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${cor}" stroke-width="5" stroke-linecap="round" stroke-dasharray="${(pct/100*c).toFixed(2)} ${c.toFixed(2)}" transform="rotate(-90 ${size/2} ${size/2})"/>
+    ${size>=60?`<text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" font-size="${size/4.6}" font-weight="600" fill="currentColor">${lim?Math.round(usado/lim*100)+'%':''}</text>`:''}</svg>`;
+}
+function espTexto(e){const usado=e?.usado||0,lim=espLimite(e);
+  if(!lim)return {t:`${espMB(usado)} usados`,s:'Seu plano não tem limite de espaço'};
+  const pct=usado/lim*100;
+  return {t:`${espMB(usado)} de ${espMB(lim)}`,s:pct>=100?'Espaço cheio: libere espaço para enviar fotos':pct>=90?'Quase cheio':pct>=70?'Mais da metade usada':usado?'Espaço livre de sobra':'Nada usado ainda'}}
+function espBloco(e,big){const t=espTexto(e);return `<div class="esp ${big?'big':''}">${espRing(e,big?76:40)}<div class="esp-t"><b>${t.t}</b><small>${t.s}</small></div>
+  <button class="pill esp-lib" data-esp-lib>Liberar espaço</button></div>`}
+function bindEspaco(root){root.querySelectorAll('[data-esp-lib]').forEach(b=>b.onclick=e=>{e.stopPropagation();closeDrop&&closeDrop();liberarEspaco()})}
+async function liberarEspaco(){
+  const e=await loadEspaco();const lix=e?.lixeira||0;
+  sheet(`<h2>Liberar espaço</h2>${e?`<div style="margin:-2px 0 4px">${espBloco(e).replace('<button class="pill esp-lib" data-esp-lib>Liberar espaço</button>','')}</div>`:''}
+    <button class="esp-op" id="lb-lix"><b>1. Limpar a lixeira</b><span>${lix?`Libera cerca de ${espMB(lix)}. Apaga para sempre tudo o que está na lixeira.`:'Apaga para sempre tudo o que está na lixeira.'}</span></button>
+    <button class="esp-op" id="lb-feed"><b>2. Excluir feeds</b><span>Escolha as contas de clientes que você não usa mais.</span></button>
+    <button class="esp-op" id="lb-bib"><b>Ver fotos na Biblioteca</b><span>Apague fotos soltas, uma por uma.</span></button>`,m=>{
+    m.querySelector('#lb-lix').onclick=async ev=>{
+      if(!confirm('Excluir tudo da lixeira para sempre? Isso não pode ser desfeito.'))return;
+      const b=ev.currentTarget;b.disabled=true;b.querySelector('b').textContent='Limpando…';
+      try{const n=await purgeTrash(false);closeSheet();await loadEspaco();toast(n?`Lixeira limpa: ${n} ${n===1?'foto apagada':'fotos apagadas'}`:'Lixeira limpa',3200);if(route[0]==='lixeira'||route[0]==='biblioteca')render()}
+      catch(err){b.disabled=false;b.querySelector('b').textContent='1. Limpar a lixeira';toast('Não deu para limpar agora. Tente de novo.')}};
+    m.querySelector('#lb-feed').onclick=()=>excluirFeeds();
+    m.querySelector('#lb-bib').onclick=()=>{closeSheet();go('biblioteca')}});
+}
+function excluirFeeds(){
+  if(!S.accounts.length){closeSheet();toast('Você ainda não tem contas de clientes');return}
+  const sel=new Set();
+  const draw=()=>`<h2>Excluir feeds</h2><p class="muted sm" style="margin:-4px 0 2px">Marque as contas que quer excluir.</p>
+    <div class="ef-list" role="group" aria-label="Contas">${S.accounts.map(a=>`<label class="ef-it"><input type="checkbox" value="${a.id}" ${sel.has(a.id)?'checked':''}>
+      ${accAvHTML(a)}<span><b>${esc(a.handle)}</b><small>${a.posts.length} ${a.posts.length===1?'post':'posts'}</small></span></label>`).join('')}</div>
+    <button class="pill dark wide" id="ef-go" ${sel.size?'':'disabled'}>Excluir${sel.size?` (${sel.size})`:''}</button>`;
+  const open=()=>sheet(draw(),m=>{
+    m.querySelectorAll('.ef-it input').forEach(c=>c.onchange=()=>{c.checked?sel.add(c.value):sel.delete(c.value);const b=m.querySelector('#ef-go');b.disabled=!sel.size;b.textContent=`Excluir${sel.size?` (${sel.size})`:''}`});
+    m.querySelector('#ef-go').onclick=()=>escolherModo()});
+  const escolherModo=()=>{const n=sel.size,txt=n===1?'esta conta':`estas ${n} contas`;
+    sheet(`<h2>Como excluir?</h2><p class="muted sm" style="margin:-4px 0 4px">${[...sel].map(id=>esc(accById(id)?.handle||'')).join(', ')}</p>
+      <button class="esp-op" id="ef-lix"><b>Excluir para a lixeira</b><span>Some do app, mas dá para recuperar por 30 dias. As fotos continuam ocupando espaço até a lixeira ser limpa.</span></button>
+      <button class="esp-op danger" id="ef-perm"><b>Excluir permanentemente</b><span>Apaga ${txt} com posts, stories e fotos agora. Libera o espaço e não pode ser desfeito.</span></button>
+      <button class="pill wide" id="ef-back">Voltar</button>`,m=>{
+      m.querySelector('#ef-back').onclick=open;
+      const fim=async(msg)=>{S.accounts=S.accounts.filter(a=>!sel.has(a.id));closeSheet();await loadEspaco();toast(msg,3600);
+        if(['feed','car','stories','previa','relatorio','resultados'].includes(route[0])&&sel.has(route[1]))go('contas');else render()};
+      m.querySelector('#ef-lix').onclick=async ev=>{ev.currentTarget.disabled=true;
+        try{await db(sb.from('accounts').update({deleted_at:new Date().toISOString()}).in('id',[...sel]));await fim(`${n===1?'Conta movida':'Contas movidas'} para a lixeira (fica${n===1?'':'m'} lá por 30 dias)`)}catch(err){ev.currentTarget.disabled=false}};
+      m.querySelector('#ef-perm').onclick=async ev=>{
+        if(!confirm(`Excluir ${txt} para sempre? Posts, stories e fotos serão apagados e não dá para recuperar.`))return;
+        const b=ev.currentTarget;b.disabled=true;b.querySelector('b').textContent='Excluindo…';
+        try{const {data,error}=await sb.rpc('delete_accounts_now',{acc_ids:[...sel]});if(error)throw error;
+          const paths=(data||[]).map(x=>typeof x==='string'?x:x?.delete_accounts_now).filter(Boolean);
+          for(let i=0;i<paths.length;i+=100)await sb.storage.from('fotos').remove(paths.slice(i,i+100));
+          await fim(`${n===1?'Conta excluída':`${n} contas excluídas`} para sempre`)}
+        catch(err){b.disabled=false;b.querySelector('b').textContent='Excluir permanentemente';toast(traduz(err.message||''))}}})};
+  open();
+}
+
+/* ======================= V18: indicações ======================= */
+const refLink=()=>(BASE_URL()||location.href.split('#')[0])+'#indicacao/'+(S.profile.referral_code||'');
+async function indicSection(){
+  const box=document.getElementById('indic');if(!box)return;
+  let list=[];try{const {data}=await sb.rpc('my_referrals');list=data||[]}catch(e){}
+  const url=refLink(),txt=`Estou usando o Fig.Feed para montar e organizar os feeds dos meus clientes. Cria sua conta grátis por aqui: ${url}`;
+  box.innerHTML=`<div class="ind-top"><div><h2 class="sec" style="margin:0">Indique amigos</h2><p class="muted sm" style="margin:4px 0 0">Mande seu link para quem trabalha com redes sociais. Quem criar a conta por ele aparece aqui.</p></div>
+      <div class="ind-n"><b>${list.length}</b><span>${list.length===1?'indicação':'indicações'}</span></div></div>
+    <div class="ig-link"><span>${esc(url)}</span><button class="pill" id="ind-cp">Copiar</button></div>
+    <div class="ind-acts"><a class="pill dark" href="https://wa.me/?text=${encodeURIComponent(txt)}" target="_blank" rel="noopener">Indicar pelo WhatsApp</a>${navigator.share?'<button class="pill" id="ind-sh">Compartilhar</button>':''}</div>
+    ${list.length?`<ul class="ind-list">${list.map(r=>`<li><span class="ind-av">${esc((r.name||'?')[0].toUpperCase())}</span><b>${esc(r.name)}</b><small>entrou em ${new Date(r.created_at).toLocaleDateString('pt-BR')}</small><span class="ind-st ${r.confirmed?'ok':''}">${r.confirmed?'Conta ativa':'Falta confirmar o e-mail'}</span></li>`).join('')}</ul>`
+      :'<p class="muted sm">Ninguém ainda. Seu primeiro indicado aparece aqui.</p>'}`;
+  box.querySelector('#ind-cp').onclick=async()=>{try{await navigator.clipboard.writeText(url);toast('Link copiado')}catch(e){prompt('Copie o seu link:',url)}};
+  const sh=box.querySelector('#ind-sh');if(sh)sh.onclick=()=>navigator.share({title:'Fig.Feed',text:txt}).catch(()=>{});
+}
+
+/* ======================= V18: beta do Instagram ======================= */
+async function betaBox(a){
+  let mine=null;try{const {data}=await sb.from('beta_requests').select('*').eq('user_id',USER.id).order('created_at',{ascending:false}).limit(1);mine=data?.[0]||null}catch(e){}
+  if(mine)return `<section class="beta beta-ok"><b>${mine.status==='adicionado'?'Você está na beta':'Recebemos seu pedido para a beta'}</b>
+    <p class="muted sm">${mine.status==='adicionado'?`Sua conta ${esc(mine.instagram)} já foi liberada. Aceite o convite de testador no Instagram e toque em "Conectar Instagram" abaixo.`:mine.status==='recusado'?'Por enquanto as vagas da beta estão fechadas. Avisamos quando abrirem de novo.':`Vamos liberar ${esc(mine.instagram)} e avisar em ${esc(mine.contato||mine.email)}. Enquanto isso, você já pode tentar conectar abaixo.`}</p></section>`;
+  const p=S.profile||{};
+  return `<section class="beta"><div class="beta-h"><span class="beta-tag">Beta</span><h2>Participe da beta dos Resultados</h2></div>
+    <p class="muted">A conexão com o Instagram está em teste com um grupo pequeno de social medias. Quer entrar, ver os números das suas contas e nos ajudar a melhorar? Preencha abaixo: a gente libera a sua conta e avisa você.</p>
+    <form id="bt-f" class="beta-f" novalidate>
+      <label>Nome<input id="bt-n" value="${esc(p.name||'')}" maxlength="120" autocomplete="name" required></label>
+      <label>E-mail<input id="bt-e" type="email" value="${esc(USER.email||'')}" maxlength="200" autocomplete="email" required></label>
+      <label>Conta do Instagram que vai conectar<input id="bt-i" value="${esc(a?.handle||'')}" placeholder="@perfil.do.cliente" maxlength="60" required></label>
+      <label>WhatsApp para contato<input id="bt-c" type="tel" placeholder="(81) 9 9999-9999" maxlength="40" autocomplete="tel"></label>
+      <p class="muted sm" style="grid-column:1/-1;margin:0">A conta precisa ser profissional (Comercial ou Criador de conteúdo). Usamos esses dados só para liberar o seu acesso à beta.</p>
+      <div class="msg" id="bt-msg" hidden role="alert" style="grid-column:1/-1"></div>
+      <button class="pill dark" id="bt-go" style="grid-column:1/-1;justify-self:start">Quero participar</button></form></section>`;
+}
+function bindBeta(a){
+  const f=document.getElementById('bt-f');if(!f)return;
+  f.onsubmit=async e=>{e.preventDefault();const v=id=>document.getElementById(id).value.trim();const m=document.getElementById('bt-msg');
+    const err=t=>{m.textContent=t;m.className='msg err';m.hidden=false};
+    let ig=v('bt-i').replace(/\s+/g,'');if(ig&&ig[0]!=='@')ig='@'+ig;
+    if(!v('bt-n'))return err('Digite seu nome.');if(!/^\S+@\S+\.\S+$/.test(v('bt-e')))return err('Digite um e-mail válido.');
+    if(ig.length<2)return err('Digite o @ da conta do Instagram.');
+    const b=document.getElementById('bt-go');b.disabled=true;b.textContent='Enviando…';
+    try{await db(sb.from('beta_requests').insert({name:v('bt-n'),email:v('bt-e'),instagram:ig,contato:v('bt-c')||null}));toast('Pedido enviado! Avisamos quando liberar.',3600);vResultados()}
+    catch(e2){b.disabled=false;b.textContent='Quero participar'}};
+}
+/* Admin › Beta */
+async function admBeta(){
+  admShell('beta','<p class="sub">Carregando…</p>');
+  let list=[];try{list=await db(sb.from('beta_requests').select('*').order('created_at',{ascending:false}))}catch(e){return}
+  if(route[0]!=='admin'||route[1]!=='beta')return;
+  const ST={novo:['Novo','#2f45ff'],adicionado:['Adicionado','#14b85a'],recusado:['Recusado','#7a7a7a']};
+  const n=list.filter(x=>x.status==='novo').length;
+  admShell('beta',`<div class="adm-head"><div><h1>Beta do Instagram</h1><p class="sub">Quem pediu para testar os Resultados. Adicione o @ como <b>Testador do Instagram</b> no app da Meta (Funções do app) e marque como adicionado.</p></div>
+      ${list.length?'<button class="pill" id="bt-csv">Baixar planilha</button>':''}</div>
+    <div class="adm-stats sm"><div><b>${n}</b><span>esperando</span></div><div><b>${list.filter(x=>x.status==='adicionado').length}</b><span>adicionados</span></div><div><b>${list.length}</b><span>pedidos no total</span></div></div>
+    ${list.length?`<div class="bt-list">${list.map(x=>`<div class="bt-it" data-id="${x.id}"><div><b>${esc(x.instagram)}</b><small>${esc(x.name)} · ${esc(x.email)}${x.contato?' · '+esc(x.contato):''}</small><small>pediu em ${new Date(x.created_at).toLocaleDateString('pt-BR')}</small></div>
+      <span class="bt-st" style="color:${ST[x.status][1]}">${ST[x.status][0]}</span>
+      <div class="bt-acts"><button class="pill" data-cp="${esc(x.instagram.replace(/^@/,''))}">Copiar @</button>${x.status!=='adicionado'?'<button class="pill dark" data-st="adicionado">Marcar adicionado</button>':''}${x.status==='novo'?'<button class="pill" data-st="recusado">Recusar</button>':''}${x.status!=='novo'?'<button class="pill" data-st="novo">Voltar para novo</button>':''}</div></div>`).join('')}</div>`
+      :'<p class="sub" style="margin-top:20px">Nenhum pedido ainda. O formulário aparece na aba Resultados de quem ainda não conectou o Instagram.</p>'}`,900);
+  app.querySelectorAll('[data-cp]').forEach(b=>b.onclick=async()=>{try{await navigator.clipboard.writeText(b.dataset.cp);toast('@ copiado')}catch(e){prompt('Copie:',b.dataset.cp)}});
+  app.querySelectorAll('[data-st]').forEach(b=>b.onclick=async()=>{const id=b.closest('[data-id]').dataset.id;b.disabled=true;
+    try{await db(sb.from('beta_requests').update({status:b.dataset.st,updated_at:new Date().toISOString()}).eq('id',id));admBeta()}catch(e){b.disabled=false}});
+  const csv=document.getElementById('bt-csv');if(csv)csv.onclick=()=>{const q=s=>`"${String(s??'').replace(/"/g,'""')}"`;
+    const rows=[['Instagram','Nome','E-mail','Contato','Situação','Pedido em'],...list.map(x=>[x.instagram,x.name,x.email,x.contato,ST[x.status][0],new Date(x.created_at).toLocaleDateString('pt-BR')])];
+    saveFile(new Blob(['﻿'+rows.map(r=>r.map(q).join(';')).join('\n')],{type:'text/csv;charset=utf-8'}),'beta-instagram.csv')};
 }
 
 /* ======================= Início ======================= */
@@ -4587,7 +4920,7 @@ async function admPainel(){
 let PLE=null;
 function admPlanos(){
   if(!PLE){const P=SITE.planos||{};PLE={limites_ativos:!!P.limites_ativos,sub:P.sub||'',planos:PLANOS.map(x=>({id:x.id,n:x.n,p:x.p,u:x.u,it:[...x.it],b:x.b,top:!!x.top,
-    contas:x.contas??{gratis:2,pro:'',agencia:''}[x.id],mb:x.mb??{gratis:500,pro:10240,agencia:51200}[x.id]}))}}
+    contas:x.contas??{gratis:3,pro:'',agencia:''}[x.id],mb:x.mb??{gratis:500,pro:10240,agencia:51200}[x.id]}))}}
   const gm=isGM();const dis=gm?'':'disabled';
   admShell('planos',`<div class="adm-head"><div><h1>Planos</h1><p class="sub">Nome, preço, o que cada plano inclui e os limites. É o que aparece na página Planos.${gm?'':' Só o GM pode mudar.'}</p></div>
       <a class="pill" href="#planos">Ver a página Planos</a></div>
