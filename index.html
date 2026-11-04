@@ -471,7 +471,7 @@ kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;borde
 .adm-inv select{border:1px solid var(--line);border-radius:10px;padding:9px 10px;background:#fff}
 .adm-note{font-size:12px;color:var(--muted);margin:0 0 28px}
 .adm-list{border-top:1px solid var(--line)}
-.adm-row{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1.2fr) 110px;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
+.adm-row{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1.2fr) minmax(120px,1fr) 110px;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
 .adm-row .who2{display:flex;align-items:center;gap:10px;min-width:0}
 .adm-row .who2 .avatar{width:30px;height:30px;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:600}
 .adm-row .nm{display:flex;flex-direction:column;min-width:0}
@@ -492,7 +492,7 @@ kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;borde
 .role-help{font-size:12px;color:var(--muted);line-height:1.5;margin:0}
 .pill[disabled]{opacity:.45;cursor:default}
 @media (max-width:760px){.nav a[data-go="admin"]{display:none}}
-@media (max-width:640px){.adm-row{grid-template-columns:minmax(0,1fr) auto 96px}.adm-row .hide-sm{display:none}.adm-log .c{display:none}}
+@media (max-width:640px){.adm-row{grid-template-columns:minmax(0,1fr) auto 96px}.adm-row .hide-sm{display:none}.adm-row .u-esp{grid-column:1/-1;order:5;padding-left:40px}.adm-log .c{display:none}}
 
 /* ---------- Cronograma: semana e quadro ---------- */
 .cr{display:grid;grid-template-columns:230px minmax(0,1fr);gap:14px;padding:6px max(16px,2.2vw) 30px;min-height:calc(100vh - 66px)}
@@ -1011,6 +1011,8 @@ mark.ph{background:#fff1b8;color:inherit;border-radius:3px;padding:0 2px}
 .bt-list{display:flex;flex-direction:column;margin-top:18px}.bt-it{display:grid;grid-template-columns:1fr auto;gap:8px 16px;padding:14px 0;border-top:1px solid var(--line);align-items:center}
 .bt-it b{font-weight:500}.bt-it small{display:block;color:var(--muted);font-size:12.5px}.bt-st{font-size:13px;font-weight:500}.bt-acts{grid-column:1/-1;display:flex;gap:6px;flex-wrap:wrap}.bt-acts .pill{font-size:12.5px;padding:6px 11px}
 @media (max-width:560px){.beta-f{grid-template-columns:1fr}.cad-row3{grid-template-columns:.8fr 1fr 1fr}.esp{min-width:0}.ind-top{flex-direction:column}}
+.u-esp{display:flex;flex-direction:column;gap:4px;min-width:0}.u-bar{height:6px;background:#ececec;border-radius:99px;overflow:hidden}.u-bar i{display:block;height:100%;border-radius:99px}
+.u-esp small{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.u-esp.big{max-width:260px;display:flex!important}.u-esp.big .u-bar{height:8px}.u-esp.big small{font-size:12.5px}
 </style>
 </head>
 <body>
@@ -1338,7 +1340,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v18';
+const VERSAO='v18.1';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -2003,6 +2005,14 @@ function vAdmin(){
   admLoad().then(()=>{if(!was||JSON.stringify([ADM.users,ADM.invites,ADM.log])!==before)draw()}).catch(()=>{});
 }
 const userName=u=>u?(u.id===USER.id?'Você':(u.name||u.handle||u.email)):'';
+/* V18.1: barra de uso do espaço de cada usuário (cor igual ao círculo) */
+function admEspaco(u,big){
+  const usado=Number(u.espaco||0),adm=['gm','admin'].includes(u.role);
+  const p=PLANOS.find(x=>x.id===planoEf(u));const mb=!adm&&p&&p.mb!==''&&p.mb!=null?+p.mb:null;const lim=mb?mb*1048576:null;
+  const pct=lim?usado/lim*100:0,cor=espCor(lim?pct:usado?1:0,usado);
+  const txt=`${espMB(usado)}${lim?` de ${espMB(lim)}`:adm?' · sem limite (admin)':' · sem limite'}`;
+  return `<span class="u-esp ${big?'big':''}" title="${esc(txt)}${lim?` (${Math.round(pct)}%)`:''}">${lim?`<span class="u-bar"><i style="width:${Math.min(100,pct).toFixed(1)}%;background:${cor}"></i></span>`:''}<small>${txt}${lim&&pct>=100?' · cheio':''}</small></span>`;
+}
 function admUsuarios(){
   const f=ADM.filter,me=USER.id;
   const match=u=>f==='todos'||(f==='admins'?['gm','admin'].includes(u.role):u.role===f);
@@ -2024,12 +2034,12 @@ function admUsuarios(){
     <div class="adm-list">${users.map(u=>`<div class="adm-row">
         <div class="who2">${av(u)}<div class="nm"><b>${esc(u.name||u.handle||u.email)}${u.id===me?' (você)':''}</b>${u.name||u.handle?`<small>${esc(u.email)}</small>`:''}</div></div>
         <span><span class="rd r-${esc(u.role)}"></span>${roleName(u.role)}</span>
-        <span class="mut hide-sm">${state(u)}</span>
+        <span class="mut hide-sm">${state(u)}</span>${admEspaco(u)}
         <button class="ed" data-u="${u.id}">Abrir</button></div>`).join('')
       ||'<p class="sub" style="margin:18px 0">Ninguém com essa função ainda.</p>'}</div>
     ${ADM.invites.length?`<h2 class="adm-h2">Convites pendentes</h2><div class="adm-list">${ADM.invites.map(i=>`<div class="adm-row">
         <div class="who2"><span class="avatar" style="background:var(--soft)"></span><div class="nm"><b>${esc(i.email)}</b><small>Convidado em ${dBR(i.created_at)}</small></div></div>
-        <span><span class="rd r-${esc(i.role)}"></span>${roleName(i.role)}</span><span class="mut hide-sm">Aguardando cadastro</span>
+        <span><span class="rd r-${esc(i.role)}"></span>${roleName(i.role)}</span><span class="mut hide-sm">Aguardando cadastro</span><span class="hide-sm"></span>
         ${canCancel(i)?`<button class="ed" data-cancel="${esc(i.email)}">Cancelar</button>`:'<span></span>'}</div>`).join('')}</div>`:''}
   </main>`;
   bindHeader();
@@ -2055,7 +2065,7 @@ function admPanel(u){
     <div class="bar"><span class="saved">Usuário</span><button class="sp-close" id="ap-x" aria-label="Fechar">${XICON}</button></div>
     <div class="body"><div><div class="ttl" id="adm-pt" style="font-size:22px">${esc(u.name||u.handle||u.email)}</div><span class="saved">${esc(u.email)}</span>${u.suspenso?' <span class="sus-tag">Suspensa</span>':''}</div>
       <dl class="u-info"><dt>Plano</dt><dd>${PLANO_NOME[planoEf(u)]||'Grátis'}${u.plano_ate&&planoEf(u)!=='gratis'?' até '+dBR(u.plano_ate):''}</dd><dt>Cadastro</dt><dd>${dBR(u.created_at)}</dd>
-        <dt>Último acesso</dt><dd>${u.last_sign_in_at?dBR(u.last_sign_in_at):'nunca'}</dd><dt>Contas de clientes</dt><dd>${u.contas??'—'}</dd><dt>Posts</dt><dd>${u.posts??'—'}</dd><dt>Espaço de fotos</dt><dd>${u.espaco!=null?MB(u.espaco):'—'}</dd></dl>
+        <dt>Último acesso</dt><dd>${u.last_sign_in_at?dBR(u.last_sign_in_at):'nunca'}</dd><dt>Contas de clientes</dt><dd>${u.contas??'—'}</dd><dt>Posts</dt><dd>${u.posts??'—'}</dd><dt>Espaço de fotos</dt><dd>${admEspaco(u,true)}</dd></dl>
       ${canE?`<h3>Função</h3><div class="chips" role="radiogroup" aria-label="Função">${myRoleOpts().map(([r,n])=>`<button class="chip ${sel===r?'on':''}" role="radio" aria-checked="${sel===r}" data-r="${r}"><span class="rd r-${r}"></span>${n}</button>`).join('')}</div>
       <p class="role-help">${ROLE_DESC[sel]||''}</p>
       ${sel==='gm'&&u.role!=='gm'?'<p class="role-help" style="color:var(--err)">Outro GM tem o mesmo poder que você, inclusive sobre a sua conta.</p>':''}
@@ -2144,9 +2154,25 @@ async function setAvatar(ctx,file){
 /* ======================= Envio de fotos ======================= */
 let pickCtx=null;
 function pickFiles(ctx){pickCtx=ctx;const f=document.getElementById('file');f.value='';f.click()}
-function shrink(file){return new Promise(res=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{
-  const k=Math.min(1,1600/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);
-  c.getContext('2d').drawImage(im,0,0,c.width,c.height);c.toBlob(b=>res(b),'image/jpeg',.85)};im.onerror=()=>res(null);im.src=r.result};r.onerror=()=>res(null);r.readAsDataURL(file)})}
+/* V18.1: toda foto enviada fica com até 1080 px de largura (1920 de altura) e cerca de 300 KB.
+   Já pequena (JPEG até 300 KB e até 1080 px)? Vai como está, sem perder qualidade. */
+const FOTO_W=1080,FOTO_H=1920,FOTO_KB=300;
+function shrink(file,opt){
+  const o=opt&&typeof opt==='object'?opt:{};const MW=o.w||FOTO_W,MH=o.h||FOTO_H,ALVO=(o.kb||FOTO_KB)*1024;
+  return new Promise(res=>{const url=URL.createObjectURL(file);const im=new Image();
+    im.onerror=()=>{URL.revokeObjectURL(url);res(null)};
+    im.onload=async()=>{URL.revokeObjectURL(url);
+      let k=Math.min(1,MW/im.width,MH/im.height);
+      if(k===1&&file.type==='image/jpeg'&&file.size<=ALVO)return res(file);
+      const enc=(c,q)=>new Promise(r=>c.toBlob(b=>r(b),'image/jpeg',q));
+      let melhor=null;
+      for(let tent=0;tent<4;tent++){
+        const c=document.createElement('canvas');c.width=Math.max(1,Math.round(im.width*k));c.height=Math.max(1,Math.round(im.height*k));
+        const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.imageSmoothingQuality='high';x.drawImage(im,0,0,c.width,c.height);
+        for(const q of [.82,.74,.66,.58]){const b=await enc(c,q);if(!b)continue;if(!melhor||b.size<melhor.size)melhor=b;if(b.size<=ALVO)return res(b)}
+        k*=.85}
+      res(melhor)};
+    im.src=url})}
 async function uploadSlides(p,files){
   const room=10-p.slides.length;if(files.length>room)toast(`Só cabem mais ${room} foto(s) neste post`);
   files=files.slice(0,Math.max(0,room));if(!files.length)return;
@@ -2404,7 +2430,7 @@ async function admBlogEditor(){
 function pickBlogFiles(accept,multiple){return new Promise(res=>{const f=document.createElement('input');f.type='file';f.accept=accept;f.multiple=!!multiple;f.onchange=()=>res([...f.files]);f.click()})}
 async function uploadBlog(file){
   const gif=file.type==='image/gif';let blob=file;
-  if(!gif){blob=await shrink(file);if(!blob)throw new Error('Não deu para ler essa imagem.')}
+  if(!gif){blob=await shrink(file,{w:1600,h:1600,kb:450});if(!blob)throw new Error('Não deu para ler essa imagem.')}
   if(blob.size>10485760)throw new Error('O arquivo passa de 10 MB.');
   const path=`${new Date().toISOString().slice(0,7)}/${crypto.randomUUID()}.${gif?'gif':'jpg'}`;
   const {error}=await sb.storage.from('blog').upload(path,blob,{contentType:gif?'image/gif':'image/jpeg'});if(error)throw error;return path;
@@ -2772,6 +2798,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v18.1','Nov 2026',['Fotos menores no envio: até 1080 px e cerca de 300 KB cada, sem perder qualidade no Instagram','Liberar espaço › Otimizar fotos já enviadas: deixa as fotos antigas com o mesmo tamanho das novas','Admin › Usuários: barra de uso do espaço de cada pessoa','Plano Grátis: 3 contas de clientes e 15 MB de fotos (cerca de 50 posts), com os limites valendo']],
   ['v18','Nov 2026',['Cadastro novo em 2 passos: nome e sobrenome, nascimento, gênero, o que você faz e onde mora (quem já tem conta completa o perfil uma vez)','Espaço: círculo que muda de cor conforme o uso (cinza, verde, amarelo, laranja e vermelho) no menu do perfil, no Perfil e na Biblioteca','Liberar espaço: limpar a lixeira ou excluir feeds (para a lixeira ou para sempre)','Plano Grátis: até 3 contas de clientes e 500 MB de fotos','Downloads e Selecionar: grade com a data, o horário e o tipo de cada post (Foto, Carrossel ou Reels)','Perfil: indique amigos com o seu link e veja quem entrou','Resultados: formulário para participar da beta do Instagram']],
   ['v17.2','Nov 2026',['"+ Criar → Adicionar posts": escolha várias fotos de uma vez e cada uma vira um post no feed','Botão Salvar na página do post: salva e volta para o feed','Conta nova: "Monte seu primeiro feed" com várias fotos ou com um feed de exemplo de 9 posts']],
   ['v17.1','Nov 2026',['Conectar Instagram: mensagens prontas para mandar ao cliente (WhatsApp curto, com passo a passo, e-mail, lembrete e reconectar)','Página do cliente com o passo a passo e as dúvidas mais comuns; telas de sucesso e de erro mais claras','O cliente agora entra com o Instagram ou com o Facebook, e a conexão não vence']],
@@ -2910,7 +2937,7 @@ function vLanding(){
 
 /* ======================= V7: Planos (só a tela; a cobrança vem depois) ======================= */
 const PLANOS_DEF=[
-  {id:'gratis',n:'Grátis',p:'R$ 0',u:'para começar',it:['Até 3 contas de clientes','Feed, carrossel e cronograma','500 MB de fotos'],b:'Começar grátis',contas:3,mb:500},
+  {id:'gratis',n:'Grátis',p:'R$ 0',u:'para começar',it:['Até 3 contas de clientes','Feed, carrossel e cronograma','15 MB de fotos (cerca de 50 posts)'],b:'Começar grátis',contas:3,mb:15},
   {id:'pro',n:'Pro',p:'R$ 29',u:'por mês',it:['Contas ilimitadas','Link do relatório para clientes','Relatório do mês','10 GB de fotos'],b:'Assinar o Pro',top:true},
   {id:'agencia',n:'Agência',p:'R$ 79',u:'por mês',it:['Tudo do Pro','Até 5 pessoas na equipe','Marca da agência nos relatórios','50 GB de fotos'],b:'Falar com a gente'}];
 let PLANOS=PLANOS_DEF;
@@ -3999,7 +4026,7 @@ function pedirPerfil(){
 /* ======================= V18: espaço do plano ======================= */
 let ESP=null;
 async function loadEspaco(){try{const {data,error}=await sb.rpc('my_storage');if(error)throw error;ESP=data}catch(e){ESP=ESP||null}return ESP}
-function espLimite(e){if(!e)return null;if(e.limite_mb)return e.limite_mb*1048576;const p=PLANOS.find(x=>x.id===(e.plano||'gratis'));const mb=p&&p.mb!==''&&p.mb!=null?+p.mb:(e.plano||'gratis')==='gratis'?500:null;return mb?mb*1048576:null}
+function espLimite(e){if(!e)return null;if(e.limite_mb)return e.limite_mb*1048576;const p=PLANOS.find(x=>x.id===(e.plano||'gratis'));const mb=p&&p.mb!==''&&p.mb!=null?+p.mb:(e.plano||'gratis')==='gratis'?15:null;return mb?mb*1048576:null}
 function espCor(pct,usado){return !usado?'#c9c9c9':pct>=100?'#e0281c':pct>=90?'#f2602e':pct>=70?'#f2b01e':'#1fae5b'}
 const espMB=b=>b>=1024**3?(b/1024**3).toFixed(1).replace('.0','').replace('.',',')+' GB':b<1048576&&b>0?'menos de 1 MB':Math.round(b/1048576)+' MB';
 function espRing(e,size=44){
@@ -4021,14 +4048,46 @@ async function liberarEspaco(){
   sheet(`<h2>Liberar espaço</h2>${e?`<div style="margin:-2px 0 4px">${espBloco(e).replace('<button class="pill esp-lib" data-esp-lib>Liberar espaço</button>','')}</div>`:''}
     <button class="esp-op" id="lb-lix"><b>1. Limpar a lixeira</b><span>${lix?`Libera cerca de ${espMB(lix)}. Apaga para sempre tudo o que está na lixeira.`:'Apaga para sempre tudo o que está na lixeira.'}</span></button>
     <button class="esp-op" id="lb-feed"><b>2. Excluir feeds</b><span>Escolha as contas de clientes que você não usa mais.</span></button>
+    <button class="esp-op" id="lb-opt"><b>3. Otimizar fotos já enviadas</b><span id="lb-opt-s">Deixa as fotos antigas com 1080 px e cerca de 300 KB, como as novas. Calculando…</span></button>
     <button class="esp-op" id="lb-bib"><b>Ver fotos na Biblioteca</b><span>Apague fotos soltas, uma por uma.</span></button>`,m=>{
+    otimizarPrep(m);
     m.querySelector('#lb-lix').onclick=async ev=>{
       if(!confirm('Excluir tudo da lixeira para sempre? Isso não pode ser desfeito.'))return;
       const b=ev.currentTarget;b.disabled=true;b.querySelector('b').textContent='Limpando…';
       try{const n=await purgeTrash(false);closeSheet();await loadEspaco();toast(n?`Lixeira limpa: ${n} ${n===1?'foto apagada':'fotos apagadas'}`:'Lixeira limpa',3200);if(route[0]==='lixeira'||route[0]==='biblioteca')render()}
       catch(err){b.disabled=false;b.querySelector('b').textContent='1. Limpar a lixeira';toast('Não deu para limpar agora. Tente de novo.')}};
     m.querySelector('#lb-feed').onclick=()=>excluirFeeds();
+    m.querySelector('#lb-opt').onclick=ev=>otimizarFotos(ev.currentTarget);
     m.querySelector('#lb-bib').onclick=()=>{closeSheet();go('biblioteca')}});
+}
+/* Otimizar fotos que foram enviadas antes da v18.1 (troca o arquivo pelo menor, no mesmo lugar) */
+let OTM=null;
+async function otimizarPrep(m){
+  const s=m.querySelector('#lb-opt-s');OTM=null;
+  try{const {data,error}=await sb.rpc('my_files');if(error)throw error;
+    const grandes=(data||[]).filter(f=>Number(f.size||0)>FOTO_KB*1024*1.15&&!f.name.includes('/instagram/')&&/\.(jpe?g|png|webp)$/i.test(f.name));
+    const total=grandes.reduce((t,f)=>t+Number(f.size||0),0),ganho=Math.max(0,total-grandes.length*FOTO_KB*1024*.8);
+    OTM=grandes;if(!document.body.contains(s))return;
+    s.textContent=grandes.length?`${grandes.length} ${grandes.length===1?'foto pode':'fotos podem'} ficar menor${grandes.length===1?'':'es'}. Libera cerca de ${espMB(ganho)}. As fotos ficam com 1080 px, ótimo para o Instagram.`:'Suas fotos já estão otimizadas.';
+    if(!grandes.length)m.querySelector('#lb-opt').disabled=true}
+  catch(e){if(document.body.contains(s))s.textContent='Não deu para calcular agora.'}}
+async function otimizarFotos(btn){
+  if(!OTM||!OTM.length)return;
+  if(!confirm(`Otimizar ${OTM.length} ${OTM.length===1?'foto':'fotos'}? Elas ficam com 1080 px de largura (o tamanho do Instagram) e não dá para voltar ao arquivo original. Deixe esta tela aberta até terminar.`))return;
+  const lista=OTM;btn.disabled=true;const b=btn.querySelector('b'),sp=btn.querySelector('span');let ok=0,antes=0,depois=0,falhou=0;
+  await signPaths(lista.map(f=>f.name));
+  for(let i=0;i<lista.length;i++){const f=lista[i];b.textContent=`Otimizando ${i+1} de ${lista.length}…`;
+    try{const r=await fetch(URLS[f.name]);if(!r.ok)throw 0;const orig=await r.blob();
+      const novo=await shrink(new File([orig],'f.jpg',{type:orig.type||'image/jpeg'}));
+      if(!novo||novo.size>=orig.size*.9)continue;
+      const {error}=await sb.storage.from('fotos').upload(f.name,novo,{contentType:'image/jpeg',upsert:true});if(error)throw error;
+      ok++;antes+=orig.size;depois+=novo.size;delete URLS[f.name]}
+    catch(e){falhou++}}
+  b.textContent='3. Otimizar fotos já enviadas';OTM=null;
+  sp.textContent=ok?`Pronto: ${ok} ${ok===1?'foto otimizada':'fotos otimizadas'}, ${espMB(antes-depois)} liberados.${falhou?` ${falhou} não ${falhou===1?'deu':'deram'} certo; tente de novo depois.`:''}`:'Nenhuma foto precisou mudar.';
+  await loadEspaco();const top=document.querySelector('#ig-sheet .esp');if(top&&ESP)top.outerHTML=espBloco(ESP).replace('<button class="pill esp-lib" data-esp-lib>Liberar espaço</button>','');
+  await signPaths(lista.map(f=>f.name));
+  if(ok)toast(`${espMB(antes-depois)} liberados`,3200);
 }
 function excluirFeeds(){
   if(!S.accounts.length){closeSheet();toast('Você ainda não tem contas de clientes');return}
@@ -4780,7 +4839,7 @@ const limitesAtivos=()=>!!SITE.planos?.limites_ativos&&!isAdmin();
 async function espacoOk(files){
   if(!limitesAtivos())return true;
   try{const {data}=await sb.rpc('my_storage');if(!data?.limite_mb)return true;
-    const novo=files.reduce((s,f)=>s+Math.min(f.size||0,500000),0);
+    const novo=files.reduce((s,f)=>s+Math.min(f.size||0,FOTO_KB*1024),0);
     if(data.usado+novo>data.limite_mb*1048576){toast(`Seu plano tem ${MB(data.limite_mb*1048576)} de fotos e você já usa ${MB(data.usado)}. Apague fotos na Biblioteca ou veja os Planos.`,6000);return false}}catch(e){}
   return true;
 }
@@ -4920,7 +4979,7 @@ async function admPainel(){
 let PLE=null;
 function admPlanos(){
   if(!PLE){const P=SITE.planos||{};PLE={limites_ativos:!!P.limites_ativos,sub:P.sub||'',planos:PLANOS.map(x=>({id:x.id,n:x.n,p:x.p,u:x.u,it:[...x.it],b:x.b,top:!!x.top,
-    contas:x.contas??{gratis:3,pro:'',agencia:''}[x.id],mb:x.mb??{gratis:500,pro:10240,agencia:51200}[x.id]}))}}
+    contas:x.contas??{gratis:3,pro:'',agencia:''}[x.id],mb:x.mb??{gratis:15,pro:10240,agencia:51200}[x.id]}))}}
   const gm=isGM();const dis=gm?'':'disabled';
   admShell('planos',`<div class="adm-head"><div><h1>Planos</h1><p class="sub">Nome, preço, o que cada plano inclui e os limites. É o que aparece na página Planos.${gm?'':' Só o GM pode mudar.'}</p></div>
       <a class="pill" href="#planos">Ver a página Planos</a></div>
