@@ -6,6 +6,7 @@ Cada versão também tem uma branch própria, com o código exatamente como esta
 
 | Versão | Nome | O que trouxe | Branch | Commit |
 | --- | --- | --- | --- | --- |
+| v20 | Créditos e dados demográficos | Página #creditos (rodapé do menu: "Fig.Feed v20 · Créditos", sem a palavra Novidades); Admin › Usuários › Abrir mostra nascimento/idade, gênero, profissão, país, cidade/estado e indicações (função admin_user_demo, supabase/v20.sql) | [versao-20-creditos](https://github.com/hakachi7/Fig.Feed/tree/versao-20-creditos) |
 | v19.3 | Chave do Feed On | Feed On busca sempre com o Instagram do Fig.Feed (nunca com a conexão de um usuário); botão "Conectar o Instagram do Fig.Feed" em Admin › Beta; a 1ª conexão de um admin vira a chave sozinha | [versao-19-3-chave-feed-on](https://github.com/hakachi7/Fig.Feed/tree/versao-19-3-chave-feed-on) |
 | v19.2 | Feed On só com o link | Quem não tem Instagram conectado usa a conta do Fig.Feed (Admin › Beta); a mensagem não pede mais para conectar | [versao-19-2-feed-on-link](https://github.com/hakachi7/Fig.Feed/tree/versao-19-2-feed-on-link) |
 | v19.1 | Ordem de publicação | Na grade com datas e tipo, o número em cada foto passa a ser a ordem de publicação (1 = o primeiro a postar) | [versao-19-1-ordem-publicacao](https://github.com/hakachi7/Fig.Feed/tree/versao-19-1-ordem-publicacao) |

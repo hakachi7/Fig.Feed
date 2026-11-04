@@ -229,7 +229,9 @@ kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;borde
 .muted{color:var(--muted)}.ul{color:inherit;text-decoration:underline;cursor:pointer}
 .acts-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
 .pill.danger{color:var(--err);border-color:#f0b9b3}.pill.danger[disabled]{opacity:.5;cursor:default}
-.drop .ver{display:block;width:100%;text-align:left;color:#9a9a9a}.drop button.ver:hover{color:var(--fg)}
+.drop .ver{display:block;width:100%;text-align:left;color:#9a9a9a}.drop .ver button{color:inherit;font:inherit;padding:0}.drop .ver button:hover{color:var(--fg)}
+.mn-ver button{color:inherit;font:inherit;padding:0}.mn-ver button:hover{text-decoration:underline}
+.cred{max-width:520px}.cred p{font-size:clamp(20px,2.4vw,28px);line-height:1.35;margin:28px 0 0}.cred a{color:var(--fg)}.cred p.cred-v{font-size:13px;color:var(--muted);margin-top:36px}
 
 
 /* ---------- V7: página pública, Planos, Lixeira e Biblioteca ---------- */
@@ -1176,7 +1178,7 @@ function render(){
   const map={entrar:()=>vAuth('entrar'),criar:()=>vAuth('criar'),senha:()=>vAuth('senha'),'nova-senha':()=>vAuth('nova-senha'),
     home:vHome,menu:vMenu,contas:vContas,feed:vFeed,car:vCar,edit:vEdit,crono:vCrono,down:vDown,perfil:vPerfil,config:vConfig,
     admin:vAdmin,'boas-vindas':vTutorial,
-    termos:vTermos,privacidade:vPrivacidade,ajuda:vAjuda,novidades:vNovidades,seguranca:vSeguranca,excluir:vExcluir,
+    termos:vTermos,privacidade:vPrivacidade,ajuda:vAjuda,novidades:vNovidades,creditos:vCreditos,seguranca:vSeguranca,excluir:vExcluir,
     erro:()=>vErro(),'sem-internet':vOffline,
     planos:vPlanos,lixeira:vLixeira,biblioteca:vBiblioteca,blog:vBlog,suporte:vSuporte,
     stories:vStories,previa:vPrevia,relatorio:vRelatorio,r:vRelPublico,
@@ -1356,7 +1358,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v19.3';
+const VERSAO='v20';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -1383,7 +1385,7 @@ function appMenuHTML(){
   return menuItems('lista').map(mi).join('')
     +(accs?`<hr><span class="lbl">Suas contas</span>${accs}${S.accounts.length>5?`<button class="it" data-g="contas" style="color:var(--muted)">Ver todas (${S.accounts.length})</button>`:''}`:'')
     +`<hr>${isAdmin()?item('admin','Admin'):''}${item('perfil','Perfil')}${item('seguranca','Segurança')}${item('config','Configuração')}${item('blog','Blog')}${item('ajuda','Ajuda')}<button class="it danger" data-a="sair">${IC.sair}Sair</button>`
-    +`<button class="ver" data-g="novidades">Fig.Feed ${VERSAO} · Novidades</button>`;
+    +`<div class="ver"><button data-g="novidades">Fig.Feed ${VERSAO}</button> · <button data-g="creditos">Créditos</button></div>`;
 }
 function closeDrop(){document.querySelector('.drop')?.remove();openDrop=null;document.getElementById('appmenu')?.setAttribute('aria-expanded','false')}
 function dropdown(kind){
@@ -2082,6 +2084,7 @@ function admPanel(u){
     <div class="body"><div><div class="ttl" id="adm-pt" style="font-size:22px">${esc(u.name||u.handle||u.email)}</div><span class="saved">${esc(u.email)}</span>${u.suspenso?' <span class="sus-tag">Suspensa</span>':''}</div>
       <dl class="u-info"><dt>Plano</dt><dd>${PLANO_NOME[planoEf(u)]||'Grátis'}${u.plano_ate&&planoEf(u)!=='gratis'?' até '+dBR(u.plano_ate):''}</dd><dt>Cadastro</dt><dd>${dBR(u.created_at)}</dd>
         <dt>Último acesso</dt><dd>${u.last_sign_in_at?dBR(u.last_sign_in_at):'nunca'}</dd><dt>Contas de clientes</dt><dd>${u.contas??'—'}</dd><dt>Posts</dt><dd>${u.posts??'—'}</dd><dt>Espaço de fotos</dt><dd>${admEspaco(u,true)}</dd></dl>
+      <h3>Dados demográficos</h3><dl class="u-info" id="ap-demo">${admDemoHTML(u._demo)}</dl>
       ${canE?`<h3>Função</h3><div class="chips" role="radiogroup" aria-label="Função">${myRoleOpts().map(([r,n])=>`<button class="chip ${sel===r?'on':''}" role="radio" aria-checked="${sel===r}" data-r="${r}"><span class="rd r-${r}"></span>${n}</button>`).join('')}</div>
       <p class="role-help">${ROLE_DESC[sel]||''}</p>
       ${sel==='gm'&&u.role!=='gm'?'<p class="role-help" style="color:var(--err)">Outro GM tem o mesmo poder que você, inclusive sobre a sua conta.</p>':''}
@@ -2109,6 +2112,18 @@ function admPanel(u){
       try{await db(sb.rpc('set_user_role',{target:u.id,new_role:sel}));closePanel();toast(`${u.name||u.email} agora é ${roleName(sel)}`);await admLoad();admUsuarios()}
       catch(e){s.disabled=false}}};
   draw();document.body.appendChild(ov);document.addEventListener('keydown',panelEsc);(ov.querySelector('.chip.on')||ov.querySelector('#ap-x'))?.focus();
+  if(u._demo===undefined)sb.rpc('admin_user_demo',{target:u.id}).then(({data})=>{u._demo=data||null;const b=ov.querySelector('#ap-demo');if(b)b.innerHTML=admDemoHTML(u._demo)},()=>{u._demo=null;const b=ov.querySelector('#ap-demo');if(b)b.innerHTML=admDemoHTML(null)});
+}
+function admDemoHTML(d){
+  if(d===undefined)return '<dt>Carregando…</dt><dd></dd>';
+  if(!d)return '<dt>Sem dados</dt><dd>Não deu para carregar.</dd>';
+  const v=x=>x?esc(String(x)):'<span class="mut">não informado</span>';
+  const nasc=d.birth_date?`${dBR(d.birth_date+'T12:00')} · ${d.idade} anos`:null;
+  const pais=d.country?(paises().find(p=>p[0]===d.country)?.[1]||d.country):null;
+  const local=[d.city,d.state].filter(Boolean).join(' / ');
+  return `<dt>Nascimento</dt><dd>${v(nasc)}</dd><dt>Gênero</dt><dd>${v(d.gender)}</dd><dt>Profissão</dt><dd>${v(d.profession)}</dd>
+    <dt>País</dt><dd>${v(pais)}</dd><dt>Cidade / estado</dt><dd>${v(local)}</dd>
+    <dt>Indicado por</dt><dd>${d.indicado_por?esc(d.indicado_por):'<span class="mut">ninguém</span>'}</dd><dt>Indicou</dt><dd>${d.indicou||0} ${d.indicou==1?'pessoa':'pessoas'}</dd>`;
 }
 function admLogText(e){
   const d=e.details||{};const u=id=>ADM.users.find(x=>x.id===id);
@@ -2815,6 +2830,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v20','Nov 2026',['Página de Créditos, no rodapé do menu ao lado da versão','Admin › Usuários › Abrir: dados demográficos (nascimento e idade, gênero, profissão, país, cidade/estado e indicações)']],
   ['v19.3','Nov 2026',['Feed On para todo mundo: cole o link de qualquer perfil profissional e veja o feed, sem conectar o seu Instagram']],
   ['v19.2','Nov 2026',['Feed On: basta o link ou o @ do perfil, sem precisar conectar o seu Instagram']],
   ['v19.1','Nov 2026',['Grade com datas e tipo: o número em cada foto agora é a ordem de publicação (1 = o primeiro a postar)']],
@@ -2849,6 +2865,13 @@ const NOVIDADES=[
   ['v3','Nov 2026',['Menu no ícone de grade','Página não encontrada','Aviso de sem internet']],
   ['v2','Nov 2026',['Login e contas salvas na nuvem','Envio de fotos para o carrossel','Cronograma com semana e quadro','Painel do post com status, data e legenda','Quadro de constância no perfil','Download da grade e app instalável no celular']],
   ['v1','Nov 2026',['Primeira versão: feed com arrastar e soltar']]];
+function vCreditos(){
+  document.title='Créditos — Fig.Feed';
+  app.innerHTML=shell('')+`<main class="page doc cred"><h1>Créditos</h1>
+    <p>Projeto No code desenvolvido por <a class="ul" href="https://www.instagram.com/jvpereiras/" target="_blank" rel="noopener">@jvpereiras</a> / <a class="ul" href="https://www.jvpereira.cc" target="_blank" rel="noopener">www.jvpereira.cc</a></p>
+    <p class="cred-v">Fig.Feed ${VERSAO}</p></main>`;
+  bindShell();
+}
 function vNovidades(){
   app.innerHTML=shell('')+`<main class="page doc"><h1>Novidades</h1><p class="sub">Tudo que mudou no Fig.Feed.</p>
     <div id="nov-blog"></div>${NOVIDADES.map(([v,d,it])=>`<section class="rel"><div><b>${v}</b><small>${d}</small></div><ul>${it.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></section>`).join('')}</main>`;
@@ -4380,7 +4403,7 @@ sb.auth.onAuthStateChange((event,session)=>{
 // [rota, nome padrão, grupo (pub = pública, app = dentro do app), pode desligar]
 const PAGES=[
   ['landing','Página inicial (landing page)','pub',true],['entrar','Entrar','pub',false],['criar','Criar conta','pub',true],['planos','Planos','pub',true],
-  ['blog','Blog','pub',true],['ajuda','Ajuda','pub',true],['novidades','Novidades','pub',true],['r','Relatório compartilhado','pub',true],
+  ['blog','Blog','pub',true],['ajuda','Ajuda','pub',true],['novidades','Novidades','pub',true],['creditos','Créditos','pub',true],['r','Relatório compartilhado','pub',true],
   ['termos','Termos de uso','pub',false],['privacidade','Política de privacidade','pub',false],
   ['home','Início do app','app',false],['contas','Contas','app',true],['crono','Cronograma','app',true],['down','Downloads','app',true],['biblioteca','Biblioteca','app',true],
   ['lixeira','Lixeira','app',true],['stories','Stories','app',true],['previa','Prévia do perfil','app',true],['relatorio','Relatório do mês','app',true],
@@ -4506,7 +4529,7 @@ function vMenu(){
         <div class="mn-side">${S.accounts.length?`<div class="mn-grp"><span class="mn-lbl">SUAS CONTAS</span>${S.accounts.slice(0,5).map(a=>`<button class="mn-acc" data-go="feed/${a.id}">${accAvHTML(a)}${esc(a.handle)}</button>`).join('')}</div>`:''}
           <nav class="mn-grp" aria-label="Sua conta"><span class="mn-lbl">SUA CONTA</span>${conta.map(([k,n])=>`<button class="mn-l" data-go="${esc(pgLink(k))}">${esc(pgName(k,n))}</button>`).join('')}
             ${isAdmin()?`<button class="mn-l" data-go="admin">Admin <span class="mn-gm">${isGM()?'GM':'ADMIN'}</span></button>`:''}<button class="mn-l mn-out" id="mn-sair">Sair</button></nav></div></div>
-      <div class="mn-foot"><span class="mn-cr">credit / ${esc(handleOf(ph.credit))}</span><button class="mn-bg" id="mn-bg" aria-label="Trocar a foto de fundo">↻ outra foto</button><button class="mn-ver" data-go="novidades">Fig.Feed ${VERSAO} · Novidades</button></div></div></main>`;
+      <div class="mn-foot"><span class="mn-cr">credit / ${esc(handleOf(ph.credit))}</span><button class="mn-bg" id="mn-bg" aria-label="Trocar a foto de fundo">↻ outra foto</button><span class="mn-ver"><button data-go="novidades">Fig.Feed ${VERSAO}</button> · <button data-go="creditos">Créditos</button></span></div></div></main>`;
   app.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
   document.getElementById('mn-x').onclick=()=>go('home');
   document.getElementById('mn-sair').onclick=sair;
