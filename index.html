@@ -555,11 +555,11 @@ kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;borde
 .wk{display:flex;flex-direction:column;gap:3px}
 .wk .mo{height:15px;font-size:10px;color:var(--muted);white-space:nowrap;width:11px;overflow:visible}
 .wk .wd{height:11px;font-size:10px;line-height:11px;color:var(--muted);padding-right:4px;width:26px}
-.cell{width:11px;height:11px;border-radius:2px;background:#ececec;display:block}
-.cell.l1{background:#cfcfcf}.cell.l2{background:#9a9a9a}.cell.l3{background:#555}.cell.l4{background:#111}
+.cell{width:11px;height:11px;border-radius:2px;background:#ebedf0;display:block}
+.cell.l1{background:#9be9a8}.cell.l2{background:#40c463}.cell.l3{background:#30a14e}.cell.l4{background:#216e39}
 .cell.fut{background:#fff;box-shadow:inset 0 0 0 1px #e3e3e3}
-.cell.fut.f1{box-shadow:inset 0 0 0 1.5px #9a9a9a}.cell.fut.f2{box-shadow:inset 0 0 0 1.5px #333}
-.cell.today{outline:1.5px solid var(--accent);outline-offset:1px}
+.cell.fut.f1{box-shadow:inset 0 0 0 1.5px #40c463}.cell.fut.f2{box-shadow:inset 0 0 0 1.5px #216e39}
+.cell.today{outline:1.5px solid var(--fg);outline-offset:1px}
 .cell[data-d]{cursor:pointer}
 .heat-foot{display:flex;align-items:center;gap:5px;justify-content:flex-end;font-size:11px;color:var(--muted);margin-top:10px;flex-wrap:wrap}
 .heat-foot .sep{width:14px}
@@ -1358,7 +1358,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v20';
+const VERSAO='v20.1';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -2830,6 +2830,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v20.1','Nov 2026',['Perfil: o quadro de constância dos posts agora é verde, como no GitHub (quanto mais posts no dia, mais escuro)']],
   ['v20','Nov 2026',['Página de Créditos, no rodapé do menu ao lado da versão','Admin › Usuários › Abrir: dados demográficos (nascimento e idade, gênero, profissão, país, cidade/estado e indicações)']],
   ['v19.3','Nov 2026',['Feed On para todo mundo: cole o link de qualquer perfil profissional e veja o feed, sem conectar o seu Instagram']],
   ['v19.2','Nov 2026',['Feed On: basta o link ou o @ do perfil, sem precisar conectar o seu Instagram']],

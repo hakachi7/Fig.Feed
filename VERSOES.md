@@ -6,6 +6,7 @@ Cada versão também tem uma branch própria, com o código exatamente como esta
 
 | Versão | Nome | O que trouxe | Branch | Commit |
 | --- | --- | --- | --- | --- |
+| v20.1 | Quadro verde | Quadro de constância do Perfil em tons de verde (estilo GitHub); agendados com contorno verde | [versao-20-1-quadro-verde](https://github.com/hakachi7/Fig.Feed/tree/versao-20-1-quadro-verde) |
 | v20 | Créditos e dados demográficos | Página #creditos (rodapé do menu: "Fig.Feed v20 · Créditos", sem a palavra Novidades); Admin › Usuários › Abrir mostra nascimento/idade, gênero, profissão, país, cidade/estado e indicações (função admin_user_demo, supabase/v20.sql) | [versao-20-creditos](https://github.com/hakachi7/Fig.Feed/tree/versao-20-creditos) |
 | v19.3 | Chave do Feed On | Feed On busca sempre com o Instagram do Fig.Feed (nunca com a conexão de um usuário); botão "Conectar o Instagram do Fig.Feed" em Admin › Beta; a 1ª conexão de um admin vira a chave sozinha | [versao-19-3-chave-feed-on](https://github.com/hakachi7/Fig.Feed/tree/versao-19-3-chave-feed-on) |
 | v19.2 | Feed On só com o link | Quem não tem Instagram conectado usa a conta do Fig.Feed (Admin › Beta); a mensagem não pede mais para conectar | [versao-19-2-feed-on-link](https://github.com/hakachi7/Fig.Feed/tree/versao-19-2-feed-on-link) |
