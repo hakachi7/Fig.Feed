@@ -1015,6 +1015,20 @@ mark.ph{background:#fff1b8;color:inherit;border-radius:3px;padding:0 2px}
 .u-esp small{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.u-esp.big{max-width:260px;display:flex!important}.u-esp.big .u-bar{height:8px}.u-esp.big small{font-size:12.5px}
 .kpi.infra b{font-size:22px}.kpi.infra b small{font-size:13px;font-weight:400;color:var(--muted)}.kpi.infra .u-bar{margin:6px 0 2px;background:#e3e3e3}
 .infra-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}.infra-top select{font:inherit;font-size:13px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:#fff}.infra-top a{text-decoration:none;font-size:13px;padding:6px 12px}
+.dot{width:7px;height:7px;border-radius:50%;background:#1fae5b;display:inline-block;flex:none}.dot.off{background:transparent;border:1.5px solid currentColor;width:8px;height:8px}
+.fo-seg{display:flex;background:var(--soft);border-radius:99px;padding:3px;gap:2px;margin:-12px 0 10px;max-width:100%}.fo-seg button{border:0;background:none;font:inherit;font-size:13.5px;padding:7px 14px;border-radius:99px;color:#5a5a5a;cursor:pointer;white-space:nowrap}
+.fo-seg button.on{background:#fff;color:var(--fg);font-weight:500;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.fo-line{display:flex;align-items:center;gap:6px 10px;flex-wrap:wrap;justify-content:center;font-size:12.5px;color:var(--muted);margin-bottom:18px;max-width:400px}.fo-line b{color:var(--fg);font-weight:500}
+.fo-line .lnk{border:0;background:none;padding:0;font:inherit;font-size:12.5px;color:var(--fg);text-decoration:underline;cursor:pointer}
+.fo-two{display:flex;gap:56px;align-items:flex-start;justify-content:center;width:100%}.fo-two .pv-phone{width:min(400px,46vw)}.fo-col-t{font-size:13px;font-weight:500;text-align:center;margin-bottom:12px}
+.fo-grid{gap:2px}.fo-t{position:relative;aspect-ratio:4/5;background:var(--tile) center/cover;display:block;overflow:hidden}.fo-t img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.fo-ph{position:absolute;inset:0;background:#d9d9d9}.fo-lk{position:absolute;left:5px;top:5px;width:18px;height:18px;border-radius:50%;background:rgba(10,10,10,.6);color:#fff;display:grid;place-items:center}
+.fo-ic{position:absolute;right:6px;top:6px;width:14px;height:14px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.45))}.fo-ic svg{width:14px;height:14px;display:block}
+.fo-d{position:absolute;left:6px;bottom:5px;font-size:10px;color:#fff;text-shadow:0 0 3px rgba(0,0,0,.6)}
+.fo-pl{outline:2px dashed var(--fg);outline-offset:-2px;cursor:pointer}.fo-tag{position:absolute;left:5px;top:5px;font-size:9px;font-weight:700;background:#fff;color:var(--fg);border-radius:99px;padding:2px 6px;letter-spacing:.02em}
+.fo-site{display:block;font-size:13px;font-weight:600;color:#00376b;text-decoration:none;margin-top:2px}.fo-hl>span{display:flex;flex-direction:column;align-items:center;gap:5px}
+.fo-h{display:flex;align-items:center;gap:8px}.fo-in{width:100%;font-size:15px;padding:13px 14px}
+@media (max-width:560px){.fo-seg button{font-size:12.5px;padding:7px 11px}}
 </style>
 </head>
 <body>
@@ -1342,7 +1356,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v18.2';
+const VERSAO='v19';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -2777,6 +2791,7 @@ const FAQ=[
   ['Meus clientes conseguem ver meu trabalho?','Sim, pelo relatório do mês. Abra a conta, vá em Relatório e clique em "Copiar link". O cliente abre pelo celular, sem criar conta, e o link vale por 30 dias.'],
   ['Como conecto o Instagram do cliente?','Abra a conta, toque na aba Resultados e em "Conectar Instagram". Se você tem o login, entre na hora; se não, toque em "Enviar link para o cliente": aparecem mensagens prontas (WhatsApp curto, com passo a passo, e-mail e lembrete) para copiar ou enviar. O cliente entra com o Instagram ou o Facebook, escolhe a empresa e o perfil e autoriza. Precisa ser conta profissional (Comercial ou Criador de conteúdo), mas não precisa de Página no Facebook.'],
   ['O cliente não consegue conectar o Instagram. E agora?','Confira três coisas: o perfil é profissional; na tela "Selecione os ativos" o perfil certo estava escolhido; e a empresa (portfólio) escolhida é a que tem esse perfil. Se o link tiver passado de 7 dias ou já tiver sido usado, gere um novo em Resultados.'],
+  ['O que é o Feed On?','Na Prévia de uma conta, toque em "Feed On" e cole o link (ou o @) do perfil no Instagram. A Prévia mostra o feed que está no ar, travado. Em "Com planejamento", os posts planejados aparecem por cima, marcados como PLANEJADO. Funciona com perfis profissionais (Comercial ou Criador de conteúdo).'],
   ['Meu espaço está acabando. O que faço?','Toque na sua foto (no alto, à direita) e em "Liberar espaço". Você pode limpar a lixeira ou excluir feeds que não usa mais, para a lixeira (dá para recuperar por 30 dias) ou para sempre (libera o espaço na hora).'],
   ['Como indico um amigo?','No seu Perfil, em "Indique amigos", copie o seu link ou envie pelo WhatsApp. Quem criar a conta por ele aparece na lista.'],
   ['Como mando o planejamento para o cliente aprovar?','Em Downloads, escolha a conta e o mês, escreva o objetivo e clique em "Baixar planejamento (PDF)". Na janela que abrir, escolha "Salvar como PDF".'],
@@ -2800,6 +2815,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v19','Nov 2026',['Feed On na Prévia: cole o link ou o @ de um perfil profissional e veja o feed que está no ar, travado','Com planejamento: os posts planejados aparecem por cima do feed real, marcados como PLANEJADO','No computador, Antes × depois lado a lado; Baixar PNG em todos os modos para mandar ao cliente']],
   ['v18.2','Nov 2026',['Admin › Visão geral: quanto o Fig.Feed usa do servidor (fotos, banco, pessoas ativas), quantas pessoas do Grátis ainda cabem e avisos quando um plano promete mais espaço do que existe']],
   ['v18.1','Nov 2026',['Fotos menores no envio: até 1080 px e cerca de 300 KB cada, sem perder qualidade no Instagram','Liberar espaço › Otimizar fotos já enviadas: deixa as fotos antigas com o mesmo tamanho das novas','Admin › Usuários: barra de uso do espaço de cada pessoa','Plano Grátis: 3 contas de clientes e 15 MB de fotos (cerca de 50 posts), com os limites valendo']],
   ['v18','Nov 2026',['Cadastro novo em 2 passos: nome e sobrenome, nascimento, gênero, o que você faz e onde mora (quem já tem conta completa o perfil uma vez)','Espaço: círculo que muda de cor conforme o uso (cinza, verde, amarelo, laranja e vermelho) no menu do perfil, no Perfil e na Biblioteca','Liberar espaço: limpar a lixeira ou excluir feeds (para a lixeira ou para sempre)','Plano Grátis: até 3 contas de clientes e 500 MB de fotos','Downloads e Selecionar: grade com a data, o horário e o tipo de cada post (Foto, Carrossel ou Reels)','Perfil: indique amigos com o seu link e veja quem entrou','Resultados: formulário para participar da beta do Instagram']],
@@ -3137,11 +3153,16 @@ const hlList=a=>(a.highlights||[]).slice(0,HL_MAX).map(h=>typeof h==='string'?{n
 const hlCircle=(h,size=120)=>h.path?`style="${bgi({path:h.path},size,size)}"`:'';
 function vPrevia(){
   const a=accById(route[1]);if(!a)return v404('conta');
+  if(!(a.id in FO)){app.innerHTML=accHeader(a,'previa')+'<main class="pv"><p class="sub">Carregando…</p></main>';bindHeader();
+    foLoad(a).then(()=>{if(route[0]==='previa'&&route[1]===a.id)vPrevia()});return}
+  const f=FO[a.id];let mode=f?(PVM[a.id]||'atual'):'plan';if(mode==='antes'&&innerWidth<900)mode='com';PVM[a.id]=mode;
   const hl=hlList(a);
   const nome=a.display_name||a.handle.replace(/^@/,'');
   app.innerHTML=accHeader(a,'previa')+`<main class="pv">
-    <div class="pv-tog" role="group" aria-label="Modo"><button class="pill dark" aria-pressed="true">Prévia</button><button class="pill" data-go="feed/${a.id}">Editar grade</button><button class="pill" id="pv-png">Baixar PNG</button></div>
-    <section class="pv-phone" aria-label="Prévia do perfil ${esc(a.handle)}">
+    <div class="pv-tog" role="group" aria-label="Modo"><button class="pill dark" aria-pressed="true">Prévia</button><button class="pill" data-go="feed/${a.id}">Editar grade</button><button class="pill ${f?'dark':''}" id="pv-fo" aria-label="Feed On: ver o feed que está no ar"><span class="dot ${f?'':'off'}"></span>Feed On</button><button class="pill" id="pv-png">Baixar PNG</button></div>
+    ${f?foBarHTML(a,f,mode):''}
+    ${mode==='atual'||mode==='com'?foPerfilHTML(a,f,mode):mode==='antes'?`<div class="fo-two">${foPerfilHTML(a,f,'atual','Antes · como está hoje')}${foPerfilHTML(a,f,'com','Depois · com o planejamento')}</div>`:''}
+    ${mode!=='plan'?'':`<section class="pv-phone" aria-label="Prévia do perfil ${esc(a.handle)}">
       <div class="pv-head"><button class="pv-avbtn" id="pv-av" aria-label="Trocar foto de perfil"><span class="avatar pv-av" style="${bgi(accAv(a),200,200)}"></span><span class="lb">trocar</span></button>
         <div class="pv-nums"><div><b>${fmtNum(a.posts.length)}</b><span>posts</span></div><div><b>${fmtNum(a.followers)}</b><span>seguidores</span></div><div><b>${fmtNum(a.following)}</b><span>seguindo</span></div></div></div>
       <div class="pv-bio"><b>${esc(nome)}</b>${a.bio?`<p>${esc(a.bio)}</p>`:'<p class="muted">Sem bio ainda.</p>'}</div>
@@ -3151,11 +3172,20 @@ function vPrevia(){
       <div class="pv-tabs" role="tablist"><span class="cur" role="tab" aria-selected="true">Posts</span><span role="tab" aria-disabled="true">Reels</span><span role="tab" aria-disabled="true">Marcados</span></div>
       ${a.posts.length?`<div class="pv-grid">${a.posts.map(p=>`<a data-go="car/${a.id}/${p.id}" aria-label="${esc(p.title)}" style="${bgi(p.slides[0],300,375)}"></a>`).join('')}</div>`
         :`<p class="muted" style="text-align:center;padding:40px 0">Nenhum post ainda. Monte a grade em "Editar grade".</p>`}
-    </section></main>`;
+    </section>`}</main>`;
   bindHeader();
-  document.getElementById('pv-edit').onclick=()=>pvForm(a);
-  document.getElementById('pv-av').onclick=()=>pickFiles({type:'accavatar',acc:a.id});
-  document.getElementById('pv-png').onclick=e=>previaPNG(a,e.currentTarget);
+  const $=id=>document.getElementById(id);
+  if($('pv-edit'))$('pv-edit').onclick=()=>pvForm(a);
+  if($('pv-av'))$('pv-av').onclick=()=>pickFiles({type:'accavatar',acc:a.id});
+  $('pv-png').onclick=e=>mode==='plan'?previaPNG(a,e.currentTarget):foPNG(a,e.currentTarget,mode);
+  $('pv-fo').onclick=()=>foSheet(a);
+  app.querySelectorAll('[data-pvm]').forEach(b=>b.onclick=()=>{PVM[a.id]=b.dataset.pvm;vPrevia()});
+  if($('fo-tr'))$('fo-tr').onclick=()=>foSheet(a);
+  if($('fo-plan'))$('fo-plan').onclick=()=>{PVM[a.id]='plan';vPrevia()};
+  if($('fo-up'))$('fo-up').onclick=async e=>{const b=e.currentTarget;b.disabled=true;b.textContent='Atualizando…';
+    const r=await foFetch(a,f.username);if(!r.ok)toast(r.texto,4500);if(route[0]==='previa'&&route[1]===a.id)vPrevia()};
+  // o Instagram troca os endereços das fotos de tempos em tempos: com mais de 1 dia, busca de novo sozinho
+  if(f&&Date.now()-new Date(f.fetched_at)>864e5&&!vPrevia.busy){vPrevia.busy=true;foFetch(a,f.username).then(r=>{vPrevia.busy=false;if(r.ok&&route[0]==='previa'&&route[1]===a.id)vPrevia()})}
   app.querySelectorAll('[data-hl]').forEach(b=>b.onclick=()=>hlEditor(a,b.dataset.hl==='novo'?null:+b.dataset.hl));
 }
 function pvForm(a){
@@ -4174,7 +4204,7 @@ async function admBeta(){
   if(route[0]!=='admin'||route[1]!=='beta')return;
   const ST={novo:['Novo','#2f45ff'],adicionado:['Adicionado','#14b85a'],recusado:['Recusado','#7a7a7a']};
   const n=list.filter(x=>x.status==='novo').length;
-  admShell('beta',`<div class="adm-head"><div><h1>Beta do Instagram</h1><p class="sub">Quem pediu para testar os Resultados. Adicione o @ como <b>Testador do Instagram</b> no app da Meta (Funções do app) e marque como adicionado.</p></div>
+  admShell('beta',`<div id="fo-viewer"></div><div class="adm-head"><div><h1>Beta do Instagram</h1><p class="sub">Quem pediu para testar os Resultados. Adicione o @ como <b>Testador do Instagram</b> no app da Meta (Funções do app) e marque como adicionado.</p></div>
       ${list.length?'<button class="pill" id="bt-csv">Baixar planilha</button>':''}</div>
     <div class="adm-stats sm"><div><b>${n}</b><span>esperando</span></div><div><b>${list.filter(x=>x.status==='adicionado').length}</b><span>adicionados</span></div><div><b>${list.length}</b><span>pedidos no total</span></div></div>
     ${list.length?`<div class="bt-list">${list.map(x=>`<div class="bt-it" data-id="${x.id}"><div><b>${esc(x.instagram)}</b><small>${esc(x.name)} · ${esc(x.email)}${x.contato?' · '+esc(x.contato):''}</small><small>pediu em ${new Date(x.created_at).toLocaleDateString('pt-BR')}</small></div>
@@ -4184,9 +4214,140 @@ async function admBeta(){
   app.querySelectorAll('[data-cp]').forEach(b=>b.onclick=async()=>{try{await navigator.clipboard.writeText(b.dataset.cp);toast('@ copiado')}catch(e){prompt('Copie:',b.dataset.cp)}});
   app.querySelectorAll('[data-st]').forEach(b=>b.onclick=async()=>{const id=b.closest('[data-id]').dataset.id;b.disabled=true;
     try{await db(sb.from('beta_requests').update({status:b.dataset.st,updated_at:new Date().toISOString()}).eq('id',id));admBeta()}catch(e){b.disabled=false}});
+  foViewerBox();
   const csv=document.getElementById('bt-csv');if(csv)csv.onclick=()=>{const q=s=>`"${String(s??'').replace(/"/g,'""')}"`;
     const rows=[['Instagram','Nome','E-mail','Contato','Situação','Pedido em'],...list.map(x=>[x.instagram,x.name,x.email,x.contato,ST[x.status][0],new Date(x.created_at).toLocaleDateString('pt-BR')])];
     saveFile(new Blob(['﻿'+rows.map(r=>r.map(q).join(';')).join('\n')],{type:'text/csv;charset=utf-8'}),'beta-instagram.csv')};
+}
+
+/* ======================= V19: Feed On (Prévia com o feed que está no ar) ======================= */
+const FO={};            // por conta: {username,data,fetched_at} ou null
+const PVM={};           // modo da Prévia por conta: 'atual' | 'com' | 'antes' | 'plan'
+const FO_LOCK='<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
+const FO_MULTI='<svg viewBox="0 0 24 24" fill="#fff"><rect x="7" y="3" width="14" height="14" rx="2"/><path d="M5 7v12a2 2 0 0 0 2 2h12" fill="none" stroke="#fff" stroke-width="2"/></svg>';
+const FO_REEL='<svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>';
+async function foLoad(a,force){
+  if(!force&&a.id in FO)return FO[a.id];
+  try{const {data}=await sb.from('feedon').select('username,data,fetched_at').eq('account_id',a.id).maybeSingle();FO[a.id]=data||null}catch(e){if(!(a.id in FO))FO[a.id]=null}
+  return FO[a.id];
+}
+const foAgo=t=>{const m=Math.max(0,Math.round((Date.now()-new Date(t))/60000));return m<1?'agora':m<60?`há ${m} min`:m<1440?`há ${Math.round(m/60)} h`:`há ${Math.round(m/1440)} ${Math.round(m/1440)===1?'dia':'dias'}`};
+const foMedia=f=>(f?.data?.media?.data||[]).map(m=>({id:m.id,url:(m.media_type==='VIDEO'?m.thumbnail_url:m.media_url)||m.thumbnail_url||'',
+  kind:m.media_product_type==='REELS'?'reels':m.media_type==='CAROUSEL_ALBUM'?'carrossel':m.media_type==='VIDEO'?'reels':'foto',link:m.permalink||'',ts:m.timestamp}));
+const foPlanned=a=>a.posts.filter(p=>p.status!=='publicado');
+const foDD=ts=>{const d=new Date(ts);return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}`};
+const foDDp=p=>p.date?`${p.date.slice(8,10)}/${p.date.slice(5,7)}`:'';
+/* Um perfil (atual ou com planejamento) no formato da Prévia */
+function foPerfilHTML(a,f,mode,titulo){
+  const d=f.data||{},plan=mode==='com'?foPlanned(a):[],real=foMedia(f);
+  const hl=hlList(a);const avUrl=d.profile_picture_url;
+  const tiles=plan.map(p=>`<a class="fo-t fo-pl" data-go="car/${a.id}/${p.id}" style="${bgi(p.slides[0],300,375)}" aria-label="Planejado: ${esc(p.title)}"><span class="fo-tag">PLANEJADO</span>${p.slides.length>1?`<span class="fo-ic">${FO_MULTI}</span>`:fmtOf(p)==='reels'?`<span class="fo-ic">${FO_REEL}</span>`:''}<span class="fo-d">${foDDp(p)}</span></a>`).join('')
+    +real.map(m=>`<a class="fo-t fo-rl" href="${esc(m.link)}" target="_blank" rel="noopener" aria-label="Post de ${foDD(m.ts)} no Instagram (abre o Instagram)">${m.url?`<img src="${esc(m.url)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">`:'<span class="fo-ph"></span>'}<span class="fo-lk">${FO_LOCK}</span>${m.kind==='carrossel'?`<span class="fo-ic">${FO_MULTI}</span>`:m.kind==='reels'?`<span class="fo-ic">${FO_REEL}</span>`:''}<span class="fo-d">${foDD(m.ts)}</span></a>`).join('');
+  return `<section class="pv-phone fo-phone" aria-label="${esc(titulo||'Perfil')}">${titulo?`<div class="fo-col-t">${titulo}</div>`:''}
+    <div class="pv-head"><span class="avatar pv-av" style="${avUrl?`background-image:url('${esc(avUrl)}')`:bgi(accAv(a),200,200)}"></span>
+      <div class="pv-nums"><div><b>${fmtNum((d.media_count||0)+plan.length)}</b><span>posts</span></div><div><b>${fmtNum(d.followers_count)}</b><span>seguidores</span></div><div><b>${fmtNum(d.follows_count)}</b><span>seguindo</span></div></div></div>
+    <div class="pv-bio"><b>${esc(d.name||d.username||'')}</b>${d.biography?`<p>${esc(d.biography)}</p>`:''}${d.website?`<a class="fo-site" href="${esc(d.website)}" target="_blank" rel="noopener">${esc(String(d.website).replace(/^https?:\/\//,'').replace(/\/$/,''))}</a>`:''}</div>
+    ${hl.length?`<div class="pv-hl fo-hl">${hl.map(h=>`<span><span ${hlCircle(h)}>${h.path?'':esc((h.name||'?')[0].toUpperCase())}</span><small>${esc(h.name)}</small></span>`).join('')}</div>`:''}
+    <div class="pv-tabs"><span class="cur">Posts</span><span>Reels</span><span>Marcados</span></div>
+    <div class="pv-grid fo-grid">${tiles||'<p class="muted" style="grid-column:1/-1;text-align:center;padding:30px 0">Nenhum post público ainda.</p>'}</div></section>`;
+}
+function foBarHTML(a,f,mode){
+  const wide=innerWidth>=900;
+  return `<div class="fo-seg" role="tablist" aria-label="O que mostrar">
+      <button role="tab" data-pvm="atual" aria-selected="${mode==='atual'}" class="${mode==='atual'?'on':''}">Feed atual</button>
+      <button role="tab" data-pvm="com" aria-selected="${mode==='com'}" class="${mode==='com'?'on':''}">Com planejamento</button>
+      ${wide?`<button role="tab" data-pvm="antes" aria-selected="${mode==='antes'}" class="${mode==='antes'?'on':''}">Antes × depois</button>`:''}</div>
+    <div class="fo-line"><span class="dot"></span><span>Feed On: <b>@${esc(f.username)}</b> · ${foAgo(f.fetched_at)}</span>
+      <button class="lnk" id="fo-up">Atualizar</button><button class="lnk" id="fo-tr">Trocar</button>${mode!=='plan'?'<button class="lnk" id="fo-plan">Editar o planejado</button>':''}</div>`;
+}
+async function foSheet(a){
+  const f=FO[a.id];let conn=null;try{conn=await igConn(a.id)}catch(e){}
+  const pre=f?.username||conn?.username||a.handle.replace(/^@/,'');
+  sheet(`<h2 class="fo-h"><span class="dot"></span>Feed On</h2>
+    <p class="muted sm" style="margin:-4px 0 2px">Cole o link do perfil ou o @. A Prévia passa a mostrar o feed que está no ar no Instagram: só para ver, sem mexer.</p>
+    <form id="fo-f" novalidate><input class="field fo-in" id="fo-u" value="${esc(pre)}" placeholder="instagram.com/perfil ou @perfil" autocapitalize="off" autocomplete="off" spellcheck="false" aria-label="Link ou @ do perfil"></form>
+    <div class="msg" id="fo-msg" hidden role="alert"></div>
+    <button class="pill dark wide" id="fo-go">Mostrar o feed atual</button>
+    ${f?'<button class="pill wide" id="fo-off">Desligar o Feed On desta conta</button>':''}
+    <p class="muted sm">Funciona com perfis profissionais (Comercial ou Criador de conteúdo). Perfis pessoais ou privados não aparecem.</p>`,m=>{
+    const i=m.querySelector('#fo-u');i.focus();i.select();
+    const go=async()=>{const b=m.querySelector('#fo-go'),msg=m.querySelector('#fo-msg');msg.hidden=true;
+      if(!i.value.trim()){msg.textContent='Cole o link ou o @ do perfil.';msg.className='msg err';msg.hidden=false;return}
+      b.disabled=true;b.textContent='Buscando o perfil…';
+      const r=await foFetch(a,i.value);
+      if(r.ok){closeSheet();PVM[a.id]='atual';toast(`Feed On: @${FO[a.id].username}`);if(route[0]==='previa'&&route[1]===a.id)vPrevia();return}
+      msg.textContent=r.texto;msg.className='msg err';msg.hidden=false;b.disabled=false;b.textContent='Mostrar o feed atual'};
+    m.querySelector('#fo-go').onclick=go;m.querySelector('#fo-f').onsubmit=e=>{e.preventDefault();go()};
+    const off=m.querySelector('#fo-off');if(off)off.onclick=async()=>{off.disabled=true;
+      try{await db(sb.from('feedon').delete().eq('account_id',a.id));FO[a.id]=null;PVM[a.id]='plan';closeSheet();toast('Feed On desligado');vPrevia()}catch(e){off.disabled=false}};
+  });
+}
+const FO_ERRO={link:'Não reconheci esse link. Use o link do perfil (instagram.com/perfil) ou o @.',
+  perfil:'Não achamos esse perfil. Confira o @: ele precisa ser profissional (Comercial ou Criador de conteúdo) e público.',
+  sem_conta:'Para buscar perfis, conecte um Instagram na aba Resultados desta conta.',
+  limite:'O Instagram pediu uma pausa. Tente de novo em alguns minutos.',
+  conexao:'A conexão com o Instagram caiu. Reconecte na aba Resultados.'};
+async function foFetch(a,username){
+  let r;try{r=await igCall({action:'feedon',account_id:a.id,username})}catch(e){r={ok:false}}
+  if(r&&r.ok){FO[a.id]={username:r.data.username,data:r.data,fetched_at:r.fetched_at||new Date().toISOString()};return {ok:true}}
+  return {ok:false,texto:FO_ERRO[r?.motivo]||'Não deu para buscar agora. Confira a internet e tente de novo.'};
+}
+/* PNG da Prévia com o Feed On (atual, com planejamento ou antes × depois) */
+async function foPNG(a,btn,mode){
+  const f=FO[a.id];if(!f)return;btn.disabled=true;const old=btn.textContent;btn.textContent='Montando…';
+  try{
+    const K=3,W=360*K,P=16*K,G=40*K,F='Inter, "Helvetica Neue", Arial, sans-serif';const d=f.data||{};const hl=hlList(a);
+    const meas=document.createElement('canvas').getContext('2d');
+    const wrap=(t,max,font)=>{meas.font=font;const out=[];String(t||'').split('\n').forEach(par=>{let line='';par.split(' ').forEach(w=>{const tt=line?line+' '+w:w;if(meas.measureText(tt).width>max&&line){out.push(line);line=w}else line=tt});out.push(line)});return out.slice(0,6)};
+    const fBio=`400 ${13*K}px ${F}`;const bio=d.biography?wrap(d.biography,W-2*P,fBio):[];const site=d.website?String(d.website).replace(/^https?:\/\//,'').replace(/\/$/,''):'';
+    const modelo=m=>{const plan=m==='com'?foPlanned(a):[];return {plan,items:[...plan.map(p=>({src:src(p.slides[0],540,675),pl:true})),...foMedia(f).map(x=>({src:x.url,pl:false}))],posts:(d.media_count||0)+plan.length}};
+    const cols=mode==='antes'?[['Antes · como está hoje','atual'],['Depois · com o planejamento','com']]:[[null,mode]];
+    const ms=cols.map(([t,m])=>({t,...modelo(m)}));
+    const cell=(W-2*K)/3,cellH=cell*5/4,TT=mode==='antes'?34*K:0;
+    const avS=86*K,yHead=P+TT,yName=yHead+avS+16*K,yBio=yName+8*K,yHl=yBio+(bio.length+(site?1:0))*19*K+(hl.length?22*K:6*K),hlS=60*K;
+    const yTabs=yHl+(hl.length?hlS+34*K:0),yGrid=yTabs+40*K;
+    const rows=Math.max(...ms.map(m=>Math.ceil(m.items.length/3)));
+    const c=document.createElement('canvas');c.width=W*cols.length+G*(cols.length-1);c.height=yGrid+rows*(cellH+2*K)+P;
+    const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);
+    const cover=(im,cx,cy,w,h)=>{if(!im)return;const r=Math.max(w/im.width,h/im.height);x.drawImage(im,cx+(w-im.width*r)/2,cy+(h-im.height*r)/2,im.width*r,im.height*r)};
+    const avIm=await loadImg(d.profile_picture_url||src(accAv(a),240,240));
+    const hlIms=await Promise.all(hl.map(h=>h.path?loadImg(src({path:h.path},240,240)):null));
+    for(let ci=0;ci<ms.length;ci++){const m=ms[ci],ox=ci*(W+G);
+      if(m.t){x.fillStyle='#0a0a0a';x.font=`600 ${14*K}px ${F}`;x.fillText(m.t,ox+P,P+14*K)}
+      x.save();x.beginPath();x.arc(ox+P+avS/2,yHead+avS/2,avS/2,0,Math.PI*2);x.clip();x.fillStyle='#e4e4e4';x.fillRect(ox+P,yHead,avS,avS);cover(avIm,ox+P,yHead,avS,avS);x.restore();
+      const nums=[[fmtNum(m.posts),'posts'],[fmtNum(d.followers_count),'seguidores'],[fmtNum(d.follows_count),'seguindo']];
+      const nx=ox+P+avS+22*K,nw=(ox+W-P-nx)/3;x.textAlign='center';
+      nums.forEach(([v,l],i)=>{const cx=nx+nw*i+nw/2;x.fillStyle='#0a0a0a';x.font=`600 ${16*K}px ${F}`;x.fillText(v,cx,yHead+avS/2-2*K);x.font=`400 ${13*K}px ${F}`;x.fillText(l,cx,yHead+avS/2+17*K)});
+      x.textAlign='left';x.fillStyle='#0a0a0a';x.font=`600 ${13*K}px ${F}`;x.fillText(d.name||d.username||'',ox+P,yName);
+      x.font=fBio;bio.forEach((l,i)=>x.fillText(l,ox+P,yBio+(i+1)*19*K-4*K));
+      if(site){x.fillStyle='#00376b';x.font=`600 ${13*K}px ${F}`;x.fillText(site,ox+P,yBio+(bio.length+1)*19*K-4*K)}
+      for(let i=0;i<hl.length;i++){const hx=ox+P+i*(hlS+14*K);if(hx+hlS>ox+W)break;
+        x.strokeStyle='#dbdbdb';x.lineWidth=K;x.beginPath();x.arc(hx+hlS/2,yHl+hlS/2,hlS/2+3*K,0,Math.PI*2);x.stroke();
+        x.save();x.beginPath();x.arc(hx+hlS/2,yHl+hlS/2,hlS/2,0,Math.PI*2);x.clip();x.fillStyle='#e4e4e4';x.fillRect(hx,yHl,hlS,hlS);cover(hlIms[i],hx,yHl,hlS,hlS);x.restore();
+        x.fillStyle='#0a0a0a';x.font=`400 ${11*K}px ${F}`;x.textAlign='center';let t=hl[i].name||'';while(x.measureText(t).width>hlS+12*K&&t.length>1)t=t.slice(0,-1);x.fillText(t,hx+hlS/2,yHl+hlS+16*K);x.textAlign='left'}
+      x.fillStyle='#e7e7e7';x.fillRect(ox,yTabs,W,K);x.fillStyle='#0a0a0a';x.fillRect(ox+W/6-30*K,yTabs,60*K,K*1.5);
+      x.font=`600 ${12*K}px ${F}`;x.textAlign='center';x.fillText('Posts',ox+W/6,yTabs+26*K);x.fillStyle='#7a7a7a';x.font=`400 ${12*K}px ${F}`;x.fillText('Reels',ox+W/2,yTabs+26*K);x.fillText('Marcados',ox+W*5/6,yTabs+26*K);x.textAlign='left';
+      const ims=await Promise.all(m.items.map(it=>loadImg(it.src)));
+      m.items.forEach((it,i)=>{const cx=ox+(i%3)*(cell+K),cy=yGrid+Math.floor(i/3)*(cellH+2*K);x.fillStyle='#d9d9d9';x.fillRect(cx,cy,cell,cellH);
+        x.save();x.beginPath();x.rect(cx,cy,cell,cellH);x.clip();cover(ims[i],cx,cy,cell,cellH);x.restore();
+        if(it.pl){x.save();x.setLineDash([6*K,4*K]);x.lineWidth=2*K;x.strokeStyle='#0a0a0a';x.strokeRect(cx+K,cy+K,cell-2*K,cellH-2*K);x.restore();
+          x.font=`700 ${9*K}px ${F}`;const tw=x.measureText('PLANEJADO').width+12*K;x.fillStyle='#fff';x.beginPath();x.roundRect?x.roundRect(cx+6*K,cy+6*K,tw,17*K,9*K):x.rect(cx+6*K,cy+6*K,tw,17*K);x.fill();
+          x.fillStyle='#0a0a0a';x.fillText('PLANEJADO',cx+12*K,cy+18*K)}});
+    }
+    await new Promise((res,rej)=>c.toBlob(b=>{if(!b)return rej();saveFile(b,`${(f.username||a.handle.replace('@',''))}-${mode==='antes'?'antes-e-depois':mode==='com'?'com-planejamento':'feed-atual'}.png`);res()},'image/png'));
+    toast('Imagem baixada');
+  }catch(err){console.error(err);toast('Não deu para gerar a imagem neste navegador.')}
+  btn.textContent=old;btn.disabled=false;
+}
+/* Admin › Beta: conta do Fig.Feed que busca perfis para quem não tem Instagram conectado */
+async function foViewerBox(){
+  const box=document.getElementById('fo-viewer');if(!box)return;
+  let i=null;try{const {data}=await sb.rpc('feedon_viewer_info');i=data}catch(e){}
+  if(!i){box.innerHTML='';return}
+  box.innerHTML=`<section class="pg-site"><div><b>Feed On para todo mundo</b><p>Quem não tem Instagram conectado usa esta conta para buscar perfis no Feed On (só dados públicos de perfis profissionais). ${i.atual?`Hoje: <b>@${esc(i.atual)}</b>.`:'Hoje: nenhuma — só quem tem Instagram conectado consegue usar.'}</p></div>
+    ${i.minhas.length?`<select id="fo-vs" aria-label="Conta do Fig.Feed"><option value="">Escolher…</option>${i.minhas.map(c=>`<option value="${c.account_id}">@${esc(c.username)}</option>`).join('')}</select>`:'<span class="mut">Conecte um Instagram seu (aba Resultados de uma conta sua) para escolher.</span>'}</section>`;
+  const s=document.getElementById('fo-vs');if(s)s.onchange=async()=>{if(!s.value)return;s.disabled=true;
+    const r=await igCall({action:'feedon_viewer',account_id:s.value});toast(r.ok?'Conta do Feed On salva':'Não deu para salvar');foViewerBox()};
 }
 
 /* ======================= Início ======================= */

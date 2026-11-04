@@ -5,8 +5,11 @@
 //   GET  ?code=…&state=<link>  → volta da Meta: guarda a chave e busca os números
 //   POST {action:'sync', account_id}       → "Atualizar agora" (usuário logado, dono da conta)
 //   POST {action:'disconnect', account_id} → desconectar (usuário logado, dono da conta)
-//   POST {action:'cron_sync'|'cron_stories', account_id} + header x-cron-secret → agendamento
+//   POST {action:'cron_sync'|'cron_stories', account_id, full?} + header x-cron-secret → agendamento
+//   POST {action:'feedon', account_id, username} → Feed On: feed público de um perfil profissional (Business Discovery)
+//   POST {action:'feedon_viewer', account_id} → admin escolhe a conta do Fig.Feed que busca perfis para quem não tem Instagram conectado
 // Segredos: IG_APP_ID (= ID do app da Meta), IG_APP_SECRET (= chave secreta do app da Meta), IG_CONFIG_ID (opcional)
+// A configuração de login precisa de instagram_basic, instagram_manage_insights e business_management.
 import { createClient } from "jsr:@supabase/supabase-js@2";
 
 const APP_ID = Deno.env.get("IG_APP_ID") ?? "";
@@ -214,6 +217,51 @@ async function findIgAccount(token: string): Promise<{ id: string; username?: st
   return null;
 }
 
+// ---------- Feed On ----------
+const FO_FIELDS = "username,name,biography,website,profile_picture_url,followers_count,follows_count,media_count," +
+  "media.limit(30){id,media_type,media_product_type,media_url,thumbnail_url,permalink,timestamp,like_count,comments_count}";
+// Quem faz o pedido à Meta: 1) o Instagram desta conta; 2) outro Instagram da mesma pessoa; 3) a conta do Fig.Feed (escolhida no Admin)
+async function feedonViewer(userId: string, accountId: string) {
+  const sel = "account_id,ig_user_id";
+  let { data: c } = await db.from("ig_connections").select(sel).eq("account_id", accountId).eq("status", "ok").maybeSingle();
+  if (!c) ({ data: c } = await db.from("ig_connections").select(sel).eq("owner_id", userId).eq("status", "ok").limit(1).maybeSingle());
+  if (!c) {
+    const { data: s } = await db.from("ig_settings").select("value").eq("key", "feedon_viewer").maybeSingle();
+    if (s?.value) ({ data: c } = await db.from("ig_connections").select(sel).eq("account_id", s.value).eq("status", "ok").maybeSingle());
+  }
+  if (!c) return null;
+  const { data: t } = await db.from("ig_tokens").select("access_token").eq("account_id", c.account_id).maybeSingle();
+  return t ? { igId: c.ig_user_id as string, token: t.access_token as string } : null;
+}
+const FO_NAO = ["p", "reel", "reels", "stories", "explore", "tv", "accounts", "direct"];
+function feedonUser(raw: string) {
+  let u = String(raw ?? "").trim();
+  const m = u.match(/instagram\.com\/([A-Za-z0-9._]+)/i);
+  if (m) u = m[1];
+  u = u.replace(/^@/, "").replace(/[/?#].*$/, "").toLowerCase();
+  return /^[a-z0-9._]{1,30}$/.test(u) && !FO_NAO.includes(u) ? u : null;
+}
+async function feedon(userId: string, accountId: string, raw: string) {
+  const username = feedonUser(raw);
+  if (!username) return { ok: false, motivo: "link" };
+  const v = await feedonViewer(userId, accountId);
+  if (!v) return { ok: false, motivo: "sem_conta" };
+  try {
+    const r = await ig(`/${v.igId}`, v.token, { fields: `business_discovery.username(${username}){${FO_FIELDS}}` });
+    const d = r.business_discovery;
+    if (!d?.username) return { ok: false, motivo: "perfil" };
+    const fetched_at = new Date().toISOString();
+    await db.from("feedon").upsert({ account_id: accountId, owner_id: userId, username: d.username, data: d, fetched_at });
+    return { ok: true, data: d, fetched_at };
+  } catch (e) {
+    const code = e instanceof IgError ? e.code : 0;
+    console.log(`[feedon] ${username}: ${code} ${(e as Error).message}`);
+    if ([4, 17, 32, 613].includes(code)) return { ok: false, motivo: "limite" };
+    if (code === 190) return { ok: false, motivo: "conexao" };
+    return { ok: false, motivo: "perfil" };
+  }
+}
+
 // ---------- Rotas ----------
 async function userOf(req: Request) {
   const jwt = (req.headers.get("Authorization") ?? "").replace("Bearer ", "");
@@ -291,6 +339,15 @@ Deno.serve(async (req) => {
   const user = await userOf(req);
   if (!user || !accountId || !(await ownsAccount(user.id, accountId))) return json({ erro: "não autorizado" }, 401);
   if (body.action === "sync") return json(await syncAccount(accountId, { full: !!body.full }));
+  if (body.action === "feedon") return json(await feedon(user.id, accountId, body.username));
+  if (body.action === "feedon_viewer") {
+    const { data: p } = await db.from("profiles").select("role").eq("id", user.id).maybeSingle();
+    if (!["gm", "admin"].includes(p?.role)) return json({ erro: "só administradores" }, 403);
+    const { data: c } = await db.from("ig_connections").select("account_id").eq("account_id", accountId).eq("status", "ok").maybeSingle();
+    if (!c) return json({ ok: false, motivo: "sem conexão" });
+    await db.from("ig_settings").upsert({ key: "feedon_viewer", value: accountId });
+    return json({ ok: true });
+  }
   if (body.action === "disconnect") {
     await db.from("ig_tokens").delete().eq("account_id", accountId);
     await db.from("ig_connections").delete().eq("account_id", accountId);
