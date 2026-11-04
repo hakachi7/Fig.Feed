@@ -6,6 +6,7 @@ Cada versão também tem uma branch própria, com o código exatamente como esta
 
 | Versão | Nome | O que trouxe | Branch | Commit |
 | --- | --- | --- | --- | --- |
+| v19.1 | Ordem de publicação | Na grade com datas e tipo, o número em cada foto passa a ser a ordem de publicação (1 = o primeiro a postar) | [versao-19-1-ordem-publicacao](https://github.com/hakachi7/Fig.Feed/tree/versao-19-1-ordem-publicacao) |
 | v19 | Feed On | Na Prévia, o feed que está no ar no Instagram (pelo link ou @ de um perfil profissional), travado; Com planejamento; Antes × depois no computador; Baixar PNG | [versao-19-feed-on](https://github.com/hakachi7/Fig.Feed/tree/versao-19-feed-on) | (veja a branch) |
 | v18.2 | Servidor na Visão geral | Admin › Visão geral mostra o uso do Supabase (fotos, banco, pessoas ativas, quantos usuários do Grátis cabem, fotos para otimizar) e avisa quando um plano promete mais espaço do que existe | [versao-18-cadastro-espaco-indicacoes](https://github.com/hakachi7/Fig.Feed/tree/versao-18-cadastro-espaco-indicacoes) | (veja a branch) |
 | v18.1 | Fotos menores e limites | Fotos reduzidas no envio (1080 px, ~300 KB), Otimizar fotos já enviadas, plano Grátis com 3 contas e 15 MB e limites ligados (também no servidor), barra de espaço em Admin › Usuários | [versao-18-cadastro-espaco-indicacoes](https://github.com/hakachi7/Fig.Feed/tree/versao-18-cadastro-espaco-indicacoes) | (veja a branch) |

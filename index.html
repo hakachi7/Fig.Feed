@@ -1356,7 +1356,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v19';
+const VERSAO='v19.1';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -1727,7 +1727,7 @@ async function exportPNG(a,posts=a.posts,sufixo='grade',info=false){
   const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);
   x.fillStyle='#0a0a0a';x.font='500 22px Inter, Arial';x.fillText(a.handle,G+4,42);
   if(info){x.font='400 15px Inter, Arial';x.fillStyle='#7a7a7a';
-    x.fillText(`${posts.length} ${posts.length===1?'post':'posts'} · na ordem do feed: da esquerda para a direita, de cima para baixo`,G+4,70)}
+    x.fillText(`${posts.length} ${posts.length===1?'post':'posts'} · o número é a ordem de publicação (1 = o primeiro a postar)`,G+4,70)}
   const imgs=await Promise.all(posts.map(p=>loadImg(src(p.slides[0],W,H))));
   const DS=['dom','seg','ter','qua','qui','sex','sáb'];
   const TAG={foto:'Foto',carrossel:'Carrossel',reels:'Reels'};
@@ -1738,9 +1738,9 @@ async function exportPNG(a,posts=a.posts,sufixo='grade',info=false){
     if(im){const r=Math.max(W/im.width,H/im.height);const w=im.width*r,h=im.height*r;x.save();x.beginPath();x.rect(cx,cy,W,H);x.clip();x.drawImage(im,cx+(W-w)/2,cy+(H-h)/2,w,h);x.restore()}
     if(!info)return;
     const f=fmtOf(p),tag=f==='carrossel'?`Carrossel · ${p.slides.length}`:TAG[f]||'Foto';
-    // número da ordem no canto da foto
+    // número da ordem de publicação: o último do feed é o primeiro a postar
     x.fillStyle='rgba(10,10,10,.78)';x.beginPath();x.arc(cx+22,cy+22,15,0,Math.PI*2);x.fill();
-    x.fillStyle='#fff';x.font='600 14px Inter, Arial';x.textAlign='center';x.fillText(String(i+1),cx+22,cy+27);x.textAlign='left';
+    x.fillStyle='#fff';x.font='600 14px Inter, Arial';x.textAlign='center';x.fillText(String(posts.length-i),cx+22,cy+27);x.textAlign='left';
     const d=p.date?new Date(p.date+'T12:00'):null;
     x.fillStyle='#0a0a0a';x.font='600 17px Inter, Arial';
     x.fillText(d?`${DS[d.getDay()]} · ${p.date.slice(8,10)}/${p.date.slice(5,7)}${p.hora?' · '+String(p.hora).slice(0,5):''}`:'Sem data',cx,cy+H+28);
@@ -2815,6 +2815,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v19.1','Nov 2026',['Grade com datas e tipo: o número em cada foto agora é a ordem de publicação (1 = o primeiro a postar)']],
   ['v19','Nov 2026',['Feed On na Prévia: cole o link ou o @ de um perfil profissional e veja o feed que está no ar, travado','Com planejamento: os posts planejados aparecem por cima do feed real, marcados como PLANEJADO','No computador, Antes × depois lado a lado; Baixar PNG em todos os modos para mandar ao cliente']],
   ['v18.2','Nov 2026',['Admin › Visão geral: quanto o Fig.Feed usa do servidor (fotos, banco, pessoas ativas), quantas pessoas do Grátis ainda cabem e avisos quando um plano promete mais espaço do que existe']],
   ['v18.1','Nov 2026',['Fotos menores no envio: até 1080 px e cerca de 300 KB cada, sem perder qualidade no Instagram','Liberar espaço › Otimizar fotos já enviadas: deixa as fotos antigas com o mesmo tamanho das novas','Admin › Usuários: barra de uso do espaço de cada pessoa','Plano Grátis: 3 contas de clientes e 15 MB de fotos (cerca de 50 posts), com os limites valendo']],
