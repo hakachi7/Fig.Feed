@@ -1356,7 +1356,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v19.1';
+const VERSAO='v19.2';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -2815,6 +2815,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v19.2','Nov 2026',['Feed On: basta o link ou o @ do perfil, sem precisar conectar o seu Instagram']],
   ['v19.1','Nov 2026',['Grade com datas e tipo: o número em cada foto agora é a ordem de publicação (1 = o primeiro a postar)']],
   ['v19','Nov 2026',['Feed On na Prévia: cole o link ou o @ de um perfil profissional e veja o feed que está no ar, travado','Com planejamento: os posts planejados aparecem por cima do feed real, marcados como PLANEJADO','No computador, Antes × depois lado a lado; Baixar PNG em todos os modos para mandar ao cliente']],
   ['v18.2','Nov 2026',['Admin › Visão geral: quanto o Fig.Feed usa do servidor (fotos, banco, pessoas ativas), quantas pessoas do Grátis ainda cabem e avisos quando um plano promete mais espaço do que existe']],
@@ -4285,7 +4286,7 @@ async function foSheet(a){
 }
 const FO_ERRO={link:'Não reconheci esse link. Use o link do perfil (instagram.com/perfil) ou o @.',
   perfil:'Não achamos esse perfil. Confira o @: ele precisa ser profissional (Comercial ou Criador de conteúdo) e público.',
-  sem_conta:'Para buscar perfis, conecte um Instagram na aba Resultados desta conta.',
+  sem_conta:'O Feed On ainda está sendo liberado para todo mundo. Tente de novo mais tarde.',
   limite:'O Instagram pediu uma pausa. Tente de novo em alguns minutos.',
   conexao:'A conexão com o Instagram caiu. Reconecte na aba Resultados.'};
 async function foFetch(a,username){
