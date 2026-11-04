@@ -95,17 +95,16 @@ Deno.serve(async (req) => {
   if (!ACC || !PUB) return json({ error: "Fotos sem configuração no servidor (R2)" }, 500);
   try {
     const ct = req.headers.get("content-type") ?? "";
-    const user = await userOf(req);
 
-    // ---- enviar ----
+    // ---- enviar ---- (v21.1: menos idas ao banco; login e leitura da foto ao mesmo tempo)
     if (ct.includes("multipart/form-data")) {
+      const [user, fd] = await Promise.all([userOf(req), req.formData()]);
       if (!user) return json({ error: "Entre na sua conta de novo" }, 401);
-      const fd = await req.formData();
       const path = String(fd.get("path") ?? "");
       const file = fd.get("file");
       if (!(file instanceof File) && !(file instanceof Blob)) return json({ error: "Nenhuma foto recebida" }, 400);
-      const admin = await isAdmin(user.id);
-      if (!PATH_OK.test(path) || path.includes("..") || (!path.startsWith(user.id + "/") && !admin)) return json({ error: "Caminho de foto inválido" }, 400);
+      const own = path.startsWith(user.id + "/");
+      if (!PATH_OK.test(path) || path.includes("..") || (!own && !(await isAdmin(user.id)))) return json({ error: "Caminho de foto inválido" }, 400);
       if (file.size > MAX) return json({ error: "Foto grande demais (máximo de 10 MB)" }, 413);
       const owner = path.split("/")[0];
       const { data: pode, error: e0 } = await db.rpc("fotos_pode_enviar", { p_user: owner, p_name: path });
@@ -115,9 +114,9 @@ Deno.serve(async (req) => {
       await r2Put(path, file, type);
       const { error: e1 } = await db.from("fotos_r2").upsert({ name: path, owner_id: owner, size: file.size, created_at: new Date().toISOString() });
       if (e1) throw e1;
-      await db.storage.from("fotos").remove([path]).catch(() => {}); // cópia antiga, se existia
       return json({ path, url: pubUrl(path), size: file.size });
     }
+    const user = await userOf(req);
 
     const body = await req.json().catch(() => ({}));
     if (body.action === "remove") {
@@ -142,7 +141,8 @@ Deno.serve(async (req) => {
     if (body.action === "selftest") {
       const k = `00000000-0000-0000-0000-000000000000/teste/${crypto.randomUUID()}.txt`;
       const out: Record<string, unknown> = { conta: ACC.slice(0, 6) + "…", bucket: BUCKET, publico: PUB };
-      try { await r2Put(k, new Blob(["ok"]), "text/plain"); out.gravar = "ok"; } catch (e) { out.gravar = (e as Error).message; return json(out); }
+      const t0 = Date.now();
+      try { await r2Put(k, new Blob(["ok"]), "text/plain"); out.gravar = "ok"; out.gravar_ms = Date.now() - t0; } catch (e) { out.gravar = (e as Error).message; return json(out); }
       try { const r = await fetch(pubUrl(k), { headers: { Origin: "https://hakachi7.github.io" } }); out.ler_publico = r.status; out.cors = r.headers.get("access-control-allow-origin"); out.vary = r.headers.get("vary"); } catch (e) { out.ler_publico = (e as Error).message; }
       try { await r2Del(k); out.apagar = "ok"; } catch (e) { out.apagar = (e as Error).message; }
       return json(out);
