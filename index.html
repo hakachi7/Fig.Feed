@@ -1471,7 +1471,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v24.1';
+const VERSAO='v24.2';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -3017,6 +3017,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v24.2','Nov 2026',['PDF de Resultados: em "Quantas fotos funcionam melhor", o nome aparece completo (carrossel / carrosséis)']],
   ['v24.1','Nov 2026',['PDF do planejamento: as páginas de Stories têm só o título "Stories" (sem "continuação")']],
   ['v24','Nov 2026',['PDF do planejamento: a página de Stories ficou em linhas, um dia por linha, e não quebra mais quando um dia tem muitos stories (o dia continua na linha de baixo e, se precisar, na página seguinte). A coluna de anotações saiu']],
   ['v23','Nov 2026',['Resultados ganhou as abas Stories e Carrosséis: retenção da sequência de stories, o que as pessoas fizeram (avançou, saiu, voltou), melhor horário, cliques no link; carrossel × outros formatos, quantas fotos funcionam melhor e melhores carrosséis','Curtidas por foto do carrossel: anote os números do app do Instagram e veja onde o carrossel prende ou perde as pessoas','As duas análises também entram no PDF de Resultados e no PDF Completo']],
@@ -4031,7 +4032,7 @@ function igCarPage(d,page,pic){const c=d.car;if(!c)return '';
   return page('Análise dos carrosséis',`<div class="kcs">${K.map(([t,v],i)=>`<div class="kc${i?'':' on'}"><span>${t}</span><b>${v}</b></div>`).join('')}</div>
     <div class="an2"><div class="anb"><div class="sec2"><b>Melhores carrosséis</b> <span class="muted">por salvamentos</span></div><div class="ctp">${c.top.map(p=>`<div><span class="cfan"><i></i><i></i>${pic(p,300,375)}</span><b>${nBR(p.saved)} salvamentos</b><small>${dm(p.dt)}${p.slides?` · ${p.slides} fotos`:''} · ${nBR(p.reach)} alcance</small></div>`).join('')||'<p class="muted">Nenhum carrossel salvo no mês.</p>'}</div></div>
       <div class="anb"><div class="sec2"><b>Carrossel × outros formatos</b></div><table class="cmp2"><tr><th></th><th>Alcance</th><th>Salvam.</th><th class="nm">Engaj.</th></tr>${F.map(([t,v])=>`<tr class="${t==='carrossel'?'me':''}"><td>${KIND_N[t]}</td><td>${mb(v.reach,mr,t==='carrossel')}${nBR(v.reach)}</td><td>${mb(v.saved,ms,t==='carrossel')}${fmt1(v.saved)}</td><td class="nm">${pcBR(v.eng)}</td></tr>`).join('')}</table>
-        ${c.slides!=null?`<div class="sec2" style="margin-top:4mm"><b>Quantas fotos funcionam melhor</b></div><div class="bk3">${c.bk.map(x=>`<div class="${x===bBest?'best':''}"><span>${x.n}</span><b>${x.q?pcBR(x.eng):'—'}</b><small>${x.q} carross.</small></div>`).join('')}</div>`:''}
+        ${c.slides!=null?`<div class="sec2" style="margin-top:4mm"><b>Quantas fotos funcionam melhor</b></div><div class="bk3">${c.bk.map(x=>`<div class="${x===bBest?'best':''}"><span>${x.n}</span><b>${x.q?pcBR(x.eng):'—'}</b><small>${x.q} ${x.q===1?'carrossel':'carrosséis'}</small></div>`).join('')}</div>`:''}
         ${slv.filter(v=>v!=null).length>=2?`<div class="sec2" style="margin-top:4mm"><b>Curtidas por foto</b> <span class="muted">em relação à 1ª (${c.ann.length} anotados)</span></div>${igCols(slv.slice(0,Math.max(...c.ann.map(p=>Math.min(10,p.sl.length)))),Array.from({length:10},(_,i)=>`${i+1}ª`),40)}`:''}</div></div>
     <div class="anb" style="margin-top:4mm"><div class="sec2"><b>Leituras</b></div><ol class="ins">${c.leituras.slice(0,3).map(x=>`<li>${x}</li>`).join('')||'<li>Ainda há poucos dados.</li>'}</ol></div>`)}
 
