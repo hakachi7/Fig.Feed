@@ -6,6 +6,7 @@ Cada versão também tem uma branch própria, com o código exatamente como esta
 
 | Versão | Nome | O que trouxe | Branch | Commit |
 | --- | --- | --- | --- | --- |
+| v25 | Mapa de usuários | Admin › Visão geral: mapa do Brasil com um ponto verde por cidade (escala do calendário do Perfil), filtros Todos / Ativos no mês / Pagantes, ranking de estados e cidades, e Pessoas/Planos na coluna ao lado | [versao-25-mapa-usuarios](https://github.com/hakachi7/Fig.Feed/tree/versao-25-mapa-usuarios) | 0165cbc |
 | v24.2 | Carrossel por extenso | PDF de Resultados: "1 carrossel" / "N carrosséis" em vez de "carross." | [versao-24-stories-em-linhas](https://github.com/hakachi7/Fig.Feed/tree/versao-24-stories-em-linhas) | f89bb73 |
 | v24.1 | Sem "continuação" | Páginas de Stories do planejamento com o título só "Stories" | [versao-24-stories-em-linhas](https://github.com/hakachi7/Fig.Feed/tree/versao-24-stories-em-linhas) | d15d2cf |
 | v24 | Stories em linhas | PDF do planejamento: página de Stories com um dia por linha (16 por linha), dia cheio continua na linha de baixo e na página seguinte, sem a coluna de anotações | [versao-24-stories-em-linhas](https://github.com/hakachi7/Fig.Feed/tree/versao-24-stories-em-linhas) | c341898 |
@@ -58,4 +59,3 @@ As mudanças do Supabase ficam na pasta `supabase/`: `schema.sql` (v2), `admin.s
 1. Subir `VERSAO` no `index.html` e o `CACHE` no `sw.js`.
 2. Acrescentar a versão no topo da lista `NOVIDADES` (no `index.html`) e nesta tabela.
 3. Criar a branch da versão: `versao-10-<nome-curto>`.
-| v25 | Mapa de usuários | Admin › Visão geral: mapa do Brasil com um ponto verde por cidade (escala do calendário do Perfil), filtros Todos / Ativos no mês / Pagantes, ranking de estados e cidades, e Pessoas/Planos na coluna ao lado | [versao-25-mapa-usuarios](https://github.com/hakachi7/Fig.Feed/tree/versao-25-mapa-usuarios) | 0165cbc |
