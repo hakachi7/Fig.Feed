@@ -6,7 +6,7 @@ Cada versão também tem uma branch própria, com o código exatamente como esta
 
 | Versão | Nome | O que trouxe | Branch | Commit |
 | --- | --- | --- | --- | --- |
-| v24.1 | Sem "continuação" | Páginas de Stories do planejamento com o título só "Stories" | [versao-24-stories-em-linhas](https://github.com/hakachi7/Fig.Feed/tree/versao-24-stories-em-linhas) | |
+| v24.1 | Sem "continuação" | Páginas de Stories do planejamento com o título só "Stories" | [versao-24-stories-em-linhas](https://github.com/hakachi7/Fig.Feed/tree/versao-24-stories-em-linhas) | d15d2cf |
 | v24 | Stories em linhas | PDF do planejamento: página de Stories com um dia por linha (16 por linha), dia cheio continua na linha de baixo e na página seguinte, sem a coluna de anotações | [versao-24-stories-em-linhas](https://github.com/hakachi7/Fig.Feed/tree/versao-24-stories-em-linhas) | c341898 |
 | v23 | Stories e Carrosséis | Resultados ganhou as abas Stories (retenção da sequência, o que as pessoas fizeram, melhor horário, cliques no link) e Carrosséis (× outros formatos, quantas fotos funcionam melhor, melhores, curtidas por foto anotadas à mão); 2 páginas novas no PDF de Resultados e no Completo; função instagram versão 16; supabase/v23.sql | [versao-23-stories-carrosseis](https://github.com/hakachi7/Fig.Feed/tree/versao-23-stories-carrosseis) | 44f0371 |
 | v22 | Editar capa | Pop-up "Editar capa" (arrastar, zoom, pinça, rodinha) para a capa do post na grade 3:4, sem cortar a foto; vale no Feed, Prévia, Feed On, PNGs e PDF; coluna posts.capa (supabase/v22.sql) | [versao-22-editar-capa](https://github.com/hakachi7/Fig.Feed/tree/versao-22-editar-capa) | fd228f6 |
