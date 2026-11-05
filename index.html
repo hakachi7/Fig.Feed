@@ -1471,7 +1471,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v24';
+const VERSAO='v24.1';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -3017,6 +3017,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v24.1','Nov 2026',['PDF do planejamento: as páginas de Stories têm só o título "Stories" (sem "continuação")']],
   ['v24','Nov 2026',['PDF do planejamento: a página de Stories ficou em linhas, um dia por linha, e não quebra mais quando um dia tem muitos stories (o dia continua na linha de baixo e, se precisar, na página seguinte). A coluna de anotações saiu']],
   ['v23','Nov 2026',['Resultados ganhou as abas Stories e Carrosséis: retenção da sequência de stories, o que as pessoas fizeram (avançou, saiu, voltou), melhor horário, cliques no link; carrossel × outros formatos, quantas fotos funcionam melhor e melhores carrosséis','Curtidas por foto do carrossel: anote os números do app do Instagram e veja onde o carrossel prende ou perde as pessoas','As duas análises também entram no PDF de Resultados e no PDF Completo']],
   ['v22','Nov 2026',['Editar capa: arraste e dê zoom na foto para escolher o que aparece na grade do feed (como no Instagram). A foto não é cortada','O botão aparece ao passar o mouse no post do feed (no celular, o ícone fica sempre visível) e na página do post','A capa ajustada vale no Feed, na Prévia, no Feed On, nos PNGs e no PDF do planejamento']],
@@ -3735,7 +3736,7 @@ function planHTML(a,month,objetivo,stories,opts={}){
     <div class="shd"><span class="av">${av}</span><b>${esc(a.handle.replace(/^@/,''))}</b>${x.d?`<span>${dd(x.d)}</span>`:''}</div>
     <div class="sft"><span>Enviar mensagem</span><i>♡</i></div></div></div>`).join('')}</div>${stories.length?'':'<p class="mood-n">Ainda não há stories neste mês: mostrando fotos dos posts.</p>'}`,'dk');
   // stories (V24: sem a coluna de anotações)
-  stPages.forEach((rows,gi)=>{out+=page(gi?'Stories (continuação)':'Stories',`${gi||!days.length?'':`<p class="stsub">${stories.length} ${stories.length===1?'story':'stories'} em ${days.length} ${days.length===1?'dia':'dias'} · cada linha é um dia, na ordem em que vão ao ar</p>`}${rows.length?`<div class="strows">${rows.map((x,ri)=>{const last=rows.slice(ri).filter(y=>y.d===x.d).at(-1),L=byDay[x.d];
+  stPages.forEach((rows,gi)=>{out+=page('Stories',`${gi||!days.length?'':`<p class="stsub">${stories.length} ${stories.length===1?'story':'stories'} em ${days.length} ${days.length===1?'dia':'dias'} · cada linha é um dia, na ordem em que vão ao ar</p>`}${rows.length?`<div class="strows">${rows.map((x,ri)=>{const last=rows.slice(ri).filter(y=>y.d===x.d).at(-1),L=byDay[x.d];
     return `<div class="strow${x.lab?'':' cont'}"><div class="stdl">${x.lab?`<b>${wd(x.d).toUpperCase()} · ${dd(x.d)}</b><span>${x.r>0?`continuação · ${x.from+1} a ${last.to} de ${x.n}`:`${x.n} ${x.n===1?'story':'stories'}${last.to<x.n?` · 1 a ${last.to} aqui`:''}`}</span>`:''}</div>
       <div class="ststrip">${L.slice(x.from,x.to).map((st,k)=>`<div class="sx"><span class="si">${pic({path:st.storage_path},90,160)}<em>${x.from+k+1}/${x.n}</em></span><small>${STORY_TIPOS[st.tipo]||'Imagem'}</small></div>`).join('')}</div></div>`}).join('')}</div>`:'<p class="muted" style="font-size:9pt">Nenhum story planejado neste mês.</p>'}`)});
   // V13.2: contracapa — "tks Fig.Feed" e a grade do feed (12 posts; bolinhas se faltar)
