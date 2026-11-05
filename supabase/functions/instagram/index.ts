@@ -83,6 +83,19 @@ async function mediaInsights(id: string, kind: string, token: string) {
     try { return ins((await ig(`/${id}/insights`, token, { metric: "reach,views" })).data); } catch { return {}; }
   }
 }
+// v23: stories — o que as pessoas fizeram (avançou, voltou, saiu, foi para outro perfil) e cliques no link
+async function storyExtra(id: string, token: string) {
+  const o: Record<string, number> = {};
+  try {
+    const r = await ig(`/${id}/insights`, token, { metric: "navigation", breakdown: "story_navigation_action_type" });
+    for (const b of r.data?.[0]?.total_value?.breakdowns?.[0]?.results ?? []) o[String(b.dimension_values?.[0] ?? "").toLowerCase()] = b.value;
+  } catch (e) { if (e instanceof IgError && e.code === 190) throw e; }
+  try {
+    const v = ins((await ig(`/${id}/insights`, token, { metric: "link_clicks" })).data);
+    if (v.link_clicks != null) o.link_clicks = v.link_clicks;
+  } catch (e) { if (e instanceof IgError && e.code === 190) throw e; }
+  return o;
+}
 async function upsertMedia(acc: any, m: any, token: string, haveThumb: Set<string>) {
   const kind = kindOf(m);
   const v = await mediaInsights(m.id, kind, token);
@@ -93,6 +106,14 @@ async function upsertMedia(acc: any, m: any, token: string, haveThumb: Set<strin
     saved: v.saved ?? null, shares: v.shares ?? null, follows: v.follows ?? null, total_interactions: v.total_interactions ?? null,
     replies: v.replies ?? null, profile_visits: v.profile_visits ?? null, navigation: v.navigation ?? null, updated_at: new Date().toISOString(),
   };
+  if (kind === "story") {
+    const x = await storyExtra(m.id, token);
+    const NAV: Record<string, string> = { tap_forward: "nav_forward", tap_back: "nav_back", tap_exit: "nav_exit", swipe_forward: "nav_next" };
+    for (const [k, col] of Object.entries(NAV)) if (x[k] != null) row[col] = x[k];
+    if (Object.keys(x).some((k) => NAV[k])) for (const col of Object.values(NAV)) row[col] ??= 0;
+    if (x.link_clicks != null) row.link_clicks = x.link_clicks;
+  }
+  if (kind === "carrossel" && Array.isArray(m.children?.data)) row.slides = m.children.data.length;
   if (!haveThumb.has(m.id)) {
     const p = await saveThumb(acc.owner_id, m.id, m.thumbnail_url ?? m.media_url);
     if (p) row.thumb_url = p;
@@ -109,10 +130,10 @@ async function syncAccount(accountId: string, opts: { full?: boolean; storiesOnl
   try {
     const { data: thumbs } = await db.from("ig_media").select("media_id").eq("account_id", accountId).not("thumb_url", "is", null);
     const have = new Set((thumbs ?? []).map((t: any) => t.media_id));
-    const fields = "id,caption,media_type,media_product_type,permalink,timestamp,thumbnail_url,media_url,like_count,comments_count";
+    const fields = "id,caption,media_type,media_product_type,permalink,timestamp,thumbnail_url,media_url,like_count,comments_count,children{id}";
 
     // stories: só ficam disponíveis por 24 h
-    const st = await ig(`/${acc.ig_user_id}/stories`, token, { fields }).catch((e) => { if (e.code === 190) throw e; return { data: [] }; });
+    const st = await ig(`/${acc.ig_user_id}/stories`, token, { fields: fields.replace(",children{id}", "") }).catch((e) => { if (e.code === 190) throw e; return { data: [] }; });
     for (const m of st.data ?? []) await upsertMedia(acc, { ...m, media_product_type: "STORY" }, token, have);
     if (opts.storiesOnly) { await db.from("ig_connections").update({ status: "ok", status_msg: null }).eq("account_id", accountId); return { ok: true }; }
 

@@ -802,6 +802,39 @@ body:has(.sel-bar) .toast{bottom:150px}
 .igr .ibar{flex:1;height:8px;background:#ececec;border-radius:99px;display:flex;gap:2px;overflow:hidden}.igr .ibar i{display:block;height:100%;border-radius:99px}
 .igr .lg2{display:flex;gap:14px;font-size:12px;color:var(--muted);margin-bottom:10px;flex-wrap:wrap}.igr .lg2 i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
 .ig-tops{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.ig-tp{color:inherit;text-decoration:none;font-size:13px}.ig-tp span{display:block;aspect-ratio:4/5;background:var(--tile) center/cover;border-radius:10px;margin-bottom:6px}.ig-tp b{display:block;font-weight:500}.ig-tp small{color:var(--muted)}
+.ig-cols{display:flex;align-items:flex-end;gap:10px}.ig-cols div{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:5px}.ig-cols i{display:block;width:100%;background:#0a0a0a;border-radius:4px 4px 0 0}.ig-cols div.rk i{background:#7a7a7a}.ig-cols b{font-size:12px;font-weight:600}.ig-cols span{font-size:11px;color:#7a7a7a}
+.ig-stk{display:flex;height:14px;border-radius:99px;overflow:hidden;background:#ececec}.ig-stk i{display:block;height:100%}
+.ig-leg{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin-top:12px}.ig-leg div{display:flex;align-items:center;gap:8px;font-size:13px}.ig-leg u{width:10px;height:10px;border-radius:3px;display:inline-block;flex:none}.ig-leg b{margin-left:auto;font-weight:600}
+.ig-seg{display:inline-flex;background:#f1f0ee;border-radius:99px;padding:3px;gap:2px;margin-left:auto}.ig-seg button{padding:7px 15px;border-radius:99px;color:var(--muted);font-size:13px}.ig-seg button.on{background:#fff;color:var(--fg);font-weight:500;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.ig-mrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 0 12px}.ig-mrow .ig-mes{margin:0}
+.ig-kc.ro .kc{cursor:default}.ig-kc .kc small{display:block;font-size:11px;color:var(--muted);margin-top:3px;line-height:1.3}
+.ig-h em{font-style:normal;font-weight:400;color:var(--muted);font-size:12px;margin-left:6px}
+.ig-sts{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px}.ig-st{width:104px;flex:none;color:inherit;text-decoration:none}
+.ig-st .im{display:block;aspect-ratio:9/16;border-radius:8px;background:var(--tile) center/cover;position:relative}
+.ig-st .im em{position:absolute;left:6px;top:6px;background:rgba(10,10,10,.72);color:#fff;font-style:normal;font-size:10px;padding:2px 6px;border-radius:99px}
+.ig-st .im u{position:absolute;right:6px;bottom:6px;background:#fff;color:#0a0a0a;text-decoration:none;font-size:10px;padding:2px 6px;border-radius:99px;font-weight:600}
+.ig-st b{display:block;font-size:14px;margin-top:6px;font-weight:600}.ig-st small{display:block;font-size:11px;color:var(--muted);line-height:1.35}
+.ig-cmp{width:100%;border-collapse:collapse;font-size:13px}.ig-cmp th{font-weight:400;color:var(--muted);text-align:left;padding:4px 6px;border-bottom:1px solid var(--line);font-size:12px}
+.ig-cmp td{padding:9px 6px;border-bottom:1px solid #f1f1f1;white-space:nowrap}.ig-cmp .n{text-align:right}.ig-cmp tr.me td{font-weight:600}
+.mb{display:inline-block;height:6px;border-radius:99px;background:#0a0a0a;vertical-align:middle;margin-right:7px}.mb.g{background:#bdbdbd}
+.ig-bk{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.ig-bk div{background:#f7f7f6;border-radius:12px;padding:12px}.ig-bk h4{font-size:12.5px;font-weight:500;color:var(--muted);margin:0}
+.ig-bk b{display:block;font-size:21px;font-weight:500;margin-top:5px}.ig-bk small{display:block;color:var(--muted);font-size:11.5px;margin-top:2px}
+.ig-bk .mini{display:block;height:6px;background:rgba(0,0,0,.08);border-radius:99px;margin-top:10px;position:relative;overflow:hidden}.ig-bk .mini i{position:absolute;inset:0 auto 0 0;background:#0a0a0a;border-radius:99px}
+.ig-bk .best{background:#0a0a0a;color:#fff}.ig-bk .best h4,.ig-bk .best small{color:rgba(255,255,255,.7)}.ig-bk .best .mini{background:rgba(255,255,255,.2)}.ig-bk .best .mini i{background:#fff}
+.ig-ctops{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.ig-ctops a{color:inherit;text-decoration:none;font-size:13px}
+.ig-ctops .fan{display:block;position:relative;aspect-ratio:4/5;margin:6px 14px 10px 4px}.ig-ctops .fan i{position:absolute;inset:0;border-radius:8px;background:#d9d9d9 center/cover;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.ig-ctops .fan i:nth-child(1){transform:translate(12px,6px) rotate(5deg);background:#cfcfcf}.ig-ctops .fan i:nth-child(2){transform:translate(6px,3px) rotate(2.5deg);background:#e2e2e2}
+.ig-ctops .fan em{position:absolute;left:8px;top:8px;z-index:2;background:rgba(10,10,10,.75);color:#fff;font-style:normal;font-size:11px;padding:3px 8px;border-radius:99px}
+.ig-ctops b{display:block;font-weight:600;font-size:14px}.ig-ctops small{display:block;color:var(--muted);font-size:12px;line-height:1.45}
+.sm-pill{padding:5px 11px;font-size:12px}
+.ig-info{display:flex;gap:10px;align-items:flex-start;background:#f7f7f6;border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:12.5px;color:#4a4a4a;line-height:1.5}
+.ig-info i{font-style:normal;width:20px;height:20px;border-radius:50%;border:1px solid #bdbdbd;display:grid;place-items:center;font-size:11px;flex:none;color:#7a7a7a}
+.sl-top{display:flex;align-items:center;gap:12px;margin-bottom:12px}.sl-top .th{width:44px;height:55px;border-radius:5px;background:var(--tile) center/cover;flex:none}
+.sl-n{display:flex;align-items:center;gap:8px;font-size:13px}.sl-n .pill{padding:4px 11px}.sl-n b{min-width:20px;text-align:center}
+.sl-in{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px}.sl-in label{display:flex;flex-direction:column;gap:3px;font-size:11px;color:var(--muted)}
+.sl-in input{border:1px solid var(--line);border-radius:8px;padding:8px;font:inherit;font-size:14px;color:var(--fg);width:100%;min-width:0}
+.sl-acts{display:flex;align-items:center;gap:14px;margin-top:12px}
+@media (max-width:760px){.ig-bk,.ig-ctops{grid-template-columns:1fr 1fr}.ig-seg{margin-left:0}.sl-in{grid-template-columns:repeat(4,1fr)}}
 .ig-ins{margin:0;padding-left:20px;line-height:1.5;font-size:14px;color:#3a3a3a}.ig-ins li{margin-bottom:8px}.ig-ins b{color:var(--fg);font-weight:600}
 .ig-tbl{overflow-x:auto}.ig-tbl table{width:100%;border-collapse:collapse;font-size:13px;white-space:nowrap}.ig-tbl th{text-align:right;font-weight:500;color:var(--muted);font-size:12px;padding:0 8px 8px}.ig-tbl th:nth-child(-n+3){text-align:left}
 .ig-tbl td{padding:6px 8px;border-top:1px solid var(--line);text-align:right}.ig-tbl td:nth-child(-n+3){text-align:left}.ig-tbl .th{display:block;width:30px;height:38px;border-radius:4px;background:var(--tile) center/cover}
@@ -1438,7 +1471,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v22';
+const VERSAO='v23';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -2984,6 +3017,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v23','Nov 2026',['Resultados ganhou as abas Stories e Carrosséis: retenção da sequência de stories, o que as pessoas fizeram (avançou, saiu, voltou), melhor horário, cliques no link; carrossel × outros formatos, quantas fotos funcionam melhor e melhores carrosséis','Curtidas por foto do carrossel: anote os números do app do Instagram e veja onde o carrossel prende ou perde as pessoas','As duas análises também entram no PDF de Resultados e no PDF Completo']],
   ['v22','Nov 2026',['Editar capa: arraste e dê zoom na foto para escolher o que aparece na grade do feed (como no Instagram). A foto não é cortada','O botão aparece ao passar o mouse no post do feed (no celular, o ícone fica sempre visível) e na página do post','A capa ajustada vale no Feed, na Prévia, no Feed On, nos PNGs e no PDF do planejamento']],
   ['v21.1','Nov 2026',['Envio de fotos mais rápido: até 4 fotos sobem ao mesmo tempo']],
   ['v21','Nov 2026',['Fotos guardadas num lugar novo (Cloudflare R2): muito mais espaço no servidor e fotos que abrem sem gastar o tráfego do Supabase','Os limites de espaço de cada plano continuam iguais']],
@@ -3800,13 +3834,15 @@ async function igConn(accId,force){if(!force&&accId in IGC)return IGC[accId];
 async function igLoad(a,month){
   const [y,m]=month.split('-').map(Number);const ini=`${month}-01`,fim=`${month}-${String(new Date(y,m,0).getDate()).padStart(2,'0')}`;
   const tIni=new Date(y,m-1,1).toISOString(),tFim=new Date(y,m,1).toISOString();
-  const [conn,daily,monthly,media,aud]=await Promise.all([igConn(a.id,true),
+  const [conn,daily,monthly,media,aud,slr]=await Promise.all([igConn(a.id,true),
     db(sb.from('ig_daily').select('*').eq('account_id',a.id).gte('day',ini).lte('day',fim).order('day')),
     sb.from('ig_monthly').select('*').eq('account_id',a.id).eq('month',month).maybeSingle().then(r=>r.data),
     db(sb.from('ig_media').select('*').eq('account_id',a.id).gte('ts',tIni).lt('ts',tFim).order('ts')),
-    db(sb.from('ig_audience').select('*').eq('account_id',a.id))]);
+    db(sb.from('ig_audience').select('*').eq('account_id',a.id)),
+    sb.from('ig_slide_likes').select('media_id,likes').eq('account_id',a.id).then(r=>r.data||[],()=>[])]);
+  const SL={};(slr||[]).forEach(r=>SL[r.media_id]=r.likes);
   await signPaths(media.map(x=>x.thumb_url).filter(Boolean));
-  const posts=media.filter(x=>x.kind!=='story').map(x=>({...x,dt:new Date(x.ts),eng:x.reach?((x.total_interactions??((x.likes||0)+(x.comments||0)+(x.saved||0)+(x.shares||0)))/x.reach*100):null}));
+  const posts=media.filter(x=>x.kind!=='story').map(x=>({...x,sl:SL[x.media_id]||null,dt:new Date(x.ts),eng:x.reach?((x.total_interactions??((x.likes||0)+(x.comments||0)+(x.saved||0)+(x.shares||0)))/x.reach*100):null}));
   const stories=media.filter(x=>x.kind==='story').map(x=>({...x,dt:new Date(x.ts)}));
   const sum=k=>daily.reduce((s,d)=>s+(d[k]||0),0),has=k=>daily.some(d=>d[k]!=null);
   const pSum=k=>posts.reduce((s,p)=>s+(p[k]||0),0);
@@ -3829,6 +3865,7 @@ async function igLoad(a,month){
   d.best=[['Mais salvo','saved','salvamentos'],['Mais compartilhado','shares','compartilhamentos'],['Mais comentado','comments','comentários'],['Mais seguidores','follows','novos seguidores']]
     .map(([t,c,u])=>{const p=[...posts].filter(x=>x[c]>0).sort((x,z)=>z[c]-x[c])[0];return p&&{t,u,p,v:p[c]}}).filter(Boolean);
   d.leituras=igLeituras(d);
+  d.st=igStCalc(d);d.car=igCarCalc(d);
   return d;
 }
 function igLeituras(d){
@@ -3846,6 +3883,145 @@ function igLeituras(d){
   const fb=d.best.find(x=>x.t==='Mais seguidores');if(d.k.net!=null)L.push(`<b>${d.k.net>=0?'+':''}${nBR(d.k.net)} seguidores</b> no mês${fb?`. O post que mais trouxe seguidores saiu em ${dd(fb.p.dt)}`:''}.`);
   return L.slice(0,6);
 }
+
+/* ======================= V23: Resultados › Stories e Carrosséis ======================= */
+let igSeg='geral';
+const avgOf=xs=>{const v=xs.filter(x=>x!=null&&!isNaN(x));return v.length?v.reduce((s,x)=>s+x,0)/v.length:null};
+const dm=x=>x.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});
+const ordN=i=>`${i+1}º`;
+const ST_PER=[['manha','Manhã',6,11],['almoco','Almoço',11,14],['tarde','Tarde',14,18],['noite','Noite',18,24],['madrugada','Madrugada',0,6]];
+function igStCalc(d){const ss=d.stories;if(!ss.length)return null;
+  const sum=k=>ss.reduce((s,x)=>s+(x[k]||0),0),has=k=>ss.some(x=>x[k]!=null);
+  const views=sum('views'),days=new Date(+d.month.slice(0,4),+d.month.slice(5),0).getDate();
+  const withNav=ss.filter(x=>x.nav_forward!=null||x.nav_exit!=null);
+  const nav={f:0,n:0,x:0,b:0};withNav.forEach(x=>{nav.f+=x.nav_forward||0;nav.n+=x.nav_next||0;nav.x+=x.nav_exit||0;nav.b+=x.nav_back||0});const navT=nav.f+nav.n+nav.x+nav.b;
+  const navViews=withNav.reduce((s,x)=>s+(x.views||0),0);
+  const byDay={};ss.forEach(s=>{if(isNaN(s.dt))return;const k=iso(s.dt);(byDay[k]=byDay[k]||[]).push(s)});
+  const pos=Array.from({length:8},()=>[]);let seqDays=0;
+  Object.values(byDay).forEach(g=>{g.sort((p,q)=>p.dt-q.dt);const v0=g[0].views;if(!v0||g.length<2)return;seqDays++;g.forEach((s,i)=>{if(s.views!=null)pos[Math.min(7,i)].push(Math.min(100,s.views/v0*100))})});
+  const ret=pos.map(v=>avgOf(v));
+  const per=ST_PER.map(([k,n,a,b])=>{const g=ss.filter(s=>{const h=s.dt.getHours();return h>=a&&h<b&&s.reach!=null});return {k,n,a,b,q:g.length,reach:avgOf(g.map(x=>x.reach))}}).filter(x=>x.q);
+  const linkS=ss.filter(s=>s.link_clicks!=null&&s.link_clicks>0);
+  const st={q:ss.length,porDia:ss.length/days,views,avgViews:views/ss.length,avgReach:avgOf(ss.map(x=>x.reach)),
+    exit:navViews?nav.x/navViews*100:null,replies:has('replies')?sum('replies'):null,links:has('link_clicks')?sum('link_clicks'):null,linkQ:linkS.length,
+    nav,navT,ret,seqDays,per,top:[...ss].sort((p,q)=>(q.views||0)-(p.views||0))};
+  st.leituras=igStLeituras(st);return st}
+function igStLeituras(st){const L=[];const r=st.ret;
+  if(st.seqDays&&r[1]!=null){let best=null;for(let i=1;i<8;i++){if(r[i]==null||r[i-1]==null)continue;const q=r[i-1]-r[i];if(!best||q>best.q)best={i,q}}
+    let lim=0;for(let i=0;i<8;i++){if(r[i]!=null&&r[i]>=75)lim=i}
+    if(lim>=1)L.push(`<b>Até ${lim+1} stories por dia</b> seguram ${Math.round(r[lim])}% do público${best&&best.i>lim?`; a partir do ${ordN(best.i)}, a queda acelera`:''}.`);
+    if(best&&best.q>=5)L.push(`<b>A maior queda é do ${ordN(best.i-1)} para o ${ordN(best.i)} story</b> (−${Math.round(best.q)} pontos).`)}
+  if(st.links!=null&&st.linkQ)L.push(`<b>Stories com link tiveram ${nBR(st.links)} ${st.links===1?'clique':'cliques'}</b>: ${(st.links/st.linkQ).toFixed(1).replace('.',',')} por story, em média.`);
+  if(st.per.length>=2){const b=[...st.per].sort((p,q)=>q.reach-p.reach)[0],m=[...st.per].sort((p,q)=>q.q-p.q)[0];
+    L.push(`<b>${b.n} é o melhor horário</b> (${milBR(b.reach)} de alcance médio)${m.k!==b.k?`, mas só ${b.q} de ${st.q} stories saíram nesse horário`:''}.`)}
+  if(st.navT&&st.nav.b/st.navT>=.05)L.push(`<b>${pcBR(st.nav.b/st.navT*100)} das vezes as pessoas voltaram</b> para ver um story de novo: sinal de interesse.`);
+  const t=st.top[0];if(t&&t.views)L.push(`<b>O story mais visto saiu em ${dm(t.dt)}</b>, com ${nBR(t.views)} visualizações.`);
+  return L.slice(0,5)}
+function igCarCalc(d){const cs=d.posts.filter(p=>p.kind==='carrossel');if(!cs.length)return null;
+  const av=(xs,k)=>avgOf(xs.map(x=>x[k]));const allReach=av(d.posts,'reach'),reach=av(cs,'reach');
+  const fm={};['carrossel','reels','foto'].forEach(t=>{const ps=d.posts.filter(p=>p.kind===t);if(ps.length)fm[t]={q:ps.length,reach:av(ps,'reach'),saved:av(ps,'saved'),shares:av(ps,'shares'),eng:av(ps,'eng')}});
+  const BK=[['2 a 3 fotos',2,3],['4 a 6 fotos',4,6],['7 a 10 fotos',7,20]];
+  const bk=BK.map(([n,a,b])=>{const g=cs.filter(p=>p.slides>=a&&p.slides<=b);return {n,q:g.length,eng:av(g,'eng'),reach:av(g,'reach')}});
+  const rows=cs.map(p=>({...p,spm:p.reach&&p.saved!=null?p.saved/p.reach*1000:null}));
+  const ann=rows.filter(p=>p.sl&&p.sl.length>1&&p.sl[0]>0);
+  const pos=Array.from({length:10},()=>[]);ann.forEach(p=>p.sl.slice(0,10).forEach((v,i)=>pos[i].push(v/p.sl[0]*100)));
+  const c={q:cs.length,of:d.posts.length,reach,diff:allReach&&reach?(reach/allReach-1)*100:null,saved:cs.reduce((s,p)=>s+(p.saved||0),0),shares:cs.reduce((s,p)=>s+(p.shares||0),0),
+    eng:av(cs,'eng'),slides:av(cs,'slides'),fm,bk,rows,ann,slPos:pos.map(v=>v.length?{v:avgOf(v),q:v.length}:null),
+    top:[...rows].filter(p=>p.saved>0).sort((p,q)=>q.saved-p.saved).slice(0,3)};
+  c.leituras=igCarLeituras(c);return c}
+function igCarLeituras(c){const L=[];const f=c.fm;
+  const mais=Object.entries(f).filter(([,v])=>v.saved!=null).sort((p,q)=>q[1].saved-p[1].saved);
+  if(mais.length>=2&&mais[0][0]==='carrossel')L.push(`<b>Carrossel é o formato mais salvo</b>: ${fmt1(f.carrossel.saved)} salvamentos por post, contra ${fmt1(mais[1][1].saved)} ${mais[1][0]==='reels'?'dos Reels':'das fotos'}.`);
+  else if(mais.length>=2)L.push(`<b>${KIND_N[mais[0][0]]} foram mais salvos</b> que carrosséis (${fmt1(mais[0][1].saved)} contra ${fmt1(f.carrossel.saved)} por post).`);
+  if(c.diff!=null&&Math.abs(c.diff)>=5)L.push(`<b>Carrosséis alcançaram ${Math.abs(Math.round(c.diff))}% ${c.diff>0?'mais':'menos'}</b> que a média dos posts do mês.`);
+  const b=c.bk.filter(x=>x.q&&x.eng!=null).sort((p,q)=>q.eng-p.eng);if(b.length>=2)L.push(`<b>Com ${b[0].n}</b>, os carrosséis tiveram o melhor engajamento (${pcBR(b[0].eng)}).`);
+  const t=[...c.rows].filter(p=>p.spm!=null).sort((p,q)=>q.spm-p.spm)[0];if(t)L.push(`<b>O carrossel de ${dm(t.dt)}</b> foi o mais salvo para o tamanho do público: ${fmt1(t.spm)} salvamentos a cada mil pessoas.`);
+  const sp=c.slPos.map((x,i)=>x&&i?{i,v:x.v}:null).filter(Boolean);
+  if(c.ann.length&&sp.length){const w=[...sp].sort((p,q)=>p.v-q.v)[0];L.push(`<b>Curtidas por foto:</b> nos carrosséis anotados, a ${w.i+1}ª foto teve ${Math.round(w.v)}% das curtidas da 1ª.`)}
+  return L.slice(0,5)}
+const fmt1=v=>v==null?'—':(Math.round(v*10)/10).toLocaleString('pt-BR');
+const thumbS=(p,w,h)=>p&&p.thumb_url?bgi({path:p.thumb_url},w,h):'';
+// gráfico de colunas (retenção) — tela e PDF
+function igCols(vals,labels,H=150,hl=-1){vals=[...vals];while(vals.length>2&&vals[vals.length-1]==null)vals.pop();const ok=vals.some(v=>v!=null);if(!ok)return '';
+  return `<div class="ig-cols" style="height:${H+40}px">${vals.map((v,i)=>`<div class="${i===hl?'rk':''}"><b>${v==null?'—':Math.round(v)+'%'}</b><i style="height:${v==null?0:Math.max(2,v/100*H)}px"></i><span>${labels[i]}</span></div>`).join('')}</div>`}
+const NAVC=[['f','Avançou para o próximo','#0a0a0a'],['n','Pulou para outro perfil','#6b6b6b'],['x','Saiu dos stories','#a9a9a9'],['b','Voltou para ver de novo','#d6d6d6']];
+function igStackHTML(st,short){if(!st.navT)return '<p class="muted sm">Os números de navegação aparecem nos stories coletados a partir de agora.</p>';
+  return `<div class="ig-stk">${NAVC.map(([k,,c])=>`<i style="width:${st.nav[k]/st.navT*100}%;background:${c}"></i>`).join('')}</div>
+    <div class="ig-leg">${NAVC.map(([k,n,c])=>`<div><u style="background:${c}"></u>${short?n.split(' ')[0]:n}<b>${pcBR(st.nav[k]/st.navT*100)}</b></div>`).join('')}</div>`}
+function igRetHint(st){let best=null;for(let i=1;i<8;i++){const a=st.ret[i-1],b=st.ret[i];if(a==null||b==null)continue;if(!best||a-b>best.q)best={i,q:a-b}}return best}
+function igStHTML(d){const st=d.st;
+  if(!st)return `<section class="ig-box"><div class="ig-h">Stories</div><p class="muted">Nenhum story guardado neste mês. A Meta só mostra os números de cada story por 24 horas; o Fig.Feed guarda a cada 4 horas a partir da conexão.</p></section>`;
+  const K=[['Stories publicados',nBR(st.q),`${fmt1(st.porDia)} por dia`],['Alcance médio',nBR(st.avgReach),'por story'],['Visualizações',nBR(st.views),`${nBR(st.avgViews)} por story`],
+    ['Taxa de saída',st.exit==null?'—':pcBR(st.exit),'saíram dos stories'],['Respostas',st.replies==null?'—':nBR(st.replies),'mensagens no direct'],['Cliques no link',st.links==null?'—':nBR(st.links),st.linkQ?`em ${st.linkQ} ${st.linkQ===1?'story':'stories'} com link`:'nenhum story com link']];
+  const hb=igRetHint(st);const pmx=Math.max(1,...st.per.map(p=>p.reach||0));
+  return `<div class="ig-kc ro">${K.map(([l,v,s],i)=>`<div class="kc ${i?'':'on'}"><span>${l}</span><b>${v}</b><small>${s}</small></div>`).join('')}</div>
+    <section class="ig-box"><div class="ig-h">Retenção da sequência <em>quantas pessoas continuam assistindo, do 1º ao último story do dia (média do mês)</em></div>
+      ${st.seqDays?igCols(st.ret,['1º','2º','3º','4º','5º','6º','7º','8º+'],150,hb?hb.i:-1)+`<p class="muted sm">${hb&&hb.q>=3?`A maior queda é do ${ordN(hb.i-1)} para o ${ordN(hb.i)} story (−${Math.round(hb.q)} pontos). `:''}Calculado em ${st.seqDays} ${st.seqDays===1?'dia':'dias'} com 2 ou mais stories.</p>`:'<p class="muted">Publique 2 ou mais stories no mesmo dia para ver a retenção da sequência.</p>'}</section>
+    <div class="ig-2"><section class="ig-box"><div class="ig-h">O que as pessoas fizeram</div>${igStackHTML(st)}<p class="muted sm">Voltar costuma ser bom sinal: a pessoa quis ver de novo.</p></section>
+      <section class="ig-box"><div class="ig-h">Melhor horário para stories <em>alcance médio</em></div>${st.per.map(p=>igBar(p.n,`${p.q} ${p.q===1?'story':'stories'}`,[[p.reach||0,p.reach===pmx?'#0a0a0a':'#9a9a9a']],pmx,milBR(p.reach))).join('')}
+        <p class="muted sm">Manhã 6h–11h · Almoço 11h–14h · Tarde 14h–18h · Noite 18h–24h · Madrugada 0h–6h</p></section></div>
+    <section class="ig-box"><div class="ig-h">Stories do mês <em>mais vistos primeiro</em></div><div class="ig-sts">${st.top.slice(0,24).map(s=>`<a class="ig-st" ${s.permalink?`href="${esc(s.permalink)}" target="_blank" rel="noopener"`:''}><span class="im" style="${thumbS(s,180,320)}"><em>${dm(s.dt)}</em>${s.link_clicks?`<u>🔗 ${nBR(s.link_clicks)}</u>`:''}</span><b>${nBR(s.views)}</b><small>visualizações<br>${nBR(s.reach)} alcance${s.nav_exit!=null&&s.views?` · ${Math.round(s.nav_exit/s.views*100)}% saída`:''}</small></a>`).join('')}</div></section>
+    ${st.leituras.length?`<section class="ig-box"><div class="ig-h">Leituras dos stories</div><ol class="ig-ins">${st.leituras.map(x=>`<li>${x}</li>`).join('')}</ol></section>`:''}`}
+function igCarHTML(d){const c=d.car;
+  if(!c)return `<section class="ig-box"><div class="ig-h">Carrosséis</div><p class="muted">Nenhum carrossel publicado neste mês.</p></section>`;
+  const f=c.fm,eo=['reels','foto'].filter(t=>f[t]&&f[t].eng!=null).map(t=>`${KIND_N[t]} ${pcBR(f[t].eng)}`).join(' · ');
+  const K=[['Carrosséis',nBR(c.q),`de ${c.of} posts`],['Alcance médio',nBR(c.reach),c.diff==null?'':`${c.diff>=0?'+':'−'}${Math.abs(Math.round(c.diff))}% que a média`],['Salvamentos',nBR(c.saved),`${fmt1(c.saved/c.q)} por carrossel`],
+    ['Compartilhamentos',nBR(c.shares),`${fmt1(c.shares/c.q)} por carrossel`],['Engajamento médio',pcBR(c.eng),eo],['Fotos por carrossel',c.slides==null?'—':fmt1(c.slides),c.slides==null?'atualize para ver':'média do mês']];
+  const F=Object.entries(f),mr=Math.max(1,...F.map(([,v])=>v.reach||0)),ms=Math.max(.1,...F.map(([,v])=>v.saved||0)),mh=Math.max(.1,...F.map(([,v])=>v.shares||0));
+  const mb=(v,mx,on)=>`<span class="mb ${on?'':'g'}" style="width:${v==null?0:Math.max(3,v/mx*56)}px"></span>`;
+  const bk=c.bk,bmx=Math.max(.01,...bk.map(x=>x.eng||0)),bBest=[...bk].filter(x=>x.q&&x.eng!=null).sort((p,q)=>q.eng-p.eng)[0];
+  const slv=c.slPos.map(x=>x&&x.v),slN=slv.filter(v=>v!=null).length;
+  return `<div class="ig-kc ro">${K.map(([l,v,s],i)=>`<div class="kc ${i?'':'on'}"><span>${l}</span><b>${v}</b><small>${s}</small></div>`).join('')}</div>
+    <div class="ig-2"><section class="ig-box"><div class="ig-h">Carrossel × outros formatos <em>média por post</em></div>
+      <table class="ig-cmp"><tr><th></th><th>Alcance</th><th>Salvam.</th><th>Compart.</th><th class="n">Engaj.</th></tr>${F.map(([t,v])=>`<tr class="${t==='carrossel'?'me':''}"><td>${KIND_N[t]}</td><td>${mb(v.reach,mr,t==='carrossel')}${nBR(v.reach)}</td><td>${mb(v.saved,ms,t==='carrossel')}${fmt1(v.saved)}</td><td>${mb(v.shares,mh,t==='carrossel')}${fmt1(v.shares)}</td><td class="n">${pcBR(v.eng)}</td></tr>`).join('')}</table></section>
+      <section class="ig-box"><div class="ig-h">Quantas fotos funcionam melhor <em>engajamento médio</em></div>
+        ${c.slides==null?'<p class="muted">Toque em "Atualizar agora" para o Fig.Feed contar as fotos de cada carrossel.</p>':`<div class="ig-bk">${bk.map(x=>`<div class="${x===bBest?'best':''}"><h4>${x.n}</h4><b>${x.q?pcBR(x.eng):'—'}</b><small>${x.q} ${x.q===1?'carrossel':'carrosséis'}${x.reach!=null?' · '+milBR(x.reach)+' alcance':''}</small><span class="mini"><i style="width:${(x.eng||0)/bmx*100}%"></i></span></div>`).join('')}</div>`}</section></div>
+    ${c.top.length?`<section class="ig-box"><div class="ig-h">Melhores carrosséis <em>por salvamentos</em></div><div class="ig-ctops">${c.top.map((p,i)=>`<a ${p.permalink?`href="${esc(p.permalink)}" target="_blank" rel="noopener"`:''}><span class="fan"><i></i><i></i><i style="${thumbS(p,400,500)}"></i>${p.slides?`<em>1/${p.slides}</em>`:''}</span><b>${i+1}º · ${nBR(p.saved)} ${p.saved===1?'salvamento':'salvamentos'}</b><small>${dm(p.dt)}${p.slides?` · ${p.slides} fotos`:''} · ${nBR(p.reach)} alcance<br>${p.spm!=null?fmt1(p.spm)+' salvamentos a cada mil pessoas':''}</small></a>`).join('')}</div></section>`:''}
+    <section class="ig-box"><div class="ig-h">Curtidas por foto <em>anotadas por você, do app do Instagram</em></div>
+      ${slN>=2?igCols(slv.slice(0,Math.max(...c.ann.map(p=>Math.min(10,p.sl.length)))),Array.from({length:10},(_,i)=>`${i+1}ª`),120)+`<p class="muted sm">Média de ${c.ann.length} ${c.ann.length===1?'carrossel':'carrosséis'}: curtidas de cada foto em relação à 1ª.</p>`
+        :`<p class="muted">No app do Instagram, abra um carrossel › Ver insights e veja em qual foto as pessoas curtiram. Anote aqui, na tabela abaixo (botão "Anotar"), e o Fig.Feed mostra onde o carrossel prende ou perde as pessoas.</p>`}</section>
+    <section class="ig-box"><div class="ig-h">Todos os carrosséis (${c.q})</div><div class="ig-tbl"><table><thead><tr><th></th><th>Data</th><th>Fotos</th><th>Alcance</th><th>Curtidas</th><th>Salvam.</th><th>Compart.</th><th>Salvos/mil</th><th>Engaj.</th><th>Curtidas por foto</th></tr></thead><tbody>${[...c.rows].reverse().map(p=>`<tr><td><span class="th" style="${thumbS(p,80,100)}"></span></td><td>${dm(p.dt)}</td><td>${p.slides??'—'}</td><td><b>${nBR(p.reach)}</b></td><td>${nBR(p.likes)}</td><td>${nBR(p.saved)}</td><td>${nBR(p.shares)}</td><td>${fmt1(p.spm)}</td><td>${pcBR(p.eng)}</td><td><button class="pill sm-pill" data-sl="${esc(p.media_id)}">${p.sl?'Ver ('+p.sl.length+')':'Anotar'}</button></td></tr>`).join('')}</tbody></table></div></section>
+    ${c.leituras.length?`<section class="ig-box"><div class="ig-h">Leituras dos carrosséis</div><ol class="ig-ins">${c.leituras.map(x=>`<li>${x}</li>`).join('')}</ol></section>`:''}
+    <div class="ig-info"><i>i</i><div><b>Curtidas por foto do carrossel</b> é uma novidade que o Instagram mostra só dentro do app dele. A Meta ainda não libera esse número para outros apps, por isso ele é anotado à mão; quando a Meta liberar, entra sozinho.</div></div>`}
+// janela para anotar as curtidas de cada foto
+function igSlideSheet(a,p,done){
+  let v=(p.sl&&p.sl.length?[...p.sl]:Array.from({length:Math.min(20,Math.max(2,p.slides||5))},()=>null));
+  sheet(`<h2>Curtidas por foto</h2><p class="muted sm" style="margin:-4px 0 12px">Carrossel de ${dm(p.dt)}${p.slides?` · ${p.slides} fotos`:''}. No app do Instagram: abra o post › Ver insights › "Quando as pessoas curtiram". Digite quantas curtidas teve cada foto.</p>
+    <div class="sl-top"><span class="th" style="${thumbS(p,120,150)}"></span><div class="sl-n"><span>Fotos:</span><button class="pill" id="sl-m" aria-label="Menos uma foto">−</button><b id="sl-q"></b><button class="pill" id="sl-p" aria-label="Mais uma foto">+</button></div></div>
+    <div class="sl-in" id="sl-in"></div><div id="sl-ch"></div>
+    <div class="sl-acts"><button class="pill dark" id="sl-ok">Salvar</button>${p.sl?'<button class="danger-link" id="sl-del">Apagar anotação</button>':''}</div>`,m=>{
+    const q=m.querySelector('#sl-q'),box=m.querySelector('#sl-in'),ch=m.querySelector('#sl-ch');
+    const chart=()=>{const n=v.map(x=>x==null?null:+x);const b=n[0];ch.innerHTML=b>0&&n.filter(x=>x!=null).length>=2?igCols(n.map(x=>x==null?null:Math.min(100,x/b*100)),n.map((_,i)=>`${i+1}ª`),80)+'<p class="muted sm">Em relação às curtidas da 1ª foto.</p>':''};
+    const draw=()=>{q.textContent=v.length;box.innerHTML=v.map((x,i)=>`<label><span>${i+1}ª</span><input type="number" min="0" inputmode="numeric" value="${x??''}" data-i="${i}"></label>`).join('');
+      box.querySelectorAll('input').forEach(inp=>inp.oninput=()=>{const t=inp.value.trim();v[+inp.dataset.i]=t===''?null:Math.max(0,parseInt(t,10)||0);chart()});chart()};
+    m.querySelector('#sl-m').onclick=()=>{if(v.length>1){v.pop();draw()}};m.querySelector('#sl-p').onclick=()=>{if(v.length<20){v.push(null);draw()}};
+    draw();
+    m.querySelector('#sl-ok').onclick=async e=>{const b=e.currentTarget;if(v.some(x=>x==null))return toast('Preencha as curtidas de todas as fotos (pode ser 0)');b.disabled=true;
+      try{await db(sb.from('ig_slide_likes').upsert({media_id:p.media_id,account_id:a.id,likes:v,updated_at:new Date().toISOString()}));closeSheet();toast('Curtidas por foto salvas');done()}catch(err){b.disabled=false}};
+    const del=m.querySelector('#sl-del');if(del)del.onclick=async()=>{if(!confirm('Apagar as curtidas anotadas deste carrossel?'))return;
+      try{await db(sb.from('ig_slide_likes').delete().eq('media_id',p.media_id));closeSheet();toast('Anotação apagada');done()}catch(err){}};
+  })}
+// páginas do PDF
+function igStPage(d,page,pic){const st=d.st;if(!st)return '';
+  const K=[['Stories',nBR(st.q)],['Alcance médio',nBR(st.avgReach)],['Visualizações',nBR(st.views)],['Taxa de saída',st.exit==null?'—':pcBR(st.exit)],['Respostas',st.replies==null?'—':nBR(st.replies)],['Cliques no link',st.links==null?'—':nBR(st.links)]];
+  const pmx=Math.max(1,...st.per.map(p=>p.reach||0));const hb=igRetHint(st);
+  return page('Análise dos stories',`<div class="kcs">${K.map(([t,v],i)=>`<div class="kc${i?'':' on'}"><span>${t}</span><b>${v}</b></div>`).join('')}</div>
+    <div class="an2"><div class="anb"><div class="sec2"><b>Retenção da sequência</b> <span class="muted">média por dia</span></div>${st.seqDays?igCols(st.ret,['1º','2º','3º','4º','5º','6º','7º','8º+'],95,hb?hb.i:-1):'<p class="muted">Sem dias com 2 ou mais stories.</p>'}</div>
+      <div class="anb"><div class="sec2"><b>O que as pessoas fizeram</b></div>${igStackHTML(st,true)}
+        <div class="sec2" style="margin-top:4mm"><b>Melhor horário</b></div>${st.per.map(p=>`<div class="hb"><div class="hl">${p.n}<small>${p.q} stories</small></div><div class="hr"><span class="ibar"><i style="width:${(p.reach||0)/pmx*100}%;background:${p.reach===pmx?'#0a0a0a':'#9a9a9a'}"></i></span><b>${milBR(p.reach)}</b></div></div>`).join('')}</div></div>
+    <div class="an2"><div class="anb"><div class="sec2"><b>Mais vistos</b></div><div class="stq st6">${st.top.slice(0,6).map(s=>`<div><span class="si2">${pic(s,180,320)}</span><b>${nBR(s.views)}</b><small>${dm(s.dt)} · ${nBR(s.reach)} alcance</small></div>`).join('')}</div></div>
+      <div class="anb"><div class="sec2"><b>Leituras</b></div><ol class="ins">${st.leituras.map(x=>`<li>${x}</li>`).join('')||'<li>Ainda há poucos dados.</li>'}</ol></div></div>`)}
+function igCarPage(d,page,pic){const c=d.car;if(!c)return '';
+  const K=[['Carrosséis',`${c.q} de ${c.of}`],['Alcance médio',nBR(c.reach)],['Salvamentos',nBR(c.saved)],['Compartilhamentos',nBR(c.shares)],['Engajamento',pcBR(c.eng)],['Fotos por carrossel',c.slides==null?'—':fmt1(c.slides)]];
+  const F=Object.entries(c.fm),mr=Math.max(1,...F.map(([,v])=>v.reach||0)),ms=Math.max(.1,...F.map(([,v])=>v.saved||0));
+  const mb=(v,mx,on)=>`<span class="mb ${on?'':'g'}" style="width:${v==null?0:Math.max(1,v/mx*16)}mm"></span>`;
+  const bBest=[...c.bk].filter(x=>x.q&&x.eng!=null).sort((p,q)=>q.eng-p.eng)[0];const slv=c.slPos.map(x=>x&&x.v);
+  return page('Análise dos carrosséis',`<div class="kcs">${K.map(([t,v],i)=>`<div class="kc${i?'':' on'}"><span>${t}</span><b>${v}</b></div>`).join('')}</div>
+    <div class="an2"><div class="anb"><div class="sec2"><b>Melhores carrosséis</b> <span class="muted">por salvamentos</span></div><div class="ctp">${c.top.map(p=>`<div><span class="cfan"><i></i><i></i>${pic(p,300,375)}</span><b>${nBR(p.saved)} salvamentos</b><small>${dm(p.dt)}${p.slides?` · ${p.slides} fotos`:''} · ${nBR(p.reach)} alcance</small></div>`).join('')||'<p class="muted">Nenhum carrossel salvo no mês.</p>'}</div></div>
+      <div class="anb"><div class="sec2"><b>Carrossel × outros formatos</b></div><table class="cmp2"><tr><th></th><th>Alcance</th><th>Salvam.</th><th class="nm">Engaj.</th></tr>${F.map(([t,v])=>`<tr class="${t==='carrossel'?'me':''}"><td>${KIND_N[t]}</td><td>${mb(v.reach,mr,t==='carrossel')}${nBR(v.reach)}</td><td>${mb(v.saved,ms,t==='carrossel')}${fmt1(v.saved)}</td><td class="nm">${pcBR(v.eng)}</td></tr>`).join('')}</table>
+        ${c.slides!=null?`<div class="sec2" style="margin-top:4mm"><b>Quantas fotos funcionam melhor</b></div><div class="bk3">${c.bk.map(x=>`<div class="${x===bBest?'best':''}"><span>${x.n}</span><b>${x.q?pcBR(x.eng):'—'}</b><small>${x.q} carross.</small></div>`).join('')}</div>`:''}
+        ${slv.filter(v=>v!=null).length>=2?`<div class="sec2" style="margin-top:4mm"><b>Curtidas por foto</b> <span class="muted">em relação à 1ª (${c.ann.length} anotados)</span></div>${igCols(slv.slice(0,Math.max(...c.ann.map(p=>Math.min(10,p.sl.length)))),Array.from({length:10},(_,i)=>`${i+1}ª`),40)}`:''}</div></div>
+    <div class="anb" style="margin-top:4mm"><div class="sec2"><b>Leituras</b></div><ol class="ins">${c.leituras.slice(0,3).map(x=>`<li>${x}</li>`).join('')||'<li>Ainda há poucos dados.</li>'}</ol></div>`)}
 
 /* ---------- Aba "Resultados" da conta ---------- */
 let igMetric='views';
@@ -3868,17 +4044,21 @@ async function vResultados(){
       <div><b>@${esc(conn.username||'')}</b><small>${conn.followers!=null?nBR(conn.followers)+' seguidores · ':''}${conn.last_sync?'atualizado '+new Date(conn.last_sync).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):esc(conn.status_msg||'Buscando os dados…')}</small></div>
       <div class="ig-acts"><button class="pill" id="ig-sync">Atualizar agora</button><button class="pill" id="ig-more" aria-label="Mais opções">${DOTS}</button></div></div>
     ${err?`<div class="ig-ban"><b>A conexão caiu</b><span>${esc(conn.status_msg||'O cliente tirou o acesso do Fig.Feed ou mudou o perfil de empresa.')}</span><button class="pill dark" id="ig-reconn">Reenviar link para o cliente</button></div>`:''}
-    <div class="ig-mes"><button class="pill" id="ig-prev" aria-label="Mês anterior">‹</button><b>${MESES_RP[+month.slice(5)-1]} ${month.slice(0,4)}</b><button class="pill" id="ig-next" aria-label="Próximo mês">›</button></div>
-    <div class="ig-kc">${MET.map(([key,l,v])=>`<button class="kc ${key===igMetric?'on':''}" data-m="${key}" ${['eng','posts'].includes(key)?'disabled':''}><span>${l}</span><b>${typeof v==='number'?nBR(v):v??'—'}</b></button>`).join('')}</div>
+    <div class="ig-mrow"><div class="ig-mes"><button class="pill" id="ig-prev" aria-label="Mês anterior">‹</button><b>${MESES_RP[+month.slice(5)-1]} ${month.slice(0,4)}</b><button class="pill" id="ig-next" aria-label="Próximo mês">›</button></div>
+      <div class="ig-seg" role="tablist" aria-label="O que ver">${[['geral','Geral'],['stories','Stories'],['carrosseis','Carrosséis']].map(([k2,n2])=>`<button role="tab" data-seg="${k2}" class="${igSeg===k2?'on':''}" aria-selected="${igSeg===k2}">${n2}</button>`).join('')}</div></div>
+    ${igSeg==='geral'?`<div class="ig-kc">${MET.map(([key,l,v])=>`<button class="kc ${key===igMetric?'on':''}" data-m="${key}" ${['eng','posts'].includes(key)?'disabled':''}><span>${l}</span><b>${typeof v==='number'?nBR(v):v??'—'}</b></button>`).join('')}</div>
     <section class="ig-box"><div class="ig-h">${MET.find(x=>x[0]===igMetric)?.[1]||'Visualizações'} por dia</div>${igLine(ser,month,Math.max(300,Math.min(940,(main.clientWidth||640)-34)),innerWidth<600?220:190)}
       <p class="muted sm">${d.daily.length?'A Meta pode levar até 2 dias para fechar os números de cada dia.':'Os números por dia aparecem depois da primeira coleta.'}</p></section>
     <div class="ig-2">${igFmtBox(d)}${igBestBox(d)}</div>
     ${d.top.length?`<section class="ig-box"><div class="ig-h">Melhores posts do mês</div><div class="ig-tops">${d.top.map((p,i)=>`<a class="ig-tp" href="${esc(p.permalink||'#')}" target="_blank" rel="noopener"><span style="${p.thumb_url?bgi({path:p.thumb_url},300,375):''}"></span><b>${i+1}º · ${nBR(p.reach)}</b><small>contas alcançadas · ${KIND_N[p.kind]}</small></a>`).join('')}</div></section>`:''}
     ${d.leituras.length?`<section class="ig-box"><div class="ig-h">Leituras do mês</div><ol class="ig-ins">${d.leituras.map(x=>`<li>${x}</li>`).join('')}</ol></section>`:''}
     <section class="ig-box"><div class="ig-h">Todos os posts (${d.posts.length})</div>${d.posts.length?`<div class="ig-tbl"><table><thead><tr><th></th><th>Data</th><th>Formato</th><th>Visualiz.</th><th>Alcance</th><th>Curtidas</th><th>Coment.</th><th>Compart.</th><th>Salvam.</th><th>Engaj.</th></tr></thead><tbody>${[...d.posts].reverse().map(p=>`<tr><td><span class="th" style="${p.thumb_url?bgi({path:p.thumb_url},80,100):''}"></span></td><td>${p.dt.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})}</td><td>${KIND_N[p.kind]}</td><td>${nBR(p.views)}</td><td><b>${nBR(p.reach)}</b></td><td>${nBR(p.likes)}</td><td>${nBR(p.comments)}</td><td>${nBR(p.shares)}</td><td>${nBR(p.saved)}</td><td>${pcBR(p.eng)}</td></tr>`).join('')}</tbody></table></div>`:'<p class="muted sm">Nenhum post neste mês.</p>'}</section>
+    `:igSeg==='stories'?igStHTML(d):igCarHTML(d)}
     <div class="ig-foot"><button class="pill dark" id="ig-pdf">Baixar Resultados (PDF)</button></div>`;
   const b=id=>document.getElementById(id);
   main.querySelectorAll('[data-m]').forEach(x=>x.onclick=()=>{igMetric=x.dataset.m;vResultados()});
+  main.querySelectorAll('[data-seg]').forEach(x=>x.onclick=()=>{if(igSeg===x.dataset.seg)return;igSeg=x.dataset.seg;vResultados()});
+  main.querySelectorAll('[data-sl]').forEach(x=>x.onclick=()=>{const p=d.posts.find(q=>q.media_id===x.dataset.sl);if(p)igSlideSheet(a,p,()=>vResultados())});
   b('ig-prev').onclick=()=>go(`resultados/${a.id}/${mesShift(month,-1)}`);b('ig-next').onclick=()=>go(`resultados/${a.id}/${mesShift(month,1)}`);
   b('ig-sync').onclick=async e=>{const t=e.currentTarget;t.disabled=true;t.textContent='Atualizando…';const r=await igCall({action:'sync',account_id:a.id});
     toast(r.ok?'Números atualizados':r.motivo==='reconectar'?'A conexão caiu. Reenvie o link para o cliente.':'Não deu para atualizar agora. Tente de novo em instantes.',3500);vResultados()};
@@ -4019,7 +4199,7 @@ function resultadosPages(d,opts={}){
   const user=d.conn?.username?'@'+d.conn.username:a.handle;
   const rows=[...d.posts];const tPages=[];for(let i=0;i<rows.length;i+=20)tPages.push(rows.slice(i,i+20));
   const aud=['city','age','gender'].filter(x=>(d.audience[x]||[]).length);
-  const TOTAL=(opts.noCover?0:1)+3+tPages.length+(d.stories.length?1:0)+(aud.length?1:0);let n=0;
+  const TOTAL=(opts.noCover?0:1)+3+(d.st?1:0)+(d.car?1:0)+tPages.length+(d.stories.length?1:0)+(aud.length?1:0);let n=0;
   const page=(title,body,cls='')=>{n++;return `<section class="pg ${cls}"><header><div class="l">${mk}<b>Fig.Feed</b><span class="sep">·</span><span>Resultados</span></div>
     <div class="r"><span class="av">${av}</span><b>${esc(user)}</b><span class="sep">·</span><b>${label}</b></div></header><h1>${title}</h1>${body}
     <footer><span>Gerado no Fig.Feed em ${hoje} · dados do Instagram (Meta)</span><span>${n} / ${TOTAL}</span></footer></section>`};
@@ -4049,6 +4229,8 @@ function resultadosPages(d,opts={}){
     <div class="sec2" style="margin-top:6mm"><b>Alcance médio por horário</b></div>${Object.entries(d.per).map(([kk,v])=>bar(NM[kk],`${v.q} posts · engaj. ${pcBR(v.eng)}`,[[v.reach,'#0a0a0a']],pmx,milBR(v.reach))).join('')}</div>
     <div><div class="lab">Leituras do mês</div><ol class="ins">${d.leituras.map(x=>`<li>${x}</li>`).join('')||'<li>Ainda há poucos dados neste mês.</li>'}</ol>
     <div class="obs"><div class="lab">Próximo mês</div><div class="nl"><i></i><i></i><i></i></div></div></div></div>`);
+  // v23: análises de stories e carrosséis
+  out+=igStPage(d,page,pic);out+=igCarPage(d,page,pic);
   // tabela
   tPages.forEach((g,gi)=>{out+=page(gi?'Todos os posts (continuação)':'Todos os posts',`<table class="posts rs"><thead><tr><th style="width:8mm"></th><th style="width:24mm">Data</th><th>Post</th>${['Visualiz.','Alcance','Curtidas','Coment.','Compart.','Salvam.','Seguid.','Engaj.'].map(x=>`<th class="nm">${x}</th>`).join('')}</tr></thead><tbody>${
     g.map(p=>`<tr><td><span class="th2">${pic(p,60,75)}</span></td><td><b>${dd(p.dt)}</b> <span class="muted">${WDc[p.dt.getDay()]} ${p.dt.toTimeString().slice(0,5)}</span></td><td><b class="t">${esc((p.caption||'Sem legenda').split('\n')[0].slice(0,44))}</b> <span class="muted">· ${KIND_N[p.kind]}</span></td>
@@ -4079,7 +4261,20 @@ const IG_PDF_CSS=`.sec{display:flex;justify-content:space-between;align-items:ba
 .obs{border:1px solid #e7e7e7;border-radius:3mm;padding:3mm 4mm;margin-top:3mm}.nl{display:flex;flex-direction:column;gap:6.5mm;margin-top:4mm}.nl i{display:block;border-bottom:1px solid #d9d9d9}
 .posts.rs{font-size:6.6pt}.posts.rs td{padding:.55mm 2mm .55mm 0}.posts.rs .th2{width:4.4mm;height:5.5mm}.nm{text-align:right}.eg{border-radius:99px;padding:.5px 5px;font-weight:500}
 .stq{display:grid;grid-template-columns:repeat(7,1fr);gap:4mm 3mm}.stq div{font-size:7pt}.stq b{display:block;font-size:10pt;font-weight:600;margin-top:1.5mm}.stq small{display:block;color:#7a7a7a;font-size:6.3pt}
-.si2{display:block;aspect-ratio:9/16;border-radius:1.5mm;overflow:hidden;background:#d9d9d9}.aud{display:grid;grid-template-columns:repeat(3,1fr);gap:10mm}`;
+.si2{display:block;aspect-ratio:9/16;border-radius:1.5mm;overflow:hidden;background:#d9d9d9}.aud{display:grid;grid-template-columns:repeat(3,1fr);gap:10mm}
+.ig-cols{display:flex;align-items:flex-end;gap:10px}.ig-cols div{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:5px}.ig-cols i{display:block;width:100%;background:#0a0a0a;border-radius:4px 4px 0 0}.ig-cols div.rk i{background:#7a7a7a}.ig-cols b{font-size:12px;font-weight:600}.ig-cols span{font-size:11px;color:#7a7a7a}
+.ig-stk{display:flex;height:14px;border-radius:99px;overflow:hidden;background:#ececec}.ig-stk i{display:block;height:100%}
+.ig-leg{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin-top:12px}.ig-leg div{display:flex;align-items:center;gap:8px;font-size:13px}.ig-leg u{width:10px;height:10px;border-radius:3px;display:inline-block;flex:none}.ig-leg b{margin-left:auto;font-weight:600}
+
+.an2{display:grid;grid-template-columns:1.15fr 1fr;gap:8mm;margin-top:5mm}.anb{min-width:0}.anb .muted{font-weight:400;font-size:8pt}
+.st6{grid-template-columns:repeat(7,1fr)}.ctp{display:grid;grid-template-columns:repeat(3,1fr);gap:5mm}.ctp div{font-size:7pt}.ctp b{display:block;font-size:9.5pt;font-weight:600;margin-top:2mm}.ctp small{display:block;color:#7a7a7a;font-size:6.5pt}
+.cfan{display:block;position:relative;aspect-ratio:4/5;margin:0 3mm 0 0;width:78%}.cfan img,.cfan i{position:absolute;inset:0;width:100%;height:100%;border-radius:1.5mm;object-fit:cover;background:#d9d9d9}
+.cfan i:nth-child(1){transform:translate(2.6mm,1.3mm) rotate(5deg);background:#cfcfcf}.cfan i:nth-child(2){transform:translate(1.3mm,.6mm) rotate(2.5deg);background:#e2e2e2}
+.cmp2{width:100%;border-collapse:collapse;font-size:8pt}.cmp2 th{font-weight:400;color:#7a7a7a;text-align:left;padding:1mm 1.5mm;border-bottom:1px solid #e7e7e7}.cmp2 td{padding:1.8mm 1.5mm;border-bottom:1px solid #f1f1f1;white-space:nowrap}.cmp2 .nm{text-align:right}.cmp2 tr.me td{font-weight:600}
+.mb{display:inline-block;height:1.6mm;border-radius:99px;background:#0a0a0a;vertical-align:middle;margin-right:2mm}.mb.g{background:#bdbdbd}
+.bk3{display:grid;grid-template-columns:repeat(3,1fr);gap:3mm}.bk3 div{background:#f2f2f2;border-radius:2.5mm;padding:2.5mm 3mm}.bk3 span{display:block;font-size:7pt;color:#5a5a5a}.bk3 b{display:block;font-size:13pt;font-weight:600;margin-top:1mm}.bk3 small{font-size:6.5pt;color:#7a7a7a}
+.bk3 .best{background:#0a0a0a;color:#fff}.bk3 .best span,.bk3 .best small{color:rgba(255,255,255,.7)}
+.ig-cols b{font-size:8pt}.ig-cols span{font-size:7pt}.ig-leg div{font-size:8pt}`;
 async function printDoc(title,body){
   const html=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>${esc(title)}</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"><style>${PLAN_CSS}\n${IG_PDF_CSS}</style></head><body>${body}</body></html>`;
