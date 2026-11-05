@@ -6,6 +6,7 @@ Cada versão também tem uma branch própria, com o código exatamente como esta
 
 | Versão | Nome | O que trouxe | Branch | Commit |
 | --- | --- | --- | --- | --- |
+| v22 | Editar capa | Pop-up "Editar capa" (arrastar, zoom, pinça, rodinha) para a capa do post na grade 3:4, sem cortar a foto; vale no Feed, Prévia, Feed On, PNGs e PDF; coluna posts.capa (supabase/v22.sql) | [versao-22-editar-capa](https://github.com/hakachi7/Fig.Feed/tree/versao-22-editar-capa) | |
 | v21.1 | Envio mais rápido | Até 4 fotos sobem ao mesmo tempo (feed, post, stories, Biblioteca); a função fotos faz menos consultas por foto | [versao-21-fotos-r2](https://github.com/hakachi7/Fig.Feed/tree/versao-21-fotos-r2) | (veja a branch) |
 | v21 | Fotos no R2 | Fotos do app e miniaturas do Instagram passam a ficar no Cloudflare R2 (10 GB grátis, tráfego grátis); envio e exclusão pela Edge Function `fotos` (supabase/functions/fotos), espaço medido pela tabela fotos_r2 (supabase/v21.sql); Admin › Visão geral mostra o R2 | [versao-21-fotos-r2](https://github.com/hakachi7/Fig.Feed/tree/versao-21-fotos-r2) | (veja a branch) |
 | v20.1 | Quadro verde | Quadro de constância do Perfil em tons de verde (estilo GitHub); agendados com contorno verde | [versao-20-1-quadro-verde](https://github.com/hakachi7/Fig.Feed/tree/versao-20-1-quadro-verde) |

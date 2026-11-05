@@ -366,6 +366,55 @@ kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;borde
 .tile.dim{opacity:.18}
 .tile .dt{position:absolute;left:6px;bottom:5px;font-size:10px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.5);opacity:0;transition:opacity .2s}
 .grid:hover .tile .dt{opacity:1}
+/* V22: Editar capa */
+.tile .cap-ed{position:absolute;right:6px;bottom:6px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.94);color:#0a0a0a;display:grid;place-items:center;opacity:0;transition:opacity .15s;box-shadow:0 1px 4px rgba(0,0,0,.18);cursor:pointer}
+.tile:hover .cap-ed,.tile:focus-within .cap-ed,.tile .cap-ed:focus-visible{opacity:1}
+@media (hover:none){.tile .cap-ed{opacity:.92;width:26px;height:26px;right:5px;bottom:5px}}
+.ce-ov{position:fixed;inset:0;z-index:90;background:rgba(10,10,10,.42);display:grid;place-items:center;padding:24px}
+.ce{width:min(1320px,100%);height:min(812px,100%);background:#fff;border-radius:18px;box-shadow:0 30px 80px rgba(0,0,0,.25);display:flex;flex-direction:column;overflow:hidden}
+.ce-top{display:flex;align-items:center;gap:14px;padding:16px 22px;border-bottom:1px solid var(--line)}
+.ce-top h2{font-size:20px;font-weight:500;margin:0;letter-spacing:-.01em}.ce-top p{margin:2px 0 0;color:var(--muted);font-size:13px}
+.ce-acts{margin-left:auto;display:flex;gap:8px;flex:none}
+.ce-main{flex:1;display:flex;min-height:0}
+.ce-l{flex:1;min-width:0;display:flex;flex-direction:column;gap:14px;padding:18px 22px 20px}
+.ce-stage{position:relative;flex:1;min-height:240px;background:#1b1b1b;border-radius:12px;overflow:hidden;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;outline:none}
+.ce-stage:active{cursor:grabbing}.ce-stage:focus-visible{box-shadow:0 0 0 2px var(--fg)}
+.ce-stage img{position:absolute;max-width:none;pointer-events:none;display:block}
+.ce-fr{position:absolute;box-shadow:0 0 0 3000px rgba(12,12,12,.62);outline:1.5px solid #fff;pointer-events:none}
+.ce-fr:before,.ce-fr:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent calc(33.33% - .5px),rgba(255,255,255,.45) 0 calc(33.33% + .5px),transparent 0 calc(66.66% - .5px),rgba(255,255,255,.45) 0 calc(66.66% + .5px),transparent 0)}
+.ce-fr:after{background:linear-gradient(180deg,transparent calc(33.33% - .5px),rgba(255,255,255,.45) 0 calc(33.33% + .5px),transparent 0 calc(66.66% - .5px),rgba(255,255,255,.45) 0 calc(66.66% + .5px),transparent 0)}
+.ce-fr i{position:absolute;width:18px;height:18px;border:0 solid #fff;z-index:1}
+.ce-fr .k1{left:-3px;top:-3px;border-width:3px 0 0 3px}.ce-fr .k2{right:-3px;top:-3px;border-width:3px 3px 0 0}.ce-fr .k3{left:-3px;bottom:-3px;border-width:0 0 3px 3px}.ce-fr .k4{right:-3px;bottom:-3px;border-width:0 3px 3px 0}
+.ce-tag{position:absolute;left:14px;top:12px;color:rgba(255,255,255,.75);font-size:11px;letter-spacing:.04em;pointer-events:none}
+.ce-hint{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(10,10,10,.62);color:#fff;border-radius:99px;padding:9px 16px;font-size:13px;pointer-events:none;white-space:nowrap}
+.ce-hint[hidden]{display:none}
+.ce-ctrl{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.ce-zoom{display:flex;align-items:center;gap:10px;flex:1;min-width:240px;max-width:520px}
+.ce-zoom .lb{color:var(--muted);font-size:13px}
+.ce-ic{width:30px;height:30px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;font-size:17px;background:#fff;flex:none;color:var(--fg)}
+.ce-zoom input{flex:1;min-width:0;accent-color:#0a0a0a}
+.ce-zv{font-variant-numeric:tabular-nums;font-weight:500;width:40px}
+.ce-b{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}.ce-b .pill{background:var(--soft);border-color:transparent}
+.ce-r{width:380px;flex:none;border-left:1px solid var(--line);padding:18px 22px;display:flex;flex-direction:column;gap:11px;background:#fcfcfb;overflow:auto}
+.ce-r h3{font-size:15px;font-weight:500;margin:0}.ce-r h3 span{color:var(--muted);font-weight:400;font-size:13px}
+.ce-seg{display:flex;background:#f1f0ee;border-radius:99px;padding:3px;gap:2px}
+.ce-seg button{flex:1;padding:7px 8px;border-radius:99px;color:var(--muted);font-size:12.5px}
+.ce-seg button.on{background:#fff;color:var(--fg);font-weight:500;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.ce-prof{display:flex;align-items:center;gap:10px;font-size:13px;min-width:0}
+.ce-prof .av{width:30px;height:30px;border-radius:50%;background:var(--tile) center/cover;flex:none}
+.ce-prof b{font-weight:500}.ce-prof small{display:block;color:var(--muted);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ce-mg{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.ce-mg[hidden],.ce-post[hidden]{display:none}
+.ce-mg div{aspect-ratio:125/164;background:var(--tile) center/cover;position:relative}
+.ce-mg .ed{outline:2px solid var(--fg);outline-offset:-2px}
+.ce-mg .ed:after{content:"CAPA";position:absolute;left:5px;top:5px;background:var(--fg);color:#fff;font-size:9px;font-weight:600;letter-spacing:.06em;padding:3px 6px;border-radius:99px}
+.ce-post div{aspect-ratio:4/5;background:var(--tile) center/cover;border-radius:4px}
+.ce-note{font-size:12px;color:var(--muted);line-height:1.45;border-top:1px solid var(--line);padding-top:10px;margin:0}.ce-note b{color:var(--fg);font-weight:500}
+@media (max-width:760px){.ce-ov{padding:0}.ce{border-radius:0;width:100%;height:100%}
+  .ce-main{flex-direction:column;overflow:auto}.ce-l{padding:12px 14px;flex:none}.ce-stage{flex:none;height:56vh;min-height:300px}
+  .ce-r{width:auto;border-left:0;border-top:1px solid var(--line);padding:14px;overflow:visible}.ce-top{padding:12px 14px}.ce-top p{display:none}
+  .ce-b{margin-left:0}.ce-mg{max-width:320px}.ce-post{max-width:320px}}
+
 .is-ph{outline:2px dashed var(--drop);outline-offset:-2px}
 .is-ph > *{opacity:.15}
 .is-ph.tile,.is-ph.slide{background-image:none!important;background-color:var(--soft)}
@@ -1084,6 +1133,15 @@ function src(s,w=600,h=750){if(!s)return'';const p=s.path||'';
   if(p.startsWith('bolinhas:'))return new URL(`img/tutorial/bolinhas-${p==='bolinhas:aleatorio'?1+rnd(9):parseInt(p.slice(9),10)||1}.jpg`,location.href).href;
   if(p.startsWith('picsum:'))return `https://picsum.photos/id/${p.slice(7)}/${w}/${h}`;return URLS[p]||''}
 const bgi=(s,w,h)=>{const u=src(s,w,h);return u?`background-image:url('${u}')`:''};
+// V22: capa do post na grade (quadro 3:4). capa={p:caminho da 1ª foto,x,y:% da posição,z:zoom,r:largura/altura da foto}
+const capaOk=p=>{const c=p&&p.capa,s=p&&p.slides&&p.slides[0];return c&&s&&c.p===s.path&&+c.r>0&&+c.z>=1?c:null};
+const capaW=c=>Math.max(100,c.r*400/3)*c.z; // largura da foto em % da largura do quadro
+const capaCSS=c=>`;background-size:${capaW(c).toFixed(2)}% auto;background-position:${(+c.x).toFixed(2)}% ${(+c.y).toFixed(2)}%`;
+const cov=(p,w,h)=>{const b=bgi(p&&p.slides&&p.slides[0],w,h),c=capaOk(p);return b&&c?b+capaCSS(c):b};
+function drawCapa(x,im,cx,cy,W,H,c){if(!im)return;const r=im.width/im.height;let w,h,px,py;
+  if(c){w=W*capaW(c)/100;h=w/r;if(h<H){h=H;w=h*r}px=cx+(W-w)*c.x/100;py=cy+(H-h)*c.y/100}
+  else{const k=Math.max(W/im.width,H/im.height);w=im.width*k;h=im.height*k;px=cx+(W-w)/2;py=cy+(H-h)/2}
+  x.drawImage(im,px,py,w,h)}
 const handleOf=c=>c?'@'+String(c).toLowerCase().replace(/[^a-z0-9._]+/g,''):'@voce';
 const fmt=d=>{if(!d)return'sem data';const[y,m,dd]=d.split('-');return `${dd}/${m}`};
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1147,11 +1205,11 @@ async function loadAll(){
   const [prof,accs,posts,slides]=await Promise.all([
     db(sb.from('profiles').select('*').eq('id',USER.id).maybeSingle()),
     db(sb.from('accounts').select('id,handle,position,avatar_path,display_name,bio,followers,following,highlights,pilares,cor').is('deleted_at',null).order('position').order('created_at')),
-    db(sb.from('posts').select('id,account_id,title,caption,publish_date,status,position,pilar,formato,hora,cta').is('deleted_at',null).order('position').order('created_at')),
+    db(sb.from('posts').select('id,account_id,title,caption,publish_date,status,position,pilar,formato,hora,cta,capa').is('deleted_at',null).order('position').order('created_at')),
     db(sb.from('slides').select('id,post_id,storage_path,credit,position').order('position').order('created_at'))]);
   S.profile=prof||{name:'',handle:'',dates_follow:true};
   const byPost={};slides.forEach(s=>(byPost[s.post_id]=byPost[s.post_id]||[]).push({id:s.id,path:s.storage_path,credit:s.credit}));
-  const byAcc={};posts.forEach(p=>(byAcc[p.account_id]=byAcc[p.account_id]||[]).push({id:p.id,title:p.title,caption:p.caption,date:p.publish_date,status:p.status,pilar:p.pilar||'',formato:p.formato||null,hora:p.hora||null,cta:p.cta||'',slides:byPost[p.id]||[]}));
+  const byAcc={};posts.forEach(p=>(byAcc[p.account_id]=byAcc[p.account_id]||[]).push({id:p.id,title:p.title,caption:p.caption,date:p.publish_date,status:p.status,pilar:p.pilar||'',formato:p.formato||null,hora:p.hora||null,cta:p.cta||'',capa:p.capa||null,slides:byPost[p.id]||[]}));
   S.accounts=accs.map(a=>({id:a.id,handle:a.handle,avatar:a.avatar_path,display_name:a.display_name||'',bio:a.bio||'',followers:a.followers,following:a.following,highlights:a.highlights||[],pilares:a.pilares||[],cor:a.cor||null,posts:byAcc[a.id]||[]}));
   applyStCores();
   await signPaths([...slides.map(s=>s.storage_path),...accs.map(a=>a.avatar_path),...accs.flatMap(a=>(a.highlights||[]).map(h=>h&&h.path)),S.profile.avatar_path].filter(Boolean));
@@ -1380,7 +1438,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v21.1';
+const VERSAO='v22';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -1507,7 +1565,7 @@ function vHome(){
 function vContas(){
   app.innerHTML=header('contas')+`<main class="contas">${S.accounts.length?`<div class="accs" id="accs">${S.accounts.map(a=>`
     <button class="acc item" data-id="${a.id}" data-h="${esc(a.handle)}">
-      <div class="g">${Array.from({length:9},(_,i)=>`<div style="${bgi(a.posts[i]?.slides[0],240,312)}"></div>`).join('')}</div>
+      <div class="g">${Array.from({length:9},(_,i)=>`<div style="${cov(a.posts[i],240,312)}"></div>`).join('')}</div>
       <div class="h">${a.avatar?accAvHTML(a):''}${esc(a.handle)}</div></button>`).join('')}</div>`
     :`<div class="empty"><h2>Comece pela primeira conta</h2><p>Use o botão Criar, lá em cima, para adicionar o @ de um cliente. Ou crie três contas de exemplo para testar.</p>
       <div class="row2"><button class="pill dark" id="seed">Criar contas de exemplo</button></div></div>`}</main>
@@ -1550,7 +1608,7 @@ function armTouch(st,el){if(st.touch)st.timer=setTimeout(()=>{st.armed=true;bloc
 function disarm(st,el){clearTimeout(st.timer);blockTouch=false;el.classList.remove('armed')}
 function sortable(container,{onDrop,onClick}){
   dragCleanup&&dragCleanup();let drag=null;
-  container.onpointerdown=e=>{const it=e.target.closest('.item');if(!it||e.button>0||e.target.closest('.x'))return;
+  container.onpointerdown=e=>{const it=e.target.closest('.item');if(!it||e.button>0||e.target.closest('.x,.cap-ed'))return;
     drag={it,x:e.clientX,y:e.clientY,started:false,lock:0,pid:e.pointerId,touch:e.pointerType==='touch',armed:e.pointerType!=='touch'};armTouch(drag,it)};
   const move=e=>{
     if(!drag||e.pointerId!==drag.pid)return;
@@ -1579,6 +1637,7 @@ function sortable(container,{onDrop,onClick}){
     onDrop([...container.querySelectorAll(':scope > .item')].map(n=>n.dataset.id),true)};
 }
 const reorder=(list,ids)=>{const m=new Map(list.map(x=>[x.id,x]));return ids.map(i=>m.get(i)).filter(Boolean)};
+const CROP_I='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/></svg>';
 const MULTI='<svg class="multi" viewBox="0 0 24 24" fill="#fff" style="filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))"><rect x="7" y="3" width="14" height="14" rx="2"/><path d="M5 7v12a2 2 0 0 0 2 2h12" fill="none" stroke="#fff" stroke-width="2"/></svg>';
 
 /* ======================= 4. Feed ======================= */
@@ -1602,9 +1661,9 @@ function vFeed(){
         <button class="pill" id="sel-all">${all?'Limpar seleção':'Selecionar todos'}</button><button class="pill" id="sel-x">Cancelar</button>`
       :`<button class="pill" id="sel">${CHECK}Selecionar</button>`}</div>
     <div class="grid ${on?'sel-mode':''}" id="grid" ${on?'role="group" aria-label="Escolha os posts para exportar"':''}>${a.posts.map(p=>{const s=p.slides[0];const ck=SEL.ids.has(p.id);return `
-      <div class="item tile ${on&&ck?'on':''}" tabindex="0" data-id="${p.id}" data-s="${esc(p.title+' '+p.caption)}" style="${bgi(s,250,328)}"
+      <div class="item tile ${on&&ck?'on':''}" tabindex="0" data-id="${p.id}" data-s="${esc(p.title+' '+p.caption)}" style="${cov(p,250,328)}"
         ${on?`role="checkbox" aria-checked="${ck}"`:''} aria-label="${esc(p.title)}, ${fmt(p.date)}">
-        ${on?`<span class="ck" aria-hidden="true">${CHECK}</span>`:''}${p.slides.length>1?MULTI:''}<span class="dt">${fmt(p.date)}</span></div>`}).join('')}</div>`
+        ${on?`<span class="ck" aria-hidden="true">${CHECK}</span>`:''}${p.slides.length>1?MULTI:''}<span class="dt">${fmt(p.date)}</span>${!on&&s?`<button class="cap-ed" data-cap="${p.id}" aria-label="Editar capa de ${esc(p.title)}" title="Editar capa">${CROP_I}</button>`:''}</div>`}).join('')}</div>`
     :`<div class="empty" style="margin-top:12vh"><h2>Monte seu primeiro feed</h2><p>Escolha várias fotos de uma vez: cada foto vira um post, na ordem da grade. Ou comece com um feed de exemplo.</p>
       <div class="row2"><button class="pill dark" id="e-up">Enviar fotos</button><button class="pill" id="e-ex">Usar feed de exemplo</button></div></div>`}</main>
     ${a.posts.length&&!on?'<div class="hint">Arraste para reorganizar (no celular, segure) · toque para abrir</div>':''}
@@ -1613,6 +1672,7 @@ function vFeed(){
   bindHeader();applySearch();
   document.getElementById('accmore').onclick=e=>{e.stopPropagation();accMenu(a,e.currentTarget)};
   const g=document.getElementById('grid');
+  if(g&&!on)g.addEventListener('click',e=>{const b=e.target.closest('.cap-ed');if(!b)return;e.stopPropagation();const q=a.posts.find(x=>x.id===b.dataset.cap);if(q)capaEditor(a,q)});
   if(g&&!on)sortable(g,{onDrop:async(ids,kb)=>{const f=kb&&document.activeElement?.dataset.id;const p=saveFeedOrder(a,ids);vFeed();if(f)document.querySelector(`[data-id="${f}"]`)?.focus();await p},
     onClick:id=>go(`car/${a.id}/${id}`)});
   if(g&&on){const tog=el=>{const id=el.dataset.id;SEL.ids.has(id)?SEL.ids.delete(id):SEL.ids.add(id);vFeed();document.querySelector(`.tile[data-id="${id}"]`)?.focus()};
@@ -1680,7 +1740,7 @@ function vCar(){
     <div class="track" id="tr">${p.slides.map(s=>`<div class="item slide" tabindex="0" data-id="${s.id}" style="${bgi(s,500,658)}"><button class="x" data-x="${s.id}" aria-label="Remover foto">×</button></div>`).join('')}
       ${n<10?'<button class="addslide" id="add">+ adicionar fotos</button>':''}</div>
     <button class="cap ${p.caption?'':'ph'}" id="cap">${p.caption?esc(p.caption):'Clique para escrever a legenda'}</button>
-    <div style="margin:40px 0 0 max(16px,8.1%);display:flex;flex-wrap:wrap;gap:8px;align-items:center"><button class="pill dark" id="savepost" style="font-size:13px">Salvar</button><button class="pill" id="det" style="font-size:12px">Status, data e detalhes</button> <button class="pill" id="delpost" style="font-size:12px;color:var(--err)">Excluir post</button></div>
+    <div style="margin:40px 0 0 max(16px,8.1%);display:flex;flex-wrap:wrap;gap:8px;align-items:center"><button class="pill dark" id="savepost" style="font-size:13px">Salvar</button><button class="pill" id="capa-ed" style="font-size:12px">${CROP_I} Editar capa</button><button class="pill" id="det" style="font-size:12px">Status, data e detalhes</button> <button class="pill" id="delpost" style="font-size:12px;color:var(--err)">Excluir post</button></div>
   </main>`;
   bindHeader();
   const tr=document.getElementById('tr'),bar=document.getElementById('bar');
@@ -1694,6 +1754,7 @@ function vCar(){
     p.slides=p.slides.filter(x=>x.id!==s.id);sb.rpc('reorder_slides',{p_post:p.id,p_ids:p.slides.map(x=>x.id)});vCar()});
   const add=document.getElementById('add');if(add)add.onclick=()=>pickFiles({type:'slides',acc:a.id,post:p.id});
   document.getElementById('cap').onclick=()=>go(`edit/${a.id}/${p.id}`);
+  document.getElementById('capa-ed').onclick=()=>capaEditor(a,p);
   const t=document.getElementById('ttl');
   const saveTitle=async()=>{const v=t.textContent.trim()||'Sem título';if(v===p.title)return;p.title=v;await db(sb.from('posts').update({title:v}).eq('id',p.id))};
   t.onblur=saveTitle;
@@ -1731,7 +1792,7 @@ function vDown(){
   app.innerHTML=header('down')+`<main class="dl"><div><h1>Download</h1>
     ${a?`<div class="pick">${S.accounts.map(x=>`<button data-acc="${x.id}" class="${x.id===a.id?'cur':''}">${esc(x.handle)}</button>`).join('')}</div>
     <div class="opts"><button class="pill" id="png">Baixar grade (.png)</button><button class="pill" id="png2">Grade com datas e tipo (.png)</button><button class="pill" id="txt">Baixar legendas e datas (.txt)</button></div>${planSection(a)}`:'<p style="color:var(--muted)">Crie uma conta para baixar um modelo.</p>'}
-    </div><div class="mini">${a?a.posts.slice(0,12).map(p=>`<div style="${bgi(p.slides[0],120,160)}"></div>`).join(''):''}</div>
+    </div><div class="mini">${a?a.posts.slice(0,12).map(p=>`<div style="${cov(p,120,160)}"></div>`).join(''):''}</div>
     <div class="tks">tks<br>Fig.Feed</div></main>`;
   bindHeader();if(!a)return;
   app.querySelectorAll('[data-acc]').forEach(b=>b.onclick=()=>{dlAcc=b.dataset.acc;vDown()});
@@ -1762,7 +1823,7 @@ async function exportPNG(a,posts=a.posts,sufixo='grade',info=false){
     x.fillStyle=dark?'#0a0a0a':'#efefef';x.beginPath();x.roundRect?x.roundRect(px-w,py,w,26,13):x.rect(px-w,py,w,26);x.fill();
     x.fillStyle=dark?'#fff':'#0a0a0a';x.fillText(t,px-w+11,py+18);return w};
   imgs.forEach((im,i)=>{const p=posts[i],cx=G+(i%cols)*(W+G),cy=TOP+G+Math.floor(i/cols)*(H+IH+G);x.fillStyle='#d9d9d9';x.fillRect(cx,cy,W,H);
-    if(im){const r=Math.max(W/im.width,H/im.height);const w=im.width*r,h=im.height*r;x.save();x.beginPath();x.rect(cx,cy,W,H);x.clip();x.drawImage(im,cx+(W-w)/2,cy+(H-h)/2,w,h);x.restore()}
+    if(im){x.save();x.beginPath();x.rect(cx,cy,W,H);x.clip();drawCapa(x,im,cx,cy,W,H,capaOk(p));x.restore()}
     if(!info)return;
     const f=fmtOf(p),tag=f==='carrossel'?`Carrossel · ${p.slides.length}`:TAG[f]||'Foto';
     // número da ordem de publicação: o último do feed é o primeiro a postar
@@ -1775,6 +1836,74 @@ async function exportPNG(a,posts=a.posts,sufixo='grade',info=false){
     x.fillStyle='#7a7a7a';x.font='400 14px Inter, Arial';let t=p.title||'';while(t&&x.measureText(t).width>W-4)t=t.slice(0,-2);
     if(t!==(p.title||''))t=t.slice(0,-1)+'…';x.fillText(t,cx,cy+H+56)});
   try{c.toBlob(b=>{saveFile(b,`${a.handle.replace('@','')}-${sufixo}.png`);toast('Grade baixada')},'image/png')}catch(e){toast('Não deu para gerar a imagem neste navegador')}
+}
+
+/* ======================= V22: Editar capa (posição e zoom da 1ª foto na grade, quadro 3:4) ======================= */
+function capaEditor(a,p){
+  const s=p&&p.slides[0];if(!s)return toast('Este post ainda não tem foto');
+  const u=src(s,1080,1350);if(!u)return toast('A foto ainda está carregando. Tente de novo.');
+  const ini=capaOk(p);const c={x:ini?+ini.x:50,y:ini?+ini.y:50,z:ini?+ini.z:1,r:ini?+ini.r:.75};
+  const idx=Math.max(0,a.posts.indexOf(p));const st=Math.max(0,Math.min(Math.floor(idx/3)*3-3,Math.ceil(a.posts.length/3)*3-9));
+  const viz=a.posts.slice(st,st+9);
+  const ov=document.createElement('div');ov.className='ce-ov';ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-labelledby','ce-t');
+  ov.innerHTML=`<div class="ce">
+    <div class="ce-top"><div><h2 id="ce-t">Editar capa</h2><p>Arraste a foto e use o zoom para escolher o que aparece na grade do feed</p></div>
+      <div class="ce-acts"><button class="pill" id="ce-x">Cancelar</button><button class="pill dark" id="ce-ok">Salvar capa</button></div></div>
+    <div class="ce-main">
+      <div class="ce-l"><div class="ce-stage" id="ce-st" tabindex="0" aria-label="Foto da capa: arraste ou use as setas para mover, + e − para o zoom"><img id="ce-im" alt="" draggable="false">
+          <div class="ce-fr" id="ce-fr"><i class="k1"></i><i class="k2"></i><i class="k3"></i><i class="k4"></i></div>
+          <span class="ce-tag">CAPA NA GRADE · 3:4</span><span class="ce-hint" id="ce-hint">✋ Arraste para reposicionar</span></div>
+        <div class="ce-ctrl"><div class="ce-zoom"><span class="lb">Zoom</span><button class="ce-ic" id="ce-m" aria-label="Diminuir o zoom">−</button>
+            <input type="range" id="ce-z" min="1" max="3" step="0.01" value="1" aria-label="Zoom"><button class="ce-ic" id="ce-p" aria-label="Aumentar o zoom">+</button><span class="ce-zv" id="ce-zv">1,0×</span></div>
+          <div class="ce-b"><button class="pill" id="ce-c">Centralizar</button><button class="pill" id="ce-o">Voltar ao original</button></div></div></div>
+      <div class="ce-r"><h3>Como fica no feed <span>· ao vivo</span></h3>
+        <div class="ce-seg"><button class="on" data-v="g" aria-pressed="true">Grade do perfil (3:4)</button><button data-v="p" aria-pressed="false">Post aberto (4:5)</button></div>
+        <div class="ce-prof"><span class="av" style="${bgi(accAv(a),80,80)}"></span><div style="min-width:0"><b>${esc(a.handle)}</b><small>${esc(p.title||'')}${p.date?' · '+fmt(p.date):''}</small></div></div>
+        <div class="ce-mg" id="ce-mg">${viz.map(q=>q===p?`<div class="ed" id="ce-me"></div>`:`<div style="${cov(q,250,328)}"></div>`).join('')}</div>
+        <div class="ce-post" id="ce-post" hidden><div style="${bgi(s,600,750)}"></div></div>
+        <p class="ce-note"><b>A foto não é cortada.</b> O Fig.Feed guarda só a posição e o zoom da capa. O post continua com a foto inteira, e você pode mudar a capa quando quiser.</p></div></div></div>`;
+  document.body.appendChild(ov);const oldOv=document.body.style.overflow;document.body.style.overflow='hidden';
+  const $=id=>ov.querySelector('#'+id);const stg=$('ce-st'),im=$('ce-im'),fr=$('ce-fr'),zr=$('ce-z'),me=$('ce-me');
+  let F={fw:0,fh:0,fx:0,fy:0},ready=false;
+  const ro=window.ResizeObserver?new ResizeObserver(()=>lay()):null;
+  const close=()=>{ro&&ro.disconnect();window.removeEventListener('resize',lay);document.removeEventListener('keydown',key);ov.remove();document.body.style.overflow=oldOv};
+  const key=e=>{if(e.key==='Escape')close()};document.addEventListener('keydown',key);
+  const draw=()=>{if(!ready)return;const iw=F.fw*capaW(c)/100,ih=iw/c.r;
+    Object.assign(im.style,{width:iw+'px',height:ih+'px',left:(F.fx+(F.fw-iw)*c.x/100)+'px',top:(F.fy+(F.fh-ih)*c.y/100)+'px'});
+    zr.value=c.z;$('ce-zv').textContent=c.z.toFixed(1).replace('.',',')+'×';
+    if(me)me.style.cssText=bgi(s,400,525)+capaCSS(c)};
+  function lay(){const W=stg.clientWidth,H=stg.clientHeight;if(!W||!H)return;const fh=Math.max(120,Math.min(H-56,(W-32)*4/3)),fw=fh*3/4;
+    F={fw,fh,fx:(W-fw)/2,fy:(H-fh)/2};Object.assign(fr.style,{left:F.fx+'px',top:F.fy+'px',width:fw+'px',height:fh+'px'});draw()}
+  window.addEventListener('resize',lay);ro&&ro.observe(stg);
+  const cl=v=>Math.max(0,Math.min(100,v));
+  const setZ=z=>{c.z=Math.max(1,Math.min(3,z));draw()};
+  const mover=(dx,dy)=>{const iw=F.fw*capaW(c)/100,ih=iw/c.r;if(F.fw-iw<-.5)c.x=cl(c.x+dx*100/(F.fw-iw));if(F.fh-ih<-.5)c.y=cl(c.y+dy*100/(F.fh-ih));draw()};
+  im.onload=()=>{c.r=im.naturalWidth/im.naturalHeight||.75;ready=true;lay()};
+  im.onerror=()=>{toast('Não deu para abrir a foto. Confira a internet e tente de novo.');close()};
+  im.src=u;
+  // arrastar com o mouse ou o dedo; pinça com dois dedos; rodinha do mouse
+  const pts=new Map();let pinch=null;
+  stg.onpointerdown=e=>{if(!ready)return;try{stg.setPointerCapture(e.pointerId)}catch(_){}pts.set(e.pointerId,{x:e.clientX,y:e.clientY});$('ce-hint').hidden=true;
+    if(pts.size===2){const [a1,a2]=[...pts.values()];pinch={d:Math.hypot(a1.x-a2.x,a1.y-a2.y)||1,z:c.z}}};
+  stg.onpointermove=e=>{if(!pts.has(e.pointerId))return;const prev=pts.get(e.pointerId),cur={x:e.clientX,y:e.clientY};pts.set(e.pointerId,cur);
+    if(pts.size>=2){if(pinch){const [a1,a2]=[...pts.values()];setZ(pinch.z*Math.hypot(a1.x-a2.x,a1.y-a2.y)/pinch.d)}return}
+    mover(cur.x-prev.x,cur.y-prev.y)};
+  const up=e=>{pts.delete(e.pointerId);if(pts.size<2)pinch=null};stg.onpointerup=up;stg.onpointercancel=up;
+  stg.addEventListener('wheel',e=>{e.preventDefault();$('ce-hint').hidden=true;setZ(c.z*Math.exp(-e.deltaY*.0015))},{passive:false});
+  stg.onkeydown=e=>{const k=e.key,st2=e.shiftKey?20:6;
+    if(k==='ArrowLeft')mover(st2,0);else if(k==='ArrowRight')mover(-st2,0);else if(k==='ArrowUp')mover(0,st2);else if(k==='ArrowDown')mover(0,-st2);
+    else if(k==='+'||k==='=')setZ(c.z+.1);else if(k==='-')setZ(c.z-.1);else return;e.preventDefault()};
+  zr.oninput=()=>setZ(+zr.value);$('ce-m').onclick=()=>setZ(c.z-.1);$('ce-p').onclick=()=>setZ(c.z+.1);
+  $('ce-c').onclick=()=>{c.x=50;c.y=50;draw()};$('ce-o').onclick=()=>{c.x=50;c.y=50;c.z=1;draw()};
+  ov.querySelectorAll('.ce-seg button').forEach(b=>b.onclick=()=>{ov.querySelectorAll('.ce-seg button').forEach(x=>{x.classList.toggle('on',x===b);x.setAttribute('aria-pressed',x===b)});
+    const g=b.dataset.v==='g';$('ce-mg').hidden=!g;$('ce-post').hidden=g});
+  $('ce-x').onclick=close;ov.addEventListener('pointerdown',e=>{if(e.target===ov)ov._down=true});ov.addEventListener('click',e=>{if(e.target===ov&&ov._down)close();ov._down=false});
+  $('ce-ok').onclick=async e=>{const b=e.currentTarget;if(!ready)return;b.disabled=true;
+    const nada=Math.abs(c.x-50)<.5&&Math.abs(c.y-50)<.5&&c.z<1.01;
+    const val=nada?null:{p:s.path,x:+c.x.toFixed(2),y:+c.y.toFixed(2),z:+c.z.toFixed(3),r:+c.r.toFixed(4)};
+    try{await db(sb.from('posts').update({capa:val}).eq('id',p.id));p.capa=val;close();toast(val?'Capa salva':'A capa voltou ao original');render()}
+    catch(err){b.disabled=false}};
+  setTimeout(()=>stg.focus({preventScroll:true}),50);
 }
 
 /* ======================= Painel lateral do post ======================= */
@@ -2855,6 +2984,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v22','Nov 2026',['Editar capa: arraste e dê zoom na foto para escolher o que aparece na grade do feed (como no Instagram). A foto não é cortada','O botão aparece ao passar o mouse no post do feed (no celular, o ícone fica sempre visível) e na página do post','A capa ajustada vale no Feed, na Prévia, no Feed On, nos PNGs e no PDF do planejamento']],
   ['v21.1','Nov 2026',['Envio de fotos mais rápido: até 4 fotos sobem ao mesmo tempo']],
   ['v21','Nov 2026',['Fotos guardadas num lugar novo (Cloudflare R2): muito mais espaço no servidor e fotos que abrem sem gastar o tráfego do Supabase','Os limites de espaço de cada plano continuam iguais']],
   ['v20.1','Nov 2026',['Perfil: o quadro de constância dos posts agora é verde, como no GitHub (quanto mais posts no dia, mais escuro)']],
@@ -3224,7 +3354,7 @@ function vPrevia(){
       <div class="pv-hl" aria-label="Destaques">${hl.map((h,i)=>`<button data-hl="${i}" aria-label="Editar destaque ${esc(h.name||i+1)}"><span ${hlCircle(h)}>${h.path?'':esc((h.name||'?')[0].toUpperCase())}</span><small>${esc(h.name)}</small></button>`).join('')}
         ${hl.length<HL_MAX?`<button data-hl="novo" aria-label="Novo destaque"><span class="add">+</span><small>Novo</small></button>`:''}</div>
       <div class="pv-tabs" role="tablist"><span class="cur" role="tab" aria-selected="true">Posts</span><span role="tab" aria-disabled="true">Reels</span><span role="tab" aria-disabled="true">Marcados</span></div>
-      ${a.posts.length?`<div class="pv-grid">${a.posts.map(p=>`<a data-go="car/${a.id}/${p.id}" aria-label="${esc(p.title)}" style="${bgi(p.slides[0],300,375)}"></a>`).join('')}</div>`
+      ${a.posts.length?`<div class="pv-grid">${a.posts.map(p=>`<a data-go="car/${a.id}/${p.id}" aria-label="${esc(p.title)}" style="${cov(p,300,375)}"></a>`).join('')}</div>`
         :`<p class="muted" style="text-align:center;padding:40px 0">Nenhum post ainda. Monte a grade em "Editar grade".</p>`}
     </section>`}</main>`;
   bindHeader();
@@ -3327,7 +3457,7 @@ async function previaPNG(a,btn){
     x.fillStyle='#e7e7e7';x.fillRect(0,yTabs,W,K);x.fillStyle='#0a0a0a';x.fillRect(W/3*0+W/6-30*K,yTabs,60*K,K*1.5);
     x.font=`600 ${12*K}px ${F}`;x.textAlign='center';x.fillText('Posts',W/6,yTabs+26*K);x.fillStyle='#7a7a7a';x.font=`400 ${12*K}px ${F}`;x.fillText('Reels',W/2,yTabs+26*K);x.fillText('Marcados',W*5/6,yTabs+26*K);x.textAlign='left';
     const ims=await Promise.all(a.posts.map(p=>img(p.slides[0],540,675)));
-    ims.forEach((im,i)=>{const cx=(i%3)*(cell+K),cy=yGrid+Math.floor(i/3)*(cellH+2*K);x.fillStyle='#d9d9d9';x.fillRect(cx,cy,cell,cellH);x.save();x.beginPath();x.rect(cx,cy,cell,cellH);x.clip();cover(im,cx,cy,cell,cellH);x.restore()});
+    ims.forEach((im,i)=>{const cx=(i%3)*(cell+K),cy=yGrid+Math.floor(i/3)*(cellH+2*K);x.fillStyle='#d9d9d9';x.fillRect(cx,cy,cell,cellH);x.save();x.beginPath();x.rect(cx,cy,cell,cellH);x.clip();const cp=capaOk(a.posts[i]);if(cp&&im)drawCapa(x,im,cx,cy,cell,cellH,cp);else cover(im,cx,cy,cell,cellH);x.restore()});
     await new Promise((res,rej)=>c.toBlob(b=>{if(!b)return rej();saveFile(b,`${a.handle.replace('@','')}-previa.png`);res()},'image/png'));
     toast('Prévia baixada');
   }catch(err){toast('Não deu para gerar a imagem neste navegador.')}
@@ -3493,6 +3623,8 @@ function planHTML(a,month,objetivo,stories,opts={}){
   const [y,m]=month.split('-').map(Number);const label=`${MESES_RP[m-1]} ${y}`;
   const ps=a.posts.filter(p=>p.date&&p.date.startsWith(month)).sort((x,z)=>(x.date+(hhmm(x.hora)||'99'))<(z.date+(hhmm(z.hora)||'99'))?-1:1);
   const pic=(s,w,h)=>{const u=s?src(s,w,h):'';return u?`<img src="${u}" alt="">`:'<span class="ph"></span>'};
+  const picC=(p,w,h)=>{const c=capaOk(p);const h0=pic(p&&p.slides[0],w,h);if(!c||!h0.startsWith('<img'))return h0;const k=(capaW(c)/100)/Math.max(1,c.r*1.25);
+    return h0.replace('alt="">',`alt="" style="object-position:${c.x}% ${c.y}%;transform:scale(${k.toFixed(4)});transform-origin:${c.x}% ${c.y}%">`)};
   const av=pic(accAv(a),80,80),hoje=new Date().toLocaleDateString('pt-BR');
   const ST_={rascunho:['Rascunho','#7a7a7a','#f2f2f2'],pronto:['Pronto','#0a0a0a','#dedede'],agendado:['Agendado','#fff','#6b6b6b'],publicado:['Publicado','#fff','#0a0a0a']};
   const chip=s=>{const[t,c,b]=ST_[s]||ST_.rascunho;return `<span class="chip" style="color:${c};background:${b}">${t}</span>`};
@@ -3515,7 +3647,7 @@ function planHTML(a,month,objetivo,stories,opts={}){
   const pct=k=>ps.length?Math.round(k/ps.length*100):0;
   const pilHTML=pil.length?pil.map(x=>`<div class="pil"><span class="pn">${esc(x.name)}</span><span class="pb"><i style="width:${pct(x.n)}%"></i>${x.meta!=null?`<em style="left:${x.meta}%"></em>`:''}</span><span class="pv">${pct(x.n)}%${x.meta!=null?` <small>meta ${x.meta}%</small>`:''}</span></div>`).join('')+(semPil?`<div class="pil muted"><span class="pn">Sem pilar</span><span class="pb"><i style="width:${pct(semPil)}%;background:#bdbdbd"></i></span><span class="pv">${pct(semPil)}%</span></div>`:'')
     :'<p class="muted" style="font-size:8pt;margin:0">Nenhum pilar definido para esta conta.</p>';
-  const grid=[...a.posts].slice(0,12).map(p=>`<div>${pic(p.slides[0],200,250)}${fmtOf(p)!=='foto'?`<i class="${fmtOf(p)}"></i>`:''}</div>`).join('');
+  const grid=[...a.posts].slice(0,12).map(p=>`<div>${picC(p,200,250)}${fmtOf(p)!=='foto'?`<i class="${fmtOf(p)}"></i>`:''}</div>`).join('');
   // V13: capa no estilo da página inicial (Fig. · foto · Feed)
   const capaP=ps.find(p=>p.slides[0])||a.posts.find(p=>p.slides[0]);
   let out='';if(!opts.noCover){n++;out=`<section class="pg capa"><div class="cv"><div class="w">Fig.</div><div class="im">${pic(capaP?.slides[0],728,956)}</div><div class="w">Feed</div></div>
@@ -3567,7 +3699,7 @@ function planHTML(a,month,objetivo,stories,opts={}){
     <div><div class="lab">Anotações e pedidos de ajuste</div><div class="notes">${'<i></i>'.repeat(15)}</div></div></div>`)});
   // V13.2: contracapa — "tks Fig.Feed" e a grade do feed (12 posts; bolinhas se faltar)
   const gr=[...a.posts].filter(p=>p.slides[0]).slice(0,12);
-  if(!opts.noBack)out+=`<section class="pg fim"><div class="tks">tks<br>Fig.Feed</div><div class="fg">${Array.from({length:12},(_,i)=>`<div>${gr[i]?pic(gr[i].slides[0],200,250):bol(i+5)}</div>`).join('')}</div></section>`;
+  if(!opts.noBack)out+=`<section class="pg fim"><div class="tks">tks<br>Fig.Feed</div><div class="fg">${Array.from({length:12},(_,i)=>`<div>${gr[i]?picC(gr[i],200,250):bol(i+5)}</div>`).join('')}</div></section>`;
   if(opts.bodyOnly)return out;
   return `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Planejamento ${esc(a.handle)} ${label}</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"><style>${PLAN_CSS}</style></head><body>${out}</body></html>`;
@@ -4295,7 +4427,7 @@ const foDDp=p=>p.date?`${p.date.slice(8,10)}/${p.date.slice(5,7)}`:'';
 function foPerfilHTML(a,f,mode,titulo){
   const d=f.data||{},plan=mode==='com'?foPlanned(a):[],real=foMedia(f);
   const hl=hlList(a);const avUrl=d.profile_picture_url;
-  const tiles=plan.map(p=>`<a class="fo-t fo-pl" data-go="car/${a.id}/${p.id}" style="${bgi(p.slides[0],300,375)}" aria-label="Planejado: ${esc(p.title)}"><span class="fo-tag">PLANEJADO</span>${p.slides.length>1?`<span class="fo-ic">${FO_MULTI}</span>`:fmtOf(p)==='reels'?`<span class="fo-ic">${FO_REEL}</span>`:''}<span class="fo-d">${foDDp(p)}</span></a>`).join('')
+  const tiles=plan.map(p=>`<a class="fo-t fo-pl" data-go="car/${a.id}/${p.id}" style="${cov(p,300,375)}" aria-label="Planejado: ${esc(p.title)}"><span class="fo-tag">PLANEJADO</span>${p.slides.length>1?`<span class="fo-ic">${FO_MULTI}</span>`:fmtOf(p)==='reels'?`<span class="fo-ic">${FO_REEL}</span>`:''}<span class="fo-d">${foDDp(p)}</span></a>`).join('')
     +real.map(m=>`<a class="fo-t fo-rl" href="${esc(m.link)}" target="_blank" rel="noopener" aria-label="Post de ${foDD(m.ts)} no Instagram (abre o Instagram)">${m.url?`<img src="${esc(m.url)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">`:'<span class="fo-ph"></span>'}<span class="fo-lk">${FO_LOCK}</span>${m.kind==='carrossel'?`<span class="fo-ic">${FO_MULTI}</span>`:m.kind==='reels'?`<span class="fo-ic">${FO_REEL}</span>`:''}<span class="fo-d">${foDD(m.ts)}</span></a>`).join('');
   return `<section class="pv-phone fo-phone" aria-label="${esc(titulo||'Perfil')}">${titulo?`<div class="fo-col-t">${titulo}</div>`:''}
     <div class="pv-head"><span class="avatar pv-av" style="${avUrl?`background-image:url('${esc(avUrl)}')`:bgi(accAv(a),200,200)}"></span>
@@ -4354,7 +4486,7 @@ async function foPNG(a,btn,mode){
     const meas=document.createElement('canvas').getContext('2d');
     const wrap=(t,max,font)=>{meas.font=font;const out=[];String(t||'').split('\n').forEach(par=>{let line='';par.split(' ').forEach(w=>{const tt=line?line+' '+w:w;if(meas.measureText(tt).width>max&&line){out.push(line);line=w}else line=tt});out.push(line)});return out.slice(0,6)};
     const fBio=`400 ${13*K}px ${F}`;const bio=d.biography?wrap(d.biography,W-2*P,fBio):[];const site=d.website?String(d.website).replace(/^https?:\/\//,'').replace(/\/$/,''):'';
-    const modelo=m=>{const plan=m==='com'?foPlanned(a):[];return {plan,items:[...plan.map(p=>({src:src(p.slides[0],540,675),pl:true})),...foMedia(f).map(x=>({src:x.url,pl:false}))],posts:(d.media_count||0)+plan.length}};
+    const modelo=m=>{const plan=m==='com'?foPlanned(a):[];return {plan,items:[...plan.map(p=>({src:src(p.slides[0],540,675),pl:true,capa:capaOk(p)})),...foMedia(f).map(x=>({src:x.url,pl:false}))],posts:(d.media_count||0)+plan.length}};
     const cols=mode==='antes'?[['Antes · como está hoje','atual'],['Depois · com o planejamento','com']]:[[null,mode]];
     const ms=cols.map(([t,m])=>({t,...modelo(m)}));
     const cell=(W-2*K)/3,cellH=cell*5/4,TT=mode==='antes'?34*K:0;
@@ -4383,7 +4515,7 @@ async function foPNG(a,btn,mode){
       x.font=`600 ${12*K}px ${F}`;x.textAlign='center';x.fillText('Posts',ox+W/6,yTabs+26*K);x.fillStyle='#7a7a7a';x.font=`400 ${12*K}px ${F}`;x.fillText('Reels',ox+W/2,yTabs+26*K);x.fillText('Marcados',ox+W*5/6,yTabs+26*K);x.textAlign='left';
       const ims=await Promise.all(m.items.map(it=>loadImg(it.src)));
       m.items.forEach((it,i)=>{const cx=ox+(i%3)*(cell+K),cy=yGrid+Math.floor(i/3)*(cellH+2*K);x.fillStyle='#d9d9d9';x.fillRect(cx,cy,cell,cellH);
-        x.save();x.beginPath();x.rect(cx,cy,cell,cellH);x.clip();cover(ims[i],cx,cy,cell,cellH);x.restore();
+        x.save();x.beginPath();x.rect(cx,cy,cell,cellH);x.clip();if(it.capa&&ims[i])drawCapa(x,ims[i],cx,cy,cell,cellH,it.capa);else cover(ims[i],cx,cy,cell,cellH);x.restore();
         if(it.pl){x.save();x.setLineDash([6*K,4*K]);x.lineWidth=2*K;x.strokeStyle='#0a0a0a';x.strokeRect(cx+K,cy+K,cell-2*K,cellH-2*K);x.restore();
           x.font=`700 ${9*K}px ${F}`;const tw=x.measureText('PLANEJADO').width+12*K;x.fillStyle='#fff';x.beginPath();x.roundRect?x.roundRect(cx+6*K,cy+6*K,tw,17*K,9*K):x.rect(cx+6*K,cy+6*K,tw,17*K);x.fill();
           x.fillStyle='#0a0a0a';x.fillText('PLANEJADO',cx+12*K,cy+18*K)}});
