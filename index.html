@@ -1035,6 +1035,22 @@ body.pg-lock .pub-hdr,body.pg-lock .hdr{position:relative;z-index:20}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
 .kpi{background:var(--soft);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:3px;text-align:left;border:1px solid transparent}
 button.kpi:hover{border-color:var(--fg)}.kpi b{font-size:28px;font-weight:400;letter-spacing:-.02em}.kpi span{font-size:13px}.kpi small{font-size:12px;color:var(--muted)}
+.vg-top{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:14px;align-items:stretch;margin-top:6px}
+.vg-col{display:flex;flex-direction:column;gap:8px}.vg-col .adm-day{margin:0}.vg-col .adm-day+.kpi{margin-top:0}.vg-col .adm-day:not(:first-child){margin-top:8px}.vg-col .kpi{flex:1;justify-content:center;padding:12px 14px}.vg-col .kpi b{font-size:26px}
+.vg-map{border:1px solid var(--line);border-radius:16px;padding:18px 20px 20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.vg-mh{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.vg-mh h3{font-size:16px;font-weight:500}
+.vg-leg{margin-left:auto;font-size:12px;color:var(--muted);display:flex;align-items:center;gap:4px}.vg-leg i{width:9px;height:9px;border-radius:2px;display:inline-block}
+.vg-seg{width:max-content;max-width:100%;margin-left:0}
+.vg-body{display:flex;flex-direction:column;gap:14px}
+.vg-mp{position:relative}.vg-mp svg{display:block;width:100%;height:auto}
+.vg-hud{position:absolute;font-family:Menlo,Consolas,monospace;font-size:9.5px;color:#a5a5a5;letter-spacing:.06em;pointer-events:none}
+.vg-tot{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;border-top:1px solid var(--line);padding-top:14px}.vg-tot b{display:block;font-size:24px;font-weight:500;letter-spacing:-.02em}.vg-tot span{font-size:12px;color:var(--muted)}
+.vg-lists{display:grid;grid-template-columns:1fr 1fr;gap:20px;border-top:1px solid var(--line);padding-top:12px}.vg-lists h4{font-size:12px;font-weight:500;color:var(--muted);margin-bottom:6px}
+.vg-r{display:grid;grid-template-columns:16px minmax(0,1fr) 70px 24px;gap:8px;align-items:center;font-size:13px;margin:6px 0}.vg-r em{font-style:normal;color:#8a8a8a;font-size:11px}.vg-r span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.vg-r b{text-align:right;font-weight:600}
+.vg-r i{display:block;height:5px;border-radius:99px;background:#ebedf0;position:relative;overflow:hidden}.vg-r i u{position:absolute;inset:0 auto 0 0;background:#30a14e;border-radius:99px}
+.vg-nl{font-size:12px;color:var(--muted)}.vg-nl .ul{font-size:12px;color:var(--muted);text-decoration:underline}
+@media (max-width:860px){.vg-top{grid-template-columns:1fr}.vg-col{display:grid;grid-template-columns:1fr 1fr}.vg-col .adm-day{grid-column:1/-1}.vg-col .adm-day:not(:first-child){margin-top:10px}}
+@media (max-width:560px){.vg-map{padding:14px}.vg-lab,.vg-hud{display:none}.vg-tot{grid-template-columns:repeat(2,1fr)}.vg-lists{grid-template-columns:1fr}.vg-leg{margin-left:0}}
 .kpi.warn{background:#fff4e5}.kpi.warn b{color:#9a5a00}
 .bars{display:flex;align-items:flex-end;gap:3px;height:110px;border-bottom:1px solid var(--line);margin-top:8px}.bars span{flex:1;background:var(--fg);border-radius:3px 3px 0 0;min-width:3px}.bars span.z{background:#e6e6e6}
 .bars-x{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:4px}
@@ -1471,7 +1487,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v24.2';
+const VERSAO='v25';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -3017,6 +3033,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v25','Nov 2026',['Admin › Visão geral: novo mapa "Onde estão os usuários", com um ponto verde por cidade (quanto mais gente, mais verde, igual ao calendário do Perfil), filtros Todos / Ativos no mês / Pagantes e os números de Pessoas e Planos ao lado']],
   ['v24.2','Nov 2026',['PDF de Resultados: em "Quantas fotos funcionam melhor", o nome aparece completo (carrossel / carrosséis)']],
   ['v24.1','Nov 2026',['PDF do planejamento: as páginas de Stories têm só o título "Stories" (sem "continuação")']],
   ['v24','Nov 2026',['PDF do planejamento: a página de Stories ficou em linhas, um dia por linha, e não quebra mais quando um dia tem muitos stories (o dia continua na linha de baixo e, se precisar, na página seguinte). A coluna de anotações saiu']],
@@ -5525,13 +5542,18 @@ async function admPainel(){
   const tile=(n,l,sub='',go='',warn=false)=>`<${go?`button data-go="${go}"`:'div'} class="kpi ${warn?'warn':''}"><b>${n}</b><span>${l}</span>${sub?`<small>${sub}</small>`:''}</${go?'button':'div'}>`;
   admShell('painel',`<div class="adm-head"><div><h1>Visão geral</h1><p class="sub">Como o Fig.Feed está hoje. Os números atualizam toda vez que você abre esta tela.</p></div>
       <button class="pill" id="pn-up">Atualizar</button></div>
-    <h2 class="adm-day" style="margin-top:6px">Pessoas</h2>
-    <div class="kpis">${tile(nBR(d.usuarios),'pessoas cadastradas',`${nBR(d.novos_7)} nos últimos 7 dias · ${nBR(d.novos_30)} em 30`,'admin/usuarios')}
-      ${tile(nBR(d.ativos_7),'entraram nos últimos 7 dias',`${nBR(d.ativos_30)} em 30 dias`)}
-      ${tile(nBR(d.usuarios-d.confirmados),'sem confirmar o e-mail','', 'admin/usuarios', d.usuarios-d.confirmados>0)}
-      ${tile(nBR(d.suspensos),'contas suspensas','','admin/usuarios')}</div>
-    <h2 class="adm-day">Planos</h2>
-    <div class="kpis">${tile(nBR(P.gratis||0),PLANO_NOME.gratis)}${tile(nBR(P.pro||0),PLANO_NOME.pro,'','admin/assinaturas')}${tile(nBR(P.agencia||0),PLANO_NOME.agencia,'','admin/assinaturas')}${tile(nBR(d.testes),'em teste ou com prazo','vencem sozinhos','admin/assinaturas')}</div>
+    <div class="vg-top">
+      <section class="vg-map" id="vg-map" aria-label="Onde estão os usuários">${vgMapSkel()}</section>
+      <div class="vg-col">
+        <h2 class="adm-day">Pessoas</h2>
+        ${tile(nBR(d.usuarios),'pessoas cadastradas',`${nBR(d.novos_7)} nos últimos 7 dias · ${nBR(d.novos_30)} em 30`,'admin/usuarios')}
+        ${tile(nBR(d.ativos_7),'entraram nos últimos 7 dias',`${nBR(d.ativos_30)} em 30 dias`)}
+        ${tile(nBR(d.usuarios-d.confirmados),'sem confirmar o e-mail','', 'admin/usuarios', d.usuarios-d.confirmados>0)}
+        ${tile(nBR(d.suspensos),'contas suspensas','','admin/usuarios')}
+        <h2 class="adm-day">Planos</h2>
+        ${tile(nBR(P.gratis||0),PLANO_NOME.gratis)}${tile(nBR(P.pro||0),PLANO_NOME.pro,'','admin/assinaturas')}${tile(nBR(P.agencia||0),PLANO_NOME.agencia,'','admin/assinaturas')}${tile(nBR(d.testes),'em teste ou com prazo','vencem sozinhos','admin/assinaturas')}
+      </div>
+    </div>
     <h2 class="adm-day">Uso</h2>
     <div class="kpis">${tile(nBR(d.contas),'contas de clientes')}${tile(nBR(d.posts),'posts',`${nBR(d.posts_7)} criados em 7 dias`)}${tile(nBR(d.stories),'stories')}${tile(MB(d.espaco_fotos+d.espaco_blog),'de espaço usado',`fotos ${MB(d.espaco_fotos)} · site ${MB(d.espaco_blog)}`)}</div>
     <h2 class="adm-day">Atenção</h2>
@@ -5541,7 +5563,82 @@ async function admPainel(){
     <div class="bars" role="img" aria-label="Cadastros por dia nos últimos 30 dias: ${dias.reduce((s,x)=>s+x.n,0)} no total">${dias.map(x=>`<span title="${dBR(x.d)}: ${x.n}" style="height:${Math.max(2,Math.round(x.n/mx*100))}%"${x.n?'':' class="z"'}></span>`).join('')}</div>
     <div class="bars-x"><span>${dias[0]?dBR(dias[0].d):''}</span><span>hoje</span></div>`,1080);
   bindGo();document.getElementById('pn-up').onclick=admPainel;
-  admInfra();
+  admInfra();vgMapa();
+}
+
+/* V25: mapa de usuários (Admin › Visão geral) — estados do IBGE + pontos verdes por cidade, na escala do calendário do Perfil */
+const VG_GR=['#9be9a8','#40c463','#30a14e','#216e39'];
+const VG={geo:null,cid:null,rows:null,f:'n'};
+const vgNorm=t=>String(t||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+const UF_NOME=Object.fromEntries(UFS);
+function vgMapSkel(){return `<div class="vg-mh"><h3>Onde estão os usuários</h3><span class="vg-leg" aria-hidden="true">Menos <i style="background:#ebedf0"></i>${VG_GR.map(c=>`<i style="background:${c}"></i>`).join('')} Mais</span></div>
+  <div class="seg vg-seg" role="tablist" aria-label="Quem mostrar no mapa">${[['n','Todos'],['a','Ativos no mês'],['p','Pagantes']].map(([k,l])=>`<button role="tab" data-vgf="${k}" aria-selected="${VG.f===k}" class="${VG.f===k?'on':''}">${l}</button>`).join('')}</div>
+  <div class="vg-body"><p class="sub" style="padding:40px 0">Carregando o mapa…</p></div>`}
+async function vgMapa(){
+  const box=document.getElementById('vg-map');if(!box)return;
+  try{const [g,c,r]=await Promise.all([VG.geo||fetch('geo/br-uf.json').then(x=>x.json()),VG.cid||fetch('geo/br-cidades.json').then(x=>x.json()),sb.rpc('admin_geo')]);
+    if(r.error)throw r.error;VG.geo=g;VG.cid=c;VG.rows=r.data||[];
+    if(!VG.cidN){VG.cidN={};for(const uf in c){VG.cidN[uf]={};for(const n in c[uf])VG.cidN[uf][vgNorm(n)]=[n,...c[uf][n]]}}
+  }catch(e){if(document.body.contains(box))box.querySelector('.vg-body').innerHTML='<p class="sub">Não deu para carregar o mapa agora.</p>';return}
+  if(!document.body.contains(box))return;
+  box.querySelectorAll('[data-vgf]').forEach(b=>b.onclick=()=>{VG.f=b.dataset.vgf;box.querySelectorAll('[data-vgf]').forEach(x=>{const on=x===b;x.classList.toggle('on',on);x.setAttribute('aria-selected',on)});vgDraw(box)});
+  vgDraw(box);
+}
+function vgDraw(box){
+  const f=VG.f,G=VG.geo,W=640,H=520,PAD=14,K=Math.cos(15*Math.PI/180);
+  const rows=VG.rows.map(r=>({...r,v:+r[f]||0})).filter(r=>r.v>0);
+  const total=rows.reduce((s,r)=>s+r.v,0);
+  const br=rows.filter(r=>r.c==='BR'&&UF_NOME[r.s]);const fora=rows.filter(r=>r.c&&r.c!=='BR');const semLocal=rows.filter(r=>!r.c||(r.c==='BR'&&!UF_NOME[r.s]));
+  const nSem=semLocal.reduce((s,r)=>s+r.v,0),nFora=fora.reduce((s,r)=>s+r.v,0);
+  // projeção
+  let a=1e9,b=-1e9,c=1e9,d=-1e9;for(const rs of Object.values(G))for(const r of rs)for(const [x,y] of r){a=Math.min(a,x*K);b=Math.max(b,x*K);c=Math.min(c,-y);d=Math.max(d,-y)}
+  const sc=Math.min((W-2*PAD)/(b-a),(H-2*PAD)/(d-c)),ox=(W-(b-a)*sc)/2,oy=(H-(d-c)*sc)/2;const P=(lo,la)=>[ox+(lo*K-a)*sc,oy+(-la-c)*sc];
+  const path=rs=>rs.map(r=>'M'+r.map(([x,y])=>P(x,y).map(v=>v.toFixed(1)).join(',')).join('L')+'Z').join('');
+  const ufCentro=uf=>{let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;for(const r of G[uf]||[])for(const [x,y] of r){x0=Math.min(x0,x);x1=Math.max(x1,x);y0=Math.min(y0,y);y1=Math.max(y1,y)}return [(y0+y1)/2,(x0+x1)/2]};
+  // agrupa estados e cidades
+  const est={},cid={};
+  for(const r of br){est[r.s]=(est[r.s]||0)+r.v;if(!r.ci)continue;
+    const hit=VG.cidN[r.s]?.[vgNorm(r.ci)];const nome=hit?hit[0]:r.ci;const k=r.s+'|'+vgNorm(nome);
+    if(!cid[k]){const [la,lo]=hit?[hit[1],hit[2]]:ufCentro(r.s);cid[k]={nome,uf:r.s,la,lo,v:0,aprox:!hit}}cid[k].v+=r.v}
+  const cidL=Object.values(cid).sort((x,y)=>y.v-x.v||x.nome.localeCompare(y.nome,'pt-BR'));
+  const estL=Object.entries(est).sort((x,y)=>y[1]-x[1]||UF_NOME[x[0]].localeCompare(UF_NOME[y[0]],'pt-BR'));
+  const mxC=Math.max(1,...cidL.map(x=>x.v));const gc=v=>VG_GR[Math.min(3,Math.floor(Math.sqrt(v/mxC)*3.999))];
+  let s='';
+  for(let la=5;la>=-35;la-=5){const [,y]=P(-75,la);s+=`<line x1="0" x2="${W}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}" stroke="#f2f2f2"/>`}
+  for(let lo=-75;lo<=-30;lo+=5){const [x]=P(lo,0);s+=`<line y1="0" y2="${H}" x1="${x.toFixed(1)}" x2="${x.toFixed(1)}" stroke="#f2f2f2"/>`}
+  for(const [uf,rs] of Object.entries(G))s+=`<path d="${path(rs)}" fill="${est[uf]?'#e4e4e4':'#f1f1f0'}" stroke="#fff" stroke-width="1.1"><title>${esc(UF_NOME[uf]||uf)}: ${est[uf]||0}</title></path>`;
+  const dots=[...cidL].reverse();
+  for(const x of dots){const [px,py]=P(x.lo,x.la);const r=5+Math.sqrt(x.v/mxC)*7,g=gc(x.v);
+    s+=`<g><title>${esc(x.nome)} (${x.uf}): ${x.v}${x.aprox?' · cidade não achada, ponto no meio do estado':''}</title><circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${(r+6).toFixed(1)}" fill="${g}" opacity=".2"/><circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${r.toFixed(1)}" fill="${g}" stroke="#fff" stroke-width="1.5"/></g>`}
+  // rótulos das 3 maiores cidades (lado oposto ao centro do mapa, sem encavalar)
+  const curto=n=>n.length>22?n.replace(/^Santa /,'Sta. ').replace(/^São /,'S. '):n;
+  const gms=(v,pos,neg)=>{const a=Math.abs(v),g=Math.floor(a),m=Math.round((a-g)*60);return `${String(g).padStart(2,'0')}°${String(m).padStart(2,'0')}'${v<0?neg:pos}`};
+  // rótulos das 3 maiores cidades: testa várias posições e fica com a que não encosta em outro rótulo, ponto ou linha
+  const pts=cidL.map(x=>{const [px,py]=P(x.lo,x.la);return {px,py,r:5+Math.sqrt(x.v/mxC)*7+4}});const caixas=[],linhas=[];
+  const CAND=[[-40,-52],[40,-52],[-40,44],[40,44],[-64,-6],[64,-6],[-40,-96],[40,-96],[-40,88],[40,88],[-90,-40],[90,-40],[-90,40],[90,40]];
+  const cruza=(a,b,c,d)=>{const o=(p,q,r)=>(q[0]-p[0])*(r[1]-p[1])-(q[1]-p[1])*(r[0]-p[0]);return o(a,b,c)*o(a,b,d)<0&&o(c,d,a)*o(c,d,b)<0};
+  const linhaNaCaixa=(a,b,k)=>{if(a[0]>k.x0&&a[0]<k.x1&&a[1]>k.y0&&a[1]<k.y1)return true;const q=[[k.x0,k.y0],[k.x1,k.y0],[k.x1,k.y1],[k.x0,k.y1]];return q.some((p,i)=>cruza(a,b,p,q[(i+1)%4]))};
+  cidL.slice(0,3).forEach((x,i)=>{const {px,py}=pts[i];const t1=`${curto(x.nome).toUpperCase()} · ${x.v}`,t2=`${gms(x.la,'N','S')} ${gms(x.lo,'L','W')}`;
+    const lw=Math.max(t1.length,t2.length)*5.9+6,lh=28;let best=null;
+    for(const [dx,dy] of CAND){const tx=px+dx,ty=py+dy,esq=dx<0;const k={x0:esq?tx-lw:tx,x1:esq?tx:tx+lw,y0:ty-11,y1:ty+lh-11};
+      if(k.x0<4||k.x1>W-4||k.y0<16||k.y1>H-18)continue;
+      let pen=Math.hypot(dx,dy)/40;const ln=[[px,py],[tx,ty+3]];
+      for(const c of caixas){if(k.x0<c.x1&&k.x1>c.x0&&k.y0<c.y1&&k.y1>c.y0)pen+=100;if(linhaNaCaixa(ln[0],ln[1],c))pen+=40}
+      for(const l of linhas){if(linhaNaCaixa(l[0],l[1],k))pen+=40;if(cruza(ln[0],ln[1],l[0],l[1]))pen+=20}
+      pts.forEach((p,j)=>{if(p.px+p.r>k.x0&&p.px-p.r<k.x1&&p.py+p.r>k.y0&&p.py-p.r<k.y1)pen+=j===i?60:25});
+      if(!best||pen<best.pen)best={pen,tx,ty,esq,k,ln}}
+    if(!best)return;caixas.push(best.k);linhas.push(best.ln);const {tx,ty,esq}=best;const anc=esq?'end':'start',ax=(tx+(esq?-4:4)).toFixed(1);
+    s+=`<g class="vg-lab" font-family="Menlo,Consolas,monospace" font-size="9.5" fill="#3a3a3a" aria-hidden="true"><line x1="${px.toFixed(1)}" y1="${py.toFixed(1)}" x2="${tx.toFixed(1)}" y2="${(ty+3).toFixed(1)}" stroke="#bdbdbd"/>
+      <text x="${ax}" y="${ty.toFixed(1)}" text-anchor="${anc}" paint-order="stroke" stroke="#fff" stroke-width="3">${esc(t1)}</text>
+      <text x="${ax}" y="${(ty+13).toFixed(1)}" text-anchor="${anc}" fill="#9a9a9a" paint-order="stroke" stroke="#fff" stroke-width="3">${t2}</text></g>`});
+  const bk=(x,y,dx,dy)=>`<path d="M${x},${y+dy*14} L${x},${y} L${x+dx*14},${y}" stroke="#cfcfcf" fill="none" stroke-width="1.3"/>`;s+=bk(1,1,1,1)+bk(W-1,1,-1,1)+bk(1,H-1,1,-1)+bk(W-1,H-1,-1,-1);
+  const lista=(t,arr)=>{const mx=Math.max(1,...arr.map(x=>x[1]));return `<div><h4>${t}</h4>${arr.length?arr.slice(0,5).map(([n,v],i)=>`<div class="vg-r"><em>${i+1}</em><span>${esc(n)}</span><i><u style="width:${Math.round(v/mx*100)}%"></u></i><b>${nBR(v)}</b></div>`).join(''):'<p class="vg-nl">Ninguém ainda.</p>'}</div>`};
+  const lbl={n:'usuários',a:'ativos no mês',p:'pagantes'}[f];
+  box.querySelector('.vg-body').innerHTML=`<div class="vg-mp"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Mapa do Brasil: ${nBR(total-nSem-nFora)} ${lbl} com local em ${estL.length} estados">${s}</svg><span class="vg-hud" style="left:4px;top:2px">FIG.FEED / ${lbl.toUpperCase()} — BR</span><span class="vg-hud" style="right:4px;bottom:2px">LAT −33.7 · −5.3 / LON −73.9 · −34.8</span></div>
+    <div class="vg-tot"><div><b>${nBR(total)}</b><span>${lbl}</span></div><div><b>${estL.length}</b><span>${estL.length===1?'estado':'estados'}</span></div><div><b>${cidL.length}</b><span>${cidL.length===1?'cidade':'cidades'}</span></div><div><b>${nBR(nSem)}</b><span>sem local</span></div></div>
+    <div class="vg-lists">${lista('Estados',estL.map(([u,v])=>[UF_NOME[u],v]))}${lista('Cidades',cidL.map(x=>[x.nome,x.v]))}</div>
+    ${nSem||nFora?`<p class="vg-nl">${nSem?`${nBR(nSem)} ${nSem===1?'pessoa':'pessoas'} sem local: entraram antes do cadastro novo`:''}${nSem&&nFora?' · ':''}${nFora?`${nBR(nFora)} fora do Brasil`:''} · <button class="ul" data-go="admin/usuarios">ver quem</button></p>`:''}`;
+  box.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
 }
 
 /* V18.2: quanto o Fig.Feed usa do Supabase (limites do plano escolhido) */

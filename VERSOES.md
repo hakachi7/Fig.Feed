@@ -58,3 +58,4 @@ As mudanças do Supabase ficam na pasta `supabase/`: `schema.sql` (v2), `admin.s
 1. Subir `VERSAO` no `index.html` e o `CACHE` no `sw.js`.
 2. Acrescentar a versão no topo da lista `NOVIDADES` (no `index.html`) e nesta tabela.
 3. Criar a branch da versão: `versao-10-<nome-curto>`.
+| v25 | Mapa de usuários | Admin › Visão geral: mapa do Brasil com um ponto verde por cidade (escala do calendário do Perfil), filtros Todos / Ativos no mês / Pagantes, ranking de estados e cidades, e Pessoas/Planos na coluna ao lado | [versao-25-mapa-usuarios](https://github.com/hakachi7/Fig.Feed/tree/versao-25-mapa-usuarios) | — |
