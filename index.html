@@ -1550,8 +1550,9 @@ async function startDemo(btn){
     toast(/anonymous/i.test(m)?'O teste sem cadastro está desligado no momento. Crie uma conta para testar.':traduz(m),4500);
     if(USER?.is_anonymous){USER=null;go('entrar')}}
 }
-const DEMO_BTN=(cls)=>`<button type="button" class="${cls||'pill'}" data-demo>Testar sem cadastro</button>`;
-function bindDemo(root){(root||document).querySelectorAll('[data-demo]').forEach(b=>b.onclick=()=>startDemo(b))}
+const DEMO_ON=false; // v26.4: botão aparece, mas sem clique, até João liberar
+const DEMO_BTN=(cls)=>`<button type="button" class="${cls||'pill'}" data-demo${DEMO_ON?'':' disabled aria-disabled="true" style="opacity:1;cursor:default;pointer-events:none"'}>Testar sem cadastro</button>`;
+function bindDemo(root){if(!DEMO_ON)return;(root||document).querySelectorAll('[data-demo]').forEach(b=>b.onclick=()=>startDemo(b))}
 // Faixa fixa para quem está testando: lembra de criar a conta para não perder o que fez
 function demoBar(){
   let el=document.getElementById('demo-bar');
@@ -1612,7 +1613,7 @@ function pedirSenhaNova(){
       catch(err){b.disabled=false;b.textContent='Salvar senha';msg(traduz(err.message))}};
   });
 }
-const VERSAO='v26.3';
+const VERSAO='v26.4';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -3158,6 +3159,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v26.4','Nov 2026',['O botão "Testar sem cadastro" fica visível, mas pausado por enquanto']],
   ['v26.3','Nov 2026',['A verificação contra robôs foi desligada por enquanto: entrar, criar conta e testar sem cadastro voltam a funcionar sem ela']],
   ['v26.2','Nov 2026',['O botão "Testar sem cadastro" da página inicial voltou a funcionar']],
   ['v26.1','Nov 2026',['Proteção contra robôs (Cloudflare Turnstile) no entrar, no criar conta, no esqueci a senha e no testar sem cadastro: quase sempre invisível']],

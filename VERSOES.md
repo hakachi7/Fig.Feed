@@ -6,6 +6,7 @@ Cada versão também tem uma branch própria, com o código exatamente como esta
 
 | Versão | Nome | O que trouxe | Branch | Commit |
 | --- | --- | --- | --- | --- |
+| v26.4 | Teste pausado | DEMO_ON=false: botão "Testar sem cadastro" aparece sem clique e sem esmaecer (disabled, opacity 1); para liberar, DEMO_ON=true | [versao-26-4-demo-pausado](https://github.com/hakachi7/Fig.Feed/tree/versao-26-4-demo-pausado) | (veja a branch) |
 | v26.3 | Sem CAPTCHA | CAPTCHA_ON=false: captcha() não roda e nenhum captchaToken é enviado (João desligou também no Supabase); código do Turnstile continua para religar | [versao-26-3-sem-captcha](https://github.com/hakachi7/Fig.Feed/tree/versao-26-3-sem-captcha) | (veja a branch) |
 | v26.2 | Botão da landing | bindDemo estava na tela de Planos e não na landing; erro do Turnstile agora grava o código em app_errors (CAPTCHA) e aparece na mensagem | [versao-26-2-botao-landing](https://github.com/hakachi7/Fig.Feed/tree/versao-26-2-botao-landing) | (veja a branch) |
 | v26.1 | Anti-robô | Cloudflare Turnstile (TS_KEY no index.html) manda captchaToken em entrar, cadastro, reenviar e-mail, esqueci a senha, teste sem cadastro e troca de senha; caixinha #ts-box só aparece se o Cloudflare pedir um clique | [versao-26-1-captcha](https://github.com/hakachi7/Fig.Feed/tree/versao-26-1-captcha) | (veja a branch) |
