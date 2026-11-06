@@ -6,6 +6,7 @@ Cada versão também tem uma branch própria, com o código exatamente como esta
 
 | Versão | Nome | O que trouxe | Branch | Commit |
 | --- | --- | --- | --- | --- |
+| v25.2 | Pop-ups no lugar | Central sempre no meio, Canto sempre embaixo à direita (regras presas ao #ff-pop); Barra no topo empurra a página (variável --popbar) e o botão dela ficou branco com texto preto | [versao-25-1-dominio](https://github.com/hakachi7/Fig.Feed/tree/versao-25-1-dominio) | (veja a branch) |
 | v25.1 | Domínio próprio | Site passa para https://jvpereira.cc (Hostinger, publicado pelo GIT a cada push no main); .htaccess esconde banco/funções/histórico; links antigos do GitHub redirecionam mantendo o #; função instagram versão 17 volta para o domínio novo | [versao-25-1-dominio](https://github.com/hakachi7/Fig.Feed/tree/versao-25-1-dominio) | (veja a branch) |
 | v25 | Mapa de usuários | Admin › Visão geral: mapa do Brasil com um ponto verde por cidade (escala do calendário do Perfil), filtros Todos / Ativos no mês / Pagantes, ranking de estados e cidades, e Pessoas/Planos na coluna ao lado | [versao-25-mapa-usuarios](https://github.com/hakachi7/Fig.Feed/tree/versao-25-mapa-usuarios) | 0165cbc |
 | v24.2 | Carrossel por extenso | PDF de Resultados: "1 carrossel" / "N carrosséis" em vez de "carross." | [versao-24-stories-em-linhas](https://github.com/hakachi7/Fig.Feed/tree/versao-24-stories-em-linhas) | f89bb73 |

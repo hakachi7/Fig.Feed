@@ -973,6 +973,16 @@ body.pg-lock .pub-hdr,body.pg-lock .hdr{position:relative;z-index:20}
 .pop-canto{position:fixed;right:18px;bottom:18px;z-index:80;width:min(320px,calc(100vw - 36px))}.pop-canto .pop-b{text-align:left;align-items:flex-start;padding:16px 18px}.pop-canto .pop-b b{font-size:16px}
 .pop-barra{position:fixed;top:0;left:0;right:0;z-index:70;border-radius:0;background:var(--fg);color:#fff;display:flex;align-items:center;justify-content:center;gap:14px;padding:10px 48px 10px 16px;font-size:13px;flex-wrap:wrap}
 .pop-barra b{font-weight:500}.pop-barra span{opacity:.85}.pop-barra .pill{padding:5px 12px;font-size:12px}.pop-barra .pop-x{background:none;color:#fff;top:50%;transform:translateY(-50%)}
+/* v25.2: posição de cada formato presa ao #ff-pop (não depende da ordem do CSS nem de outras regras) */
+#ff-pop .pop-bg{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:16px}
+#ff-pop .pop-bg>.pop-central{position:relative;inset:auto;margin:auto;max-height:calc(100vh - 32px);overflow:auto}
+#ff-pop>.pop-canto{position:fixed;inset:auto 18px 18px auto;margin:0;height:auto;max-height:calc(100vh - 36px);overflow:auto}
+#ff-pop>.pop-barra{position:fixed;inset:0 0 auto 0;margin:0;height:auto}
+#ff-pop .pop-barra .pill{background:#fff;color:var(--fg);border:1px solid #fff;font-weight:500;white-space:nowrap}
+#ff-pop .pop-barra .pill:hover{background:#e9e9e9}
+.pop-bt{max-width:min(860px,100%);text-align:center;line-height:1.45}
+html{--popbar:0px}body{padding-top:var(--popbar)}.hdr,.pub-hdr{top:var(--popbar)}
+@media (max-width:640px){#ff-pop>.pop-canto{inset:auto 12px 12px 12px;width:auto}.pop-barra{padding:10px 44px 10px 14px}}
 /* menu do ícone v15 */
 .mn2 .mn-main,.mn2 .mn-grp{position:static}
 .mn2 .shade{background:linear-gradient(90deg,rgba(0,0,0,.32) 0%,rgba(0,0,0,.16) 50%,rgba(0,0,0,.08) 100%)}
@@ -1488,7 +1498,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v25.1';
+const VERSAO='v25.2';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -3034,6 +3044,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v25.2','Nov 2026',['Pop-ups: o Central fica sempre no meio da tela e o Canto da tela sempre embaixo à direita; a Barra no topo empurra a página para baixo (não cobre mais o topo) e o botão dela voltou a aparecer']],
   ['v25.1','Nov 2026',['O Fig.Feed mudou de endereço: agora é jvpereira.cc. Quem abrir um link antigo (hakachi7.github.io/Fig.Feed) vai direto para o novo, na mesma página']],
   ['v25','Nov 2026',['Admin › Visão geral: novo mapa "Onde estão os usuários", com um ponto verde por cidade (quanto mais gente, mais verde, igual ao calendário do Perfil), filtros Todos / Ativos no mês / Pagantes e os números de Pessoas e Planos ao lado']],
   ['v24.2','Nov 2026',['PDF de Resultados: em "Quantas fotos funcionam melhor", o nome aparece completo (carrossel / carrosséis)']],
@@ -4819,7 +4830,7 @@ const pgQuem=k=>SITE.pages[k]?.quem||(PG_DEF[k]?.[2]==='app'?'logados':'todos');
 const PG={lock:null,ban:'',timer:null};
 function pgReset(){
   PG.lock=null;PG.ban='';clearInterval(PG.timer);document.body.classList.remove('pg-lock');
-  document.getElementById('pg-lock')?.remove();document.getElementById('pg-admbar')?.remove();document.getElementById('ff-pop')?.remove();popClear();
+  document.getElementById('pg-lock')?.remove();document.getElementById('pg-admbar')?.remove();document.getElementById('ff-pop')?.remove();popBarOff();popClear();
   [...app.children].forEach(c=>{c.inert=false});
 }
 function pgDecor(){
@@ -4988,6 +4999,7 @@ const POP_PUB=[['todos','Todo mundo'],['sem_conta','Sem conta'],['logados','Quem
 const POP_MOM={abrir:'Assim que a página abre',segundos:'Depois de alguns segundos',rolar:'Ao rolar até a metade',sair:'Ao tentar sair da página'};
 const POP_FREQ={uma:'Uma vez por pessoa',dia:'Uma vez por dia','30dias':'Uma vez a cada 30 dias',sempre:'Sempre'};
 const POP_FMT={central:'Central',canto:'Canto da tela',barra:'Barra no topo'};
+function popBarOff(){POP.ro?.disconnect();POP.ro=null;document.documentElement.style.setProperty('--popbar','0px')}
 function popClear(){clearTimeout(POP.timer);POP.cleanup&&POP.cleanup();POP.cleanup=null}
 function popAudOk(p){const a=p.publico||[];if(!a.length||a.includes('todos'))return true;if(!USER)return a.includes('sem_conta');if(a.includes('logados'))return true;return a.includes(planoEf(S.profile))}
 const popKey=p=>`ff-pop-${p.id}-${USER?.id||'visitante'}`;
@@ -5017,8 +5029,9 @@ function showPopup(p){
   try{localStorage.setItem(popKey(p),String(Date.now()))}catch(e){}
   sb.rpc('popup_event',{p_id:p.id,p_kind:'visto'}).then(()=>{},()=>{});
   const w=document.createElement('div');w.id='ff-pop';w.innerHTML=popupHTML(p);document.body.appendChild(w);
+  const bar=w.querySelector('.pop-barra');if(bar){const fit=()=>document.documentElement.style.setProperty('--popbar',(document.body.contains(bar)?bar.offsetHeight:0)+'px');fit();POP.ro?.disconnect();POP.ro=new ResizeObserver(fit);POP.ro.observe(bar)}
   const prev=document.activeElement;
-  const close=kind=>{w.remove();document.removeEventListener('keydown',k);if(kind)sb.rpc('popup_event',{p_id:p.id,p_kind:kind}).then(()=>{},()=>{});prev?.focus?.({preventScroll:true})};
+  const close=kind=>{w.remove();popBarOff();document.removeEventListener('keydown',k);if(kind)sb.rpc('popup_event',{p_id:p.id,p_kind:kind}).then(()=>{},()=>{});prev?.focus?.({preventScroll:true})};
   const k=e=>{if(e.key==='Escape')close('fechou')};document.addEventListener('keydown',k);
   w.querySelectorAll('[data-pop="x"]').forEach(b=>b.onclick=()=>close('fechou'));
   w.querySelector('.pop-bg')?.addEventListener('click',e=>{if(e.target.classList.contains('pop-bg'))close('fechou')});
