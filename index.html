@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
+<script>/* v25.1: endereço antigo (GitHub) → domínio próprio, mantendo a página (#…) */if(/github\.io$/.test(location.hostname)){location.replace('https://jvpereira.cc/'+location.search+location.hash)}</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Fig.Feed</title>
@@ -1487,7 +1488,7 @@ function bindHeader(){
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
 async function sair(){await sb.auth.signOut();}
-const VERSAO='v25';
+const VERSAO='v25.1';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -3033,6 +3034,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v25.1','Nov 2026',['O Fig.Feed mudou de endereço: agora é jvpereira.cc. Quem abrir um link antigo (hakachi7.github.io/Fig.Feed) vai direto para o novo, na mesma página']],
   ['v25','Nov 2026',['Admin › Visão geral: novo mapa "Onde estão os usuários", com um ponto verde por cidade (quanto mais gente, mais verde, igual ao calendário do Perfil), filtros Todos / Ativos no mês / Pagantes e os números de Pessoas e Planos ao lado']],
   ['v24.2','Nov 2026',['PDF de Resultados: em "Quantas fotos funcionam melhor", o nome aparece completo (carrossel / carrosséis)']],
   ['v24.1','Nov 2026',['PDF do planejamento: as páginas de Stories têm só o título "Stories" (sem "continuação")']],
