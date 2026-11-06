@@ -1350,7 +1350,7 @@ function render(){
   if(!USER&&!AUTH.includes(v)&&!PUBLIC.includes(v))return go('entrar');
   if(USER&&AUTH.includes(v)&&!(v==='nova-senha'&&recovery))return go('home');
   const map={entrar:()=>vAuth('entrar'),criar:()=>vAuth('criar'),senha:()=>vAuth('senha'),'nova-senha':()=>vAuth('nova-senha'),
-    home:vHome,menu:()=>location.replace('#home'),contas:vContas,feed:vFeed,car:vCar,edit:vEdit,crono:vCrono,down:vDown,perfil:vPerfil,config:vConfig,
+    home:vHome,menu:()=>SITE.pages.menu&&pgOn(SITE.pages.menu)?vMenu():location.replace('#home'),contas:vContas,feed:vFeed,car:vCar,edit:vEdit,crono:vCrono,down:vDown,perfil:vPerfil,config:vConfig,
     admin:vAdmin,'boas-vindas':vTutorial,
     termos:vTermos,privacidade:vPrivacidade,ajuda:vAjuda,novidades:vNovidades,creditos:vCreditos,seguranca:vSeguranca,excluir:vExcluir,
     erro:()=>vErro(),'sem-internet':vOffline,
@@ -1620,7 +1620,7 @@ function pedirSenhaNova(){
       catch(err){b.disabled=false;b.textContent='Salvar senha';msg(traduz(err.message))}};
   });
 }
-const VERSAO='v26.7';
+const VERSAO='v26.8';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -3165,6 +3165,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v26.8','Nov 2026',['Admin › Páginas mostra também as telas de sistema (Esqueci a senha, Nova senha, E-mail confirmado, conexão do Instagram, Erro, Sem internet, Boas-vindas) e o Menu de tela cheia, que pode ser ligado ou desligado']],
   ['v26.7','Nov 2026',['Home: a foto fica exatamente no meio da tela, na horizontal e na vertical']],
   ['v26.6','Nov 2026',['No celular, o app não dá mais zoom sozinho ao abrir o Entrar e outras telas com campos','Home no celular: "Fig.", a foto e "Feed" ficam na mesma linha, centralizados e no tamanho certo para a tela']],
   ['v26.5','Nov 2026',['A Home ganhou o cabeçalho do app (menu, busca, Criar e sua conta)','O menu de tela cheia saiu: o endereço #menu agora leva para a Home','Os créditos das fotos no login usam a mesma letra do resto do site']],
@@ -4934,10 +4935,13 @@ const PAGES=[
   ['landing','Página inicial (landing page)','pub',true],['entrar','Entrar','pub',false],['criar','Criar conta','pub',true],['planos','Planos','pub',true],
   ['blog','Blog','pub',true],['ajuda','Ajuda','pub',true],['novidades','Novidades','pub',true],['creditos','Créditos','pub',true],['r','Relatório compartilhado','pub',true],
   ['termos','Termos de uso','pub',false],['privacidade','Política de privacidade','pub',false],
+  ['senha','Esqueci a senha','pub',false],['nova-senha','Criar nova senha','pub',false],['confirmado','E-mail confirmado','pub',false],
+  ['conectar','Conectar Instagram (link do cliente)','pub',true],['conectado','Instagram conectado','pub',false],['conectar-erro','Erro ao conectar Instagram','pub',false],
+  ['erro','Erro do app (FF-500)','pub',false],['sem-internet','Sem internet','pub',false],
   ['home','Início do app','app',false],['contas','Contas','app',true],['crono','Cronograma','app',true],['down','Downloads','app',true],['biblioteca','Biblioteca','app',true],
   ['lixeira','Lixeira','app',true],['stories','Stories','app',true],['previa','Prévia do perfil','app',true],['relatorio','Relatório do mês','app',true],
   ['resultados','Resultados','app',true],['suporte','Fale com a gente','app',true],['perfil','Perfil','app',false],['config','Configuração','app',false],
-  ['seguranca','Segurança e Excluir conta','app',false]];
+  ['seguranca','Segurança e Excluir conta','app',false],['boas-vindas','Boas-vindas (tutorial)','app',false],['menu','Menu de tela cheia','app',true]];
 const PG_DEF=Object.fromEntries(PAGES.map(p=>[p[0],p]));
 const PAGE_OF={feed:'contas',car:'contas',edit:'contas',excluir:'seguranca'};
 const PG_RESERVED=new Set(['landing','entrar','criar','senha','nova-senha','home','menu','contas','feed','car','edit','crono','down','perfil','config','admin','boas-vindas',
