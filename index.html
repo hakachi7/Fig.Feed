@@ -117,12 +117,12 @@ body.com-demo{padding-bottom:76px}
 .auth-r .col{display:flex;flex-direction:column;align-items:center;gap:32px;animation:rise 70s linear infinite}
 .auth-r .col img{object-fit:cover}
 @keyframes rise{from{transform:translateY(0)}to{transform:translateY(-50%)}}
-.auth-r .cap{position:absolute;left:20px;bottom:14px;font-size:10px;font-weight:600;line-height:1.25}
+.auth-r .cap{position:absolute;left:20px;bottom:14px;font-family:var(--f);font-size:12px;font-weight:400;line-height:1.4;letter-spacing:0}
 @media (max-width:820px){.auth{grid-template-columns:1fr}.auth-r{display:none}}
 @media (prefers-reduced-motion:reduce){.auth-r .col{animation:none}}
 
 /* ---------- 1. Home ---------- */
-.home{height:100vh;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
+.home{height:100vh;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}.hdr+.home{height:calc(100vh - 72px);height:calc(100dvh - 72px)}
 .home .word{font-size:clamp(44px,6.7vw,128px);font-weight:400;letter-spacing:-.025em;text-align:center;line-height:1}
 .home .photo{width:clamp(130px,19vw,364px);aspect-ratio:364/478;position:relative;overflow:hidden;background:var(--tile)}
 .home .photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .7s ease}
@@ -1343,7 +1343,7 @@ function render(){
   if(!USER&&!AUTH.includes(v)&&!PUBLIC.includes(v))return go('entrar');
   if(USER&&AUTH.includes(v)&&!(v==='nova-senha'&&recovery))return go('home');
   const map={entrar:()=>vAuth('entrar'),criar:()=>vAuth('criar'),senha:()=>vAuth('senha'),'nova-senha':()=>vAuth('nova-senha'),
-    home:vHome,menu:vMenu,contas:vContas,feed:vFeed,car:vCar,edit:vEdit,crono:vCrono,down:vDown,perfil:vPerfil,config:vConfig,
+    home:vHome,menu:()=>location.replace('#home'),contas:vContas,feed:vFeed,car:vCar,edit:vEdit,crono:vCrono,down:vDown,perfil:vPerfil,config:vConfig,
     admin:vAdmin,'boas-vindas':vTutorial,
     termos:vTermos,privacidade:vPrivacidade,ajuda:vAjuda,novidades:vNovidades,creditos:vCreditos,seguranca:vSeguranca,excluir:vExcluir,
     erro:()=>vErro(),'sem-internet':vOffline,
@@ -1613,7 +1613,7 @@ function pedirSenhaNova(){
       catch(err){b.disabled=false;b.textContent='Salvar senha';msg(traduz(err.message))}};
   });
 }
-const VERSAO='v26.4';
+const VERSAO='v26.5';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -1726,13 +1726,12 @@ function applySearch(){
 /* ======================= 1. Home ======================= */
 function vHome(){
   const pics=Array.from({length:8},randPhoto);
-  app.innerHTML=`<main class="view home"><div class="word">Fig.</div>
-    <div class="photo">${pics.map((p,i)=>`<img src="${src(p,600,790)}" alt="" class="${i?'':'on'}">`).join('')}
-      <button aria-label="Abrir o menu com esta foto" id="open"></button></div>
+  app.innerHTML=header('home')+`<main class="view home"><div class="word">Fig.</div>
+    <div class="photo">${pics.map((p,i)=>`<img src="${src(p,600,790)}" alt="" class="${i?'':'on'}">`).join('')}</div>
     <div class="word">Feed</div></main>`;
+  bindHeader();
   let i=0;const imgs=app.querySelectorAll('.photo img');
   homeTimer=setInterval(()=>{imgs[i].classList.remove('on');i=(i+1)%imgs.length;imgs[i].classList.add('on')},2400);
-  document.getElementById('open').onclick=()=>{menuPhoto=pics[i];go('menu')};
 }
 
 /* ======================= 2. Menu ======================= */
@@ -3159,6 +3158,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v26.5','Nov 2026',['A Home ganhou o cabeçalho do app (menu, busca, Criar e sua conta)','O menu de tela cheia saiu: o endereço #menu agora leva para a Home','Os créditos das fotos no login usam a mesma letra do resto do site']],
   ['v26.4','Nov 2026',['O botão "Testar sem cadastro" fica visível, mas pausado por enquanto']],
   ['v26.3','Nov 2026',['A verificação contra robôs foi desligada por enquanto: entrar, criar conta e testar sem cadastro voltam a funcionar sem ela']],
   ['v26.2','Nov 2026',['O botão "Testar sem cadastro" da página inicial voltou a funcionar']],
