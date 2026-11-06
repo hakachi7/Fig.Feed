@@ -104,6 +104,7 @@ img{display:block;max-width:100%}
 .auth-f .forgot{color:var(--muted);font-size:13px;margin-top:6px;cursor:pointer}
 .demo-or{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px;margin:6px 0 0}.demo-or:before,.demo-or:after{content:"";flex:1;height:1px;background:var(--line)}
 .auth-btn.demo{background:#fff;color:var(--fg);border:1px solid var(--fg)}.demo-sub{color:var(--muted);font-size:12px;margin:-4px 0 0}
+#ts-box{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:200}#ts-box:empty{display:none}
 #demo-bar{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:60;display:flex;align-items:center;gap:14px;max-width:calc(100% - 32px);box-sizing:border-box;padding:10px 10px 10px 18px;border-radius:99px;background:#141414;color:#fff;font-size:13px;box-shadow:0 6px 24px rgba(0,0,0,.18)}
 #demo-bar .pill.dark{background:#fff;color:#141414;border-color:#fff;white-space:nowrap}
 body.com-demo{padding-bottom:76px}
@@ -1214,8 +1215,24 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const iso=d=>{const x=new Date(d);x.setMinutes(x.getMinutes()-x.getTimezoneOffset());return x.toISOString().slice(0,10)};
 function toast(m,ms=2600){const t=document.getElementById('toast');t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,ms)}
 async function db(q){const {data,error}=await q;if(error){console.error(error);toast(traduz(error.message));throw error}return data}
+/* v26.1: verificação anti-robô (Cloudflare Turnstile). O token vai junto em login, cadastro, senha e teste sem cadastro. */
+const TS_KEY='0x4AAAAAAF2YV2Jva4c_R_LP';
+let tsLoad=null,tsId=null;
+function tsScript(){return tsLoad||(tsLoad=new Promise((ok,no)=>{const s=document.createElement('script');
+  s.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';s.async=true;s.onload=()=>ok();
+  s.onerror=()=>{tsLoad=null;no(new Error('captcha-load'))};document.head.appendChild(s)}))}
+async function captcha(){
+  await tsScript();
+  let box=document.getElementById('ts-box');if(!box){box=document.createElement('div');box.id='ts-box';document.body.appendChild(box)}
+  if(tsId!==null){try{turnstile.remove(tsId)}catch(e){}tsId=null}
+  return new Promise((ok,no)=>{let fim=false;const end=(f,v)=>{if(fim)return;fim=true;clearTimeout(tm);f(v)};
+    const tm=setTimeout(()=>end(no,new Error('captcha-timeout')),90000);
+    tsId=turnstile.render(box,{sitekey:TS_KEY,appearance:'interaction-only',language:'pt-br',
+      callback:t=>end(ok,t),'error-callback':()=>end(no,new Error('captcha')),'expired-callback':()=>end(no,new Error('captcha'))})})
+}
 function traduz(m=''){
   const t=m.toLowerCase();
+  if(t.includes('captcha'))return 'Não deu para confirmar que você não é um robô. Confira a internet e tente de novo.';
   if(t.includes('invalid login'))return 'E-mail ou senha incorretos.';
   if(t.includes('email not confirmed'))return 'Confirme seu e-mail antes de entrar. Procure o link na sua caixa de entrada (e no spam).';
   if(t.includes('already registered'))return 'Já existe uma conta com esse e-mail. Entre ou recupere a senha.';
@@ -1379,7 +1396,7 @@ function vAuth(mode){
   if(authNote&&mode==='entrar'){msg(authNote.t||authNote,authNote.ok);authNote=null}
   const resend=document.getElementById('resend');
   resend.onclick=async()=>{const email=document.getElementById('a-email')?.value.trim();if(!email)return;resend.disabled=true;
-    try{const {error}=await sb.auth.resend({type:'signup',email,options:{emailRedirectTo:BASE_URL()}});if(error)throw error;
+    try{const {error}=await sb.auth.resend({type:'signup',email,options:{emailRedirectTo:BASE_URL(),captchaToken:await captcha()}});if(error)throw error;
       msg(`Enviamos de novo para ${email}. Olhe também a caixa de spam.`,true)}catch(err){msg(traduz(err.message))}
     setTimeout(()=>resend.disabled=false,30000)};
   document.getElementById('af').onsubmit=async e=>{
@@ -1391,13 +1408,13 @@ function vAuth(mode){
     if(mode==='nova-senha'&&pass!==document.getElementById('a-pass2').value)return msg('As duas senhas não são iguais. Digite de novo.');
     btn.disabled=true;const old=btn.textContent;btn.textContent='Aguarde…';
     try{
-      if(mode==='entrar'){const {error}=await sb.auth.signInWithPassword({email,password:pass});
+      if(mode==='entrar'){const {error}=await sb.auth.signInWithPassword({email,password:pass,options:{captchaToken:await captcha()}});
         if(error){if(error.message.toLowerCase().includes('email not confirmed'))resend.hidden=false;throw error}}
       if(mode==='criar'){const name=document.getElementById('a-name').value.trim();
-        const {data,error}=await sb.auth.signUp({email,password:pass,options:{data:{name},emailRedirectTo:BASE_URL()}});
+        const {data,error}=await sb.auth.signUp({email,password:pass,options:{data:{name},emailRedirectTo:BASE_URL(),captchaToken:await captcha()}});
         if(error)throw error;
         if(!data.session){msg(`Conta criada! Enviamos um link de confirmação para ${email}. Clique nele para ativar sua conta.`,true);resend.hidden=false;btn.textContent=old;btn.disabled=false;return}}
-      if(mode==='senha'){const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:BASE_URL()});if(error)throw error;
+      if(mode==='senha'){const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:BASE_URL(),captchaToken:await captcha()});if(error)throw error;
         msg(`Se existir uma conta com ${email}, você vai receber um link para criar uma nova senha.`,true);btn.textContent=old;btn.disabled=false;return}
       if(mode==='nova-senha'){const {error}=await sb.auth.updateUser({password:pass});if(error)throw error;recovery=false;toast('Senha alterada');go('home')}
     }catch(err){msg(traduz(err.message));btn.textContent=old;btn.disabled=false}
@@ -1515,7 +1532,7 @@ const ehVisitante=()=>!!USER?.is_anonymous;
 async function startDemo(btn){
   const txt=btn?.textContent;if(btn){btn.disabled=true;btn.textContent='Preparando…'}
   try{
-    const {data,error}=await sb.auth.signInAnonymously({options:{data:{name:'Visitante'}}});if(error)throw error;
+    const {data,error}=await sb.auth.signInAnonymously({options:{data:{name:'Visitante'},captchaToken:await captcha()}});if(error)throw error;
     USER=data.user||data.session?.user;app.innerHTML=LOADING;
     try{localStorage.setItem(tutKey(),'1')}catch(e){}
     await Promise.all([loadAll(),loadSite()]);
@@ -1591,7 +1608,7 @@ function pedirSenhaNova(){
       catch(err){b.disabled=false;b.textContent='Salvar senha';msg(traduz(err.message))}};
   });
 }
-const VERSAO='v26';
+const VERSAO='v26.1';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -2404,7 +2421,7 @@ function admPanel(u){
       <p class="role-help">Suspensa, a pessoa não consegue entrar e sai do app em até 1 hora. Os dados ficam guardados. Excluir apaga tudo e não dá para desfazer.</p>`:''}</div></aside>`;
     ov.querySelector('#ap-x').onclick=closePanel;const apc=ov.querySelector('#ap-cancel');if(apc)apc.onclick=closePanel;
     const pw=ov.querySelector('#ap-pw');if(pw)pw.onclick=async()=>{if(!confirm(`Enviar para ${u.email} um link para criar uma senha nova?`))return;pw.disabled=true;
-      const {error}=await sb.auth.resetPasswordForEmail(u.email,{redirectTo:BASE_URL()});if(error){pw.disabled=false;return toast(traduz(error.message),4000)}
+      const {error}=await sb.auth.resetPasswordForEmail(u.email,{redirectTo:BASE_URL(),captchaToken:await captcha().catch(()=>undefined)});if(error){pw.disabled=false;return toast(traduz(error.message),4000)}
       admLog('usuarios','enviou link de troca de senha',{email:u.email},u.id);toast('Link enviado para '+u.email,3600)};
     const su=ov.querySelector('#ap-sus');if(su)su.onclick=async()=>{const vai=!u.suspenso;
       if(vai&&!confirm(`Suspender a conta de ${u.email}? A pessoa não vai conseguir entrar até você reativar.`))return;su.disabled=true;
@@ -3137,6 +3154,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v26.1','Nov 2026',['Proteção contra robôs (Cloudflare Turnstile) no entrar, no criar conta, no esqueci a senha e no testar sem cadastro: quase sempre invisível']],
   ['v26','Nov 2026',['Testar sem cadastro: na página inicial, no Entrar e no Criar conta, um botão abre o app na hora com um cliente de exemplo de 9 posts, sem e-mail e sem senha','Quem está testando vê uma faixa "Criar conta": informa nome e e-mail, confirma pelo link e cria a senha; tudo o que fez no teste continua na conta']],
   ['v25.2','Nov 2026',['Pop-ups: o Central fica sempre no meio da tela e o Canto da tela sempre embaixo à direita; a Barra no topo empurra a página para baixo (não cobre mais o topo) e o botão dela voltou a aparecer']],
   ['v25.1','Nov 2026',['O Fig.Feed mudou de endereço: agora é jvpereira.cc. Quem abrir um link antigo (hakachi7.github.io/Fig.Feed) vai direto para o novo, na mesma página']],
@@ -3229,7 +3247,7 @@ function vSeguranca(){
     if(!atual)return say('pw-msg','Digite sua senha atual.');if(nova.length<6)return say('pw-msg','A nova senha precisa ter pelo menos 6 caracteres.');
     if(nova===atual)return say('pw-msg','A nova senha precisa ser diferente da atual.');
     const b=e.submitter;b.disabled=true;
-    try{const {error:e1}=await sb.auth.signInWithPassword({email:USER.email,password:atual});if(e1)throw new Error('senha-atual');
+    try{const {error:e1}=await sb.auth.signInWithPassword({email:USER.email,password:atual,options:{captchaToken:await captcha()}});if(e1)throw new Error('senha-atual');
       const {error}=await sb.auth.updateUser({password:nova});if(error)throw error;
       e.target.reset();say('pw-msg','Senha alterada.',true)}
     catch(err){say('pw-msg',err.message==='senha-atual'?'A senha atual está incorreta.':traduz(err.message))}
@@ -4529,7 +4547,7 @@ function vCadastro(){
   const back=document.getElementById('cad-back');if(back)back.onclick=()=>{cadData.terms=document.getElementById('cd-t').checked;Object.assign(cadData,lerSobreParcial(f));cadStep=1;vCadastro()};
   (document.getElementById(cadStep===1?'a-name':'cd-c')||f).focus();
   const resend=document.getElementById('resend');
-  resend.onclick=async()=>{resend.disabled=true;try{const {error}=await sb.auth.resend({type:'signup',email:cadData.email,options:{emailRedirectTo:BASE_URL()}});if(error)throw error;
+  resend.onclick=async()=>{resend.disabled=true;try{const {error}=await sb.auth.resend({type:'signup',email:cadData.email,options:{emailRedirectTo:BASE_URL(),captchaToken:await captcha()}});if(error)throw error;
     msg(`Enviamos de novo para ${cadData.email}. Olhe também a caixa de spam.`,true)}catch(err){msg(traduz(err.message))}setTimeout(()=>resend.disabled=false,30000)};
   f.onsubmit=async e=>{e.preventDefault();const btn=document.getElementById('a-go');
     if(cadStep===1){
@@ -4545,7 +4563,7 @@ function vCadastro(){
     btn.disabled=true;btn.textContent='Aguarde…';
     const meta={name:[cadData.first,cadData.last].filter(Boolean).join(' ').slice(0,120),birth_date:cadData.birth_date,gender:cadData.gender,
       profession:s.profession,country:s.country,state:s.state,city:s.city,ref:refGet(),termos_aceitos:new Date().toISOString()};
-    try{const {data,error}=await sb.auth.signUp({email:cadData.email,password:cadData.pass,options:{data:meta,emailRedirectTo:BASE_URL()}});
+    try{const {data,error}=await sb.auth.signUp({email:cadData.email,password:cadData.pass,options:{data:meta,emailRedirectTo:BASE_URL(),captchaToken:await captcha()}});
       if(error)throw error;try{localStorage.removeItem('figfeed-ref')}catch(e){}
       const em=cadData.email;cadData={pass:''};cadStep=1;
       if(!data.session){f.querySelectorAll('fieldset,.cad-terms,#a-go,.cad-steps').forEach(x=>x.hidden=true);
