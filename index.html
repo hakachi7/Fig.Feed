@@ -102,6 +102,12 @@ img{display:block;max-width:100%}
 .auth-btn{height:52px;border-radius:99px;background:var(--fg);color:#fff;font-weight:600;font-size:14px;margin-top:2px}
 .auth-btn[disabled]{opacity:.55;cursor:default}
 .auth-f .forgot{color:var(--muted);font-size:13px;margin-top:6px;cursor:pointer}
+.demo-or{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px;margin:6px 0 0}.demo-or:before,.demo-or:after{content:"";flex:1;height:1px;background:var(--line)}
+.auth-btn.demo{background:#fff;color:var(--fg);border:1px solid var(--fg)}.demo-sub{color:var(--muted);font-size:12px;margin:-4px 0 0}
+#demo-bar{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:60;display:flex;align-items:center;gap:14px;max-width:calc(100% - 32px);box-sizing:border-box;padding:10px 10px 10px 18px;border-radius:99px;background:#141414;color:#fff;font-size:13px;box-shadow:0 6px 24px rgba(0,0,0,.18)}
+#demo-bar .pill.dark{background:#fff;color:#141414;border-color:#fff;white-space:nowrap}
+body.com-demo{padding-bottom:76px}
+@media(max-width:600px){#demo-bar{border-radius:16px;bottom:10px;padding:10px 10px 10px 14px;gap:10px;font-size:12px}}
 .auth-f .msg{font-size:13px;line-height:1.45;padding:10px 12px;border-radius:12px;text-align:left}
 .auth-f .msg.err{background:#fdecea;color:var(--err)}
 .auth-f .msg.ok{background:#eaf6ee;color:#1e6b3a}
@@ -1325,7 +1331,8 @@ function render(){
     resultados:vResultados,indicacao:vIndicacao,conectar:vConectar,conectado:vConectado,'conectar-erro':vConectarErro,p:vPaginaCustom,landing:vLanding};
   document.title=PG_DEF[gate.k]&&SITE.pages[gate.k]?.nome?`${SITE.pages[gate.k].nome} · Fig.Feed`:'Fig.Feed';
   try{(map[v]||v404)()}catch(err){console.error(err);vErro('FF-501')}window.scrollTo(0,0);
-  if(USER&&typeof pedirPerfil==='function')setTimeout(pedirPerfil,1400);
+  demoBar();if(USER&&!USER.is_anonymous&&USER.user_metadata?.precisa_senha)setTimeout(pedirSenhaNova,600);
+  if(USER&&!USER.is_anonymous&&typeof pedirPerfil==='function')setTimeout(pedirPerfil,1400);
   if(map[v]&&v!=='p')pageExtras(gate,v);else if(v==='p'&&gate.c&&!gate.lock&&gate.c.banners){PG.ban=bannersHTML(gate.c.banners);pgDecor();popupCheck(gate.k)}
 }
 
@@ -1359,11 +1366,12 @@ function vAuth(mode){
       ${mode==='nova-senha'?'<input id="a-pass2" type="password" placeholder="Repita a nova senha" aria-label="Repita a nova senha" autocomplete="new-password" required>':''}
       <button class="auth-btn" id="a-go">${T[2]}</button>
       ${mode==='entrar'?'<a class="forgot" data-go="senha">Esqueceu sua senha?</a>':''}
+      ${mode==='entrar'?`<div class="demo-or"><span>ou</span></div>${DEMO_BTN('auth-btn demo')}<p class="demo-sub">Sem e-mail e sem senha. Crie a conta só se gostar.</p>`:''}
       <div class="msg" id="a-msg" hidden></div>
       <button type="button" class="forgot" id="resend" hidden>Não chegou? Reenviar o e-mail</button>
     </form>
     <div class="auth-word">Fig.Feed</div></section>${authPanel()}</main>`;
-  app.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+  app.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));bindDemo(app);
   const eye=document.getElementById('eye');
   if(eye)eye.onclick=()=>{const i=document.getElementById('a-pass');const show=i.type==='password';i.type=show?'text':'password';eye.innerHTML=show?EYE:EYE_OFF;eye.setAttribute('aria-label',show?'Esconder senha':'Mostrar senha')};
   const msg=(t,ok)=>{const m=document.getElementById('a-msg');m.textContent=t;m.className='msg '+(ok?'ok':'err');m.hidden=false};
@@ -1497,8 +1505,93 @@ function bindHeader(){
   const bl=document.getElementById('bell');if(bl)bl.onclick=e=>{e.stopPropagation();dropdown('avisos')};
   document.getElementById('me').onclick=e=>{e.stopPropagation();dropdown('me')};
 }
-async function sair(){await sb.auth.signOut();}
-const VERSAO='v25.2';
+async function sair(){
+  if(USER?.is_anonymous&&!confirm('Você está testando sem conta. Se sair agora, o que você fez será perdido. Sair mesmo assim?'))return;
+  await sb.auth.signOut();}
+
+/* ======================= v26: Testar sem cadastro ======================= */
+// Entra como visitante (usuário anônimo do Supabase), cria um cliente de exemplo com 9 posts e abre o feed.
+const ehVisitante=()=>!!USER?.is_anonymous;
+async function startDemo(btn){
+  const txt=btn?.textContent;if(btn){btn.disabled=true;btn.textContent='Preparando…'}
+  try{
+    const {data,error}=await sb.auth.signInAnonymously({options:{data:{name:'Visitante'}}});if(error)throw error;
+    USER=data.user||data.session?.user;app.innerHTML=LOADING;
+    try{localStorage.setItem(tutKey(),'1')}catch(e){}
+    await Promise.all([loadAll(),loadSite()]);
+    let acc=S.accounts[0];
+    if(!acc){const row=await db(sb.from('accounts').insert({handle:'@cliente.exemplo',position:0}).select('id,handle').single());
+      acc={id:row.id,handle:row.handle,display_name:'',bio:'',highlights:[],pilares:[],cor:null,posts:[]};S.accounts.push(acc);
+      await insertFeedPosts(acc,Array.from({length:9},()=>randPhoto()))}
+    go('feed/'+acc.id);setTimeout(()=>toast('Arraste os posts para reorganizar o feed. Depois veja a Prévia.',5000),600);
+  }catch(err){if(btn){btn.disabled=false;btn.textContent=txt}
+    const m=String(err?.message||'');
+    toast(/anonymous/i.test(m)?'O teste sem cadastro está desligado no momento. Crie uma conta para testar.':traduz(m),4500);
+    if(USER?.is_anonymous){USER=null;go('entrar')}}
+}
+const DEMO_BTN=(cls)=>`<button type="button" class="${cls||'pill'}" data-demo>Testar sem cadastro</button>`;
+function bindDemo(root){(root||document).querySelectorAll('[data-demo]').forEach(b=>b.onclick=()=>startDemo(b))}
+// Faixa fixa para quem está testando: lembra de criar a conta para não perder o que fez
+function demoBar(){
+  let el=document.getElementById('demo-bar');
+  if(!ehVisitante()||AUTH.includes(route[0])){el?.remove();document.body.classList.remove('com-demo');return}
+  if(!el){el=document.createElement('div');el.id='demo-bar';el.setAttribute('role','status');
+    el.innerHTML='<span>Você está testando sem conta. Crie sua conta para salvar o que fez.</span><button type="button" class="pill dark" id="demo-salvar">Criar conta</button>';
+    document.body.appendChild(el);el.querySelector('#demo-salvar').onclick=salvarConta}
+  document.body.classList.add('com-demo');
+}
+// Visitante → conta de verdade: e-mail primeiro (Supabase exige confirmar), senha depois
+function salvarConta(){
+  sheet(`<h2>Crie sua conta</h2><p class="muted sm" style="margin:-4px 0 4px">Tudo o que você fez no teste continua na sua conta. Vamos enviar um link para confirmar o e-mail; depois você cria a senha.</p>
+    <form id="sc-f" class="cad cp-f" novalidate>
+      <input id="sc-n" placeholder="Seu nome" autocomplete="name" aria-label="Seu nome" required>
+      <input id="sc-e" type="email" placeholder="seu@email.com" autocomplete="email" aria-label="E-mail" required>
+      <label class="cad-terms"><input type="checkbox" id="sc-t"> <span>Li e aceito os <a href="#termos" target="_blank">Termos de uso</a> e a <a href="#privacidade" target="_blank">Política de privacidade</a>.</span></label>
+      <div class="msg" id="sc-msg" hidden role="alert"></div>
+      <button class="pill dark wide" id="sc-ok">Enviar link de confirmação</button></form>`,m=>{
+    const f=m.querySelector('#sc-f'),mm=m.querySelector('#sc-msg');
+    const msg=(t,ok)=>{mm.textContent=t;mm.className='msg '+(ok?'ok':'err');mm.hidden=false};
+    m.querySelector('#sc-n').focus();
+    f.onsubmit=async e=>{e.preventDefault();
+      const name=m.querySelector('#sc-n').value.trim(),email=m.querySelector('#sc-e').value.trim();
+      if(!name)return msg('Digite seu nome.');
+      if(!/^\S+@\S+\.\S+$/.test(email))return msg('Digite um e-mail válido.');
+      if(!m.querySelector('#sc-t').checked)return msg('Para criar a conta, aceite os Termos e a Política de privacidade.');
+      const b=m.querySelector('#sc-ok');b.disabled=true;b.textContent='Aguarde…';
+      try{
+        const {error}=await sb.auth.updateUser({email,data:{name,precisa_senha:true,termos_aceitos:new Date().toISOString(),ref:refGet()||undefined}},{emailRedirectTo:BASE_URL()});
+        if(error)throw error;
+        await sb.from('profiles').update({name}).eq('id',USER.id);S.profile.name=name;
+        f.querySelectorAll('input,label,#sc-ok').forEach(x=>x.hidden=true);
+        msg(`Enviamos um link para ${email}. Abra o e-mail e clique no link para confirmar. Até lá, pode continuar testando normalmente.`,true);
+      }catch(err){const t=String(err?.message||'');b.disabled=false;b.textContent='Enviar link de confirmação';
+        msg(/already|registered|exists/i.test(t)?'Esse e-mail já tem conta no Fig.Feed. Use outro e-mail, ou saia do teste e entre na sua conta.':traduz(t))}};
+  });
+}
+// Depois que o e-mail foi confirmado, pede a senha uma vez (vale em qualquer aparelho)
+let senhaPedida=false;
+function pedirSenhaNova(){
+  if(senhaPedida||!USER||USER.is_anonymous||!USER.user_metadata?.precisa_senha)return;
+  senhaPedida=true;
+  sheet(`<h2>E-mail confirmado</h2><p class="muted sm" style="margin:-4px 0 4px">Agora crie uma senha para entrar na sua conta de qualquer aparelho.</p>
+    <form id="ps-f" class="cad cp-f" novalidate>
+      <input id="ps-1" type="password" placeholder="Senha (mínimo 6 caracteres)" aria-label="Senha" autocomplete="new-password" required>
+      <input id="ps-2" type="password" placeholder="Repita a senha" aria-label="Repita a senha" autocomplete="new-password" required>
+      <div class="msg" id="ps-msg" hidden role="alert"></div>
+      <button class="pill dark wide" id="ps-ok">Salvar senha</button></form>`,m=>{
+    const f=m.querySelector('#ps-f'),mm=m.querySelector('#ps-msg');
+    const msg=t=>{mm.textContent=t;mm.className='msg err';mm.hidden=false};
+    m.querySelector('#ps-1').focus();
+    f.onsubmit=async e=>{e.preventDefault();const p1=m.querySelector('#ps-1').value,p2=m.querySelector('#ps-2').value;
+      if(!p1||p1.length<6)return msg('A senha precisa ter pelo menos 6 caracteres.');
+      if(p1!==p2)return msg('As duas senhas não são iguais. Digite de novo.');
+      const b=m.querySelector('#ps-ok');b.disabled=true;b.textContent='Aguarde…';
+      try{const {data,error}=await sb.auth.updateUser({password:p1,data:{precisa_senha:false}});if(error)throw error;
+        if(data?.user)USER=data.user;closeSheet();demoBar();toast('Pronto! Sua conta está criada.',3600)}
+      catch(err){b.disabled=false;b.textContent='Salvar senha';msg(traduz(err.message))}};
+  });
+}
+const VERSAO='v26';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -3044,6 +3137,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v26','Nov 2026',['Testar sem cadastro: na página inicial, no Entrar e no Criar conta, um botão abre o app na hora com um cliente de exemplo de 9 posts, sem e-mail e sem senha','Quem está testando vê uma faixa "Criar conta": informa nome e e-mail, confirma pelo link e cria a senha; tudo o que fez no teste continua na conta']],
   ['v25.2','Nov 2026',['Pop-ups: o Central fica sempre no meio da tela e o Canto da tela sempre embaixo à direita; a Barra no topo empurra a página para baixo (não cobre mais o topo) e o botão dela voltou a aparecer']],
   ['v25.1','Nov 2026',['O Fig.Feed mudou de endereço: agora é jvpereira.cc. Quem abrir um link antigo (hakachi7.github.io/Fig.Feed) vai direto para o novo, na mesma página']],
   ['v25','Nov 2026',['Admin › Visão geral: novo mapa "Onde estão os usuários", com um ponto verde por cidade (quanto mais gente, mais verde, igual ao calendário do Perfil), filtros Todos / Ativos no mês / Pagantes e os números de Pessoas e Planos ao lado']],
@@ -3193,7 +3287,7 @@ function vLanding(){
     <section class="home land-hero" aria-label="Fig.Feed"><div class="word">Fig.</div>
       <div class="photo">${LI.hero.map((p,i)=>`<img src="${anyImg(p)}" alt="" class="${i?'':'on'}">`).join('')}</div><div class="word">Feed</div></section>
     <section class="land-cta"><p>${esc(LT.frase)}</p>
-      <div class="acts"><button class="pill dark" data-go="criar">${esc(LT.bt1)}</button><button class="pill" id="como">${esc(LT.bt2)}</button></div></section>
+      <div class="acts"><button class="pill dark" data-go="criar">${esc(LT.bt1)}</button>${USER?'':DEMO_BTN('pill')}<button class="pill" id="como">${esc(LT.bt2)}</button></div></section>
     <section class="land-feat" id="feat">
       <div><div class="g6" aria-hidden="true">${g(0)}</div><h2>${esc(LT.f[0][0])}</h2><p>${esc(LT.f[0][1])}</p></div>
       <div><div class="g6" aria-hidden="true">${g(3)}</div><h2>${esc(LT.f[1][0])}</h2><p>${esc(LT.f[1][1])}</p></div>
@@ -3220,7 +3314,7 @@ function vPlanos(){
     <div class="pl-grid">${PLANOS.map(x=>`<section class="pl ${x.top?'top':''}" aria-label="Plano ${esc(x.n)}"><div class="pl-h"><span>${esc(x.n)}</span>${ef===x.id?'<span class="tag">Seu plano</span>':x.top?'<span class="tag">Mais escolhido</span>':''}</div>
       <div class="pl-p"><b>${esc(x.p)}</b><small>${esc(x.u)}</small></div><ul>${x.it.map(i=>`<li>${esc(i)}</li>`).join('')}</ul>
       <button class="pill ${x.top?'dark':''}" data-plan="${x.id}" ${ef===x.id?'disabled':''}>${ef===x.id?'Seu plano atual':esc(x.b)}</button></section>`).join('')}</div></main>${USER?'':pubFooter()}`;
-  bindShell();
+  bindShell();bindDemo(app);
   app.querySelectorAll('[data-plan]').forEach(b=>b.onclick=()=>{const id=b.dataset.plan;
     if(id==='gratis')return USER?toast('Você já está no plano Grátis'):go('criar');
     if(id==='pro')return toast('A assinatura do Pro abre em breve. Avisaremos por e-mail.',4000);
@@ -4415,7 +4509,8 @@ function vCadastro(){
       <div class="pw"><input id="a-pass" type="password" placeholder="Senha (mínimo 6 caracteres)" aria-label="Senha" autocomplete="new-password" required><button type="button" id="eye" aria-label="Mostrar senha">${EYE_OFF}</button></div>
       ${sobreCampos(cadData,{semProfissao:true,semLocal:true})}
       <button class="auth-btn" id="a-go">Continuar</button>
-      <p class="cad-steps">Passo 1 de 2</p>`;
+      <p class="cad-steps">Passo 1 de 2</p>
+      <div class="demo-or"><span>ou</span></div>${DEMO_BTN('auth-btn demo')}<p class="demo-sub">Teste antes, sem preencher nada.</p>`;
   const step2=`<h1>Sobre o seu trabalho</h1><p class="sub">Isso ajuda a deixar o Fig.Feed com a sua cara. <a id="cad-back" href="javascript:void 0">Voltar</a></p>
       ${sobreCampos(cadData,{semNascimento:true})}
       <label class="cad-terms"><input type="checkbox" id="cd-t" ${cadData.terms?'checked':''}> <span>Li e aceito os <a href="#termos" target="_blank">Termos de uso</a> e a <a href="#privacidade" target="_blank">Política de privacidade</a>.</span></label>
@@ -4427,7 +4522,7 @@ function vCadastro(){
       <button type="button" class="forgot" id="resend" hidden>Não chegou? Reenviar o e-mail</button></form>
     <div class="auth-word">Fig.Feed</div></section>${authPanel()}</main>`;
   app.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
-  const f=document.getElementById('af');bindSobre(f);
+  const f=document.getElementById('af');bindSobre(f);bindDemo(f);
   const msg=(t,ok)=>{const m=document.getElementById('a-msg');m.textContent=t;m.className='msg '+(ok?'ok':'err');m.hidden=false};
   const eye=document.getElementById('eye');
   if(eye)eye.onclick=()=>{const i=document.getElementById('a-pass');const show=i.type==='password';i.type=show?'text':'password';eye.innerHTML=show?EYE:EYE_OFF;eye.setAttribute('aria-label',show?'Esconder senha':'Mostrar senha')};
@@ -4794,6 +4889,7 @@ sb.auth.onAuthStateChange((event,session)=>{
       loadAvisos();
       go(route[0]==='confirmado'?'confirmado':needsTutorial()?'boas-vindas':'home')}
     if(event==='USER_UPDATED'&&session?.user)USER=session.user;
+    if(session?.user&&USER&&USER.id===session.user.id&&['SIGNED_IN','TOKEN_REFRESHED','USER_UPDATED'].includes(event)){USER=session.user;demoBar();pedirSenhaNova()}
     if(event==='SIGNED_OUT'){USER=null;S={profile:{name:'',handle:'',dates_follow:true},accounts:[]};ADM={users:[],invites:[],log:[],filter:'todos',cat:'todos',loaded:false};loadSite().finally(()=>go('entrar'))}
   },0);
 });
