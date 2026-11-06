@@ -122,7 +122,14 @@ body.com-demo{padding-bottom:76px}
 @media (prefers-reduced-motion:reduce){.auth-r .col{animation:none}}
 
 /* ---------- 1. Home ---------- */
-.home{height:100vh;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}.hdr+.home{--hh:72px;box-sizing:border-box;height:calc(100vh - var(--hh));height:calc(100dvh - var(--hh));padding-bottom:var(--hh)}
+.home{height:100vh;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}.home{position:relative}
+.home-beta{position:absolute;left:50%;bottom:calc(var(--hh,72px) + 24px);transform:translateX(-50%);width:min(440px,calc(100% - 32px));display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center}
+.hb-top{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.hb-pill{background:var(--fg);color:#fff;border-radius:99px;padding:8px 15px;font-size:13px;font-weight:500;white-space:nowrap}
+.home-beta h2{margin:0;font-size:15px;font-weight:500;letter-spacing:-.005em}
+.home-beta p{margin:0;max-width:340px;font-size:13px;line-height:1.55;color:var(--muted)}
+.home-beta a{color:inherit;text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+.hdr+.home{--hh:72px;box-sizing:border-box;height:calc(100vh - var(--hh));height:calc(100dvh - var(--hh));padding-bottom:var(--hh)}
 .home .word{font-size:clamp(44px,6.7vw,128px);font-weight:400;letter-spacing:-.025em;text-align:center;line-height:1}
 .home .photo{width:clamp(130px,19vw,364px);aspect-ratio:364/478;position:relative;overflow:hidden;background:var(--tile)}
 .home .photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .7s ease}
@@ -651,9 +658,18 @@ kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;borde
   .car .meta{margin-top:36px}
   .prog{margin-top:30px}
   .home{grid-template-columns:1fr;grid-template-rows:1fr auto 1fr;justify-items:center;row-gap:clamp(12px,4vw,20px)}.hdr+.home{--hh:60px}
-  .home .word:first-child{align-self:end}.home .word:last-child{align-self:start}
+  .home .word:first-child{align-self:end}.home .word:nth-child(3){align-self:start}
+  .home-beta{bottom:18px;gap:14px}.hb-pill{padding:7px 13px;font-size:12.5px}.home-beta h2{font-size:14.5px}.home-beta p{font-size:12.5px;line-height:1.5}
   .home .word{font-size:clamp(44px,15vw,72px)}
   .home .photo{width:clamp(160px,52vw,260px)}
+}
+@media (min-width:601px) and (max-height:820px){
+  .hdr+.home{height:auto;min-height:calc(100dvh - var(--hh));padding:36px 0 32px;align-content:center}
+  .home-beta{position:static;transform:none;grid-row:2;grid-column:1/-1;margin:36px auto 0}
+}
+@media (max-width:600px) and (max-height:780px){
+  .hdr+.home{height:auto;min-height:calc(100dvh - var(--hh));padding-bottom:28px}
+  .home-beta{position:static;transform:none;grid-row:4;margin:28px auto 0}
 }
 /* v26.6: no celular, campos com letra de 16px para o iPhone não dar zoom sozinho ao abrir uma tela com o cursor no campo */
 @media (pointer:coarse),(max-width:760px){
@@ -1620,7 +1636,7 @@ function pedirSenhaNova(){
       catch(err){b.disabled=false;b.textContent='Salvar senha';msg(traduz(err.message))}};
   });
 }
-const VERSAO='v26.10';
+const VERSAO='v26.11';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -1731,11 +1747,18 @@ function applySearch(){
 }
 
 /* ======================= 1. Home ======================= */
+// v26.11: boas-vindas da versão beta embaixo da Home
+function homeBeta(){
+  const h=(S.profile?.handle||'').trim(),nome=(S.profile?.name||'').trim().split(/\s+/)[0];
+  const quem=h?(h.startsWith('@')?h:'@'+h):nome;
+  return `<section class="home-beta" aria-label="Boas-vindas"><div class="hb-top"><span class="hb-pill">Olá${quem?' '+esc(quem):''}</span><h2>Boas-vindas ao Fig.Feed!</h2></div>
+    <p>Você está entre as primeiras pessoas a planejar, mostrar e provar o trabalho dos seus clientes num lugar só. Encontrou um erro ou teve uma ideia? Conta pra gente em <a data-go="suporte">Ajuda › Fale com a gente</a>.</p></section>`;
+}
 function vHome(){
   const pics=Array.from({length:8},randPhoto);
   app.innerHTML=header('home')+`<main class="view home"><div class="word">Fig.</div>
     <div class="photo">${pics.map((p,i)=>`<img src="${src(p,600,790)}" alt="" class="${i?'':'on'}">`).join('')}</div>
-    <div class="word">Feed</div></main>`;
+    <div class="word">Feed</div>${homeBeta()}</main>`;
   bindHeader();
   let i=0;const imgs=app.querySelectorAll('.photo img');
   homeTimer=setInterval(()=>{imgs[i].classList.remove('on');i=(i+1)%imgs.length;imgs[i].classList.add('on')},2400);
@@ -3165,6 +3188,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v26.11','Nov 2026',['Home: boas-vindas da versão beta embaixo do Fig. Feed, com o seu @ e o atalho para falar com a gente']],
   ['v26.10','Nov 2026',['Home no celular: "Fig." em cima e "Feed" embaixo da foto, que fica no meio da tela']],
   ['v26.8','Nov 2026',['Admin › Páginas mostra também as telas de sistema (Esqueci a senha, Nova senha, E-mail confirmado, conexão do Instagram, Erro, Sem internet, Boas-vindas) e o Menu de tela cheia, que pode ser ligado ou desligado']],
   ['v26.7','Nov 2026',['Home: a foto fica exatamente no meio da tela, na horizontal e na vertical']],

@@ -6,6 +6,7 @@ Cada versão também tem uma branch própria, com o código exatamente como esta
 
 | Versão | Nome | O que trouxe | Branch | Commit |
 | --- | --- | --- | --- | --- |
+| v26.11 | Boas-vindas beta | homeBeta(): selo preto "Olá @handle" (ou primeiro nome) + "Boas-vindas ao Fig.Feed!" + texto cinza centralizado com link para #suporte, preso embaixo da Home (.home-beta absoluto); telas baixas (celular ≤780px, computador ≤820px de altura) o texto desce para depois do Fig. Feed | [versao-26-11-boas-vindas-beta](https://github.com/hakachi7/Fig.Feed/tree/versao-26-11-boas-vindas-beta) | (veja a branch) |
 | v26.10 | Home empilhada | Celular: grid 1 coluna, linhas 1fr auto 1fr (foto no meio da tela), "Fig." em cima e "Feed" embaixo, texto horizontal; substitui a v26.9 | [versao-26-10-home-empilhada](https://github.com/hakachi7/Fig.Feed/tree/versao-26-10-home-empilhada) | (veja a branch) |
 | v26.9 | Home vertical | Celular: palavras com writing-mode vertical-rl + rotate(180deg), clamp(48px,17vw,76px); foto clamp(150px,46vw,220px) | [versao-26-9-home-vertical](https://github.com/hakachi7/Fig.Feed/tree/versao-26-9-home-vertical) | (veja a branch) |
 | v26.8 | Páginas de sistema | PAGES ganhou senha, nova-senha, confirmado, conectar (pode desligar), conectado, conectar-erro, erro, sem-internet, boas-vindas e menu (pode desligar; desligado = #menu vai para a Home; site_pages menu ativo=false) | [versao-26-8-paginas](https://github.com/hakachi7/Fig.Feed/tree/versao-26-8-paginas) | (veja a branch) |
