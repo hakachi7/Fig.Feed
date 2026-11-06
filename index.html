@@ -661,14 +661,14 @@ kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;borde
   .home .word:first-child{align-self:end}.home .word:nth-child(3){align-self:start}
   .home-beta{bottom:36px;gap:10px}.home-beta p{max-width:290px;line-height:1.5}
   .home .word{font-size:clamp(44px,15vw,72px)}
-  .home .photo{width:clamp(160px,52vw,260px)}
+  .home .photo{width:clamp(160px,52vw,260px);width:max(110px,min(clamp(160px,52vw,260px),calc((100dvh - 480px)*.7615)))}
 }
 @media (min-width:601px) and (max-height:760px){
   .hdr+.home{height:auto;min-height:calc(100dvh - var(--hh));padding:36px 0 32px;align-content:center}
   .home-beta{position:static;transform:none;grid-row:2;grid-column:1/-1;margin:36px auto 0}
 }
-@media (max-width:600px) and (max-height:700px){
-  .hdr+.home{height:auto;min-height:calc(100dvh - var(--hh));padding-bottom:28px}
+@media (max-width:600px) and (max-height:560px){
+  .hdr+.home{height:auto;min-height:calc(100dvh - var(--hh));padding:28px 0}
   .home-beta{position:static;transform:none;grid-row:4;margin:28px auto 0}
 }
 /* v26.6: no celular, campos com letra de 16px para o iPhone não dar zoom sozinho ao abrir uma tela com o cursor no campo */
@@ -1636,7 +1636,7 @@ function pedirSenhaNova(){
       catch(err){b.disabled=false;b.textContent='Salvar senha';msg(traduz(err.message))}};
   });
 }
-const VERSAO='v26.12';
+const VERSAO='v26.13';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -3188,6 +3188,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v26.13','Nov 2026',['Home no iPhone: Fig., a foto e Feed ficam no meio da tela e as boas-vindas com espaço embaixo, mesmo com as barras do Safari']],
   ['v26.12','Nov 2026',['Boas-vindas da Home mais discreto: letras menores e mais perto do fim da tela']],
   ['v26.11','Nov 2026',['Home: boas-vindas da versão beta embaixo do Fig. Feed, com o seu @ e o atalho para falar com a gente']],
   ['v26.10','Nov 2026',['Home no celular: "Fig." em cima e "Feed" embaixo da foto, que fica no meio da tela']],
