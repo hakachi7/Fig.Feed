@@ -650,7 +650,13 @@ kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;borde
   .crumb{font-size:14px}
   .car .meta{margin-top:36px}
   .prog{margin-top:30px}
-  .home{grid-template-columns:1fr auto 1fr}
+  .home{grid-template-columns:auto auto auto;justify-content:center;column-gap:clamp(10px,3.5vw,16px)}
+  .home .word{font-size:clamp(30px,10.5vw,44px)}
+  .home .photo{width:clamp(96px,32vw,150px)}
+}
+/* v26.6: no celular, campos com letra de 16px para o iPhone não dar zoom sozinho ao abrir uma tela com o cursor no campo */
+@media (pointer:coarse),(max-width:760px){
+  input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]),select,textarea{font-size:16px!important}
 }
 
 /* ---------- V10: Admin completo (Templates, Blog, Suporte, Assinaturas) ---------- */
@@ -1613,7 +1619,7 @@ function pedirSenhaNova(){
       catch(err){b.disabled=false;b.textContent='Salvar senha';msg(traduz(err.message))}};
   });
 }
-const VERSAO='v26.5';
+const VERSAO='v26.6';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -3158,6 +3164,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v26.6','Nov 2026',['No celular, o app não dá mais zoom sozinho ao abrir o Entrar e outras telas com campos','Home no celular: "Fig.", a foto e "Feed" ficam na mesma linha, centralizados e no tamanho certo para a tela']],
   ['v26.5','Nov 2026',['A Home ganhou o cabeçalho do app (menu, busca, Criar e sua conta)','O menu de tela cheia saiu: o endereço #menu agora leva para a Home','Os créditos das fotos no login usam a mesma letra do resto do site']],
   ['v26.4','Nov 2026',['O botão "Testar sem cadastro" fica visível, mas pausado por enquanto']],
   ['v26.3','Nov 2026',['A verificação contra robôs foi desligada por enquanto: entrar, criar conta e testar sem cadastro voltam a funcionar sem ela']],

@@ -6,6 +6,7 @@ Cada versão também tem uma branch própria, com o código exatamente como esta
 
 | Versão | Nome | O que trouxe | Branch | Commit |
 | --- | --- | --- | --- | --- |
+| v26.6 | Celular | Campos com 16px em telas de toque/até 760px (iOS dava zoom no foco automático do Entrar); Home no celular em linha centralizada (auto auto auto, palavra clamp(30px,10.5vw,44px), foto clamp(96px,32vw,150px)) | [versao-26-6-celular](https://github.com/hakachi7/Fig.Feed/tree/versao-26-6-celular) | (veja a branch) |
 | v26.5 | Home com cabeçalho | Home usa header('home') + bindHeader (altura calc(100dvh - 72px)); foto da Home não abre mais #menu; rota menu redireciona para #home (vMenu fica no código); crédito "Fotos via Unsplash" do login com var(--f), 12px, peso 400 | [versao-26-5-home-header](https://github.com/hakachi7/Fig.Feed/tree/versao-26-5-home-header) | (veja a branch) |
 | v26.4 | Teste pausado | DEMO_ON=false: botão "Testar sem cadastro" aparece sem clique e sem esmaecer (disabled, opacity 1); para liberar, DEMO_ON=true | [versao-26-4-demo-pausado](https://github.com/hakachi7/Fig.Feed/tree/versao-26-4-demo-pausado) | (veja a branch) |
 | v26.3 | Sem CAPTCHA | CAPTCHA_ON=false: captcha() não roda e nenhum captchaToken é enviado (João desligou também no Supabase); código do Turnstile continua para religar | [versao-26-3-sem-captcha](https://github.com/hakachi7/Fig.Feed/tree/versao-26-3-sem-captcha) | (veja a branch) |
