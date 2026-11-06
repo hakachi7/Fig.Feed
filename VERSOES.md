@@ -6,6 +6,7 @@ Cada versão também tem uma branch própria, com o código exatamente como esta
 
 | Versão | Nome | O que trouxe | Branch | Commit |
 | --- | --- | --- | --- | --- |
+| v26.2 | Botão da landing | bindDemo estava na tela de Planos e não na landing; erro do Turnstile agora grava o código em app_errors (CAPTCHA) e aparece na mensagem | [versao-26-2-botao-landing](https://github.com/hakachi7/Fig.Feed/tree/versao-26-2-botao-landing) | (veja a branch) |
 | v26.1 | Anti-robô | Cloudflare Turnstile (TS_KEY no index.html) manda captchaToken em entrar, cadastro, reenviar e-mail, esqueci a senha, teste sem cadastro e troca de senha; caixinha #ts-box só aparece se o Cloudflare pedir um clique | [versao-26-1-captcha](https://github.com/hakachi7/Fig.Feed/tree/versao-26-1-captcha) | (veja a branch) |
 | v26 | Testar sem cadastro | Botão "Testar sem cadastro" (landing, Entrar, Criar conta) entra como visitante anônimo do Supabase com um cliente de exemplo de 9 posts; faixa "Criar conta" converte o visitante (e-mail com link, depois senha) sem perder nada; visitantes antigos apagados sozinhos depois de 14 dias (supabase/v26.sql) | [versao-26-testar-sem-cadastro](https://github.com/hakachi7/Fig.Feed/tree/versao-26-testar-sem-cadastro) | (veja a branch) |
 | v25.2 | Pop-ups no lugar | Central sempre no meio, Canto sempre embaixo à direita (regras presas ao #ff-pop); Barra no topo empurra a página (variável --popbar) e o botão dela ficou branco com texto preto | [versao-25-1-dominio](https://github.com/hakachi7/Fig.Feed/tree/versao-25-1-dominio) | (veja a branch) |
