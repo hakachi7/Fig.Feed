@@ -1217,11 +1217,13 @@ function toast(m,ms=2600){const t=document.getElementById('toast');t.textContent
 async function db(q){const {data,error}=await q;if(error){console.error(error);toast(traduz(error.message));throw error}return data}
 /* v26.1: verificação anti-robô (Cloudflare Turnstile). O token vai junto em login, cadastro, senha e teste sem cadastro. */
 const TS_KEY='0x4AAAAAAF2YV2Jva4c_R_LP';
+const CAPTCHA_ON=false; // v26.3: desligado (João pediu). Para religar: true aqui E ligar em Supabase › Authentication › Attack Protection com Turnstile
 let tsLoad=null,tsId=null;
 function tsScript(){return tsLoad||(tsLoad=new Promise((ok,no)=>{const s=document.createElement('script');
   s.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';s.async=true;s.onload=()=>ok();
   s.onerror=()=>{tsLoad=null;no(new Error('captcha-load'))};document.head.appendChild(s)}))}
 async function captcha(){
+  if(!CAPTCHA_ON)return undefined;
   await tsScript();
   let box=document.getElementById('ts-box');if(!box){box=document.createElement('div');box.id='ts-box';document.body.appendChild(box)}
   if(tsId!==null){try{turnstile.remove(tsId)}catch(e){}tsId=null}
@@ -1610,7 +1612,7 @@ function pedirSenhaNova(){
       catch(err){b.disabled=false;b.textContent='Salvar senha';msg(traduz(err.message))}};
   });
 }
-const VERSAO='v26.2';
+const VERSAO='v26.3';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -3156,6 +3158,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v26.3','Nov 2026',['A verificação contra robôs foi desligada por enquanto: entrar, criar conta e testar sem cadastro voltam a funcionar sem ela']],
   ['v26.2','Nov 2026',['O botão "Testar sem cadastro" da página inicial voltou a funcionar']],
   ['v26.1','Nov 2026',['Proteção contra robôs (Cloudflare Turnstile) no entrar, no criar conta, no esqueci a senha e no testar sem cadastro: quase sempre invisível']],
   ['v26','Nov 2026',['Testar sem cadastro: na página inicial, no Entrar e no Criar conta, um botão abre o app na hora com um cliente de exemplo de 9 posts, sem e-mail e sem senha','Quem está testando vê uma faixa "Criar conta": informa nome e e-mail, confirma pelo link e cria a senha; tudo o que fez no teste continua na conta']],
