@@ -143,7 +143,7 @@ Deno.serve(async (req) => {
       const out: Record<string, unknown> = { conta: ACC.slice(0, 6) + "…", bucket: BUCKET, publico: PUB };
       const t0 = Date.now();
       try { await r2Put(k, new Blob(["ok"]), "text/plain"); out.gravar = "ok"; out.gravar_ms = Date.now() - t0; } catch (e) { out.gravar = (e as Error).message; return json(out); }
-      try { const r = await fetch(pubUrl(k), { headers: { Origin: "https://hakachi7.github.io" } }); out.ler_publico = r.status; out.cors = r.headers.get("access-control-allow-origin"); out.vary = r.headers.get("vary"); } catch (e) { out.ler_publico = (e as Error).message; }
+      try { const r = await fetch(pubUrl(k), { headers: { Origin: "https://jvpereira.cc" } }); out.ler_publico = r.status; out.cors = r.headers.get("access-control-allow-origin"); out.vary = r.headers.get("vary"); } catch (e) { out.ler_publico = (e as Error).message; }
       try { await r2Del(k); out.apagar = "ok"; } catch (e) { out.apagar = (e as Error).message; }
       return json(out);
     }

@@ -16,7 +16,7 @@ import { AwsClient } from "npm:aws4fetch@1.0.20";
 const APP_ID = Deno.env.get("IG_APP_ID") ?? "";
 const APP_SECRET = Deno.env.get("IG_APP_SECRET") ?? "";
 const CONFIG_ID = Deno.env.get("IG_CONFIG_ID") ?? "1136611732178374";
-const SITE = Deno.env.get("SITE_URL") ?? "https://hakachi7.github.io/Fig.Feed/";
+const SITE = "https://jvpereira.cc/"; // v25: site no domínio próprio (Hostinger)
 const SB_URL = Deno.env.get("SUPABASE_URL")!;
 const SELF = `${SB_URL}/functions/v1/instagram`;
 const GV = "v26.0";
