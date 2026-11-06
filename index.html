@@ -21,7 +21,7 @@
 <style>
 :root{
   --bg:#ffffff; --fg:#0a0a0a; --muted:#7a7a7a; --line:#e7e7e7; --tile:#d9d9d9; --soft:#f4f4f4; --panel:#f1f0ee;
-  --accent:#ff1f1f; --drop:#14d36a; --badge:#2f45ff; --err:#c4281c;
+  --accent:#ff1f1f; --drop:#14d36a; --badge:#2f45ff; --notif:#216e39; --err:#c4281c;
   --f:"Inter","Helvetica Neue",Arial,sans-serif;
   color-scheme:light;
 }
@@ -156,7 +156,7 @@ body.com-demo{padding-bottom:76px}
 .logo.big{grid-template-columns:repeat(3,8px)}.logo.big i{width:8px;height:10px}
 .nav a{font-size:15px;color:var(--muted);text-decoration:none;font-weight:500;position:relative;white-space:nowrap;cursor:pointer}
 .nav a.cur{color:var(--fg)}
-.nav .badge{position:absolute;top:-10px;right:-15px;background:var(--badge);color:#fff;font-size:10px;border-radius:99px;min-width:17px;height:17px;display:grid;place-items:center;padding:0 4px}
+.nav .badge{position:absolute;top:-10px;right:-15px;background:var(--notif);color:#fff;font-size:10.5px;font-weight:600;line-height:1;font-variant-numeric:tabular-nums;border-radius:99px;min-width:18px;height:18px;display:grid;place-items:center;padding:0 5px}
 .crumb{color:var(--fg);font-weight:500;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .crumb span{color:var(--muted);font-weight:400}
 .search{display:flex;align-items:center;gap:10px;width:min(430px,34vw);border:1px solid var(--line);background:#fafafa;border-radius:99px;padding:10px 16px}
@@ -182,7 +182,7 @@ body.com-demo{padding-bottom:76px}
 .drop .it svg{flex:none;color:#555}
 .drop .it.cur{background:var(--soft);font-weight:600}
 .drop .it .avatar{width:20px;height:20px;flex:none}
-.drop .it .n{margin-left:auto;background:var(--badge);color:#fff;font-size:10px;border-radius:99px;min-width:17px;height:17px;display:grid;place-items:center;padding:0 4px;font-weight:500}
+.drop .it .n{margin-left:auto;background:var(--notif);color:#fff;font-size:10.5px;line-height:1;font-variant-numeric:tabular-nums;border-radius:99px;min-width:18px;height:18px;display:grid;place-items:center;padding:0 5px;font-weight:600}
 .drop .it .h{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .drop .danger,.drop .danger svg{color:var(--err)}
 .drop .ver{color:#aaa;font-size:11px;padding:6px 12px 4px}
@@ -682,7 +682,8 @@ kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;borde
 .field.sm{height:34px;width:auto;font-size:12px;padding:0 8px;border-radius:8px}
 .mut{color:var(--muted)}.mono{font-family:ui-monospace,Menlo,monospace;letter-spacing:.02em}
 .adm-head{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px;margin-bottom:26px}.adm-head>div{flex:1 1 300px;min-width:0}.adm-head .sub{margin:0}
-.adm-n{display:inline-grid;place-items:center;min-width:17px;height:17px;padding:0 5px;border-radius:99px;background:var(--badge);color:#fff;font-size:10px;margin-left:6px;vertical-align:1px}
+.adm-n{display:inline-grid;place-items:center;min-width:18px;height:18px;padding:0 5px;border-radius:99px;background:var(--notif);color:#fff;font-size:10.5px;font-weight:600;line-height:1;font-variant-numeric:tabular-nums;margin-left:6px;vertical-align:1px}
+.adm-tabs a .adm-n{padding:0 5px;margin-bottom:0;border:0;color:#fff}
 .adm-empty{border:1px dashed #d4d4d4;border-radius:14px;padding:44px 16px;text-align:center;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:20px}.adm-empty p{margin:0}
 .adm-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 28px}
 .adm-stats div{background:var(--soft);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:3px}.adm-stats b{font-size:22px;font-weight:400}.adm-stats span{font-size:12px;color:var(--muted)}
@@ -1112,11 +1113,11 @@ mark.ph{background:#fff1b8;color:inherit;border-radius:3px;padding:0 2px}
 .sd-st{font-size:12px;border-radius:99px;padding:3px 10px;white-space:nowrap}.sd-st.ok{background:#eafaf0;color:#0d7a3c}.sd-st.warn{background:#fff4e5;color:#9a5a00}.sd-st.err{background:#fdecea;color:var(--err)}
 .sd-n{font-variant-numeric:tabular-nums;color:var(--muted)}.sd-row code{font-size:11px;background:var(--soft);border-radius:4px;padding:1px 5px}
 .bell{position:relative;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#444}.bell:hover{background:var(--soft)}
-.bell .bn{position:absolute;top:4px;right:3px;min-width:16px;height:16px;border-radius:99px;background:var(--badge);color:#fff;font-size:10px;display:grid;place-items:center;padding:0 4px;font-weight:600}
+.bell .bn{position:absolute;top:4px;right:3px;min-width:16px;height:16px;border-radius:99px;background:var(--notif);color:#fff;font-size:10px;display:grid;place-items:center;padding:0 4px;font-weight:600}
 .drop.av-drop{width:min(340px,calc(100vw - 32px));max-height:70vh;overflow:auto}
 .av-it{padding:10px 12px;border-radius:8px;display:flex;flex-direction:column;gap:3px;position:relative;font-size:13px}.av-it+.av-it{border-top:1px solid #f0f0f0}
 .av-it b{font-weight:500;padding-right:14px}.av-it p{margin:0;color:#444;line-height:1.45}.av-it small{color:var(--muted);font-size:11px}.av-it a{font-size:12px;align-self:flex-start}
-.av-dot{position:absolute;right:12px;top:15px;width:8px;height:8px;border-radius:50%;background:var(--badge)}.av-empty{margin:4px 12px 12px;color:var(--muted);font-size:13px}
+.av-dot{position:absolute;right:12px;top:15px;width:8px;height:8px;border-radius:50%;background:var(--notif)}.av-empty{margin:4px 12px 12px;color:var(--muted);font-size:13px}
 .u-info{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13px;margin:14px 0 4px}.u-info dt{color:var(--muted)}.u-info dd{margin:0}
 .u-acts{display:flex;flex-direction:column;align-items:flex-start;gap:8px}.sus-tag{font-size:11px;background:#fdecea;color:var(--err);border-radius:99px;padding:2px 8px;font-weight:500}
 .pub-foot a[target=_blank]{text-decoration:underline}
@@ -1636,7 +1637,7 @@ function pedirSenhaNova(){
       catch(err){b.disabled=false;b.textContent='Salvar senha';msg(traduz(err.message))}};
   });
 }
-const VERSAO='v26.14';
+const VERSAO='v26.15';
 const LOADING=document.querySelector('.loading')?.outerHTML||'';
 const IC={
   link:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
@@ -3188,6 +3189,7 @@ function vAjuda(){
 }
 // Histórico de versões: acrescente a versão nova no topo a cada envio
 const NOVIDADES=[
+  ['v26.15','Nov 2026',['Selos de notificação em verde, alinhados ao texto (abas do Admin, menu, sininho e avisos)']],
   ['v26.14','Nov 2026',['Home no celular: "Fig.", a foto e "Feed" voltaram a ficar lado a lado, no meio da tela']],
   ['v26.13','Nov 2026',['Home no iPhone: Fig., a foto e Feed ficam no meio da tela e as boas-vindas com espaço embaixo, mesmo com as barras do Safari']],
   ['v26.12','Nov 2026',['Boas-vindas da Home mais discreto: letras menores e mais perto do fim da tela']],
